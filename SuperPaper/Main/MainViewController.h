@@ -2,7 +2,7 @@
 //  ASMainViewController.h
 //  Demo
 //
-//  Created by 王强 on 16/1/8.
+//  Created by Ehan on 16/1/8.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
@@ -15,6 +15,10 @@ typedef NS_ENUM(NSInteger , MainTabBarDisplayType) {
     MainTabBarDisplayTypeStudent
 };
 
+/**
+ *  @brief 主窗口类
+ *
+ */
 @interface MainViewController : BaseViewController
 
 - (void)changeTabBarDisplayType:(MainTabBarDisplayType)type;

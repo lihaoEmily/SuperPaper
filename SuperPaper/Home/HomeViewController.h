@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
-
+/**
+ *  @brief 首页
+ *
+ */
 @interface HomeViewController : BaseViewController
 
 @end

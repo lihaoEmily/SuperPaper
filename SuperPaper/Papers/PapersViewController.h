@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
-
+/**
+ *  @brief 论文
+ *
+ */
 @interface PapersViewController : BaseViewController
 
 @end
