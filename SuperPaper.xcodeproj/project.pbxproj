@@ -10,6 +10,7 @@
 		0401D4D91C41E12D002E2F12 /* Apple in Resources */ = {isa = PBXBuildFile; fileRef = 0401D4D81C41E12D002E2F12 /* Apple */; };
 		0401D4DC1C41E1E3002E2F12 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0401D4DB1C41E1E3002E2F12 /* AppInfo.m */; };
 		0401D4E01C4237AC002E2F12 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0401D4DF1C4237AC002E2F12 /* RegisterViewController.m */; };
+		0401D4E31C423BFE002E2F12 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0401D4E21C423BFE002E2F12 /* AboutUsViewController.m */; };
 		04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDCD1C40F63D00ECCA1C /* main.m */; };
 		04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDD01C40F63D00ECCA1C /* AppDelegate.m */; };
 		04FFFDD41C40F63D00ECCA1C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDD31C40F63D00ECCA1C /* ViewController.m */; };
@@ -43,6 +44,8 @@
 		0401D4DB1C41E1E3002E2F12 /* AppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppInfo.m; path = Utils/AppInfo.m; sourceTree = "<group>"; };
 		0401D4DE1C4237AC002E2F12 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = Login/RegisterViewController.h; sourceTree = "<group>"; };
 		0401D4DF1C4237AC002E2F12 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = Login/RegisterViewController.m; sourceTree = "<group>"; };
+		0401D4E11C423BFE002E2F12 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsViewController.h; path = User/AboutUsViewController.h; sourceTree = "<group>"; };
+		0401D4E21C423BFE002E2F12 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsViewController.m; path = User/AboutUsViewController.m; sourceTree = "<group>"; };
 		04FFFDC91C40F63D00ECCA1C /* SuperPaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperPaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04FFFDCD1C40F63D00ECCA1C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04FFFDCF1C40F63D00ECCA1C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -208,6 +211,8 @@
 			children = (
 				04FFFDFD1C410C2900ECCA1C /* UserViewController.h */,
 				04FFFDFE1C410C2900ECCA1C /* UserViewController.m */,
+				0401D4E11C423BFE002E2F12 /* AboutUsViewController.h */,
+				0401D4E21C423BFE002E2F12 /* AboutUsViewController.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -378,6 +383,7 @@
 				04FFFDDA1C40F63D00ECCA1C /* SuperPaper.xcdatamodeld in Sources */,
 				04FFFDF31C410A2500ECCA1C /* HomeViewController.m in Sources */,
 				04FFFE191C4123F100ECCA1C /* TabBarItem.m in Sources */,
+				0401D4E31C423BFE002E2F12 /* AboutUsViewController.m in Sources */,
 				0401D4E01C4237AC002E2F12 /* RegisterViewController.m in Sources */,
 				04FFFE0A1C4122E200ECCA1C /* UserSession.m in Sources */,
 				04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */,
