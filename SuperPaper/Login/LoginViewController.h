@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  @brief 登录
+ *
+ */
 @interface LoginViewController : UIViewController
 
 @end

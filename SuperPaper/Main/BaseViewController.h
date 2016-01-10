@@ -2,7 +2,7 @@
 //  ASBaseViewController.h
 //  Demo
 //
-//  Created by 王强 on 16/1/8.
+//  Created by Ehan on 16/1/8.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
@@ -18,7 +18,10 @@
 #define kColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define kSelColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
 
-
+/**
+ *  @brief 父窗口类
+ *
+ */
 @interface BaseViewController : UIViewController
 
 @property (assign, nonatomic) BaseViewController *mainControllerDelegate;

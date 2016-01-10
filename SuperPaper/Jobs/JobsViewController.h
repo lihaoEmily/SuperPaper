@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
-
+/**
+ *  @brief 就业
+ *
+ */
 @interface JobsViewController : BaseViewController
 
 @end
