@@ -55,7 +55,7 @@ typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) {
      * Handles cookies stored in NSHTTPCookieStore by setting
      * NSMutableURLRequest.HTTPShouldHandleCookies = YES;
      */
-    SDWebImageHandleCookies = 1 << 6,
+    SDWebImagEthandleCookies = 1 << 6,
 
     /**
      * Enable to allow untrusted SSL certificates.
