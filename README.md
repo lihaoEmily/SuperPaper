@@ -23,11 +23,13 @@
 * AppDelegate.m
 * ViewController.h
 * ViewController.m
+
 ----
 * Info.plist
 * SuperPaper.xcdatamodeld/
 * Assets.xcassets/
 * Base.lproj/
+
 ----
 * Home/ *首页*
 * Jobs/ *就业*
@@ -36,6 +38,7 @@
 * Papers/ *论文*
 * Study/ *学习*
 * User/ *我的*
+
 ----
 * Main/ *自定义View*
 * WebView/ *Web页面*
