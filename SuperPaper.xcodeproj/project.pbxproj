@@ -34,6 +34,7 @@
 		04FFFE1F1C4146EC00ECCA1C /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFE1E1C4146EC00ECCA1C /* BaseView.m */; };
 		04FFFE251C414C6B00ECCA1C /* NormalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFE241C414C6B00ECCA1C /* NormalWebViewController.m */; };
 		04FFFE281C414CB000ECCA1C /* NormalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFE271C414CB000ECCA1C /* NormalTableViewCell.m */; };
+		7F60BF1F1C423F5100F2DF8F /* SDWebImage in Resources */ = {isa = PBXBuildFile; fileRef = 7F60BF1E1C423F5100F2DF8F /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		04FFFE241C414C6B00ECCA1C /* NormalWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalWebViewController.m; path = WebView/NormalWebViewController.m; sourceTree = "<group>"; };
 		04FFFE261C414CB000ECCA1C /* NormalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalTableViewCell.h; path = CommonView/NormalTableViewCell.h; sourceTree = "<group>"; };
 		04FFFE271C414CB000ECCA1C /* NormalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalTableViewCell.m; path = CommonView/NormalTableViewCell.m; sourceTree = "<group>"; };
+		7F60BF1E1C423F5100F2DF8F /* SDWebImage */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SDWebImage; path = ThirdParty/SDWebImage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +233,7 @@
 		04FFFDEE1C40F7DD00ECCA1C /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				7F60BF1E1C423F5100F2DF8F /* SDWebImage */,
 				0401D4D81C41E12D002E2F12 /* Apple */,
 			);
 			name = ThirdParty;
@@ -348,6 +351,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F60BF1F1C423F5100F2DF8F /* SDWebImage in Resources */,
 				04FFFDDF1C40F63D00ECCA1C /* LaunchScreen.storyboard in Resources */,
 				04FFFDDC1C40F63D00ECCA1C /* Assets.xcassets in Resources */,
 				04FFFDD71C40F63D00ECCA1C /* Main.storyboard in Resources */,
