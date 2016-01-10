@@ -127,7 +127,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - ASTabBarDelegate
+#pragma mark - TabBarDelegate
 - (void)TabBarDisplayType:(SelectedButtonType)selectedButtonType didSelectAtIndex:(NSInteger)index {
     self.pageIndex = index;
     BaseViewController *destinationController = nil;

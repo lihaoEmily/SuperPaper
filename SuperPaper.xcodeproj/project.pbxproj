@@ -46,6 +46,7 @@
 		0401D4DF1C4237AC002E2F12 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = Login/RegisterViewController.m; sourceTree = "<group>"; };
 		0401D4E11C423BFE002E2F12 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsViewController.h; path = User/AboutUsViewController.h; sourceTree = "<group>"; };
 		0401D4E21C423BFE002E2F12 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsViewController.m; path = User/AboutUsViewController.m; sourceTree = "<group>"; };
+		0401D4E41C42912D002E2F12 /* SPGlobal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPGlobal.h; path = Common/SPGlobal.h; sourceTree = "<group>"; };
 		04FFFDC91C40F63D00ECCA1C /* SuperPaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperPaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04FFFDCD1C40F63D00ECCA1C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04FFFDCF1C40F63D00ECCA1C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -222,6 +223,7 @@
 			children = (
 				04FFFE081C4122E200ECCA1C /* UserSession.h */,
 				04FFFE091C4122E200ECCA1C /* UserSession.m */,
+				0401D4E41C42912D002E2F12 /* SPGlobal.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -329,7 +331,7 @@
 				TargetAttributes = {
 					04FFFDC81C40F63D00ECCA1C = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = GW24UJB397;
+						DevelopmentTeam = J262EESFV3;
 					};
 				};
 			};
