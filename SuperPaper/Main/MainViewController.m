@@ -99,7 +99,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - ASTabBarDelegate
+#pragma mark - TabBarDelegate
 - (void)TabBarDisplayType:(SelectedButtonType)selectedButtonType didSelectAtIndex:(NSInteger)index {
 //    NSLog(@"%d   %ld",selectedButtonType,(long)index);
     

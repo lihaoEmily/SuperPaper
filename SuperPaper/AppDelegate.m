@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "NavigationController.h"
+#import "../Common/SPGlobal.h"
 
 @interface AppDelegate ()
 
@@ -36,6 +37,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; // 拿到根视图
     [self.window makeKeyAndVisible];
+    NSLog(@"----> upload url %@", UPLOAD_SERVER);
     return YES;
 }
 
