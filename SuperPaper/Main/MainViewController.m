@@ -72,7 +72,7 @@
     self.tabbar = [[TabBar alloc] init];
     self.tabbar.delegate = self;
     [self.view addSubview:self.tabbar];
-    self.tabbar.selectIndex = 4;
+    self.tabbar.selectIndex = 0;
     
     [self addChildViewController:self.homeController];
     [self.view addSubview:self.homeController.view];

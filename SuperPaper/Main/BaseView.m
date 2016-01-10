@@ -42,6 +42,10 @@
     [super drawRect:rect];
 }
 
+- (UIView *)layoutContentView {
+    return _contentView;
+}
+
 - (void)layoutCustomizedView {
     [_topBarView setTranslatesAutoresizingMaskIntoConstraints:NO];
     NSLayoutConstraint *constraintToTop = [NSLayoutConstraint constraintWithItem:_topBarView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];

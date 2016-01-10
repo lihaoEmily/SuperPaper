@@ -7,7 +7,7 @@
 //
 
 #import "UserViewController.h"
-
+#import "MainViewController.h"
 @interface UserViewController ()
 
 @end
@@ -17,6 +17,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //TODO: for testing
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
+    btn.backgroundColor = kSelColor;
+    [btn setTitle:@"Teacher" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:btn];
+    [btn addTarget:self
+            action:@selector(buttonAction:)
+  forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,5 +47,17 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (void)buttonAction:(UIButton *)btn
+{
+    MainViewController *mainController = (MainViewController *)self.mainControllerDelegate;
+    btn.selected = !btn.selected;
+    if (btn.selected) {
+        [btn setTitle:@"Student" forState:UIControlStateNormal] ;
+        [mainController changeTabBarDisplayType:MainTabBarDisplayTypeStudent];
+    }else{
+        [btn setTitle:@"Teacher" forState:UIControlStateNormal] ;
+        [mainController changeTabBarDisplayType:MainTabBarDisplayTypeTeacher];
+    }
+}
 
 @end
