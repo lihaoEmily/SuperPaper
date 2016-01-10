@@ -1,16 +1,16 @@
 //
-//  AppInfo.h
+//  RegisterViewController.h
 //  SuperPaper
 //
 //  Created by AppStudio on 16/1/10.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 /**
- *  @brief 应用程序信息
+ *  @brief 注册
  *
  */
-@interface AppInfo : NSObject
+@interface RegisterViewController : UIViewController
 
 @end

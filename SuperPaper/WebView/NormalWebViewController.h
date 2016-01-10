@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  @brief 共通WebView
+ *
+ */
 @interface NormalWebViewController : UIViewController
 
 @end

@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
-
+/**
+ *  @brief 学习
+ *
+ */
 @interface StudyViewController : BaseViewController
 
 @end

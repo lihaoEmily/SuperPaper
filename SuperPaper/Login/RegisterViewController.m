@@ -1,43 +1,27 @@
 //
-//  ASBaseViewController.m
-//  Demo
+//  RegisterViewController.m
+//  SuperPaper
 //
-//  Created by Ehan on 16/1/8.
+//  Created by AppStudio on 16/1/10.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "RegisterViewController.h"
 
-
-#define kTitleName @"TitleName"
-
-
-
-@interface BaseViewController ()
+@interface RegisterViewController ()
 
 @end
 
-@implementation BaseViewController
+@implementation RegisterViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = kArcColor;
     // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (NSString *)titleName
-{
-    return kTitleName;
-}
-
-- (void)reloadViewController
-{
-    
 }
 
 /*

@@ -13,6 +13,10 @@ typedef NS_ENUM(NSInteger, UserRole){
     kUserRoleStudent = 2
 };
 
+/**
+ *  @brief 用户会话，监测用户状态
+ *
+ */
 @interface UserSession : NSObject
 
 @property (nonatomic, strong) NSString *currentUserRole;

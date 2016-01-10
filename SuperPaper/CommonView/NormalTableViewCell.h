@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  @brief 共通TableViewCell
+ *
+ */
 @interface NormalTableViewCell : UITableViewCell
 
 @end
