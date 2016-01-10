@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0401D4D91C41E12D002E2F12 /* Apple in Resources */ = {isa = PBXBuildFile; fileRef = 0401D4D81C41E12D002E2F12 /* Apple */; };
+		0401D4DC1C41E1E3002E2F12 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0401D4DB1C41E1E3002E2F12 /* AppInfo.m */; };
 		04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDCD1C40F63D00ECCA1C /* main.m */; };
 		04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDD01C40F63D00ECCA1C /* AppDelegate.m */; };
 		04FFFDD41C40F63D00ECCA1C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDD31C40F63D00ECCA1C /* ViewController.m */; };
@@ -34,6 +36,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0401D4D81C41E12D002E2F12 /* Apple */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Apple; path = ThirdParty/Apple; sourceTree = "<group>"; };
+		0401D4DA1C41E1E3002E2F12 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppInfo.h; path = Utils/AppInfo.h; sourceTree = "<group>"; };
+		0401D4DB1C41E1E3002E2F12 /* AppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppInfo.m; path = Utils/AppInfo.m; sourceTree = "<group>"; };
 		04FFFDC91C40F63D00ECCA1C /* SuperPaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperPaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04FFFDCD1C40F63D00ECCA1C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04FFFDCF1C40F63D00ECCA1C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -212,6 +217,8 @@
 		04FFFDED1C40F7CD00ECCA1C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0401D4DA1C41E1E3002E2F12 /* AppInfo.h */,
+				0401D4DB1C41E1E3002E2F12 /* AppInfo.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -219,6 +226,7 @@
 		04FFFDEE1C40F7DD00ECCA1C /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				0401D4D81C41E12D002E2F12 /* Apple */,
 			);
 			name = ThirdParty;
 			sourceTree = "<group>";
@@ -338,6 +346,7 @@
 				04FFFDDF1C40F63D00ECCA1C /* LaunchScreen.storyboard in Resources */,
 				04FFFDDC1C40F63D00ECCA1C /* Assets.xcassets in Resources */,
 				04FFFDD71C40F63D00ECCA1C /* Main.storyboard in Resources */,
+				0401D4D91C41E12D002E2F12 /* Apple in Resources */,
 				04FFFE1C1C412F8C00ECCA1C /* Resources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,6 +361,7 @@
 				04FFFDFF1C410C2900ECCA1C /* UserViewController.m in Sources */,
 				04FFFDD41C40F63D00ECCA1C /* ViewController.m in Sources */,
 				04FFFE251C414C6B00ECCA1C /* NormalWebViewController.m in Sources */,
+				0401D4DC1C41E1E3002E2F12 /* AppInfo.m in Sources */,
 				04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */,
 				04FFFE281C414CB000ECCA1C /* NormalTableViewCell.m in Sources */,
 				04FFFDF61C410A6200ECCA1C /* LoginViewController.m in Sources */,
