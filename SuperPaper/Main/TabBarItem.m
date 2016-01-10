@@ -2,7 +2,7 @@
 //  ASTabBarItem.m
 //  Demo
 //
-//  Created by Ehan on 16/1/8.
+//  Created by Ethan on 16/1/8.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
