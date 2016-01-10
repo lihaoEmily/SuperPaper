@@ -294,7 +294,7 @@
 
     NSArray *tempArr = self.tabBarDisplayType == TabBarDisplayTypeTeacher ? _teacherArr : _studentArr;
     
-    NSInteger w = tempArr.count; // 等加上线的时候，需要  - 1
+    NSInteger w = tempArr.count; 
     
     CGFloat width = self.bounds.size.width / w;
     for (int i = 0 ; i < tempArr.count; i ++) {
