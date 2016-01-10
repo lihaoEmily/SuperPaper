@@ -20,7 +20,7 @@
     if (!_nav)
     {
         _nav = [[NavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
-        [_nav setNavigationBarHidden:YES];
+        [_nav setNavigationBarHidden:NO];
     }
     
     return _nav;

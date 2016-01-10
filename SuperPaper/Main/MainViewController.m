@@ -164,6 +164,7 @@
         return;
     }
 
+    self.title = destinationController.titleName;
     [self.currentController viewWillDisappear:YES];
     [self.currentController.view removeFromSuperview];
     [self.currentController removeFromParentViewController];
@@ -191,9 +192,6 @@
     if (!_homeController)
     {
         _homeController = [[HomeViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_homeController];
-        nav.title = _homeController.titleName;
-
     }
     
     return _homeController;
@@ -204,8 +202,6 @@
     if (!_paperController)
     {
         _paperController = [[PapersViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_paperController];
-        nav.title = _paperController.titleName;
     }
     
     return _paperController;
@@ -216,8 +212,6 @@
     if (!_jobTitleController)
     {
         _jobTitleController = [[AssessmentTitleViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_jobTitleController];
-        nav.title = _jobTitleController.titleName;
     }
     
     return _jobTitleController;
@@ -228,8 +222,6 @@
     if (!_jobsController)
     {
         _jobsController = [[JobsViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_jobsController];
-        nav.title = _jobsController.titleName;
     }
     
     return _jobsController;
@@ -240,8 +232,6 @@
     if (!_studyController)
     {
         _studyController = [[StudyViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_studyController];
-        nav.title = _studyController.titleName;
     }
     
     return _studyController;
@@ -252,9 +242,6 @@
     if (!_userController)
     {
         _userController = [[UserViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_userController];
-
-        nav.title = _userController.titleName;
     }
     
     return _userController;
