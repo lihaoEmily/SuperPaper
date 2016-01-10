@@ -35,6 +35,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; // 拿到根视图
+    //test
     [self.window makeKeyAndVisible];
     return YES;
 }
