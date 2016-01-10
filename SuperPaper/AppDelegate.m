@@ -36,7 +36,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; // 拿到根视图
     [self.window makeKeyAndVisible];
-    //test pull request
     return YES;
 }
 
