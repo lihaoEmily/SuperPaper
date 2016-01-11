@@ -2,7 +2,7 @@
 //  ASMainViewController.m
 //  Demo
 //
-//  Created by Ehan on 16/1/8.
+//  Created by Ethan on 16/1/8.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
@@ -52,10 +52,16 @@
  */
 @property (strong, nonatomic) BaseViewController *currentController;
 
+/**
+ *  当前页面索引
+ */
+@property (assign, nonatomic) NSUInteger pageIndex;
 @end
 
 @implementation MainViewController
 
+
+#pragma mark -   methods
 - (void)changeTabBarDisplayType:(MainTabBarDisplayType)type
 {
     if (type == MainTabBarDisplayTypeStudent) {
@@ -65,6 +71,8 @@
     }
 }
 
+
+#pragma mark -  like cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -80,6 +88,26 @@
     self.currentController = self.homeController;
 }
 
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    if (self.currentController)
+    {
+        [self.currentController viewWillAppear:animated];
+    }
+ 
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.currentController)
+    {
+        [self.currentController viewWillDisappear:animated];
+    }
+}
 
 
 - (void)viewDidLayoutSubviews{
@@ -101,8 +129,7 @@
 
 #pragma mark - TabBarDelegate
 - (void)TabBarDisplayType:(SelectedButtonType)selectedButtonType didSelectAtIndex:(NSInteger)index {
-//    NSLog(@"%d   %ld",selectedButtonType,(long)index);
-    
+    self.pageIndex = index;
     BaseViewController *destinationController = nil;
     switch (selectedButtonType)
     {
@@ -131,20 +158,21 @@
     }
     if (self.currentController == destinationController)
     {
-        /**
-         *  刷新
-         */
+        /***  刷新 ****/
         [self.currentController reloadViewController];
-        
+
         return;
     }
-//    CGFloat offSizeW = -kWidth;
+
+    self.title = destinationController.titleName;
+    [self.currentController viewWillDisappear:YES];
     [self.currentController.view removeFromSuperview];
     [self.currentController removeFromParentViewController];
     [self addChildViewController:destinationController];
     [self.view addSubview:destinationController.view];
+    
     [destinationController didMoveToParentViewController:self];
-//    [self.currentController.view removeFromSuperview];
+
     self.currentController = destinationController;
     [self.view bringSubviewToFront:self.tabbar];
 }
@@ -152,7 +180,6 @@
 
 
 
-#pragma mark -  private methods
 
 
 #pragma mark -  event response
@@ -160,18 +187,11 @@
 
 #pragma mark -  lazying - getter and setter
 
-
-#pragma mark - HttpRequest
-
-
-#pragma mark -  like cycle
 - (HomeViewController *)homeController
 {
     if (!_homeController)
     {
         _homeController = [[HomeViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_homeController];
-        nav.title = _homeController.titleName;
     }
     
     return _homeController;
@@ -182,8 +202,6 @@
     if (!_paperController)
     {
         _paperController = [[PapersViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_paperController];
-        nav.title = _paperController.titleName;
     }
     
     return _paperController;
@@ -194,8 +212,6 @@
     if (!_jobTitleController)
     {
         _jobTitleController = [[AssessmentTitleViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_jobTitleController];
-        nav.title = _jobTitleController.titleName;
     }
     
     return _jobTitleController;
@@ -206,8 +222,6 @@
     if (!_jobsController)
     {
         _jobsController = [[JobsViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_jobsController];
-        nav.title = _jobsController.titleName;
     }
     
     return _jobsController;
@@ -218,8 +232,6 @@
     if (!_studyController)
     {
         _studyController = [[StudyViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_studyController];
-        nav.title = _studyController.titleName;
     }
     
     return _studyController;
@@ -230,13 +242,12 @@
     if (!_userController)
     {
         _userController = [[UserViewController alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:_userController];
-
-        nav.title = _userController.titleName;
     }
     
     return _userController;
 }
+
+#pragma mark - HttpRequest
 
 
 /*

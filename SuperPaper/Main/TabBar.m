@@ -2,7 +2,7 @@
 //  ASTabBar.m
 //  Demo
 //
-//  Created by Ehan on 16/1/8.
+//  Created by Ethan on 16/1/8.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
@@ -294,7 +294,7 @@
 
     NSArray *tempArr = self.tabBarDisplayType == TabBarDisplayTypeTeacher ? _teacherArr : _studentArr;
     
-    NSInteger w = tempArr.count; // 等加上线的时候，需要  - 1
+    NSInteger w = tempArr.count; 
     
     CGFloat width = self.bounds.size.width / w;
     for (int i = 0 ; i < tempArr.count; i ++) {
