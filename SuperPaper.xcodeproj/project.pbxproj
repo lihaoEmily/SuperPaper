@@ -639,7 +639,10 @@
 				84C139661C4628DB00284087 /* SDWebImageDecoder.m in Sources */,
 				04FFFDFC1C410BB900ECCA1C /* PapersViewController.m in Sources */,
 				84C1393F1C4628D500284087 /* UIImage+ImageEffects.m in Sources */,
+<<<<<<< HEAD
 				040AD98D1C46747A000AB02A /* Reachability.m in Sources */,
+=======
+>>>>>>> master
 				84C139671C4628DB00284087 /* SDWebImageDownloader.m in Sources */,
 				04FFFDDA1C40F63D00ECCA1C /* SuperPaper.xcdatamodeld in Sources */,
 				04FFFDF31C410A2500ECCA1C /* HomeViewController.m in Sources */,
