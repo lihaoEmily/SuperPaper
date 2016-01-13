@@ -98,14 +98,12 @@
     UIImage *iamge = [UIImage imageNamed:[[NSBundle bundleWithPath:bundleStr] pathForResource:@"userImage" ofType:@"png" inDirectory:@"navi"]];
     [btn setBackgroundImage:iamge forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(userAction:) forControlEvents:UIControlEventTouchUpInside];
-//    btn.contentEdgeInsets = UIEdgeInsetsMake(0, - 40, 0, 0);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
 }
 
 - (void)userAction:(UIButton *)button
 {
-    NSLog(@"%s",__func__);
-    self.tabbar.selectIndex = 3;
+    self.tabbar.selectIndex = self.tabbar.tabBarDisplayType == TabBarDisplayTypeTeacher ? 3 : 4;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
