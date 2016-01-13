@@ -86,9 +86,27 @@
     [self.view addSubview:self.homeController.view];
     [self.homeController didMoveToParentViewController:self];
     self.currentController = self.homeController;
+    
+    
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+    btn.clipsToBounds = YES;
+    
+    
+    NSString *bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources"
+                                                          ofType:@"bundle"];
+    
+    UIImage *iamge = [UIImage imageNamed:[[NSBundle bundleWithPath:bundleStr] pathForResource:@"userImage" ofType:@"png" inDirectory:@"navi"]];
+    [btn setBackgroundImage:iamge forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(userAction:) forControlEvents:UIControlEventTouchUpInside];
+//    btn.contentEdgeInsets = UIEdgeInsetsMake(0, - 40, 0, 0);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
 }
 
-
+- (void)userAction:(UIButton *)button
+{
+    NSLog(@"%s",__func__);
+    self.tabbar.selectIndex = 3;
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     
