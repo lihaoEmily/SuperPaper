@@ -10,7 +10,11 @@
 		0401D4DC1C41E1E3002E2F12 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0401D4DB1C41E1E3002E2F12 /* AppInfo.m */; };
 		0401D4E01C4237AC002E2F12 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0401D4DF1C4237AC002E2F12 /* RegisterViewController.m */; };
 		0401D4E31C423BFE002E2F12 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0401D4E21C423BFE002E2F12 /* AboutUsViewController.m */; };
+<<<<<<< HEAD
 		040AD98D1C46747A000AB02A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 040AD98C1C46747A000AB02A /* Reachability.m */; };
+=======
+		040AD9901C4675F8000AB02A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 040AD98F1C4675F8000AB02A /* Reachability.m */; };
+>>>>>>> master
 		04C3B82A1C43D5B4009D48E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B8291C43D5B4009D48E4 /* Foundation.framework */; };
 		04C3B82C1C43D5D0009D48E4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82B1C43D5D0009D48E4 /* CFNetwork.framework */; };
 		04C3B82E1C43D5E2009D48E4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82D1C43D5E2009D48E4 /* CoreFoundation.framework */; };
@@ -85,8 +89,13 @@
 		0401D4E11C423BFE002E2F12 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsViewController.h; path = User/AboutUsViewController.h; sourceTree = "<group>"; };
 		0401D4E21C423BFE002E2F12 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsViewController.m; path = User/AboutUsViewController.m; sourceTree = "<group>"; };
 		0401D4E41C42912D002E2F12 /* SPGlobal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPGlobal.h; path = Common/SPGlobal.h; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		040AD98B1C46747A000AB02A /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Utils/Reachability.h; sourceTree = "<group>"; };
 		040AD98C1C46747A000AB02A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Utils/Reachability.m; sourceTree = "<group>"; };
+=======
+		040AD98E1C4675F8000AB02A /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Utils/Reachability.h; sourceTree = "<group>"; };
+		040AD98F1C4675F8000AB02A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Utils/Reachability.m; sourceTree = "<group>"; };
+>>>>>>> master
 		04C3B8291C43D5B4009D48E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04C3B82B1C43D5D0009D48E4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		04C3B82D1C43D5E2009D48E4 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -368,8 +377,13 @@
 		04FFFDED1C40F7CD00ECCA1C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				040AD98B1C46747A000AB02A /* Reachability.h */,
 				040AD98C1C46747A000AB02A /* Reachability.m */,
+=======
+				040AD98E1C4675F8000AB02A /* Reachability.h */,
+				040AD98F1C4675F8000AB02A /* Reachability.m */,
+>>>>>>> master
 				0401D4DA1C41E1E3002E2F12 /* AppInfo.h */,
 				0401D4DB1C41E1E3002E2F12 /* AppInfo.m */,
 			);
@@ -640,8 +654,12 @@
 				04FFFDFC1C410BB900ECCA1C /* PapersViewController.m in Sources */,
 				84C1393F1C4628D500284087 /* UIImage+ImageEffects.m in Sources */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				040AD98D1C46747A000AB02A /* Reachability.m in Sources */,
 =======
+>>>>>>> master
+=======
+				040AD9901C4675F8000AB02A /* Reachability.m in Sources */,
 >>>>>>> master
 				84C139671C4628DB00284087 /* SDWebImageDownloader.m in Sources */,
 				04FFFDDA1C40F63D00ECCA1C /* SuperPaper.xcdatamodeld in Sources */,
