@@ -40,6 +40,8 @@
 		04FFFE251C414C6B00ECCA1C /* NormalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFE241C414C6B00ECCA1C /* NormalWebViewController.m */; };
 		04FFFE281C414CB000ECCA1C /* NormalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFE271C414CB000ECCA1C /* NormalTableViewCell.m */; };
 		7F60BF1F1C423F5100F2DF8F /* SDWebImage in Resources */ = {isa = PBXBuildFile; fileRef = 7F60BF1E1C423F5100F2DF8F /* SDWebImage */; };
+		F23480351C45FEC500813AEC /* AFNetworking in Resources */ = {isa = PBXBuildFile; fileRef = F23480341C45FEC500813AEC /* AFNetworking */; };
+		F23480371C45FED400813AEC /* UIKit+AFNetworking in Resources */ = {isa = PBXBuildFile; fileRef = F23480361C45FED400813AEC /* UIKit+AFNetworking */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -266,6 +268,8 @@
 		04FFFDEE1C40F7DD00ECCA1C /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				F23480361C45FED400813AEC /* UIKit+AFNetworking */,
+				F23480341C45FEC500813AEC /* AFNetworking */,
 				7F60BF1E1C423F5100F2DF8F /* SDWebImage */,
 				0401D4D81C41E12D002E2F12 /* Apple */,
 			);
@@ -386,6 +390,8 @@
 			files = (
 				7F60BF1F1C423F5100F2DF8F /* SDWebImage in Resources */,
 				04FFFDDF1C40F63D00ECCA1C /* LaunchScreen.storyboard in Resources */,
+				F23480371C45FED400813AEC /* UIKit+AFNetworking in Resources */,
+				F23480351C45FEC500813AEC /* AFNetworking in Resources */,
 				04FFFDDC1C40F63D00ECCA1C /* Assets.xcassets in Resources */,
 				04FFFDD71C40F63D00ECCA1C /* Main.storyboard in Resources */,
 				0401D4D91C41E12D002E2F12 /* Apple in Resources */,
