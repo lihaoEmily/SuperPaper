@@ -7,7 +7,7 @@
 //
 
 #import "HomeViewController.h"
-#import "AppDelegate.h"
+
 @interface HomeViewController ()
 
 @end
@@ -32,14 +32,16 @@
 }
 
 
-
 - (void)buttonAction:(UIButton *)btn
 {
     UIViewController *vc = [[UIViewController alloc] init];
     vc.title = @"新页面";
     vc.view.backgroundColor = [UIColor yellowColor];
-    UINavigationController *nav  = [(AppDelegate *)[UIApplication sharedApplication].delegate nav];
-    [nav pushViewController:vc animated:YES];
+    /**
+     * 跳转页面
+     */
+    [AppDelegate.app.nav pushViewController:vc animated:YES];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
