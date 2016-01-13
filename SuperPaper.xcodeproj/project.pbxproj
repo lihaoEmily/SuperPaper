@@ -72,6 +72,8 @@
 		84C139711C4628DB00284087 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C139611C4628DB00284087 /* UIView+WebCacheOperation.m */; };
 		F23480351C45FEC500813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F23480371C45FED400813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */; };
+		F6B69F001C462E0500CBFEB3 /* PublicationSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,6 +201,10 @@
 		84C1395F1C4628DB00284087 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		84C139601C4628DB00284087 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		84C139611C4628DB00284087 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		F6B69EFB1C462E0500CBFEB3 /* PublicationSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSearchTableViewCell.h; path = Study/PublicationSearchTableViewCell.h; sourceTree = "<group>"; };
+		F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSearchTableViewCell.m; path = Study/PublicationSearchTableViewCell.m; sourceTree = "<group>"; };
+		F6B69EFD1C462E0500CBFEB3 /* PublicationSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSearchViewController.h; path = Study/PublicationSearchViewController.h; sourceTree = "<group>"; };
+		F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSearchViewController.m; path = Study/PublicationSearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,6 +315,10 @@
 			children = (
 				04FFFDF71C410B1000ECCA1C /* StudyViewController.h */,
 				04FFFDF81C410B1000ECCA1C /* StudyViewController.m */,
+				F6B69EFB1C462E0500CBFEB3 /* PublicationSearchTableViewCell.h */,
+				F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */,
+				F6B69EFD1C462E0500CBFEB3 /* PublicationSearchViewController.h */,
+				F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */,
 			);
 			name = Study;
 			sourceTree = "<group>";
@@ -604,6 +614,7 @@
 				84C139371C4628A800284087 /* UIButton+AFNetworking.m in Sources */,
 				84C1391B1C4628A300284087 /* AFURLRequestSerialization.m in Sources */,
 				04FFFDFF1C410C2900ECCA1C /* UserViewController.m in Sources */,
+				F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */,
 				04FFFDD41C40F63D00ECCA1C /* ViewController.m in Sources */,
 				84C1396F1C4628DB00284087 /* UIImageView+HighlightedWebCache.m in Sources */,
 				84C139391C4628A800284087 /* UIProgressView+AFNetworking.m in Sources */,
@@ -611,6 +622,7 @@
 				84C139361C4628A800284087 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				04FFFE251C414C6B00ECCA1C /* NormalWebViewController.m in Sources */,
 				84C1393A1C4628A800284087 /* UIRefreshControl+AFNetworking.m in Sources */,
+				F6B69F001C462E0500CBFEB3 /* PublicationSearchViewController.m in Sources */,
 				0401D4DC1C41E1E3002E2F12 /* AppInfo.m in Sources */,
 				84C1391D1C4628A300284087 /* AFURLSessionManager.m in Sources */,
 				04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */,
