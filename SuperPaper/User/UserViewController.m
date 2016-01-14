@@ -18,6 +18,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //TODO: for testing
+    
+    self.view.backgroundColor = [UIColor orangeColor];
+    
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
     btn.backgroundColor = kSelColor;
     [btn setTitle:@"Teacher" forState:UIControlStateNormal];

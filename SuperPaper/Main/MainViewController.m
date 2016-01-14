@@ -263,7 +263,7 @@
 {
     if (!_userController)
     {
-        _userController = [[UserViewController alloc] init];
+        _userController = [[UIStoryboard storyboardWithName:@"User" bundle:nil] instantiateInitialViewController];
     }
     
     return _userController;
