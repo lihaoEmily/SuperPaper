@@ -23,10 +23,10 @@
     [super viewDidLoad];
     
     _webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    [_webView setDelegate:self];
     [self.view addSubview:_webView];
     
     _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//    _indicatorView.center = CGPointMake(self.view.bounds.size.width/2.0f,self.view.bounds.size.height/2.0f);
     [_indicatorView setHidden:YES];
     [self.view addSubview:_indicatorView];
     [self layoutWebView];
@@ -101,6 +101,10 @@
     [self.view addConstraints:indicatorConstraints];
 
 }
+
+/**
+ *  请求网页
+ */
 
 - (void)requestWeb {
     if (_urlString && _urlString.length > 0) {
