@@ -102,6 +102,7 @@
 		F23480371C45FED400813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */; };
 		F6B69F001C462E0500CBFEB3 /* PublicationSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */; };
+		F6F3487E1C476F4400AB5CFB /* PapersGeneratorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -284,6 +285,8 @@
 		F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSearchTableViewCell.m; path = Study/PublicationSearchTableViewCell.m; sourceTree = "<group>"; };
 		F6B69EFD1C462E0500CBFEB3 /* PublicationSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSearchViewController.h; path = Study/PublicationSearchViewController.h; sourceTree = "<group>"; };
 		F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSearchViewController.m; path = Study/PublicationSearchViewController.m; sourceTree = "<group>"; };
+		F6F3487C1C476F4400AB5CFB /* PapersGeneratorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PapersGeneratorViewController.h; path = Papers/PapersGeneratorViewController.h; sourceTree = "<group>"; };
+		F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PapersGeneratorViewController.m; path = Papers/PapersGeneratorViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,6 +428,8 @@
 			children = (
 				04FFFDFA1C410BB900ECCA1C /* PapersViewController.h */,
 				04FFFDFB1C410BB900ECCA1C /* PapersViewController.m */,
+				F6F3487C1C476F4400AB5CFB /* PapersGeneratorViewController.h */,
+				F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */,
 			);
 			name = Papers;
 			sourceTree = "<group>";
@@ -850,6 +855,7 @@
 				04FFFE281C414CB000ECCA1C /* NormalTableViewCell.m in Sources */,
 				84C139641C4628DB00284087 /* SDImageCache.m in Sources */,
 				04FFFDF61C410A6200ECCA1C /* LoginViewController.m in Sources */,
+				F6F3487E1C476F4400AB5CFB /* PapersGeneratorViewController.m in Sources */,
 				84C139661C4628DB00284087 /* SDWebImageDecoder.m in Sources */,
 				5807C2EE1C473B7A002C5F8E /* MJRefreshConst.m in Sources */,
 				5807C2F11C473B7A002C5F8E /* UIView+MJExtension.m in Sources */,
