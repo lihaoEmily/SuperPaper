@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperPaper/Papers/PapersViewController.m"
-            timestampString = "474453281.571858"
+            timestampString = "474457679.290992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperPaper/Papers/PapersViewController.m"
-            timestampString = "474453281.571858"
+            timestampString = "474457679.290992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "49"
@@ -42,12 +42,12 @@
                   moduleName = "SuperPaper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
-                  timestampString = "474454177.062563"
+                  timestampString = "474457549.694467"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "49"
-                  endingLineNumber = "49"
-                  offsetFromSymbolStart = "376">
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "588">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -57,11 +57,11 @@
                   moduleName = "SuperPaper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
-                  timestampString = "474454177.062756"
+                  timestampString = "474457549.695404"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "49"
-                  endingLineNumber = "49"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
                   offsetFromSymbolStart = "48">
                </Location>
             </Locations>
@@ -74,45 +74,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperPaper/Papers/PapersViewController.m"
-            timestampString = "474453278.239014"
+            timestampString = "474457679.290992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "-getData"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__31-[PapersViewController getData]_block_invoke_2"
-                  moduleName = "SuperPaper"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
-                  timestampString = "474454177.089699"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "80">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__31-[PapersViewController getData]_block_invoke_3"
-                  moduleName = "SuperPaper"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
-                  timestampString = "474454177.089963"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "72">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperPaper/Papers/PapersViewController.m"
-            timestampString = "474453396.825085"
+            timestampString = "474457679.290992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "-getData"
             landmarkType = "5">
          </BreakpointContent>

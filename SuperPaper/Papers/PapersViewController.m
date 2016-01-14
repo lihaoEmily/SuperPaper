@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
-    _paperArray = @[@"艺术类论文", @"经济类论文", @"法学类论文", @"教育类论文", @"计算机类论文", @"可以类论文", @"建筑类论文", @"管理学类论文", @"文化类论文"];
+    _paperArray = [NSArray array];
     [self setupUI];
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -40,16 +40,22 @@
 {
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"ownertype",nil];
     NSLog(@"%@",paramDic);
-    NSString *urlString =  [NSString stringWithFormat:@"%@mobileapp/getadinfo.php",BASE_URL];
+    NSString *urlString =  [NSString stringWithFormat:@"%@/paper_type.php",BASE_URL];
     NSLog(@"%@",urlString);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager.requestSerializer setTimeoutInterval:15.0f];
     [manager POST:urlString
        parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
-           
+
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-           
+           NSDictionary * dataDic = [NSDictionary dictionary];
+           dataDic = responseObject;
+           if (dataDic) {
+               NSArray * listData = [dataDic objectForKey:@"list"];
+               _paperArray = listData;
+               [self.tableView reloadData];
+           }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
        }];
@@ -94,6 +100,7 @@
     tableView.showsVerticalScrollIndicator = NO;
     tableView.delegate = self;
     tableView.dataSource = self;
+    self.tableView = tableView;
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:tableView];
 }
@@ -126,7 +133,8 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    cell.textLabel.text = [_paperArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[_paperArray objectAtIndex:indexPath.row] objectForKey:@"typename"];
+    
     return cell;
 }
 
