@@ -8,6 +8,7 @@
 
 #import "TabBarItem.h"
 
+
 #pragma mark 随机色
 #define kArcColor kColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 
@@ -35,18 +36,10 @@
     if (self) {
         self.userInteractionEnabled = YES;
         self.showsTouchWhenHighlighted = YES;
-
-        NSString *bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources"
-                                                              ofType:@"bundle"];
         
-        _aSelImage = [UIImage imageNamed:[[NSBundle bundleWithPath:bundleStr] pathForResource:selImageStr
-                                                                                       ofType:@"png"
-                                                                                  inDirectory:@"tabbar"]];
+        _aSelImage = [UIImage imageWithASName:selImageStr directory:@"tabbar"];
         
-        _aImage = [UIImage imageNamed:[[NSBundle bundleWithPath:bundleStr] pathForResource:imageStr
-                                                                                    ofType:@"png"
-                                                                               inDirectory:@"tabbar"]];
-
+        _aImage = [UIImage imageWithASName:imageStr directory:@"tabbar"];
         
         [self addSubview:self.backImageView];
         

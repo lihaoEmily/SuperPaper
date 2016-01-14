@@ -14,6 +14,11 @@
 
 @implementation UserViewController
 
+- (void)awakeFromNib
+{
+//    NSLog(@"xxxx");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

@@ -25,7 +25,6 @@
 		04FFFDDF1C40F63D00ECCA1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04FFFDDD1C40F63D00ECCA1C /* LaunchScreen.storyboard */; };
 		04FFFDF31C410A2500ECCA1C /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDF21C410A2500ECCA1C /* HomeViewController.m */; };
 		04FFFDF61C410A6200ECCA1C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDF51C410A6200ECCA1C /* LoginViewController.m */; };
-		04FFFDF91C410B1000ECCA1C /* StudyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDF81C410B1000ECCA1C /* StudyViewController.m */; };
 		04FFFDFC1C410BB900ECCA1C /* PapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDFB1C410BB900ECCA1C /* PapersViewController.m */; };
 		04FFFDFF1C410C2900ECCA1C /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDFE1C410C2900ECCA1C /* UserViewController.m */; };
 		04FFFE031C41205900ECCA1C /* JobsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFE021C41205900ECCA1C /* JobsViewController.m */; };
@@ -65,7 +64,13 @@
 		5807C2FB1C473D7F002C5F8E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2FA1C473D7F002C5F8E /* libz.tbd */; };
 		5807C2FD1C4741DE002C5F8E /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5807C2FC1C4741DE002C5F8E /* PushConfig.plist */; };
 		5807C3141C478059002C5F8E /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807C30F1C478059002C5F8E /* IntroViewController.m */; };
+		812021B41C478D6A000D05A4 /* ServiceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 812021B31C478D6A000D05A4 /* ServiceButton.m */; };
+		812021B61C478D7E000D05A4 /* Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = 812021B51C478D7E000D05A4 /* Service.plist */; };
+		812021B91C478D95000D05A4 /* StudyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 812021B81C478D95000D05A4 /* StudyViewController.m */; };
 		845A3CBB1C476C2800D58713 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845A3CBA1C476C2800D58713 /* User.storyboard */; };
+		84B7BD1B1C4796C300E202A6 /* UIImage+BundleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */; };
+		84B7BD1E1C4796CD00E202A6 /* AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD1D1C4796CD00E202A6 /* AppConfig.m */; };
+		84B7BD211C4796E300E202A6 /* TelephoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD201C4796E300E202A6 /* TelephoneView.m */; };
 		84C139181C4628A300284087 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1390C1C4628A300284087 /* AFHTTPSessionManager.m */; };
 		84C139191C4628A300284087 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1390F1C4628A300284087 /* AFNetworkReachabilityManager.m */; };
 		84C1391A1C4628A300284087 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C139111C4628A300284087 /* AFSecurityPolicy.m */; };
@@ -136,8 +141,6 @@
 		04FFFDF21C410A2500ECCA1C /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Home/HomeViewController.m; sourceTree = "<group>"; };
 		04FFFDF41C410A6200ECCA1C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Login/LoginViewController.h; sourceTree = "<group>"; };
 		04FFFDF51C410A6200ECCA1C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Login/LoginViewController.m; sourceTree = "<group>"; };
-		04FFFDF71C410B1000ECCA1C /* StudyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudyViewController.h; path = Study/StudyViewController.h; sourceTree = "<group>"; };
-		04FFFDF81C410B1000ECCA1C /* StudyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudyViewController.m; path = Study/StudyViewController.m; sourceTree = "<group>"; };
 		04FFFDFA1C410BB900ECCA1C /* PapersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PapersViewController.h; path = Papers/PapersViewController.h; sourceTree = "<group>"; };
 		04FFFDFB1C410BB900ECCA1C /* PapersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PapersViewController.m; path = Papers/PapersViewController.m; sourceTree = "<group>"; };
 		04FFFDFD1C410C2900ECCA1C /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = User/UserViewController.h; sourceTree = "<group>"; };
@@ -211,7 +214,18 @@
 		5807C2FC1C4741DE002C5F8E /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		5807C30E1C478059002C5F8E /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroViewController.h; path = IntroduceView/IntroViewController.h; sourceTree = "<group>"; };
 		5807C30F1C478059002C5F8E /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntroViewController.m; path = IntroduceView/IntroViewController.m; sourceTree = "<group>"; };
+		812021B21C478D6A000D05A4 /* ServiceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceButton.h; sourceTree = "<group>"; };
+		812021B31C478D6A000D05A4 /* ServiceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceButton.m; sourceTree = "<group>"; };
+		812021B51C478D7E000D05A4 /* Service.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Service.plist; sourceTree = "<group>"; };
+		812021B71C478D95000D05A4 /* StudyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudyViewController.h; sourceTree = "<group>"; };
+		812021B81C478D95000D05A4 /* StudyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudyViewController.m; sourceTree = "<group>"; };
 		845A3CBA1C476C2800D58713 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
+		84B7BD191C4796C300E202A6 /* UIImage+BundleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+BundleImage.h"; path = "Utils/UIImage+BundleImage.h"; sourceTree = "<group>"; };
+		84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+BundleImage.m"; path = "Utils/UIImage+BundleImage.m"; sourceTree = "<group>"; };
+		84B7BD1C1C4796CD00E202A6 /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = Utils/AppConfig.h; sourceTree = "<group>"; };
+		84B7BD1D1C4796CD00E202A6 /* AppConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppConfig.m; path = Utils/AppConfig.m; sourceTree = "<group>"; };
+		84B7BD1F1C4796E300E202A6 /* TelephoneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TelephoneView.h; sourceTree = "<group>"; };
+		84B7BD201C4796E300E202A6 /* TelephoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TelephoneView.m; sourceTree = "<group>"; };
 		84C138871C46200A00284087 /* SuperPaper.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperPaper.pch; sourceTree = "<group>"; };
 		84C1390B1C4628A300284087 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		84C1390C1C4628A300284087 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
@@ -404,11 +418,12 @@
 		04FFFDE81C40F73A00ECCA1C /* Study */ = {
 			isa = PBXGroup;
 			children = (
-				04FFFDF71C410B1000ECCA1C /* StudyViewController.h */,
-				04FFFDF81C410B1000ECCA1C /* StudyViewController.m */,
+				812021B71C478D95000D05A4 /* StudyViewController.h */,
+				812021B81C478D95000D05A4 /* StudyViewController.m */,
 				F6B69EFB1C462E0500CBFEB3 /* PublicationSearchTableViewCell.h */,
 				F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */,
 				F6B69EFD1C462E0500CBFEB3 /* PublicationSearchViewController.h */,
+				812021B51C478D7E000D05A4 /* Service.plist */,
 				F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */,
 			);
 			name = Study;
@@ -461,8 +476,12 @@
 			children = (
 				047EC9031C4681E800FA66B3 /* ImagesCarousel.h */,
 				047EC9041C4681E800FA66B3 /* ImagesCarousel.m */,
+				84B7BD191C4796C300E202A6 /* UIImage+BundleImage.h */,
+				84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */,
 				040AD98E1C4675F8000AB02A /* Reachability.h */,
 				040AD98F1C4675F8000AB02A /* Reachability.m */,
+				84B7BD1C1C4796CD00E202A6 /* AppConfig.h */,
+				84B7BD1D1C4796CD00E202A6 /* AppConfig.m */,
 				0401D4DA1C41E1E3002E2F12 /* AppInfo.h */,
 				0401D4DB1C41E1E3002E2F12 /* AppInfo.m */,
 			);
@@ -522,7 +541,11 @@
 			isa = PBXGroup;
 			children = (
 				04FFFE261C414CB000ECCA1C /* NormalTableViewCell.h */,
+				812021B21C478D6A000D05A4 /* ServiceButton.h */,
+				812021B31C478D6A000D05A4 /* ServiceButton.m */,
 				04FFFE271C414CB000ECCA1C /* NormalTableViewCell.m */,
+				84B7BD1F1C4796E300E202A6 /* TelephoneView.h */,
+				84B7BD201C4796E300E202A6 /* TelephoneView.m */,
 			);
 			name = CommonView;
 			sourceTree = "<group>";
@@ -809,6 +832,7 @@
 			files = (
 				5807C2FD1C4741DE002C5F8E /* PushConfig.plist in Resources */,
 				04FFFDDF1C40F63D00ECCA1C /* LaunchScreen.storyboard in Resources */,
+				812021B61C478D7E000D05A4 /* Service.plist in Resources */,
 				F23480371C45FED400813AEC /* (null) in Resources */,
 				5807C2ED1C473B7A002C5F8E /* MJRefresh.bundle in Resources */,
 				F23480351C45FEC500813AEC /* (null) in Resources */,
@@ -827,10 +851,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				84C1396B1C4628DB00284087 /* UIButton+WebCache.m in Sources */,
+				84B7BD1E1C4796CD00E202A6 /* AppConfig.m in Sources */,
 				84C139371C4628A800284087 /* UIButton+AFNetworking.m in Sources */,
 				84C1391B1C4628A300284087 /* AFURLRequestSerialization.m in Sources */,
+				84B7BD1B1C4796C300E202A6 /* UIImage+BundleImage.m in Sources */,
 				04FFFDFF1C410C2900ECCA1C /* UserViewController.m in Sources */,
 				F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */,
+				84B7BD211C4796E300E202A6 /* TelephoneView.m in Sources */,
 				5807C2E01C473B7A002C5F8E /* MJRefreshBackFooter.m in Sources */,
 				5807C2E91C473B7A002C5F8E /* MJRefreshBackStateFooter.m in Sources */,
 				04FFFDD41C40F63D00ECCA1C /* ViewController.m in Sources */,
@@ -865,6 +892,8 @@
 				5807C2E31C473B7A002C5F8E /* MJRefreshHeader.m in Sources */,
 				84C139671C4628DB00284087 /* SDWebImageDownloader.m in Sources */,
 				04FFFDDA1C40F63D00ECCA1C /* SuperPaper.xcdatamodeld in Sources */,
+				812021B41C478D6A000D05A4 /* ServiceButton.m in Sources */,
+				812021B91C478D95000D05A4 /* StudyViewController.m in Sources */,
 				04FFFDF31C410A2500ECCA1C /* HomeViewController.m in Sources */,
 				5807C2E11C473B7A002C5F8E /* MJRefreshComponent.m in Sources */,
 				5807C2E71C473B7A002C5F8E /* MJRefreshBackGifFooter.m in Sources */,
@@ -902,7 +931,6 @@
 				84C1393B1C4628A800284087 /* UIWebView+AFNetworking.m in Sources */,
 				5807C2EC1C473B7A002C5F8E /* MJRefreshStateHeader.m in Sources */,
 				84C139701C4628DB00284087 /* UIImageView+WebCache.m in Sources */,
-				04FFFDF91C410B1000ECCA1C /* StudyViewController.m in Sources */,
 				84C1391C1C4628A300284087 /* AFURLResponseSerialization.m in Sources */,
 				04FFFE181C4123F100ECCA1C /* TabBar.m in Sources */,
 			);

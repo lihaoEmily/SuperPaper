@@ -2,7 +2,7 @@
 //  PublicationSearchViewController.m
 //  SuperPaper
 //
-//  Created by lihao on 16/1/13.
+//  Created by Emily on 16/1/13.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
@@ -33,6 +33,7 @@
     [super viewDidLoad];
     
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    [self getData];
     [self setupUI];
     
     _iconArr = @[@"searchList1", @"searchList2", @"searchList3", @"searchList1", @"searchList2", @"searchList3"];
@@ -41,7 +42,17 @@
 
 - (void)getData
 {
-    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [ AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"ownertype":@"2", @"group_id":@"10", @"start_pos":@"0", @"list_num":@"1"};
+    [manager POST:@"http://mobileapp.com/study_newsinfo.php?" parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
 }
 
 // UI搭建
@@ -85,11 +96,12 @@
     _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(50, 0, searchBarImg.frame.size.width - 50, 40)];
     _searchBar.layer.cornerRadius = 5;
     _searchBar.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _searchBar.placeholder = @"输入您要搜索的关键词";
+    _searchBar.font = [UIFont systemFontOfSize:16.0];
     
     // 右侧文字搜索button
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(_searchBar.frame.size.width - 80, 0, 80, _searchBar.frame.size.height);
-    _searchBar.placeholder = @"输入您要搜索的关键词";
     [searchBtn setTitle:@"搜一下" forState:UIControlStateNormal];
     [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(clickToSearch) forControlEvents:UIControlEventTouchUpInside];
