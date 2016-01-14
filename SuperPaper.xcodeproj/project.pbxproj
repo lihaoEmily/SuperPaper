@@ -64,6 +64,7 @@
 		5807C2F91C473D4B002C5F8E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2F81C473D4B002C5F8E /* SystemConfiguration.framework */; };
 		5807C2FB1C473D7F002C5F8E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2FA1C473D7F002C5F8E /* libz.tbd */; };
 		5807C2FD1C4741DE002C5F8E /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5807C2FC1C4741DE002C5F8E /* PushConfig.plist */; };
+		845A3CBB1C476C2800D58713 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845A3CBA1C476C2800D58713 /* User.storyboard */; };
 		84C139181C4628A300284087 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1390C1C4628A300284087 /* AFHTTPSessionManager.m */; };
 		84C139191C4628A300284087 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1390F1C4628A300284087 /* AFNetworkReachabilityManager.m */; };
 		84C1391A1C4628A300284087 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C139111C4628A300284087 /* AFSecurityPolicy.m */; };
@@ -206,6 +207,7 @@
 		5807C2F81C473D4B002C5F8E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5807C2FA1C473D7F002C5F8E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5807C2FC1C4741DE002C5F8E /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
+		845A3CBA1C476C2800D58713 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		84C138871C46200A00284087 /* SuperPaper.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperPaper.pch; sourceTree = "<group>"; };
 		84C1390B1C4628A300284087 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		84C1390C1C4628A300284087 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 				04FFFDFE1C410C2900ECCA1C /* UserViewController.m */,
 				0401D4E11C423BFE002E2F12 /* AboutUsViewController.h */,
 				0401D4E21C423BFE002E2F12 /* AboutUsViewController.m */,
+				845A3CBA1C476C2800D58713 /* User.storyboard */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -794,6 +797,7 @@
 				04FFFDDC1C40F63D00ECCA1C /* Assets.xcassets in Resources */,
 				04FFFDD71C40F63D00ECCA1C /* Main.storyboard in Resources */,
 				04FFFE1C1C412F8C00ECCA1C /* Resources.bundle in Resources */,
+				845A3CBB1C476C2800D58713 /* User.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
