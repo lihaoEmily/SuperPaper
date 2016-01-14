@@ -64,7 +64,7 @@
 		5807C2F91C473D4B002C5F8E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2F81C473D4B002C5F8E /* SystemConfiguration.framework */; };
 		5807C2FB1C473D7F002C5F8E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2FA1C473D7F002C5F8E /* libz.tbd */; };
 		5807C2FD1C4741DE002C5F8E /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5807C2FC1C4741DE002C5F8E /* PushConfig.plist */; };
-		5807C3001C477257002C5F8E /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807C2FF1C477257002C5F8E /* IntroViewController.m */; };
+		5807C3141C478059002C5F8E /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807C30F1C478059002C5F8E /* IntroViewController.m */; };
 		845A3CBB1C476C2800D58713 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845A3CBA1C476C2800D58713 /* User.storyboard */; };
 		84C139181C4628A300284087 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1390C1C4628A300284087 /* AFHTTPSessionManager.m */; };
 		84C139191C4628A300284087 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1390F1C4628A300284087 /* AFNetworkReachabilityManager.m */; };
@@ -208,8 +208,8 @@
 		5807C2F81C473D4B002C5F8E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5807C2FA1C473D7F002C5F8E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5807C2FC1C4741DE002C5F8E /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
-		5807C2FE1C477257002C5F8E /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
-		5807C2FF1C477257002C5F8E /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
+		5807C30E1C478059002C5F8E /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroViewController.h; path = IntroduceView/IntroViewController.h; sourceTree = "<group>"; };
+		5807C30F1C478059002C5F8E /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntroViewController.m; path = IntroduceView/IntroViewController.m; sourceTree = "<group>"; };
 		845A3CBA1C476C2800D58713 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		84C138871C46200A00284087 /* SuperPaper.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperPaper.pch; sourceTree = "<group>"; };
 		84C1390B1C4628A300284087 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -638,8 +638,8 @@
 		5807C3011C47727B002C5F8E /* IntroduceView */ = {
 			isa = PBXGroup;
 			children = (
-				5807C2FE1C477257002C5F8E /* IntroViewController.h */,
-				5807C2FF1C477257002C5F8E /* IntroViewController.m */,
+				5807C30E1C478059002C5F8E /* IntroViewController.h */,
+				5807C30F1C478059002C5F8E /* IntroViewController.m */,
 			);
 			name = IntroduceView;
 			sourceTree = "<group>";
@@ -882,7 +882,7 @@
 				04FFFE151C4123F100ECCA1C /* BaseViewController.m in Sources */,
 				04FFFE1F1C4146EC00ECCA1C /* BaseView.m in Sources */,
 				84C139381C4628A800284087 /* UIImageView+AFNetworking.m in Sources */,
-				5807C3001C477257002C5F8E /* IntroViewController.m in Sources */,
+				5807C3141C478059002C5F8E /* IntroViewController.m in Sources */,
 				84C1396C1C4628DB00284087 /* UIImage+GIF.m in Sources */,
 				04FFFE061C41207C00ECCA1C /* AssessmentTitleViewController.m in Sources */,
 				04FFFE161C4123F100ECCA1C /* MainViewController.m in Sources */,

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "../Common/SPGlobal.h"
+#import "IntroViewController.h"
 
 @interface AppDelegate ()
 
@@ -32,17 +33,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; // 拿到根视图
-    NSString * fristRun = [userDefault objectForKey:@"appFirstRun"];
-    if (!fristRun) {
-      [userDefault setObject:@"1" forKey:@"appFristRun"];
-        
-    }
-    
-    
+//    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+//    NSString * fristRun = [userDefault objectForKey:@"appFirstRun"];
+//    if (![fristRun isEqualToString:@"1"]) {
+//        [userDefault setObject:@"1" forKey:@"appFirstRun"];
+//        [userDefault synchronize];
+//        IntroViewController *introPageView = [[IntroViewController alloc]init];
+//        self.window.rootViewController = introPageView;
+//    }
     [self.window makeKeyAndVisible];
     NSLog(@"----> upload url %@", UPLOAD_SERVER);
     return YES;

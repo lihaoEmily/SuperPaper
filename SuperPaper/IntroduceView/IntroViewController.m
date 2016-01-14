@@ -21,15 +21,23 @@
     if (!_arrayOfImageSource) {
         _arrayOfImageSource = [[NSMutableArray alloc]init];
         
-        UIImage *image1 =[UIImage imageNamed:@"guide_1.png"];
-        UIImage *image2 =[UIImage imageNamed:@"guide_2.png"];
-        UIImage *image3 =[UIImage imageNamed:@"guide_3.png"];
-        UIImage *image4 =[UIImage imageNamed:@"guide_4.png"];
-        
-        [_arrayOfImageSource addObject:image1];
-        [_arrayOfImageSource addObject:image2];
-        [_arrayOfImageSource addObject:image3];
-        [_arrayOfImageSource addObject:image4];
+        UIImage *image1 =[UIImage imageNamed:@"guide_1.jpg"];
+        UIImage *image2 =[UIImage imageNamed:@"guide_2.jpg"];
+        UIImage *image3 =[UIImage imageNamed:@"guide_3.jpg"];
+        UIImage *image4 =[UIImage imageNamed:@"guide_4.jpg"];
+        if (image1) {
+            [_arrayOfImageSource addObject:image1];
+        }
+        if (image2) {
+            [_arrayOfImageSource addObject:image2];
+        }
+        if (image3) {
+            [_arrayOfImageSource addObject:image3];
+        }
+        if (image4) {
+            [_arrayOfImageSource addObject:image4];
+        }
+
     }
     return _arrayOfImageSource;
 }
@@ -70,9 +78,11 @@
     [super viewWillAppear:animated];
     [self.navigationItem setHidesBackButton:YES];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
     
-    
-    
+    [super viewWillDisappear:animated];
 }
 - (void)setupScrollView{
     CGSize size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -85,7 +95,16 @@
         [self.scrollView addSubview:imageView];
         self.scrollView.contentSize = CGSizeMake((index + 1) * size.width, 0);
         if (index == [self.arrayOfImageSource count] - 1) {
+            self.teacherButton = [[UIButton alloc]initWithFrame:CGRectMake(size.width*(index + 1) - 320, SCREEN_HEIGHT - 200, 320, 60)];
+            [self.teacherButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [self.teacherButton setTitle:@"我是老师" forState:UIControlStateNormal];
+            
+            self.studentButton = [[UIButton alloc]initWithFrame:CGRectMake(size.width*(index + 1) - 320, SCREEN_HEIGHT - 150, 320, 60)];
+            [self.studentButton setTitle:@"我是学生" forState:UIControlStateNormal];
+            [self.studentButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 
+            [self.scrollView addSubview:self.studentButton];
+            [self.scrollView addSubview:self.teacherButton];
         }
     }
 }
