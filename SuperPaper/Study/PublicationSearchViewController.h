@@ -2,7 +2,7 @@
 //  PublicationSearchViewController.h
 //  SuperPaper
 //
-//  Created by lihao on 16/1/13.
+//  Created by Emily on 16/1/13.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
