@@ -16,9 +16,16 @@
 
 @implementation PublicationSearchViewController
 {
+    /// 刊物图片
     NSArray *_iconArr;
+    
+    /// 刊物名
     NSArray *_titleArr;
+    
+    /// 资源图片文件路径
     NSString *_bundleStr;
+    
+    /// 搜索框
     UITextField *_searchBar;
 }
 
