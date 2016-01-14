@@ -14,8 +14,8 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
 #import "Appdelegate.h"
-
-
+#import "UIImageView+WebCache.h"
+#import "AFNetworking.h"
 
 
 #endif /* SuperPaper_pch */
