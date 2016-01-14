@@ -7,6 +7,8 @@
 //
 
 #import "PapersViewController.h"
+#import "AFNetworking.h"
+#import "SPGlobal.h"
 
 @interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -20,11 +22,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     [self setupUI];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self getData];
+}
 
+- (void)getData
+{
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"ownertype",nil];
+    NSString *urlString =  [NSString stringWithFormat:@"%@mobileapp/paper_type.php",BASE_URL];
+    //初始化AFHTTPRequestOperationManager
+    NSLog(@"%@",urlString);
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager.requestSerializer setTimeoutInterval:15.0f];
+    [manager POST:urlString parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 - (void)setupUI
 {
     UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"bgImg" ofType:@"png" inDirectory:@"Paper"]];
