@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "NormalWebViewController.h"
 
 @interface HomeViewController ()
 
@@ -19,14 +20,23 @@
     // Do any additional setup after loading the view.
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
     btn.backgroundColor = kSelColor;
-    [btn setTitle:@"" forState:UIControlStateNormal];
+    btn.tag = 100;
+    [btn setTitle:@"画面迁移" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:btn];
     [btn addTarget:self
             action:@selector(buttonAction:)
   forControlEvents:UIControlEventTouchUpInside];
-    
-    
+    //TODO:for texting
+    UIButton *btnWeb = [[UIButton alloc] initWithFrame:CGRectMake(108,64,100, 100)];
+    btnWeb.backgroundColor = kSelColor;
+    btnWeb.tag = 101;
+    [btnWeb setTitle:@"WebView" forState:UIControlStateNormal];
+    [btnWeb setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:btnWeb];
+    [btnWeb addTarget:self
+               action:@selector(buttonAction:)
+     forControlEvents:UIControlEventTouchUpInside];
 
     
 }
@@ -34,13 +44,32 @@
 
 - (void)buttonAction:(UIButton *)btn
 {
-    UIViewController *vc = [[UIViewController alloc] init];
-    vc.title = @"新页面";
-    vc.view.backgroundColor = [UIColor yellowColor];
-    /**
-     * 跳转页面
-     */
-    [AppDelegate.app.nav pushViewController:vc animated:YES];
+    switch (btn.tag) {
+        case 100:
+        {
+            UIViewController *vc = [[UIViewController alloc] init];
+            vc.title = @"新页面";
+            vc.view.backgroundColor = [UIColor yellowColor];
+            /**
+             * 跳转页面
+             */
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
+            break;
+        }
+        case 101:
+        {
+            NormalWebViewController *vc = [[NormalWebViewController alloc] init];
+            vc.title = @"网页展示";
+            vc.urlString = @"http://www.baidu.com";
+            /**
+             * 跳转页面
+             */
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
+        }
+        default:
+            break;
+    }
+    
     
 }
 - (void)didReceiveMemoryWarning {

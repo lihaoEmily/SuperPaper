@@ -8,6 +8,12 @@
 
 #import "PapersViewController.h"
 
+#import "AFNetworking.h"
+#import "SPGlobal.h"
+
+#import "PapersGeneratorViewController.h"
+
+
 @interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @end
@@ -16,15 +22,39 @@
 {
     /// 资源图片文件路径
     NSString *_bundleStr;
+    
+    /// 论文分类数组
+    NSArray *_paperArray;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    _paperArray = @[@"艺术类论文", @"经济类论文", @"法学类论文", @"教育类论文", @"计算机类论文", @"可以类论文", @"建筑类论文", @"管理学类论文", @"文化类论文"];
     [self setupUI];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self getData];
+}
 
+- (void)getData
+{
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"ownertype",nil];
+    NSString *urlString =  [NSString stringWithFormat:@"%@mobileapp/paper_type.php",BASE_URL];
+    //初始化AFHTTPRequestOperationManager
+    NSLog(@"%@",urlString);
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager.requestSerializer setTimeoutInterval:15.0f];
+    [manager POST:urlString parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 - (void)setupUI
 {
     UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"bgImg" ofType:@"png" inDirectory:@"Paper"]];
@@ -76,7 +106,9 @@
 
 - (void)clickToGenerate
 {
-    NSLog(@"clickToGenerate");
+    PapersGeneratorViewController *papersGeneratorVC = [[PapersGeneratorViewController alloc] init];
+    papersGeneratorVC.title = @"论文生成器";
+    [AppDelegate.app.nav pushViewController:papersGeneratorVC animated:YES];
 }
 
 - (NSString *)titleName {
@@ -85,7 +117,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 9;
+    return _paperArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -95,12 +127,13 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    cell.textLabel.text = [_paperArray objectAtIndex:indexPath.row];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 200;
 }
 
 @end

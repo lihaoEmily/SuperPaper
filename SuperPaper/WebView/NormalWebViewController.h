@@ -12,5 +12,9 @@
  *
  */
 @interface NormalWebViewController : UIViewController
+/**
+ *  URL地址
+ */
+@property(nonatomic, strong) NSString * urlString;
 
 @end
