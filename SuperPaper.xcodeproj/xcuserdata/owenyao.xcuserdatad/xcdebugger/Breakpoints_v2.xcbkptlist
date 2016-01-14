@@ -10,14 +10,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperPaper/Papers/PapersViewController.m"
-            timestampString = "474451308.864958"
+            timestampString = "474453281.571858"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
             endingLineNumber = "43"
             landmarkName = "-getData"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SuperPaper/Papers/PapersViewController.m"
+            timestampString = "474453281.571858"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "-getData"
+            landmarkType = "5">
             <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[PapersViewController getData]"
+                  moduleName = "SuperPaper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
+                  timestampString = "474454177.062563"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "376">
+               </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
@@ -26,13 +57,31 @@
                   moduleName = "SuperPaper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
-                  timestampString = "474451830.971416"
+                  timestampString = "474454177.062756"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
-                  offsetFromSymbolStart = "56">
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "48">
                </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SuperPaper/Papers/PapersViewController.m"
+            timestampString = "474453278.239014"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "-getData"
+            landmarkType = "5">
+            <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
@@ -41,11 +90,26 @@
                   moduleName = "SuperPaper"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
-                  timestampString = "474451830.971763"
+                  timestampString = "474454177.089699"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__31-[PapersViewController getData]_block_invoke_3"
+                  moduleName = "SuperPaper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
+                  timestampString = "474454177.089963"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
                   offsetFromSymbolStart = "72">
                </Location>
             </Locations>
@@ -58,75 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperPaper/Papers/PapersViewController.m"
-            timestampString = "474451308.864958"
+            timestampString = "474453396.825085"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "-getData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SuperPaper/Papers/PapersViewController.m"
-            timestampString = "474451308.864958"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "-getData"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__31-[PapersViewController getData]_block_invoke_2"
-                  moduleName = "SuperPaper"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
-                  timestampString = "474451831.100052"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
-                  offsetFromSymbolStart = "80">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__31-[PapersViewController getData]_block_invoke_3"
-                  moduleName = "SuperPaper"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/owenyao/Desktop/SuperPaper/SuperPaper/Papers/PapersViewController.m"
-                  timestampString = "474451831.100245"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
-                  offsetFromSymbolStart = "80">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SuperPaper/Papers/PapersViewController.m"
-            timestampString = "474451308.864958"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "-getData"
             landmarkType = "5">
          </BreakpointContent>

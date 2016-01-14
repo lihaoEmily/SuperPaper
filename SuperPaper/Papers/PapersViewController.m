@@ -7,10 +7,8 @@
 //
 
 #import "PapersViewController.h"
-
 #import "AFNetworking.h"
 #import "SPGlobal.h"
-
 #import "PapersGeneratorViewController.h"
 
 
@@ -40,20 +38,21 @@
 
 - (void)getData
 {
-    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"ownertype",nil];
-    NSString *urlString =  [NSString stringWithFormat:@"%@mobileapp/paper_type.php",BASE_URL];
-    //初始化AFHTTPRequestOperationManager
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"ownertype",nil];
+    NSLog(@"%@",paramDic);
+    NSString *urlString =  [NSString stringWithFormat:@"%@mobileapp/getadinfo.php",BASE_URL];
     NSLog(@"%@",urlString);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager.requestSerializer setTimeoutInterval:15.0f];
-    [manager POST:urlString parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+    [manager POST:urlString
+       parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
+           
+       } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           NSLog(@"%@",error);
+       }];
 }
 - (void)setupUI
 {
