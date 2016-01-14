@@ -32,9 +32,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; // 拿到根视图
+    NSString * fristRun = [userDefault objectForKey:@"appFirstRun"];
+    if (!fristRun) {
+      [userDefault setObject:@"1" forKey:@"appFristRun"];
+        
+    }
+    
+    
     [self.window makeKeyAndVisible];
     NSLog(@"----> upload url %@", UPLOAD_SERVER);
     return YES;
