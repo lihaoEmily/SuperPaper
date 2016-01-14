@@ -8,7 +8,7 @@
 
 #import "PapersViewController.h"
 
-@interface PapersViewController ()
+@interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -60,6 +60,13 @@
     [generatorBtn setTitle:@"论文生成器" forState:UIControlStateNormal];
     [generatorBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [generatorBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, -20, 5, 0)];
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64)];
+    tableView.showsVerticalScrollIndicator = NO;
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:tableView];
 }
 
 - (void)clickToCall
@@ -74,6 +81,26 @@
 
 - (NSString *)titleName {
     return @"论文";
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 9;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"cell";
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
 }
 
 @end
