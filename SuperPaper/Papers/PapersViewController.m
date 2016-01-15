@@ -7,12 +7,10 @@
 //
 
 #import "PapersViewController.h"
-
 #import "AFNetworking.h"
 #import "SPGlobal.h"
-
 #import "PapersGeneratorViewController.h"
-
+#import "UIImageView+WebCache.h"
 
 @interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -30,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
-    _paperArray = @[@"艺术类论文", @"经济类论文", @"法学类论文", @"教育类论文", @"计算机类论文", @"可以类论文", @"建筑类论文", @"管理学类论文", @"文化类论文"];
+    _paperArray = [NSArray array];
     [self setupUI];
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -40,20 +38,29 @@
 
 - (void)getData
 {
-    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"ownertype",nil];
-    NSString *urlString =  [NSString stringWithFormat:@"%@mobileapp/paper_type.php",BASE_URL];
-    //初始化AFHTTPRequestOperationManager
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"ownertype",nil];
+    NSLog(@"%@",paramDic);
+    NSString *urlString =  [NSString stringWithFormat:@"%@paper_type.php",BASE_URL];
     NSLog(@"%@",urlString);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager.requestSerializer setTimeoutInterval:15.0f];
-    [manager POST:urlString parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+    [manager POST:urlString
+       parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
+
+       } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           NSDictionary * dataDic = [NSDictionary dictionary];
+           dataDic = responseObject;
+           if (dataDic) {
+               NSArray * listData = [dataDic objectForKey:@"list"];
+               _paperArray = listData;
+               self.tableView.delegate = self;
+               self.tableView.dataSource = self;
+               [self.tableView reloadData];
+           }
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           NSLog(@"%@",error);
+       }];
 }
 - (void)setupUI
 {
@@ -93,8 +100,8 @@
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64)];
     tableView.showsVerticalScrollIndicator = NO;
-    tableView.delegate = self;
-    tableView.dataSource = self;
+
+    self.tableView = tableView;
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:tableView];
 }
@@ -127,7 +134,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    cell.textLabel.text = [_paperArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[_paperArray objectAtIndex:indexPath.row] objectForKey:@"typename"];
+    NSString *imageUrlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_paperArray objectAtIndex:indexPath.row] objectForKey:@"picname"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imageUrlString]];
     return cell;
 }
 
