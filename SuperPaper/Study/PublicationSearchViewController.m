@@ -8,8 +8,6 @@
 
 #import "PublicationSearchViewController.h"
 #import "PublicationSearchTableViewCell.h"
-#import "AFNetworking.h"
-#import "SPGlobal.h"
 
 @interface PublicationSearchViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -125,6 +123,24 @@
     tableView.dataSource = self;
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:tableView];
+    
+    // 下拉刷新
+    tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 结束刷新
+            [tableView.mj_header endRefreshing];
+        });
+    }];
+    
+    // 上拉加载
+    tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 结束刷新
+            [tableView.mj_footer endRefreshing];
+        });
+    }];
 }
 
 #pragma mark - Actions
