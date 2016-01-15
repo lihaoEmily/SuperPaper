@@ -2,13 +2,12 @@
 //  PublicationSearchViewController.m
 //  SuperPaper
 //
-//  Created by lihao on 16/1/13.
+//  Created by Emily on 16/1/13.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
 #import "PublicationSearchViewController.h"
 #import "PublicationSearchTableViewCell.h"
-#import "AFNetworking.h"
 
 @interface PublicationSearchViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -16,17 +15,16 @@
 
 @implementation PublicationSearchViewController
 {
-    /// 刊物图片
-    NSArray *_iconArr;
-    
-    /// 刊物名
-    NSArray *_titleArr;
-    
     /// 资源图片文件路径
     NSString *_bundleStr;
     
     /// 搜索框
     UITextField *_searchBar;
+    
+    /// 返回数据
+    NSArray *_responseArr;
+    
+    UITableView *_searchTableView;
 }
 
 - (void)viewDidLoad {
@@ -34,16 +32,30 @@
     
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     [self setupUI];
-    
-    _iconArr = @[@"searchList1", @"searchList2", @"searchList3", @"searchList1", @"searchList2", @"searchList3"];
-    _titleArr = @[@"马克思主义与现实 Marxism & Reality", @"外国文学评论 Foreign Literature Review", @"外国文学评论 Foreign Literature Review", @"马克思主义与现实 Marxism & Reality", @"外国文学评论 Foreign Literature Review", @"外国文学评论 Foreign Literature Review"];
 }
 
+#pragma mark - 网络请求
 - (void)getData
 {
-    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"keywords":@"", @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:1000]/*, @"group_id":@"10"*/};
+    NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php?",BASE_URL];
+    NSLog(@"%@",urlString);
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%@",uploadProgress);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        _responseArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+        NSLog(@"%@",responseObject);
+        [_searchTableView reloadData];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
 }
 
+#pragma mark - UI搭建
 // UI搭建
 - (void)setupUI
 {
@@ -85,11 +97,14 @@
     _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(50, 0, searchBarImg.frame.size.width - 50, 40)];
     _searchBar.layer.cornerRadius = 5;
     _searchBar.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _searchBar.placeholder = @"输入您要搜索的关键词";
+    _searchBar.font = [UIFont systemFontOfSize:16.0];
+    _searchBar.textColor = [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f];
+    _searchBar.clearButtonMode = UITextFieldViewModeAlways;
     
     // 右侧文字搜索button
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(_searchBar.frame.size.width - 80, 0, 80, _searchBar.frame.size.height);
-    _searchBar.placeholder = @"输入您要搜索的关键词";
     [searchBtn setTitle:@"搜一下" forState:UIControlStateNormal];
     [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(clickToSearch) forControlEvents:UIControlEventTouchUpInside];
@@ -102,12 +117,33 @@
 // 配置tableView
 - (void)setupTableView
 {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - 50 - 64)];
-    tableView.showsVerticalScrollIndicator = NO;
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.view addSubview:tableView];
+    _searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - 50 - 64)];
+    _searchTableView.showsVerticalScrollIndicator = NO;
+    _searchTableView.delegate = self;
+    _searchTableView.dataSource = self;
+    _searchTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:_searchTableView];
+    
+    // 下拉刷新
+    _searchTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self getData];
+            // 结束刷新
+            [_searchTableView.mj_header endRefreshing];
+        });
+    }];
+    
+    // 上拉加载
+    _searchTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+        
+            [self getData];
+            // 结束刷新
+            [_searchTableView.mj_footer endRefreshing];
+//        });
+    }];
 }
 
 #pragma mark - Actions
@@ -119,19 +155,18 @@
 - (void)clickToShowKeyboard
 {
     [_searchBar resignFirstResponder];
-    NSLog(@"clickToShowKeyboard");
 }
 
 - (void)clickToSearch
 {
     [_searchBar resignFirstResponder];
-    NSLog(@"clickToSearch");
+    [self getData];
 }
 
 #pragma mark - UITableView DataSource and Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _iconArr.count;
+    return _responseArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,9 +177,10 @@
         cell = [[PublicationSearchTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     
-    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:[_iconArr objectAtIndex:indexPath.row] ofType:@"png" inDirectory:@"temp"]];
-    [cell.iconImg setImage:image];
-    cell.titleLabel.text = [_titleArr objectAtIndex:indexPath.row];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
+    [cell.iconImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+    
+    cell.titleLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
     return cell;
 }
 

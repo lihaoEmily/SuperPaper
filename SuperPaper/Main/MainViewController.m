@@ -276,10 +276,7 @@
         
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
         btn.clipsToBounds = YES;
-        NSString *bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources"
-                                                              ofType:@"bundle"];
-        UIImage *iamge = [UIImage imageNamed:[[NSBundle bundleWithPath:bundleStr] pathForResource:@"userImage" ofType:@"png" inDirectory:@"navi"]];
-        [btn setBackgroundImage:iamge forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageWithASName:@"userImage" directory:@"navi"] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(userAction:) forControlEvents:UIControlEventTouchUpInside];
         _normalBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     }

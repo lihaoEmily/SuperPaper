@@ -16,6 +16,9 @@
 #import "Appdelegate.h"
 #import "UIImageView+WebCache.h"
 #import "AFNetworking.h"
+#import "UIImage+BundleImage.h"
+#import "SPGlobal.h"
+#import "MJRefresh.h"
 
 
 #endif /* SuperPaper_pch */
