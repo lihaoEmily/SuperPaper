@@ -11,6 +11,7 @@
 #import "SPGlobal.h"
 #import "PapersGeneratorViewController.h"
 #import "UIImageView+WebCache.h"
+#import "ClassifiedPapersViewController.h"
 
 @interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -143,6 +144,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 200;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ClassifiedPapersViewController *classifiedPapersVC = [[ClassifiedPapersViewController alloc] init];
+    [AppDelegate.app.nav pushViewController:classifiedPapersVC animated:YES];
 }
 
 @end
