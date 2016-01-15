@@ -120,9 +120,9 @@
 /// 生成论文
 - (void)clickToGenerator
 {
-    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"uid",[NSNumber numberWithInteger:1],@"keywordsnum",_searchBar.text,@"keyword1",nil];
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:54],@"uid",[NSNumber numberWithInteger:1],@"keywordsnum",_searchBar.text,@"keywords",nil];
     NSLog(@"%@",paramDic);
-    NSString *urlString =  [NSString stringWithFormat:@"%@createpaper.php",BASE_URL];
+    NSString *urlString =  [NSString stringWithFormat:@"%@paper_create.php",BASE_URL];
     NSLog(@"%@",urlString);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -133,6 +133,7 @@
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
+           NSLog(@"%@",responseObject);
            if (dataDic) {
               // NSArray * listData = [dataDic objectForKey:@"list"];
            }
