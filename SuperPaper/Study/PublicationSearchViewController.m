@@ -9,6 +9,7 @@
 #import "PublicationSearchViewController.h"
 #import "PublicationSearchTableViewCell.h"
 #import "AFNetworking.h"
+#import "SPGlobal.h"
 
 @interface PublicationSearchViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -43,13 +44,17 @@
 - (void)getData
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [ AFHTTPResponseSerializer serializer];
-    NSDictionary *parameters = @{@"ownertype":@"2", @"group_id":@"10", @"start_pos":@"0", @"list_num":@"1"};
-    [manager POST:@"http://mobileapp.com/study_newsinfo.php?" parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSDictionary *parameters = @{@"ownertype":@"2", @"group_id":@"10", @"start_pos":@"0", @"list_num":@"137"};
+    NSString *urlString = [NSString stringWithFormat:@"%@study_newsinfo.php",BASE_URL];
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
         NSLog(@"%@",responseObject);
+        NSString *title = [[[responseObject valueForKey:@"list"] objectAtIndex:0] valueForKey:@"title"];
+        NSLog(@"title is : %@",title);
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];
