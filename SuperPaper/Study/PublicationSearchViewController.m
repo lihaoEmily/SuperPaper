@@ -39,8 +39,8 @@
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"keywords":@"", @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:1000]/*, @"group_id":@"10"*/};
-    NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php?",BASE_URL];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"keywords":@"", @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:10]};
+    NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
     NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
