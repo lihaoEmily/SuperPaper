@@ -106,7 +106,51 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%ld",indexPath.row);
+    
+    NSString *colorString = nil;
+    if (indexPath.section == 0)
+    {
+        switch (indexPath.row)
+        {
+            case 0:
+                colorString = @"green"; // 我的消息
+                break;
+            case 1:
+                colorString = @"yellow"; // 我的信息
+                break;
+            case 2:
+                colorString = @"orange"; // 我的账户
+                break;
+            case 3:
+                colorString = @"pink";  // 我的邀请
+                break;
+            case 4:
+                colorString = @"gray";  // 我的论文
+                break;
+            default:
+                break;
+        }
+    }else if (indexPath.section == 1){
+        switch (indexPath.row) {
+            case 0:
+                colorString = @"blue"; // 关于我们
+                break;
+            case 1:
+                colorString = @"purple"; // 意见反馈
+                break;
+
+            
+            default:
+                break;
+        }
+    }
+    
+    if (colorString.length > 0)
+    {
+        [self performSegueWithIdentifier:colorString sender:nil];
+    }
+
+
 }
 
 /*
