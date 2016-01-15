@@ -8,7 +8,13 @@
 
 #import "UserViewController.h"
 #import "MainViewController.h"
-@interface UserViewController ()
+@interface UserViewController () <UITableViewDataSource,UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *backTableView;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic)  UILabel *displayTypeLabel;
+@property (weak, nonatomic)  UILabel *paperNumLabel;
+@property (weak, nonatomic)  UILabel *telephoneNumLabel;
 
 @end
 
@@ -16,7 +22,8 @@
 
 - (void)awakeFromNib
 {
-//    NSLog(@"xxxx");
+//    return  [[[NSBundle mainBundle] loadNibNamed:@"ETProfileHeaderView" owner:nil options:nil] lastObject];
+
 }
 
 - (void)viewDidLoad {
@@ -24,16 +31,7 @@
     // Do any additional setup after loading the view.
     //TODO: for testing
     
-    self.view.backgroundColor = [UIColor orangeColor];
-    
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
-    btn.backgroundColor = kSelColor;
-    [btn setTitle:@"Teacher" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:btn];
-    [btn addTarget:self
-            action:@selector(buttonAction:)
-  forControlEvents:UIControlEventTouchUpInside];
+    self.backTableView.tableHeaderView = self.headerView;
 
 }
 
@@ -46,6 +44,68 @@
     return @"我的";
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    if (/* DISABLES CODE */ (1)) // 登陆状态
+    {
+        return section == 0 ? 6 : 3;
+    }else
+    {
+        return section == 0 ? 3 : 3;
+    }
+    
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell * cell = nil;
+    
+    if (indexPath.section == 0)
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"userReuse%ld",indexPath.row ]];
+        if (indexPath.row == 4)
+        {
+            self.displayTypeLabel = [cell viewWithTag:178802];
+        }else if (indexPath.row == 5)
+        {
+            self.paperNumLabel = [cell viewWithTag:178803];
+        }
+    }else if (indexPath.section == 1)
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"userCell%ld",indexPath.row ]];
+        if (indexPath.row == 2)
+        {
+            self.telephoneNumLabel = [cell viewWithTag:178804];
+        }
+    }
+    
+    if (cell == nil)
+    {
+        NSLog(@"indexpathsection %ld  indexpath.row = %ld",indexPath.section , indexPath.row);
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@""];
+    }
+
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return 50.0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%ld",indexPath.row);
+}
+
 /*
 #pragma mark - Navigation
 
@@ -55,17 +115,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-- (void)buttonAction:(UIButton *)btn
-{
-    MainViewController *mainController = (MainViewController *)self.mainControllerDelegate;
-    btn.selected = !btn.selected;
-    if (btn.selected) {
-        [btn setTitle:@"Student" forState:UIControlStateNormal] ;
-        [mainController changeTabBarDisplayType:MainTabBarDisplayTypeStudent];
-    }else{
-        [btn setTitle:@"Teacher" forState:UIControlStateNormal] ;
-        [mainController changeTabBarDisplayType:MainTabBarDisplayTypeTeacher];
-    }
-}
+
 
 @end
