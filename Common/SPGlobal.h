@@ -10,7 +10,7 @@
 #define SPGlobal_h
 
 
-#define  BASE_URL             @"http://121.42.179.44/api"
+#define  BASE_URL             @"http://121.42.179.44/api/"
 #define  BASE_URL_DOWNLOAD    @"http://121.42.179.44/download/"
 
 #define  IMGURL               BASE_URL@"img/"

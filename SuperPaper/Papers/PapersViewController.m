@@ -10,8 +10,7 @@
 #import "AFNetworking.h"
 #import "SPGlobal.h"
 #import "PapersGeneratorViewController.h"
-#import "SDWebImageOperation.h"
-
+#import "UIImageView+WebCache.h"
 
 @interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -41,7 +40,7 @@
 {
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"ownertype",nil];
     NSLog(@"%@",paramDic);
-    NSString *urlString =  [NSString stringWithFormat:@"%@/paper_type.php",BASE_URL];
+    NSString *urlString =  [NSString stringWithFormat:@"%@paper_type.php",BASE_URL];
     NSLog(@"%@",urlString);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -55,6 +54,8 @@
            if (dataDic) {
                NSArray * listData = [dataDic objectForKey:@"list"];
                _paperArray = listData;
+               self.tableView.delegate = self;
+               self.tableView.dataSource = self;
                [self.tableView reloadData];
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -99,8 +100,7 @@
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64)];
     tableView.showsVerticalScrollIndicator = NO;
-    tableView.delegate = self;
-    tableView.dataSource = self;
+
     self.tableView = tableView;
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:tableView];
@@ -135,8 +135,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = [[_paperArray objectAtIndex:indexPath.row] objectForKey:@"typename"];
-   // cell.imageView.image =
-    
+    NSString *imageUrlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_paperArray objectAtIndex:indexPath.row] objectForKey:@"picname"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imageUrlString]];
     return cell;
 }
 

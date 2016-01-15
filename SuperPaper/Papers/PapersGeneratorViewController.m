@@ -7,6 +7,7 @@
 //
 
 #import "PapersGeneratorViewController.h"
+#import "AFNetworking.h"
 #define kScreenWidth self.view.frame.size.width
 
 @interface PapersGeneratorViewController ()
@@ -119,7 +120,26 @@
 /// 生成论文
 - (void)clickToGenerator
 {
-    NSLog(@"clickToGenerator");
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"uid",[NSNumber numberWithInteger:1],@"keywordsnum",_searchBar.text,@"keyword1",nil];
+    NSLog(@"%@",paramDic);
+    NSString *urlString =  [NSString stringWithFormat:@"%@createpaper.php",BASE_URL];
+    NSLog(@"%@",urlString);
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager.requestSerializer setTimeoutInterval:15.0f];
+    [manager POST:urlString
+       parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
+           
+       } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           NSDictionary * dataDic = [NSDictionary dictionary];
+           dataDic = responseObject;
+           if (dataDic) {
+              // NSArray * listData = [dataDic objectForKey:@"list"];
+           }
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           NSLog(@"%@",error);
+       }];
+
 }
 
 - (void)exportPapers:(UIButton *)sender
