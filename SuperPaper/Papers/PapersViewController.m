@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "SPGlobal.h"
 #import "PapersGeneratorViewController.h"
+#import "SDWebImageOperation.h"
 
 
 @interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -134,6 +135,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = [[_paperArray objectAtIndex:indexPath.row] objectForKey:@"typename"];
+   // cell.imageView.image =
     
     return cell;
 }
