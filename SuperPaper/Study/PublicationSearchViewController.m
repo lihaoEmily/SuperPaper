@@ -147,11 +147,6 @@
 }
 
 #pragma mark - Actions
-- (void)back
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)clickToShowKeyboard
 {
     [_searchBar resignFirstResponder];
@@ -175,11 +170,9 @@
     PublicationSearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[PublicationSearchTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    }
-    
+    }        
     NSString *urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
     [cell.iconImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
-    
     cell.titleLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
     return cell;
 }
