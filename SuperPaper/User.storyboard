@@ -18,13 +18,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="OIC-ew-CB2">
-                                <rect key="frame" x="0.0" y="20" width="320" height="499"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.99784772724626958" green="0.87921342877628816" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="d3A-zm-dwD">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="0.38383002293225399" green="1" blue="0.34993328361475529" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="userReuse0" id="mMI-LU-S8S">
@@ -565,11 +565,11 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.49556277466714682" green="1" blue="0.39986776532311263" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="OIC-ew-CB2" firstAttribute="leading" secondItem="8bt-cl-s94" secondAttribute="leading" id="VFf-71-j3v"/>
-                            <constraint firstItem="Lot-pq-x97" firstAttribute="top" secondItem="OIC-ew-CB2" secondAttribute="bottom" constant="49" id="sH5-al-tma"/>
+                            <constraint firstItem="Lot-pq-x97" firstAttribute="top" secondItem="OIC-ew-CB2" secondAttribute="bottom" id="sH5-al-tma"/>
                             <constraint firstAttribute="trailing" secondItem="OIC-ew-CB2" secondAttribute="trailing" id="u1q-ao-nO0"/>
                             <constraint firstItem="OIC-ew-CB2" firstAttribute="top" secondItem="Yr4-Mr-Uaa" secondAttribute="bottom" id="yst-r8-zhZ"/>
                         </constraints>
@@ -579,6 +579,7 @@
                     <connections>
                         <outlet property="backTableView" destination="OIC-ew-CB2" id="h18-Lr-Grj"/>
                         <outlet property="headerView" destination="d3A-zm-dwD" id="q9w-Bq-dTf"/>
+                        <outlet property="tableViewBottom" destination="sH5-al-tma" id="gWm-pp-U6S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8zo-7Y-Zbq" userLabel="First Responder" sceneMemberID="firstResponder"/>

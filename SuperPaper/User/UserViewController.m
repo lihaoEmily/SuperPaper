@@ -15,6 +15,7 @@
 @property (weak, nonatomic)  UILabel *displayTypeLabel;
 @property (weak, nonatomic)  UILabel *paperNumLabel;
 @property (weak, nonatomic)  UILabel *telephoneNumLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottom;
 
 @end
 
@@ -22,22 +23,24 @@
 
 - (void)awakeFromNib
 {
-//    return  [[[NSBundle mainBundle] loadNibNamed:@"ETProfileHeaderView" owner:nil options:nil] lastObject];
-
+    self.backTableView.tableHeaderView = self.headerView;
+// [[[NSBundle mainBundle] loadNibNamed:@"" owner:nil options:nil] lastObject];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    //TODO: for testing
-    
-    self.backTableView.tableHeaderView = self.headerView;
 
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.tableViewBottom.constant = 49 + 64 - 20;
 }
 
 - (NSString *)titleName {
