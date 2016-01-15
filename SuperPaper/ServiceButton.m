@@ -23,7 +23,7 @@
     [super layoutSubviews];
     
     // 控件大小,间距大小
-    CGFloat const imageViewEdge   = self.bounds.size.width * 0.4;
+    CGFloat const imageViewEdge   = self.bounds.size.width * 0.6;
     CGFloat const centerOfView    = self.bounds.size.width * 0.5;
     CGFloat const labelLineHeight = self.titleLabel.font.lineHeight;
     CGFloat const verticalMarginT = self.bounds.size.height - labelLineHeight - imageViewEdge - MARGIN;
@@ -42,32 +42,33 @@
     self.titleLabel.bounds = CGRectMake(0, 0, self.bounds.size.width, labelLineHeight);
     self.titleLabel.center = CGPointMake(centerOfView, centerOfTitleLabel);
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.font = [UIFont systemFontOfSize:20.0];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        // 控件大小,间距大小
-        CGFloat const imageViewEdge   = self.bounds.size.width * 0.4;
-        CGFloat const centerOfView    = self.bounds.size.width * 0.5;
-        CGFloat const labelLineHeight = self.titleLabel.font.lineHeight;
-        CGFloat const verticalMarginT = self.bounds.size.height - labelLineHeight - imageViewEdge - MARGIN;
-        CGFloat const verticalMargin  = verticalMarginT / 2;
-        
-        // imageView 和 titleLabel 中心的 Y 值
-        CGFloat const centerOfImageView  = verticalMargin + imageViewEdge * 0.5;
-        CGFloat const centerOfTitleLabel = imageViewEdge  + verticalMargin + MARGIN + labelLineHeight * 0.5;
-        
-        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, imageViewEdge, imageViewEdge)];
-        _icon.center = CGPointMake(centerOfView, centerOfImageView);
-        _icon.contentMode = UIViewContentModeScaleAspectFit;
-        [self addSubview:_icon];
-        
-        _titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, labelLineHeight)];
-        _titleLbl.center = CGPointMake(centerOfView, centerOfTitleLabel);
-        _titleLbl.textAlignment = NSTextAlignmentCenter;
-        _titleLbl.font = [UIFont systemFontOfSize:15];
-        [self addSubview:_titleLbl];
+//        // 控件大小,间距大小
+//        CGFloat const imageViewEdge   = self.bounds.size.width * 0.4;
+//        CGFloat const centerOfView    = self.bounds.size.width * 0.5;
+//        CGFloat const labelLineHeight = self.titleLabel.font.lineHeight;
+//        CGFloat const verticalMarginT = self.bounds.size.height - labelLineHeight - imageViewEdge - MARGIN;
+//        CGFloat const verticalMargin  = verticalMarginT / 2;
+//        
+//        // imageView 和 titleLabel 中心的 Y 值
+//        CGFloat const centerOfImageView  = verticalMargin + imageViewEdge * 0.5;
+//        CGFloat const centerOfTitleLabel = imageViewEdge  + verticalMargin + MARGIN + labelLineHeight * 0.5;
+//        
+//        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, imageViewEdge, imageViewEdge)];
+//        _icon.center = CGPointMake(centerOfView, centerOfImageView);
+//        _icon.contentMode = UIViewContentModeScaleAspectFit;
+//        [self addSubview:_icon];
+//        
+//        _titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, labelLineHeight)];
+//        _titleLbl.center = CGPointMake(centerOfView, centerOfTitleLabel);
+//        _titleLbl.textAlignment = NSTextAlignmentCenter;
+//        _titleLbl.font = [UIFont systemFontOfSize:20];
+//        [self addSubview:_titleLbl];
     }
     return self;
 }
