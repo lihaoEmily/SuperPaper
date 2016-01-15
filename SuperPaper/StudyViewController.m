@@ -51,11 +51,11 @@
 - (void)serviceBtnClick:(UIButton *)button{
     switch (button.tag) {
         case 0:{
-
+            
         }
             break;
         case 1:{
-           
+            
         }
             break;
         case 2:{
@@ -67,11 +67,11 @@
         }
             break;
         case 4:{
-           
+            
         }
             break;
         case 5:{
-           
+            
         }
             break;
         case 6:{
@@ -94,29 +94,52 @@
 #pragma mark - TableView dataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *ID = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    if (0 == indexPath.section) {
+        
+        static NSString *ID = @"Cell0";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
+        
+        return cell;
     }
-    
-    NSString *service   = [[NSBundle mainBundle] pathForResource:@"Service" ofType:@"plist"];
-    NSArray  *services = [NSArray arrayWithContentsOfFile:service];
-    for (int i = 0; i < services.count; i ++) {
-        NSDictionary *dic = services[i];
-        ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*KAppWidth/3, (i/3)*KAppWidth/3, KAppWidth/3, KAppWidth/3)];
-        serviceBtn.tag = i;
-        serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
-        serviceBtn.layer.borderWidth = 0.5;
-        [serviceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        [serviceBtn addTarget:self action:@selector(serviceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [serviceBtn setTitle:dic[@"title"] forState:UIControlStateNormal];
-        [serviceBtn setImage:[UIImage imageNamed:dic[@"icon"]] forState:UIControlStateNormal];
-        [cell.contentView addSubview:serviceBtn];
+    else if (1 == indexPath.section) {
+        
+        static NSString *ID = @"Cell1";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
+        
+        NSString *service   = [[NSBundle mainBundle] pathForResource:@"Service" ofType:@"plist"];
+        NSArray  *services = [NSArray arrayWithContentsOfFile:service];
+        for (int i = 0; i < services.count; i ++) {
+            NSDictionary *dic = services[i];
+            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*KAppWidth/3, (i/3)*KAppWidth/3, KAppWidth/3, KAppWidth/3)];
+            serviceBtn.tag = i;
+            serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
+            serviceBtn.layer.borderWidth = 1;
+            [serviceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
+            [serviceBtn addTarget:self action:@selector(serviceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [serviceBtn setTitle:dic[@"title"] forState:UIControlStateNormal];
+            [serviceBtn setImage:[UIImage imageWithASName:dic[@"icon"] directory:@"homePage"] forState:UIControlStateNormal];
+            [cell.contentView addSubview:serviceBtn];
+        }
+        
+        return cell;
     }
-    return cell;
-    
+    else {
+        static NSString *ID = @"Cell2";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
+        
+        return cell;
+        
+    }
     
 }
 
@@ -143,8 +166,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return KAppWidth;
+    if (1 == indexPath.section) {
+        return  KAppWidth;
+    }
     
+    return 50;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.1;
 }
 
 @end
