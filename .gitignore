@@ -1,7 +1,5 @@
-
+# Xcode
 *.xcuserstate
-<<<<<<< HEAD
-=======
-
-*.xcuserstate
->>>>>>> master
+*.pbxuser
+!default.pbxuser
+*.xcbkptlist
