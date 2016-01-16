@@ -8,7 +8,11 @@
 
 #import "UserViewController.h"
 #import "MainViewController.h"
-@interface UserViewController () <UITableViewDataSource,UITableViewDelegate>
+#import "UserHeaderView.h"
+
+
+
+@interface UserViewController () <UITableViewDataSource,UITableViewDelegate,UserHeaderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *backTableView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -16,20 +20,41 @@
 @property (weak, nonatomic)  UILabel *paperNumLabel;
 @property (weak, nonatomic)  UILabel *telephoneNumLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottom;
+@property (strong, nonatomic) UserHeaderView *userHeaderView;
 
 @end
 
 @implementation UserViewController
 
-- (void)awakeFromNib
-{
-    self.backTableView.tableHeaderView = self.headerView;
-// [[[NSBundle mainBundle] loadNibNamed:@"" owner:nil options:nil] lastObject];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.userHeaderView = [[UserHeaderView alloc] init];
+    self.userHeaderView.delegate = self;
+
+    self.backTableView.tableHeaderView = self.headerView;
+    
+    [self.headerView addSubview:self.userHeaderView.loginView];
+    [self.headerView addSubview:self.userHeaderView.normalView];
+    self.userHeaderView.loginView.hidden = YES;
+}
+
+- (void)userHeaderType:(UserHeaderType)type
+{
+    switch (type) {
+        case UserHeaderTypeCamera:
+            NSLog(@"UserHeaderTypeCamera");
+            break;
+        case UserHeaderTypeLogin:
+            NSLog(@"UserHeaderTypeLogin");
+            break;
+        case UserHeaderTypeRegister:
+            NSLog(@"UserHeaderTypeRegister");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +65,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.tableViewBottom.constant = 49 + 64 - 20;
+    self.tableViewBottom.constant = 44;
 }
 
 - (NSString *)titleName {
@@ -106,7 +131,51 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%ld",indexPath.row);
+    
+    NSString *colorString = nil;
+    if (indexPath.section == 0)
+    {
+        switch (indexPath.row)
+        {
+            case 0:
+                colorString = @"green"; // 我的消息
+                break;
+            case 1:
+                colorString = @"yellow"; // 我的信息
+                break;
+            case 2:
+                colorString = @"orange"; // 我的账户
+                break;
+            case 3:
+                colorString = @"pink";  // 我的邀请
+                break;
+            case 4:
+                colorString = @"gray";  // 我的论文
+                break;
+            default:
+                break;
+        }
+    }else if (indexPath.section == 1){
+        switch (indexPath.row) {
+            case 0:
+                colorString = @"blue"; // 关于我们
+                break;
+            case 1:
+                colorString = @"purple"; // 意见反馈
+                break;
+
+            
+            default:
+                break;
+        }
+    }
+    
+    if (colorString.length > 0)
+    {
+        [self performSegueWithIdentifier:colorString sender:nil];
+    }
+
+
 }
 
 /*
