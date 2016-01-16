@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "NormalWebViewController.h"
+#import "ExportableWebViewController.h"
 #import "HomeNewsCell.h"
 #import "HomeActivityCell.h"
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -22,27 +23,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
-//    btn.backgroundColor = kSelColor;
-//    btn.tag = 100;
-//    [btn setTitle:@"画面迁移" forState:UIControlStateNormal];
-//    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [self.view addSubview:btn];
-//    [btn addTarget:self
-//            action:@selector(buttonAction:)
-//  forControlEvents:UIControlEventTouchUpInside];
-//    //TODO:for texting
-//    UIButton *btnWeb = [[UIButton alloc] initWithFrame:CGRectMake(108,64,100, 100)];
-//    btnWeb.backgroundColor = kSelColor;
-//    btnWeb.tag = 101;
-//    [btnWeb setTitle:@"WebView" forState:UIControlStateNormal];
-//    [btnWeb setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [self.view addSubview:btnWeb];
-//    [btnWeb addTarget:self
-//               action:@selector(buttonAction:)
-//     forControlEvents:UIControlEventTouchUpInside];
+    //TODO: for testing
+    [self viewTest];
+//    [self loadUI];
+}
 
-    [self loadUI];
+/**
+ *  测试显示网页
+ */
+- (void)viewTest {
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
+    btn.backgroundColor = kSelColor;
+    btn.tag = 100;
+    [btn setTitle:@"画面迁移" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:btn];
+    [btn addTarget:self
+            action:@selector(buttonAction:)
+  forControlEvents:UIControlEventTouchUpInside];
+    //TODO:for texting
+    UIButton *btnWeb = [[UIButton alloc] initWithFrame:CGRectMake(108,64,100, 100)];
+    btnWeb.backgroundColor = kSelColor;
+    btnWeb.tag = 101;
+    [btnWeb setTitle:@"WebView" forState:UIControlStateNormal];
+    [btnWeb setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:btnWeb];
+    [btnWeb addTarget:self
+               action:@selector(buttonAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    
+    //TODO:for texting
+    UIButton *btnWebExp = [[UIButton alloc] initWithFrame:CGRectMake(216,64,100, 100)];
+    btnWebExp.backgroundColor = kSelColor;
+    btnWebExp.tag = 102;
+    [btnWebExp setTitle:@"导出网页" forState:UIControlStateNormal];
+    [btnWebExp setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:btnWebExp];
+    [btnWebExp addTarget:self
+                  action:@selector(buttonAction:)
+        forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)loadUI{
@@ -100,6 +119,17 @@
              */
             [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
+        case 102:
+        {
+            ExportableWebViewController *vc = [[ExportableWebViewController alloc] init];
+            vc.title = @"导出网页展示";
+            vc.urlString = @"http://www.baidu.com";
+            /**
+             * 跳转页面
+             */
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
+        }
+            break;
         default:
             break;
     }

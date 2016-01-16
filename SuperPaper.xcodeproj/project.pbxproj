@@ -16,6 +16,7 @@
 		04C3B82C1C43D5D0009D48E4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82B1C43D5D0009D48E4 /* CFNetwork.framework */; };
 		04C3B82E1C43D5E2009D48E4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82D1C43D5E2009D48E4 /* CoreFoundation.framework */; };
 		04C3B8301C43D5F1009D48E4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82F1C43D5F1009D48E4 /* CoreTelephony.framework */; };
+		04F8906B1C4A939200891ABF /* ExportableWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8906A1C4A939200891ABF /* ExportableWebViewController.m */; };
 		04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDCD1C40F63D00ECCA1C /* main.m */; };
 		04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDD01C40F63D00ECCA1C /* AppDelegate.m */; };
 		04FFFDD41C40F63D00ECCA1C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDD31C40F63D00ECCA1C /* ViewController.m */; };
@@ -144,6 +145,8 @@
 		04C3B82B1C43D5D0009D48E4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		04C3B82D1C43D5E2009D48E4 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		04C3B82F1C43D5F1009D48E4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		04F890691C4A939200891ABF /* ExportableWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExportableWebViewController.h; path = WebView/ExportableWebViewController.h; sourceTree = "<group>"; };
+		04F8906A1C4A939200891ABF /* ExportableWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExportableWebViewController.m; path = WebView/ExportableWebViewController.m; sourceTree = "<group>"; };
 		04FFFDC91C40F63D00ECCA1C /* SuperPaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperPaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04FFFDCD1C40F63D00ECCA1C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04FFFDCF1C40F63D00ECCA1C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -603,6 +606,8 @@
 		04FFFE221C414B4700ECCA1C /* WebView */ = {
 			isa = PBXGroup;
 			children = (
+				04F890691C4A939200891ABF /* ExportableWebViewController.h */,
+				04F8906A1C4A939200891ABF /* ExportableWebViewController.m */,
 				04FFFE231C414C6B00ECCA1C /* NormalWebViewController.h */,
 				04FFFE241C414C6B00ECCA1C /* NormalWebViewController.m */,
 			);
@@ -954,6 +959,7 @@
 				5807C2E01C473B7A002C5F8E /* MJRefreshBackFooter.m in Sources */,
 				5807C2E91C473B7A002C5F8E /* MJRefreshBackStateFooter.m in Sources */,
 				04FFFDD41C40F63D00ECCA1C /* ViewController.m in Sources */,
+				04F8906B1C4A939200891ABF /* ExportableWebViewController.m in Sources */,
 				84C1396F1C4628DB00284087 /* UIImageView+HighlightedWebCache.m in Sources */,
 				84C139391C4628A800284087 /* UIProgressView+AFNetworking.m in Sources */,
 				7F477B5D1C49FA1000612850 /* HomeNewsCell.m in Sources */,
