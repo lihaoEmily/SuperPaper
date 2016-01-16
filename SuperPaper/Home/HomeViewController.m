@@ -8,7 +8,6 @@
 
 #import "HomeViewController.h"
 #import "NormalWebViewController.h"
-#import "UserSession.h"
 
 @interface HomeViewController ()
 
@@ -39,12 +38,9 @@
                action:@selector(buttonAction:)
      forControlEvents:UIControlEventTouchUpInside];
 
+    
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self testUserSession];
-}
 
 - (void)buttonAction:(UIButton *)btn
 {
@@ -83,16 +79,6 @@
 
 - (NSString *)titleName {
     return @"首页";
-}
-
-- (void)testUserSession {
-    UserRole role = [[UserSession sharedInstance] currentRole];
-    NSLog(@"----> CurrentUserRole:%ld",role);
-//    if (role == kUserRoleStudent) {
-//        [[UserSession sharedInstance] setCurrentRole:kUserRoleTeacher];
-//    } else if (role == kUserRoleTeacher) {
-//        [[UserSession sharedInstance] setCurrentRole:kUserRoleStudent];
-//    }
 }
 
 /*
