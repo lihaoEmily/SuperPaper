@@ -8,9 +8,13 @@
 
 #import "HomeViewController.h"
 #import "NormalWebViewController.h"
-
-@interface HomeViewController ()
-
+#import "HomeNewsCell.h"
+#import "HomeActivityCell.h"
+@interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView *_tableView;
+    NSDictionary *dict;
+}
 @end
 
 @implementation HomeViewController
@@ -18,27 +22,57 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
-    btn.backgroundColor = kSelColor;
-    btn.tag = 100;
-    [btn setTitle:@"画面迁移" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:btn];
-    [btn addTarget:self
-            action:@selector(buttonAction:)
-  forControlEvents:UIControlEventTouchUpInside];
-    //TODO:for texting
-    UIButton *btnWeb = [[UIButton alloc] initWithFrame:CGRectMake(108,64,100, 100)];
-    btnWeb.backgroundColor = kSelColor;
-    btnWeb.tag = 101;
-    [btnWeb setTitle:@"WebView" forState:UIControlStateNormal];
-    [btnWeb setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:btnWeb];
-    [btnWeb addTarget:self
-               action:@selector(buttonAction:)
-     forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
+//    btn.backgroundColor = kSelColor;
+//    btn.tag = 100;
+//    [btn setTitle:@"画面迁移" forState:UIControlStateNormal];
+//    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [self.view addSubview:btn];
+//    [btn addTarget:self
+//            action:@selector(buttonAction:)
+//  forControlEvents:UIControlEventTouchUpInside];
+//    //TODO:for texting
+//    UIButton *btnWeb = [[UIButton alloc] initWithFrame:CGRectMake(108,64,100, 100)];
+//    btnWeb.backgroundColor = kSelColor;
+//    btnWeb.tag = 101;
+//    [btnWeb setTitle:@"WebView" forState:UIControlStateNormal];
+//    [btnWeb setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [self.view addSubview:btnWeb];
+//    [btnWeb addTarget:self
+//               action:@selector(buttonAction:)
+//     forControlEvents:UIControlEventTouchUpInside];
 
-    
+    [self loadUI];
+}
+
+-(void)loadUI{
+    _tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    dict = @{@"image":@"http://pic1.nipic.com/2008-08-12/200881211331729_2.jpg",@"title":@"最美高校老师系列推选活动结果巩个",@"time":@"2016-1-16"};
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    static NSString *cellName = @"cellName";
+    HomeActivityCell *cell = nil;
+    cell = [tableView dequeueReusableCellWithIdentifier:cellName];
+    if (cell == nil)
+    {
+        cell = [[HomeActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: cellName];
+    }
+
+    cell.infoDict = dict;
+    return cell;
+
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
 }
 
 
