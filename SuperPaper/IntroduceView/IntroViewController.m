@@ -9,6 +9,7 @@
 #define SCREEN_HEIGHT   ([UIScreen mainScreen].bounds.size.height)
 
 #import "IntroViewController.h"
+#import "UserSession.h"
 
 @interface IntroViewController ()<UIScrollViewDelegate>
 @property (strong, nonatomic)   UIScrollView    *scrollView;
@@ -78,6 +79,7 @@
     [super viewWillAppear:animated];
     [self.navigationItem setHidesBackButton:YES];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self testUserSession];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -128,5 +130,15 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)testUserSession {
+    UserRole role = [[UserSession sharedInstance] currentRole];
+    NSLog(@"----> CurrentUserRole:%ld",role);
+    if (role == kUserRoleStudent) {
+        [[UserSession sharedInstance] setCurrentRole:kUserRoleTeacher];
+    } else if (role == kUserRoleTeacher) {
+        [[UserSession sharedInstance] setCurrentRole:kUserRoleStudent];
+    }
+}
 
 @end
