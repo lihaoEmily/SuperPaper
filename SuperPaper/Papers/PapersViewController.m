@@ -14,6 +14,7 @@
 #import "ClassifiedPapersViewController.h"
 #import <MessageUI/MessageUI.h>
 #import <MapKit/MapKit.h>
+#import "HomeActivityCell.h"
 
 @interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -25,16 +26,18 @@
     NSString *_bundleStr;
     
     /// 论文分类数组
-    NSArray *_paperArray;
+    NSMutableArray *_paperArray;
     
     /// 论文指导与发表电话
     NSString *_paper_tel;
+    NSArray *_nextpageData;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
-    _paperArray = [NSArray array];
+    _paperArray = [NSMutableArray array];
+    _nextpageData = [NSArray array];
     [self setupUI];
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -60,7 +63,18 @@
            NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [dataDic objectForKey:@"list"];
-               _paperArray = listData;
+               _nextpageData = listData;
+               
+               for (NSDictionary * dic in listData) {
+                   NSString *imageUrlString = [NSString stringWithFormat:@"%@%@",IMGURL,[dic objectForKey:@"picname"]];
+                   NSLog(@"---->%@",imageUrlString);
+                   NSString *titleName = [dic objectForKey:@"typename"];
+                   NSString *imageUrl = [dic objectForKey:@"picname"];
+                   imageUrl = [NSString stringWithFormat:@"%@%@",IMGURL,imageUrl];
+                   NSLog(@"%@",imageUrl);
+                   NSDictionary *infoDic = [NSDictionary dictionaryWithObjectsAndKeys:titleName,@"title",imageUrl,@"image",nil];
+                   [_paperArray addObject:infoDic];
+               }
                self.tableView.delegate = self;
                self.tableView.dataSource = self;
                [self.tableView reloadData];
@@ -107,7 +121,7 @@
     [generatorBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [generatorBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, -20, 5, 0)];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64 -36)];
     tableView.showsVerticalScrollIndicator = NO;
 
     self.tableView = tableView;
@@ -137,31 +151,32 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _paperArray.count;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cell";
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    HomeActivityCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[HomeActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    cell.textLabel.text = [[_paperArray objectAtIndex:indexPath.row] objectForKey:@"typename"];
-    NSString *imageUrlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_paperArray objectAtIndex:indexPath.row] objectForKey:@"picname"]];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imageUrlString]];
+    cell.infoDict = [_paperArray objectAtIndex:indexPath.row];
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200;
+    //return [self tableView:tableView cellForRowAtIndexPath:indexPath].frame.size.height;
+    return 150;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ClassifiedPapersViewController *classifiedPapersVC = [[ClassifiedPapersViewController alloc] init];
-    classifiedPapersVC.title = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"typename"];
-    classifiedPapersVC.type_id = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"id"];
+    classifiedPapersVC.title = [[_nextpageData objectAtIndex:indexPath.row] valueForKey:@"typename"];
+    classifiedPapersVC.type_id = [[_nextpageData objectAtIndex:indexPath.row] valueForKey:@"id"];
     [AppDelegate.app.nav pushViewController:classifiedPapersVC animated:YES];
 }
 
