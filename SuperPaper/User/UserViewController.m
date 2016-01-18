@@ -65,7 +65,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.tableViewBottom.constant = 44;
+    self.tableViewBottom.constant = 0;
 }
 
 - (NSString *)titleName {
