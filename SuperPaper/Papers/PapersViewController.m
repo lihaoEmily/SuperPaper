@@ -12,6 +12,8 @@
 #import "PapersGeneratorViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ClassifiedPapersViewController.h"
+#import <MessageUI/MessageUI.h>
+#import <MapKit/MapKit.h>
 
 @interface PapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -24,6 +26,9 @@
     
     /// 论文分类数组
     NSArray *_paperArray;
+    
+    /// 论文指导与发表电话
+    NSString *_paper_tel;
 }
 
 - (void)viewDidLoad {
@@ -52,12 +57,15 @@
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
+           NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [dataDic objectForKey:@"list"];
                _paperArray = listData;
                self.tableView.delegate = self;
                self.tableView.dataSource = self;
                [self.tableView reloadData];
+               
+               _paper_tel = [dataDic valueForKey:@"paper_tel"];
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
@@ -109,7 +117,10 @@
 
 - (void)clickToCall
 {
-    NSLog(@"clickToCall");
+    UIWebView *callWebView = [[UIWebView alloc] init];
+    NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",_paper_tel]];
+    [callWebView loadRequest:[NSURLRequest requestWithURL:telURL]];
+    [self.tableView addSubview:callWebView];
 }
 
 - (void)clickToGenerate
@@ -149,6 +160,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ClassifiedPapersViewController *classifiedPapersVC = [[ClassifiedPapersViewController alloc] init];
+    classifiedPapersVC.title = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"typename"];
+    classifiedPapersVC.type_id = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"id"];
     [AppDelegate.app.nav pushViewController:classifiedPapersVC animated:YES];
 }
 
