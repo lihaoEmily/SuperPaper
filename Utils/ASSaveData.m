@@ -2,7 +2,7 @@
 //  ASSaveData.m
 //  SuperPaper
 //
-//  Created by 瞿飞 on 16/1/18.
+//  Created by AppStudio on 16/1/18.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
@@ -20,10 +20,10 @@
 
 @implementation ASSaveData
 
-+ (void)initialize {
-    [self initialize];
+//+ (void)initialize {
+//    [self initialize];
 //    NSString *homeDirStr = NSHomeDirectory();
-}
+//}
 
 - (instancetype)init {
     self = [super init];
@@ -53,7 +53,7 @@
     NSString* datePrefix = [formatter stringFromDate:[NSDate date]];
     NSLog(@"----> DataPrefix:%@",datePrefix);
     
-    NSString * fileName = [NSString stringWithFormat:@"%@_%@.txt",FILE_NAME, datePrefix];
+    NSString * fileName = [NSString stringWithFormat:@"%@_%@.txt",title, datePrefix];
     NSString * fullPath = [_documentDirString stringByAppendingString:fileName];
     NSLog(@"----> fullPath:%@",fullPath);
     NSError *error = nil;

@@ -33,13 +33,13 @@
 
 - (void)creatUI{
     
-    _headImageView = [[UIImageView alloc]initWithFrame:CGRectMake(LEFT_MARGIN, LEFT_MARGIN, self.bounds.size.width-LEFT_MARGIN*2, 90)];
+    _headImageView = [[UIImageView alloc]initWithFrame:CGRectMake(LEFT_MARGIN, LEFT_MARGIN, OWIDTH-LEFT_MARGIN*2, 130)];
     _headImageView.layer.masksToBounds = YES;
     _headImageView.layer.cornerRadius  = 10;
     _headImageView.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:_headImageView];
     
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_MARGIN*2,LEFT_MARGIN * 4, self.bounds.size.width - LEFT_MARGIN * 4, 40)];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_MARGIN*2,LEFT_MARGIN * 4, OWIDTH - LEFT_MARGIN * 4, 60)];
     _titleLabel.font = [UIFont systemFontOfSize:15.0];
     _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.numberOfLines = 2;
