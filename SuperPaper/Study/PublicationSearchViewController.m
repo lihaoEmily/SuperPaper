@@ -9,7 +9,7 @@
 #import "PublicationSearchViewController.h"
 #import "PublicationSearchTableViewCell.h"
 
-#define SEARCHPAGESIZE 10
+#define SEARCHPAGESIZE 30
 
 @interface PublicationSearchViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -185,8 +185,10 @@
 {
     [_searchBar resignFirstResponder];
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入搜索关键字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入搜索关键字" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
     }else{
         [self getData];
     }

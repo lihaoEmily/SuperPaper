@@ -16,6 +16,7 @@
 		04C3B82C1C43D5D0009D48E4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82B1C43D5D0009D48E4 /* CFNetwork.framework */; };
 		04C3B82E1C43D5E2009D48E4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82D1C43D5E2009D48E4 /* CoreFoundation.framework */; };
 		04C3B8301C43D5F1009D48E4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82F1C43D5F1009D48E4 /* CoreTelephony.framework */; };
+		04E3F3B61C4C8A9A00DEE217 /* ASSaveData.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3F3B51C4C8A9A00DEE217 /* ASSaveData.m */; };
 		04F8906B1C4A939200891ABF /* ExportableWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8906A1C4A939200891ABF /* ExportableWebViewController.m */; };
 		04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDCD1C40F63D00ECCA1C /* main.m */; };
 		04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDD01C40F63D00ECCA1C /* AppDelegate.m */; };
@@ -152,6 +153,8 @@
 		04C3B82B1C43D5D0009D48E4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		04C3B82D1C43D5E2009D48E4 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		04C3B82F1C43D5F1009D48E4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		04E3F3B41C4C8A9A00DEE217 /* ASSaveData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASSaveData.h; path = Utils/ASSaveData.h; sourceTree = "<group>"; };
+		04E3F3B51C4C8A9A00DEE217 /* ASSaveData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASSaveData.m; path = Utils/ASSaveData.m; sourceTree = "<group>"; };
 		04F890691C4A939200891ABF /* ExportableWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExportableWebViewController.h; path = WebView/ExportableWebViewController.h; sourceTree = "<group>"; };
 		04F8906A1C4A939200891ABF /* ExportableWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExportableWebViewController.m; path = WebView/ExportableWebViewController.m; sourceTree = "<group>"; };
 		04FFFDC91C40F63D00ECCA1C /* SuperPaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperPaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -242,6 +245,7 @@
 		5807C2FC1C4741DE002C5F8E /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		5807C30E1C478059002C5F8E /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroViewController.h; path = IntroduceView/IntroViewController.h; sourceTree = "<group>"; };
 		5807C30F1C478059002C5F8E /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntroViewController.m; path = IntroduceView/IntroViewController.m; sourceTree = "<group>"; };
+		58F3124E1C4CCC2C006CAE3E /* OwToolHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OwToolHeader.h; sourceTree = "<group>"; };
 		7F477B5B1C49FA1000612850 /* HomeNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNewsCell.h; path = CommonView/HomeNewsCell.h; sourceTree = "<group>"; };
 		7F477B5C1C49FA1000612850 /* HomeNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNewsCell.m; path = CommonView/HomeNewsCell.m; sourceTree = "<group>"; };
 		7F477B5F1C4A0D6600612850 /* HomeActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeActivityCell.h; path = CommonView/HomeActivityCell.h; sourceTree = "<group>"; };
@@ -553,6 +557,9 @@
 				84B7BD1D1C4796CD00E202A6 /* AppConfig.m */,
 				0401D4DA1C41E1E3002E2F12 /* AppInfo.h */,
 				0401D4DB1C41E1E3002E2F12 /* AppInfo.m */,
+				04E3F3B41C4C8A9A00DEE217 /* ASSaveData.h */,
+				04E3F3B51C4C8A9A00DEE217 /* ASSaveData.m */,
+				58F3124E1C4CCC2C006CAE3E /* OwToolHeader.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -612,9 +619,9 @@
 			isa = PBXGroup;
 			children = (
 				04FFFE261C414CB000ECCA1C /* NormalTableViewCell.h */,
+				04FFFE271C414CB000ECCA1C /* NormalTableViewCell.m */,
 				812021B21C478D6A000D05A4 /* ServiceButton.h */,
 				812021B31C478D6A000D05A4 /* ServiceButton.m */,
-				04FFFE271C414CB000ECCA1C /* NormalTableViewCell.m */,
 				84B7BD1F1C4796E300E202A6 /* TelephoneView.h */,
 				84B7BD201C4796E300E202A6 /* TelephoneView.m */,
 				7F477B5B1C49FA1000612850 /* HomeNewsCell.h */,
@@ -1045,6 +1052,7 @@
 				5807C2EE1C473B7A002C5F8E /* MJRefreshConst.m in Sources */,
 				AAFA08641C49292C00FB0DA4 /* UserHeaderView.m in Sources */,
 				5807C2F11C473B7A002C5F8E /* UIView+MJExtension.m in Sources */,
+				04E3F3B61C4C8A9A00DEE217 /* ASSaveData.m in Sources */,
 				04FFFDFC1C410BB900ECCA1C /* PapersViewController.m in Sources */,
 				816F32531C4C84B1000D0AE5 /* SDCycleScrollView.m in Sources */,
 				84C1393F1C4628D500284087 /* UIImage+ImageEffects.m in Sources */,

@@ -10,4 +10,6 @@
 
 @interface ClassifiedPapersViewController : BaseViewController
 
+@property (nonatomic, assign) NSString *type_id;
+
 @end
