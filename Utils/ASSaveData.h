@@ -9,9 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define CACHE_DIR @"Papers"
-/**
- *  @brief 将文件保存到本地Document中
- */
+
 @interface ASSaveData : NSObject
 /**
  *  保存Data数据
