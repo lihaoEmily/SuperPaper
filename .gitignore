@@ -1,7 +1,9 @@
-
+# Xcode
 *.xcuserstate
-<<<<<<< HEAD
-=======
+*.pbxuser
+!default.pbxuser
+*.xcbkptlist
 
-*.xcuserstate
->>>>>>> master
+SuperPaper.xcodeproj/project.xcworkspace/xcuserdata/qufei.xcuserdatad/UserInterfaceState.xcuserstate
+
+*.xcbkptlist

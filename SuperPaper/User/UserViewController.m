@@ -8,7 +8,11 @@
 
 #import "UserViewController.h"
 #import "MainViewController.h"
-@interface UserViewController () <UITableViewDataSource,UITableViewDelegate>
+#import "UserHeaderView.h"
+
+
+
+@interface UserViewController () <UITableViewDataSource,UITableViewDelegate,UserHeaderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *backTableView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -16,20 +20,41 @@
 @property (weak, nonatomic)  UILabel *paperNumLabel;
 @property (weak, nonatomic)  UILabel *telephoneNumLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottom;
+@property (strong, nonatomic) UserHeaderView *userHeaderView;
 
 @end
 
 @implementation UserViewController
 
-- (void)awakeFromNib
-{
-    self.backTableView.tableHeaderView = self.headerView;
-// [[[NSBundle mainBundle] loadNibNamed:@"" owner:nil options:nil] lastObject];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.userHeaderView = [[UserHeaderView alloc] init];
+    self.userHeaderView.delegate = self;
+
+    self.backTableView.tableHeaderView = self.headerView;
+    
+    [self.headerView addSubview:self.userHeaderView.loginView];
+    [self.headerView addSubview:self.userHeaderView.normalView];
+    self.userHeaderView.loginView.hidden = YES;
+}
+
+- (void)userHeaderType:(UserHeaderType)type
+{
+    switch (type) {
+        case UserHeaderTypeCamera:
+            NSLog(@"UserHeaderTypeCamera");
+            break;
+        case UserHeaderTypeLogin:
+            NSLog(@"UserHeaderTypeLogin");
+            break;
+        case UserHeaderTypeRegister:
+            NSLog(@"UserHeaderTypeRegister");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +65,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.tableViewBottom.constant = 49 + 64 - 20;
+    self.tableViewBottom.constant = 44;
 }
 
 - (NSString *)titleName {
