@@ -215,7 +215,7 @@
     {
         _homeController = [[HomeViewController alloc] init];
         CGRect rect = _homeController.view.frame;
-        rect.size.height -= 103;
+        rect.size.height -= 83;
         _homeController.view.frame = rect;
     }
     
@@ -228,7 +228,7 @@
     {
         _paperController = [[PapersViewController alloc] init];
         CGRect rect = _paperController.view.frame;
-        rect.size.height -= 103;
+        rect.size.height -= 83;
         _paperController.view.frame = rect;
     }
     
@@ -241,7 +241,7 @@
     {
         _jobTitleController = [[AssessmentTitleViewController alloc] init];
         CGRect rect = _jobsController.view.frame;
-        rect.size.height -= 103;
+        rect.size.height -= 83;
         _jobsController.view.frame = rect;
     }
     
@@ -254,7 +254,7 @@
     {
         _jobsController = [[JobsViewController alloc] init];
         CGRect rect = _jobsController.view.frame;
-        rect.size.height -= 103;
+        rect.size.height -= 83;
         _jobsController.view.frame = rect;
     }
     
@@ -267,7 +267,7 @@
     {
         _studyController = [[StudyViewController alloc] init];
         CGRect rect = _studyController.view.frame;
-        rect.size.height -= 103;
+        rect.size.height -= 83;
         _studyController.view.frame = rect;
     }
     
@@ -280,7 +280,7 @@
     {
         _userController = [[UIStoryboard storyboardWithName:@"User" bundle:nil] instantiateInitialViewController];
         CGRect rect = _userController.view.frame;
-        rect.size.height -= 103;
+        rect.size.height -= 83;
         _userController.view.frame = rect;
     }
     
