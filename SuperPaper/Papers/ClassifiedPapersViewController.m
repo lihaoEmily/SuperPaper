@@ -117,7 +117,10 @@
 //    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2, 0, self.view.frame.size.width / 2, 44)];
 //    titleView.backgroundColor = [UIColor yellowColor];
 //    self.navigationItem.titleView = titleView;
-//    UIButton 
+//    UIButton
+    
+//    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    searchBtn setBackgroundImage:<#(nullable UIImage *)#> forState:<#(UIControlState)#>
 }
 
 #pragma mark - UITableViewDataSource and UITableViewDelegate
@@ -135,7 +138,16 @@
     }
     cell.textLabel.text = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"title"];
     cell.detailTextLabel.text = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"description"];
-    NSLog(@"%@",[[_paperArray objectAtIndex:indexPath.row] valueForKey:@"description"]);
+    cell.detailTextLabel.numberOfLines = 3;
+    cell.detailTextLabel.textColor = [UIColor grayColor];
+    
+    UILabel *dataLabel = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 110, 80, 100, 20)];
+    dataLabel.text = [[[[_paperArray objectAtIndex:indexPath.row] valueForKey:@"createdate"] componentsSeparatedByString:@" "] objectAtIndex:0];
+    dataLabel.textAlignment = NSTextAlignmentRight;
+    dataLabel.font = [UIFont systemFontOfSize:12.0];
+    dataLabel.textColor = [UIColor grayColor];
+    [cell.contentView addSubview:dataLabel];
+    
     return cell;
 }
 

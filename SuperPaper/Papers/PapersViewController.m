@@ -30,12 +30,14 @@
     
     /// 论文指导与发表电话
     NSString *_paper_tel;
+    NSArray *_nextpageData;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     _paperArray = [NSMutableArray array];
+    _nextpageData = [NSArray array];
     [self setupUI];
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -61,6 +63,7 @@
            NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [dataDic objectForKey:@"list"];
+               _nextpageData = listData;
                
                for (NSDictionary * dic in listData) {
                    NSString *imageUrlString = [NSString stringWithFormat:@"%@%@",IMGURL,[dic objectForKey:@"picname"]];
@@ -172,8 +175,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ClassifiedPapersViewController *classifiedPapersVC = [[ClassifiedPapersViewController alloc] init];
-    classifiedPapersVC.title = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"typename"];
-    classifiedPapersVC.type_id = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"id"];
+    classifiedPapersVC.title = [[_nextpageData objectAtIndex:indexPath.row] valueForKey:@"typename"];
+    classifiedPapersVC.type_id = [[_nextpageData objectAtIndex:indexPath.row] valueForKey:@"id"];
     [AppDelegate.app.nav pushViewController:classifiedPapersVC animated:YES];
 }
 
