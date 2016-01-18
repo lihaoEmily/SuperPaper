@@ -48,9 +48,16 @@
     return @"学习";
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    _studyTableView.frame = CGRectMake(0, 0, KAppWidth,self.view.bounds.size.height);
+
+}
+
 - (void)initData {
     
-    _studyTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KAppWidth, KAppHeight) style:UITableViewStyleGrouped];
+    _studyTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _studyTableView.dataSource = self;
     _studyTableView.delegate = self;
     _studyTableView.sectionHeaderHeight = 10;
@@ -145,6 +152,7 @@
         
         _responseAdInfoArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         NSLog(@"%@",responseObject);
+        [_studyTableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
