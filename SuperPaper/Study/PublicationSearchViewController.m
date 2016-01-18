@@ -9,6 +9,8 @@
 #import "PublicationSearchViewController.h"
 #import "PublicationSearchTableViewCell.h"
 
+#define SEARCHPAGESIZE 10
+
 @interface PublicationSearchViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @end
@@ -24,7 +26,17 @@
     /// 返回数据
     NSArray *_responseArr;
     
+    /// 搜索table
     UITableView *_searchTableView;
+    
+    /// 下拉加载header
+    MJRefreshNormalHeader *header;
+    
+    /// 上拉刷新footer
+    MJRefreshAutoNormalFooter *footer;
+    
+    /// 当前数据页数
+    NSInteger _linePageIndex;
 }
 
 - (void)viewDidLoad {
@@ -39,7 +51,16 @@
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"keywords":@"", @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:10]};
+    
+    /**
+     ** parameters 参数
+     * ownertype  整型    1：教师  其他不明确
+     * keywords   字符串  搜索的关键字
+     * start_pos  整型    表单中获取数据的开始位置。从0开始
+     * list_num   整型    一次获取list数
+     * group_id   整型    ownertype为1时  1：刊物  其他不明确
+     */
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)(SEARCHPAGESIZE * _linePageIndex)], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
     NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -55,11 +76,30 @@
     }];
 }
 
+// 加载前一页数据
+- (void)loadPrePageData
+{
+    if (_linePageIndex > 0) {
+        --_linePageIndex;
+    }
+    [self getData];
+    [_searchTableView.mj_header endRefreshing];
+}
+
+// 加载后一页数据
+- (void)loadNextPageData
+{
+    ++_linePageIndex;
+    [self getData];
+    [_searchTableView.mj_footer endRefreshing];
+}
+
 #pragma mark - UI搭建
 // UI搭建
 - (void)setupUI
 {
     self.title = @"刊物搜索";
+    _linePageIndex = 0;
     [self setupSearchBar];
     [self setupTableView];
 }
@@ -126,23 +166,12 @@
     
     // 下拉刷新
     _searchTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
-        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self getData];
-            // 结束刷新
-            [_searchTableView.mj_header endRefreshing];
-        });
+            [self loadPrePageData];
     }];
     
     // 上拉加载
     _searchTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//        dispatch_async(dispatch_get_main_queue(), ^{
-        
-            [self getData];
-            // 结束刷新
-            [_searchTableView.mj_footer endRefreshing];
-//        });
+            [self loadNextPageData];
     }];
 }
 
@@ -155,7 +184,12 @@
 - (void)clickToSearch
 {
     [_searchBar resignFirstResponder];
-    [self getData];
+    if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入搜索关键字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }else{
+        [self getData];
+    }
 }
 
 #pragma mark - UITableView DataSource and Delegate
