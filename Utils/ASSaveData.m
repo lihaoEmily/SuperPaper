@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *homeDirString;
 @property (nonatomic, strong) NSString *documentDirString;
 @property (nonatomic, strong) NSString *cachesDirString;
+@property (nonatomic, strong) NSString *savedDicString;
 
 @end
 
@@ -36,6 +37,7 @@
         _cachesDirString = [cachePaths objectAtIndex:0];
         
         NSString *savePath = [_documentDirString stringByAppendingPathComponent:CACHE_DIR];
+        _savedDicString = [NSString stringWithString:savePath];
         if(![[NSFileManager defaultManager] fileExistsAtPath:savePath]){
             [[NSFileManager defaultManager] createDirectoryAtPath:savePath
                                       withIntermediateDirectories:YES
@@ -49,12 +51,12 @@
 
 - (BOOL)saveToSandBoxWithData:(NSData *)cacheData withTitle:(NSString *)title {
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+    [formatter setDateFormat:@"yyyyMMdd-HHmmss"];
     NSString* datePrefix = [formatter stringFromDate:[NSDate date]];
     NSLog(@"----> DataPrefix:%@",datePrefix);
     
     NSString * fileName = [NSString stringWithFormat:@"%@_%@.txt",title, datePrefix];
-    NSString * fullPath = [_documentDirString stringByAppendingString:fileName];
+    NSString * fullPath = [_savedDicString stringByAppendingPathComponent:fileName];
     NSLog(@"----> fullPath:%@",fullPath);
     NSError *error = nil;
 //    [cacheData writeToFile:fullPath atomically:YES];
