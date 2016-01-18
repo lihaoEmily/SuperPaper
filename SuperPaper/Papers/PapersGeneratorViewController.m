@@ -8,7 +8,8 @@
 
 #import "PapersGeneratorViewController.h"
 #import "AFNetworking.h"
-#define kScreenWidth self.view.frame.size.width
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
 @interface PapersGeneratorViewController ()
 
@@ -21,6 +22,20 @@
     
     /// 搜索框
     UITextField *_searchBar;
+    
+    /// 显示论文的label
+    UILabel *_paperLabel;
+    
+    /// 生成的论文
+    NSString *_content;
+    
+    // searchBar的容器View
+    UIView *_searchBgView;
+    
+    /// 显示论文的scrollView
+    UIScrollView *_paperScrollerView;
+    
+    UIView *_lineView;
 }
 
 - (void)viewDidLoad {
@@ -33,15 +48,14 @@
 #pragma mark - UI
 - (void)setupUI
 {
-    // searchBar的容器View
-    UIView *searchBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-    [self.view addSubview:searchBgView];
+    _searchBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
+    [self.view addSubview:_searchBgView];
     
     // 灰色背景图片
-    UIImageView *searchBgImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    UIImageView *searchBgImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
     UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"generatorBox" ofType:@"png" inDirectory:@"Paper"]];
     searchBgImg.image = image;
-    [searchBgView addSubview:searchBgImg];
+    [_searchBgView addSubview:searchBgImg];
     searchBgImg.userInteractionEnabled = YES;
     
     UILabel *topicLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 55, 30)];
@@ -51,7 +65,7 @@
     [searchBgImg addSubview:topicLabel];
     
     // 白色背景图片
-    UIImageView *searchBarImg = [[UIImageView alloc] initWithFrame:CGRectMake(65, 5, self.view.frame.size.width - 140, 40)];
+    UIImageView *searchBarImg = [[UIImageView alloc] initWithFrame:CGRectMake(65, 5, kScreenWidth - 140, 40)];
     UIImage *searchBarImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBar" ofType:@"png" inDirectory:@"Paper"]];
     searchBarImg.image = searchBarImage;
     [searchBgImg addSubview:searchBarImg];
@@ -76,7 +90,7 @@
     [searchBgImg addSubview:generatorBtn];
     
     /// 底部导出论文的背景图片
-    UIImageView *exportBoxImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 114, self.view.frame.size.width, 50)];
+    UIImageView *exportBoxImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenHeight - 114, kScreenWidth, 50)];
     UIImage *exportBoxImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"exportBox" ofType:@"png" inDirectory:@"Paper"]];
     exportBoxImg.image = exportBoxImage;
     [self.view addSubview:exportBoxImg];
@@ -114,12 +128,52 @@
     [exportBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     exportBtn.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [exportBoxImg addSubview:exportBtn];
+    
+    _paperScrollerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBgView.frame), kScreenWidth, kScreenHeight - 64 - 50 - 60)];
+    _paperScrollerView.contentSize = CGSizeMake(kScreenWidth, 50);
+    _paperScrollerView.scrollEnabled = YES;
+    [self.view addSubview:_paperScrollerView];
+    
+    /// 正文预览
+    UILabel *textPreviewLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth / 2 - 80, 5, 160, 30)];
+    textPreviewLabel.font = [UIFont systemFontOfSize:20.0];
+    textPreviewLabel.text = @"正文预览";
+    textPreviewLabel.textAlignment = NSTextAlignmentCenter;
+    textPreviewLabel.textColor = [UIColor blackColor];
+    [_paperScrollerView addSubview:textPreviewLabel];
+    
+    _lineView = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(textPreviewLabel.frame) + 5, kScreenWidth - 20, 1)];
+    _lineView.backgroundColor = [UIColor lightGrayColor];
+    [_paperScrollerView addSubview:_lineView];
+}
+
+- (void)setupScrollView
+{
+    CGFloat labelHeight;
+    if (_content) {
+        labelHeight = [_content sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0]}].height;
+    }else{
+        labelHeight = 0.0;
+    }
+    _paperScrollerView.contentSize = CGSizeMake(kScreenWidth, labelHeight + 31);
+    
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_lineView.frame) + 10, kScreenWidth - 20, labelHeight)];
+    textView.text = _content;
+    textView.textColor = [UIColor blackColor];
+    textView.font = [UIFont systemFontOfSize:17.0];
+    [_paperScrollerView addSubview:textView];
 }
 
 #pragma mark - action
 /// 生成论文
 - (void)clickToGenerator
 {
+    if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入论文题目" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:54],@"uid",[NSNumber numberWithInteger:1],@"keywordsnum",_searchBar.text,@"keywords",nil];
     NSLog(@"%@",paramDic);
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_create.php",BASE_URL];
@@ -135,12 +189,12 @@
            dataDic = responseObject;
            NSLog(@"%@",responseObject);
            if (dataDic) {
-              // NSArray * listData = [dataDic objectForKey:@"list"];
+               _content = [dataDic valueForKey:@"content"];
            }
+           [self setupScrollView];
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
        }];
-
 }
 
 - (void)exportPapers:(UIButton *)sender
