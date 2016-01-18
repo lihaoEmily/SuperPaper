@@ -238,6 +238,7 @@
 		5807C2FC1C4741DE002C5F8E /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		5807C30E1C478059002C5F8E /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroViewController.h; path = IntroduceView/IntroViewController.h; sourceTree = "<group>"; };
 		5807C30F1C478059002C5F8E /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntroViewController.m; path = IntroduceView/IntroViewController.m; sourceTree = "<group>"; };
+		58F3124E1C4CCC2C006CAE3E /* OwToolHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OwToolHeader.h; sourceTree = "<group>"; };
 		7F477B5B1C49FA1000612850 /* HomeNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNewsCell.h; path = CommonView/HomeNewsCell.h; sourceTree = "<group>"; };
 		7F477B5C1C49FA1000612850 /* HomeNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNewsCell.m; path = CommonView/HomeNewsCell.m; sourceTree = "<group>"; };
 		7F477B5F1C4A0D6600612850 /* HomeActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeActivityCell.h; path = CommonView/HomeActivityCell.h; sourceTree = "<group>"; };
@@ -537,6 +538,7 @@
 				0401D4DB1C41E1E3002E2F12 /* AppInfo.m */,
 				04E3F3B41C4C8A9A00DEE217 /* ASSaveData.h */,
 				04E3F3B51C4C8A9A00DEE217 /* ASSaveData.m */,
+				58F3124E1C4CCC2C006CAE3E /* OwToolHeader.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -595,9 +597,9 @@
 			isa = PBXGroup;
 			children = (
 				04FFFE261C414CB000ECCA1C /* NormalTableViewCell.h */,
+				04FFFE271C414CB000ECCA1C /* NormalTableViewCell.m */,
 				812021B21C478D6A000D05A4 /* ServiceButton.h */,
 				812021B31C478D6A000D05A4 /* ServiceButton.m */,
-				04FFFE271C414CB000ECCA1C /* NormalTableViewCell.m */,
 				84B7BD1F1C4796E300E202A6 /* TelephoneView.h */,
 				84B7BD201C4796E300E202A6 /* TelephoneView.m */,
 				7F477B5B1C49FA1000612850 /* HomeNewsCell.h */,
