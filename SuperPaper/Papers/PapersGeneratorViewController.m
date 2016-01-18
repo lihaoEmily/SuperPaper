@@ -8,11 +8,12 @@
 
 #import "PapersGeneratorViewController.h"
 #import "AFNetworking.h"
+#import "ASSaveData.h"
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-@interface PapersGeneratorViewController ()
-
+@interface PapersGeneratorViewController ()<UITextViewDelegate>
+@property(nonatomic, strong) ASSaveData * saver;
 @end
 
 @implementation PapersGeneratorViewController
@@ -168,6 +169,8 @@
 /// 生成论文
 - (void)clickToGenerator
 {
+    [_searchBar resignFirstResponder];
+    
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入论文题目" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
@@ -197,9 +200,25 @@
        }];
 }
 
+#pragma mark - UITextViewDelegate
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+    return YES;
+}
+
+
 - (void)exportPapers:(UIButton *)sender
 {
     NSLog(@"tag为%ld的btn点击了导出",sender.tag);
+    if (_saver == nil) {
+        _saver = [[ASSaveData alloc] init];
+    }
+    //FIXME: for testing
+    BOOL ret = [_saver saveToLocationwithStrings:_content withTitle:_searchBar.text];
+    if (ret) {
+        NSLog(@"----> Save to the [Document] directory successfully.");
+    } else {
+        NSLog(@"----> Save to the [Document] directory failed.");
+    }
 }
 
 @end
