@@ -9,14 +9,17 @@
 #import "PapersSortsViewController.h"
 
 @interface PapersSortsViewController ()<UITableViewDataSource,UITableViewDelegate>
-
+{
+    NSArray *_sortData;
+}
 @end
 
 @implementation PapersSortsViewController
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
+    _sortData = [NSArray array];
+    [self setUpTableView];
     [self getData];
 
 }
@@ -30,9 +33,7 @@
 -(void)getData
 {
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.typeId,@"type_id",nil];
-    NSLog(@"%@",paramDic);
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_tag.php",BASE_URL];
-    NSLog(@"%@",urlString);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager.requestSerializer setTimeoutInterval:15.0f];
@@ -42,27 +43,22 @@
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
-           NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [dataDic objectForKey:@"list"];
-
+               _sortData = listData;
                self.tableView.delegate = self;
                self.tableView.dataSource = self;
                [self.tableView reloadData];
-               
-                        }
+        }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
        }];
 
 }
-
-
 #pragma -mark tableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return _sortData.count;
 }
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -71,7 +67,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    cell.textLabel.text = [[_sortData objectAtIndex:indexPath.row] objectForKey:@"tagname"];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    NSLog(@"%@",cell.textLabel.text);
     return cell;
 
 }
