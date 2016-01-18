@@ -13,11 +13,16 @@
  *  网页视图
  */
 @property(nonatomic, strong) UIWebView * webView;
+/**
+ *  加载进度
+ */
 @property(nonatomic, strong) UIActivityIndicatorView * indicatorView;
 
 @end
 
 @implementation NormalWebViewController
+
+#pragma mark - UIViewControllerLifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
