@@ -66,6 +66,7 @@
 		5807C2FB1C473D7F002C5F8E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2FA1C473D7F002C5F8E /* libz.tbd */; };
 		5807C2FD1C4741DE002C5F8E /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5807C2FC1C4741DE002C5F8E /* PushConfig.plist */; };
 		5807C3141C478059002C5F8E /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807C30F1C478059002C5F8E /* IntroViewController.m */; };
+		58F312511C4CD165006CAE3E /* PapersSortsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F312501C4CD165006CAE3E /* PapersSortsViewController.m */; };
 		7F477B5D1C49FA1000612850 /* HomeNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F477B5C1C49FA1000612850 /* HomeNewsCell.m */; };
 		7F477B611C4A0D6600612850 /* HomeActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F477B601C4A0D6600612850 /* HomeActivityCell.m */; };
 		812021B41C478D6A000D05A4 /* ServiceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 812021B31C478D6A000D05A4 /* ServiceButton.m */; };
@@ -239,6 +240,8 @@
 		5807C30E1C478059002C5F8E /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroViewController.h; path = IntroduceView/IntroViewController.h; sourceTree = "<group>"; };
 		5807C30F1C478059002C5F8E /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntroViewController.m; path = IntroduceView/IntroViewController.m; sourceTree = "<group>"; };
 		58F3124E1C4CCC2C006CAE3E /* OwToolHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OwToolHeader.h; sourceTree = "<group>"; };
+		58F3124F1C4CD165006CAE3E /* PapersSortsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PapersSortsViewController.h; sourceTree = "<group>"; };
+		58F312501C4CD165006CAE3E /* PapersSortsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PapersSortsViewController.m; sourceTree = "<group>"; };
 		7F477B5B1C49FA1000612850 /* HomeNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNewsCell.h; path = CommonView/HomeNewsCell.h; sourceTree = "<group>"; };
 		7F477B5C1C49FA1000612850 /* HomeNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNewsCell.m; path = CommonView/HomeNewsCell.m; sourceTree = "<group>"; };
 		7F477B5F1C4A0D6600612850 /* HomeActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeActivityCell.h; path = CommonView/HomeActivityCell.h; sourceTree = "<group>"; };
@@ -494,6 +497,8 @@
 				F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */,
 				F6F21CB61C48B8D000AD6A6D /* ClassifiedPapersViewController.h */,
 				F6F21CB71C48B8D000AD6A6D /* ClassifiedPapersViewController.m */,
+				58F3124F1C4CD165006CAE3E /* PapersSortsViewController.h */,
+				58F312501C4CD165006CAE3E /* PapersSortsViewController.m */,
 			);
 			name = Papers;
 			sourceTree = "<group>";
@@ -976,6 +981,7 @@
 				5807C2DF1C473B7A002C5F8E /* MJRefreshAutoFooter.m in Sources */,
 				04FFFE251C414C6B00ECCA1C /* NormalWebViewController.m in Sources */,
 				84C1393A1C4628A800284087 /* UIRefreshControl+AFNetworking.m in Sources */,
+				58F312511C4CD165006CAE3E /* PapersSortsViewController.m in Sources */,
 				5807C2E81C473B7A002C5F8E /* MJRefreshBackNormalFooter.m in Sources */,
 				F6B69F001C462E0500CBFEB3 /* PublicationSearchViewController.m in Sources */,
 				5807C2EB1C473B7A002C5F8E /* MJRefreshNormalHeader.m in Sources */,
