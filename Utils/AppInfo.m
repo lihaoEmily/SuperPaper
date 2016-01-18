@@ -10,4 +10,16 @@
 
 @implementation AppInfo
 
++ (NSString *)appCurrentVersion {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
+
++ (NSString *)appBuildVersion {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVerion"];
+}
+
++ (CGFloat)currentDeviceSystemVersion {
+    return [[[UIDevice currentDevice] systemVersion] doubleValue];
+}
+
 @end
