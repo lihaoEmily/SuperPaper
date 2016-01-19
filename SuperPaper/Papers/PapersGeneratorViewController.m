@@ -11,7 +11,7 @@
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-@interface PapersGeneratorViewController ()
+@interface PapersGeneratorViewController ()<UITextFieldDelegate>
 
 @end
 
@@ -77,6 +77,7 @@
     _searchBar.layer.cornerRadius = 5;
     _searchBar.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _searchBar.placeholder = @"请输入论文题目";
+    _searchBar.delegate = self;
     _searchBar.clearButtonMode = UITextFieldViewModeAlways;
     [searchBarImg addSubview:_searchBar];
     
@@ -163,6 +164,8 @@
     textView.text = _content;
     textView.textColor = [UIColor blackColor];
     textView.font = [UIFont systemFontOfSize:17.0];
+    textView.returnKeyType = UIReturnKeyDone;
+    [textView setEditable:NO];
     [_paperScrollerView addSubview:textView];
 }
 
@@ -182,13 +185,20 @@
 
 - (void)exportPapers:(UIButton *)sender
 {
-    ASSaveData *data = [[ASSaveData alloc] init];
-    [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    if (_content) {
+        ASSaveData *data = [[ASSaveData alloc] init];
+        [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"没有可导出的论文" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 #pragma mark - 获取数据
@@ -215,6 +225,13 @@
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
        }];
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_searchBar resignFirstResponder];
+    return YES;
 }
 
 @end

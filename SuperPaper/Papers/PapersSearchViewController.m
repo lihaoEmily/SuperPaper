@@ -7,6 +7,8 @@
 //
 
 #import "PapersSearchViewController.h"
+#import "GetPapersViewController.h"
+
 #define SEARCHPAGESIZE 15
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
@@ -64,12 +66,6 @@
     
     /// 搜索table
     UITableView *_searchTableView;
-    
-    /// 下拉加载header
-    MJRefreshNormalHeader *header;
-    
-    /// 上拉刷新footer
-    MJRefreshAutoNormalFooter *footer;
 }
 
 - (void)viewDidLoad {
@@ -180,6 +176,7 @@
     _searchTableView.showsVerticalScrollIndicator = NO;
     _searchTableView.delegate = self;
     _searchTableView.dataSource = self;
+    _searchTableView.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
     _searchTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:_searchTableView];
     
@@ -192,6 +189,9 @@
     _searchTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [self loadNextPageData];
     }];
+    
+    _searchTableView.mj_header.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
+    _searchTableView.mj_footer.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
 }
 
 #pragma mark - Actions
@@ -239,6 +239,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 100;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    GetPapersViewController *getPapersVC = [[GetPapersViewController alloc] init];
+    getPapersVC.title = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
+    getPapersVC.paperTitleStr = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
+    getPapersVC.dateStr = [[[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"createdate"] componentsSeparatedByString:@" "] objectAtIndex:0];
+    getPapersVC.paperID = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"id"];
+    [AppDelegate.app.nav pushViewController:getPapersVC animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
