@@ -109,6 +109,7 @@
 #pragma mark - 网络请求获取数据
 - (void)getData
 {
+    
     NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":tagId};
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
