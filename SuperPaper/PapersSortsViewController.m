@@ -80,5 +80,6 @@
 {
     [self.delegate passTypeId:[[_sortData objectAtIndex:indexPath.row] objectForKey:@"id"]];
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 @end
