@@ -79,6 +79,7 @@
 		816F32521C4C84B1000D0AE5 /* SDCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 816F32491C4C84B1000D0AE5 /* SDCollectionViewCell.m */; };
 		816F32531C4C84B1000D0AE5 /* SDCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 816F324B1C4C84B1000D0AE5 /* SDCycleScrollView.m */; };
 		816F32541C4C84B1000D0AE5 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 816F324D1C4C84B1000D0AE5 /* UIView+SDExtension.m */; };
+		8180BDE21C4DC8190068751C /* NormalStudyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8180BDE11C4DC8190068751C /* NormalStudyViewController.m */; };
 		844694331C48B889005619D7 /* usercell1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8446942A1C48B889005619D7 /* usercell1.png */; };
 		844694341C48B889005619D7 /* usercell2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8446942B1C48B889005619D7 /* usercell2.png */; };
 		844694351C48B889005619D7 /* usercell3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8446942C1C48B889005619D7 /* usercell3.png */; };
@@ -272,6 +273,8 @@
 		816F324B1C4C84B1000D0AE5 /* SDCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCycleScrollView.m; sourceTree = "<group>"; };
 		816F324C1C4C84B1000D0AE5 /* UIView+SDExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SDExtension.h"; sourceTree = "<group>"; };
 		816F324D1C4C84B1000D0AE5 /* UIView+SDExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SDExtension.m"; sourceTree = "<group>"; };
+		8180BDE01C4DC8190068751C /* NormalStudyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalStudyViewController.h; sourceTree = "<group>"; };
+		8180BDE11C4DC8190068751C /* NormalStudyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalStudyViewController.m; sourceTree = "<group>"; };
 		8446942A1C48B889005619D7 /* usercell1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell1.png; sourceTree = "<group>"; };
 		8446942B1C48B889005619D7 /* usercell2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell2.png; sourceTree = "<group>"; };
 		8446942C1C48B889005619D7 /* usercell3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell3.png; sourceTree = "<group>"; };
@@ -496,6 +499,8 @@
 				F6B69EFD1C462E0500CBFEB3 /* PublicationSearchViewController.h */,
 				812021B51C478D7E000D05A4 /* Service.plist */,
 				F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */,
+				8180BDE01C4DC8190068751C /* NormalStudyViewController.h */,
+				8180BDE11C4DC8190068751C /* NormalStudyViewController.m */,
 			);
 			name = Study;
 			sourceTree = "<group>";
@@ -1047,6 +1052,7 @@
 				0401D4DC1C41E1E3002E2F12 /* AppInfo.m in Sources */,
 				84C1391D1C4628A300284087 /* AFURLSessionManager.m in Sources */,
 				5807C2E41C473B7A002C5F8E /* MJRefreshAutoGifFooter.m in Sources */,
+				8180BDE21C4DC8190068751C /* NormalStudyViewController.m in Sources */,
 				04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */,
 				84C139651C4628DB00284087 /* SDWebImageCompat.m in Sources */,
 				84C139691C4628DB00284087 /* SDWebImageManager.m in Sources */,
