@@ -37,12 +37,13 @@
     _headImageView = [[UIImageView alloc]initWithFrame:CGRectMake(LEFT_MARGIN, LEFT_MARGIN, 60, 60)];
     _headImageView.layer.masksToBounds = YES;
     _headImageView.layer.cornerRadius  = 10;
-    _headImageView.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:_headImageView];
     
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame),LEFT_MARGIN, self.bounds.size.width - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN , 40)];   _titleLabel.font = [UIFont systemFontOfSize:15.0];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame) + LEFT_MARGIN,LEFT_MARGIN, self.bounds.size.width - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN * 2, 40)];
+    _titleLabel.font = [UIFont systemFontOfSize:15.0];
     _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.numberOfLines = 2;
+    _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.contentView addSubview:_titleLabel];
     
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame),70- LEFT_MARGIN-20, self.bounds.size.width - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN , 20)];
@@ -58,6 +59,9 @@
     [_headImageView sd_setImageWithURL:infoDict[@"image"] placeholderImage:[UIImage imageNamed:@""]];
     _titleLabel.text = infoDict[@"title"];
     [_titleLabel sizeToFit];
+    CGSize detailmaxSize = CGSizeMake(self.bounds.size.width - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN * 2, 40);
+    CGSize detailSize = [_titleLabel sizeThatFits:detailmaxSize];
+    _titleLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) + LEFT_MARGIN,LEFT_MARGIN , detailSize.width, detailSize.height);
     _timeLabel.text = infoDict[@"time"];
     
     
