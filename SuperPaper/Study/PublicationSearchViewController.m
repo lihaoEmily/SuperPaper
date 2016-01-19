@@ -24,7 +24,7 @@
     UITextField *_searchBar;
     
     /// 返回数据
-    NSArray *_responseArr;
+    NSMutableArray *_responseArr;
     
     /// 搜索table
     UITableView *_searchTableView;
@@ -34,15 +34,13 @@
     
     /// 上拉刷新footer
     MJRefreshAutoNormalFooter *footer;
-    
-    /// 当前数据页数
-    NSInteger _linePageIndex;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    _responseArr = [[NSMutableArray alloc] init];
     [self setupUI];
 }
 
@@ -60,14 +58,14 @@
      * list_num   整型    一次获取list数
      * group_id   整型    ownertype为1时  1：刊物  其他不明确
      */
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)(SEARCHPAGESIZE * _linePageIndex)], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
     NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        _responseArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+        NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+        [_responseArr addObjectsFromArray:listArray];
         NSLog(@"%@",responseObject);
         [_searchTableView reloadData];
         
@@ -79,9 +77,7 @@
 // 加载前一页数据
 - (void)loadPrePageData
 {
-    if (_linePageIndex > 0) {
-        --_linePageIndex;
-    }
+    [_responseArr removeAllObjects];
     [self getData];
     [_searchTableView.mj_header endRefreshing];
 }
@@ -89,7 +85,6 @@
 // 加载后一页数据
 - (void)loadNextPageData
 {
-    ++_linePageIndex;
     [self getData];
     [_searchTableView.mj_footer endRefreshing];
 }
@@ -99,7 +94,6 @@
 - (void)setupUI
 {
     self.title = @"刊物搜索";
-    _linePageIndex = 0;
     [self setupSearchBar];
     [self setupTableView];
 }
@@ -206,7 +200,10 @@
     PublicationSearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[PublicationSearchTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    }        
+    }
+    if (_responseArr.count == 0) {
+        return cell;
+    }
     NSString *urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
     [cell.iconImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
     cell.titleLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];

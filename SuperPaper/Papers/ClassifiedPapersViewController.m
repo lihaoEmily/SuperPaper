@@ -9,6 +9,7 @@
 #import "ClassifiedPapersViewController.h"
 #import "PapersSearchViewController.h"
 #import "ExportableWebViewController.h"
+#import "PapersSortsViewController.h"
 #define SEARCHPAGESIZE 30
 
 @interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -71,8 +72,8 @@
 }
 - (void)creatButtonWasClicked
 {
-    PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
-    sortsView.typeId = self.type_id;
+    PapersSearchViewController *sortsView = [[PapersSearchViewController alloc]init];
+//    sortsView.typeId = self.type_id;
     [self.navigationController pushViewController:sortsView animated:YES];
     
 }

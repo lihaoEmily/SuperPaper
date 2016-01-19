@@ -7,7 +7,7 @@
 //
 
 #import "PapersSearchViewController.h"
-#define SEARCHPAGESIZE 30
+#define SEARCHPAGESIZE 15
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
 @interface SearchTableViewCell : UITableViewCell
@@ -71,16 +71,13 @@
     
     /// 上拉刷新footer
     MJRefreshAutoNormalFooter *footer;
-    
-    /// 当前数据页数
-    NSInteger _linePageIndex;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
-    _linePageIndex = 0;
+    _responseArr = [[NSMutableArray alloc] init];
     [self setupUI];
 }
 
@@ -89,17 +86,14 @@
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:1], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_linePageIndex], @"list_num":[NSNumber numberWithInt:(int)(15 + SEARCHPAGESIZE * _linePageIndex)]};
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:1], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE]};
     NSString *urlString = [NSString stringWithFormat:@"%@searchpaper.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
         NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-        _responseArr = [[NSMutableArray alloc] init];
         [_responseArr addObjectsFromArray:listArray];
-        _searchTableView.delegate = self;
-        _searchTableView.dataSource = self;
         [_searchTableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -110,9 +104,7 @@
 // 加载前一页数据
 - (void)loadPrePageData
 {
-    if (_linePageIndex > 0) {
-        --_linePageIndex;
-    }
+    [_responseArr removeAllObjects];
     [self getData];
     [_searchTableView.mj_header endRefreshing];
 }
@@ -120,7 +112,6 @@
 // 加载后一页数据
 - (void)loadNextPageData
 {
-    ++_linePageIndex;
     [self getData];
     [_searchTableView.mj_footer endRefreshing];
 }
@@ -188,6 +179,8 @@
 {
     _searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - 50 - 64)];
     _searchTableView.showsVerticalScrollIndicator = NO;
+    _searchTableView.delegate = self;
+    _searchTableView.dataSource = self;
     _searchTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:_searchTableView];
     
@@ -233,6 +226,9 @@
     SearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[SearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    if (_responseArr.count == 0) {
+        return cell;
     }
     cell.titltLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
     cell.detailLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"description"];

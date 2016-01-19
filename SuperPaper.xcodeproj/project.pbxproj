@@ -521,6 +521,8 @@
 				F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */,
 				F6F21CB61C48B8D000AD6A6D /* ClassifiedPapersViewController.h */,
 				F6F21CB71C48B8D000AD6A6D /* ClassifiedPapersViewController.m */,
+				58F3124F1C4CD165006CAE3E /* PapersSortsViewController.h */,
+				58F312501C4CD165006CAE3E /* PapersSortsViewController.m */,
 				F6FC3FAB1C4CDB67008DF895 /* PapersSearchViewController.h */,
 				F6FC3FAC1C4CDB67008DF895 /* PapersSearchViewController.m */,
 			);
