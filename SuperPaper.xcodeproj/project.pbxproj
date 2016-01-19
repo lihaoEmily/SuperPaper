@@ -128,6 +128,7 @@
 		F6B69F001C462E0500CBFEB3 /* PublicationSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */; };
 		F6F21CB81C48B8D000AD6A6D /* ClassifiedPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F21CB71C48B8D000AD6A6D /* ClassifiedPapersViewController.m */; };
 		F6F3487E1C476F4400AB5CFB /* PapersGeneratorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */; };
+		F6FC3FAD1C4CDB67008DF895 /* PapersSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6FC3FAC1C4CDB67008DF895 /* PapersSearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -348,6 +349,8 @@
 		F6F21CB71C48B8D000AD6A6D /* ClassifiedPapersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassifiedPapersViewController.m; path = Papers/ClassifiedPapersViewController.m; sourceTree = "<group>"; };
 		F6F3487C1C476F4400AB5CFB /* PapersGeneratorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PapersGeneratorViewController.h; path = Papers/PapersGeneratorViewController.h; sourceTree = "<group>"; };
 		F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PapersGeneratorViewController.m; path = Papers/PapersGeneratorViewController.m; sourceTree = "<group>"; };
+		F6FC3FAB1C4CDB67008DF895 /* PapersSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PapersSearchViewController.h; path = Papers/PapersSearchViewController.h; sourceTree = "<group>"; };
+		F6FC3FAC1C4CDB67008DF895 /* PapersSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PapersSearchViewController.m; path = Papers/PapersSearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -494,6 +497,8 @@
 				F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */,
 				F6F21CB61C48B8D000AD6A6D /* ClassifiedPapersViewController.h */,
 				F6F21CB71C48B8D000AD6A6D /* ClassifiedPapersViewController.m */,
+				F6FC3FAB1C4CDB67008DF895 /* PapersSearchViewController.h */,
+				F6FC3FAC1C4CDB67008DF895 /* PapersSearchViewController.m */,
 			);
 			name = Papers;
 			sourceTree = "<group>";
@@ -998,6 +1003,7 @@
 				04E3F3B61C4C8A9A00DEE217 /* ASSaveData.m in Sources */,
 				04FFFDFC1C410BB900ECCA1C /* PapersViewController.m in Sources */,
 				84C1393F1C4628D500284087 /* UIImage+ImageEffects.m in Sources */,
+				F6FC3FAD1C4CDB67008DF895 /* PapersSearchViewController.m in Sources */,
 				040AD9901C4675F8000AB02A /* Reachability.m in Sources */,
 				5807C2E31C473B7A002C5F8E /* MJRefreshHeader.m in Sources */,
 				84C139671C4628DB00284087 /* SDWebImageDownloader.m in Sources */,
