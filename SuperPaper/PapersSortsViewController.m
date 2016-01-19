@@ -21,6 +21,7 @@
     _sortData = [NSMutableArray array];
     [self setUpTableView];
     [self getData];
+    
 
 }
 - (void)setUpTableView{
