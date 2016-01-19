@@ -1266,7 +1266,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharetechnology.SuperPapers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "408e0298-372f-4fc7-86c8-036bf6436858";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1286,7 +1286,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharetechnology.SuperPapers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "408e0298-372f-4fc7-86c8-036bf6436858";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
