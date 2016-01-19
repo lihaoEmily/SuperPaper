@@ -10,7 +10,7 @@
 
 @interface PapersSortsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    NSMutableArray *_sortData;
+    NSArray *_sortData;
 }
 @end
 
@@ -18,15 +18,14 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    _sortData = [NSMutableArray array];
-
+    _sortData = [NSArray array];
     [self setUpTableView];
     [self getData];
 
 }
 - (void)setUpTableView{
 
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, OWIDTH, OHIGHT - 36) style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, OWIDTH, OHIGHT - 72) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
 
 }
@@ -46,9 +45,7 @@
            dataDic = responseObject;
            if (dataDic) {
                NSArray * listData = [dataDic objectForKey:@"list"];
-               _sortData = [NSMutableArray arrayWithArray:listData];
-               NSDictionary * firstDic = [NSDictionary dictionaryWithObjectsAndKeys:@"全部",@"tagname",@"",@"id",nil];
-               [_sortData insertObject:firstDic atIndex:0];
+               _sortData = listData;
                self.tableView.delegate = self;
                self.tableView.dataSource = self;
                [self.tableView reloadData];
@@ -80,7 +77,6 @@
 #pragma -mark tableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.delegate passTypeId:[[_sortData objectAtIndex:indexPath.row] objectForKey:@"id"]];
-    [self.navigationController popViewControllerAnimated:YES];
+
 }
 @end

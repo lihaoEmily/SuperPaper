@@ -58,7 +58,6 @@
        parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
 
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-           [_paperArray removeAllObjects];
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
            NSLog(@"%@",dataDic);

@@ -9,7 +9,7 @@
 #import "ClassifiedPapersViewController.h"
 #import "PapersSortsViewController.h"
 
-@interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate,ClassifiedPapersViewControllerDelegate>
+@interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -19,12 +19,10 @@
     NSArray *_paperArray;
     /// 资源图片文件路径
     NSString *_bundleStr;
-    NSString *tagId;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    tagId =@""; 
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     [self getData];
     [self setupUI];
@@ -35,7 +33,6 @@
     UIButton * sortButton = [UIButton buttonWithType:UIButtonTypeCustom];
     sortButton.frame=CGRectMake(0, 5, 25, 25);
     [sortButton setImage:[UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchIcon" ofType:@"png" inDirectory:@"temp"]] forState:UIControlStateNormal];
-    sortButton.backgroundColor = [UIColor blueColor];
     [sortButton addTarget:self action:@selector(sortButtonWasClicked)forControlEvents:UIControlEventTouchDown];
     UIView *rightBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 60, 31)];
     [rightBarView addSubview:sortButton];
@@ -44,7 +41,6 @@
     [creatButton setFrame:CGRectMake(30, 5, 25, 25)];
     [creatButton setImage:[UIImage imageNamed:@"c_address.png"] forState:UIControlStateNormal];
     [creatButton addTarget:self action:@selector(creatButtonWasClicked)forControlEvents:UIControlEventTouchDown];
-    creatButton.backgroundColor = [UIColor greenColor];
     [rightBarView addSubview:creatButton];
     rightBarView.backgroundColor=[UIColor clearColor];
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithCustomView:rightBarView];
@@ -52,11 +48,6 @@
     self.navigationItem.rightBarButtonItem = rightBtn;
 
 
-}
-- (void)passTypeId:(NSString *)typeId
-{
-    tagId = typeId;
-    [self getData];
 }
 
 - (void)sortButtonWasClicked
@@ -69,14 +60,13 @@
 {
     PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
     sortsView.typeId = self.type_id;
-    sortsView.delegate = self;
     [self.navigationController pushViewController:sortsView animated:YES];
     
 }
 
 - (void)getData
 {
-    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":tagId};
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":@""};
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
