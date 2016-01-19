@@ -36,13 +36,14 @@
     _headImageView = [[UIImageView alloc]initWithFrame:CGRectMake(LEFT_MARGIN, LEFT_MARGIN, OWIDTH-LEFT_MARGIN*2, 130)];
     _headImageView.layer.masksToBounds = YES;
     _headImageView.layer.cornerRadius  = 10;
-    _headImageView.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:_headImageView];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_MARGIN*2,LEFT_MARGIN * 4, OWIDTH - LEFT_MARGIN * 4, 60)];
-    _titleLabel.font = [UIFont systemFontOfSize:15.0];
+    _titleLabel.font = [UIFont systemFontOfSize:17.0];
+    _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.numberOfLines = 2;
+    _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.contentView addSubview:_titleLabel];
     
 }
