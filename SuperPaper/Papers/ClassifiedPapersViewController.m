@@ -50,7 +50,7 @@
 
 @end
 
-@interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate,ClassifiedPapersViewControllerDelegate>
 
 @end
 
@@ -61,26 +61,56 @@
     
     /// 资源图片文件路径
     NSString *_bundleStr;
+
+    NSString *tagId;
+
     
     /// 下拉加载header
     MJRefreshNormalHeader *header;
     
     /// 上拉刷新footer
     MJRefreshAutoNormalFooter *footer;
+    /// 当前数据页数
+    NSInteger _linePageIndex;
+
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    tagId = @"";
+    [self getData];
+    [self setupUI];
+}
+- (void)passTypeId:(NSString *)typeId
+{
+    tagId = typeId;
+    [self getData];
+}
+- (void)sortButtonWasClicked
+{
+
+
+
+}
+- (void)creatButtonWasClicked
+{
+    PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
+    sortsView.typeId = self.type_id;
+    sortsView.delegate =self;
+    [self.navigationController pushViewController:sortsView animated:YES];
     _paperArray = [[NSMutableArray alloc] init];
     [self getData];
     [self setupUI];
+
 }
 
 #pragma mark - 网络请求获取数据
 - (void)getData
 {
-    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:(int)_paperArray.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"paper_tagid":@""};
+    
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":tagId};
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];

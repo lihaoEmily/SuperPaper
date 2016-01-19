@@ -36,6 +36,7 @@
     UIScrollView *_paperScrollerView;
     
     UIView *_lineView;
+    
 }
 
 - (void)viewDidLoad {
