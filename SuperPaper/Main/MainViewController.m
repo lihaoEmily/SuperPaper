@@ -95,8 +95,6 @@
     self.currentController = self.homeController;
     
     self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
-    self.tabbar.tabBarDisplayType = TabBarDisplayTypeStudent;
-
 }
 
 - (void)userAction:(UIButton *)button
