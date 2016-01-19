@@ -9,7 +9,7 @@
 #import "ClassifiedPapersViewController.h"
 #import "PapersSortsViewController.h"
 
-@interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate,ClassifiedPapersViewControllerDelegate>
 
 @end
 
@@ -19,11 +19,13 @@
     NSArray *_paperArray;
     /// 资源图片文件路径
     NSString *_bundleStr;
+    NSString *tagId;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    tagId = @"";
     [self getData];
     [self setupUI];
     [self addToolBar];
@@ -49,7 +51,11 @@
 
 
 }
-
+- (void)passTypeId:(NSString *)typeId
+{
+    tagId = typeId;
+    [self getData];
+}
 - (void)sortButtonWasClicked
 {
 
@@ -60,13 +66,14 @@
 {
     PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
     sortsView.typeId = self.type_id;
+    sortsView.delegate =self;
     [self.navigationController pushViewController:sortsView animated:YES];
     
 }
 
 - (void)getData
 {
-    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":@""};
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":tagId};
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
