@@ -11,6 +11,7 @@
 #import "SDCycleScrollView.h"
 #import "HomeNewsCell.h"
 #import "NormalWebViewController.h"
+#import "NormalStudyViewController.h"
 
 /** 获取屏幕尺寸*/
 #define KAppWidth [UIScreen mainScreen].bounds.size.width
@@ -25,7 +26,7 @@
 @implementation StudyViewController{
     // 返回学习主页资讯数据
     NSMutableArray *_responseNewsInfoArr;
-    int _newsInfoNum;
+
     // 返回学习广告信息数据
     NSArray *_responseAdInfoArr;
 }
@@ -65,7 +66,7 @@
     [self.view addSubview:_studyTableView];
     
     //变量初始化
-    _newsInfoNum = 0;
+
     _responseNewsInfoArr = [[NSMutableArray alloc]init];
     
     // 下拉刷新
@@ -167,35 +168,51 @@
         }
             break;
         case 1:{
-            
+            NormalStudyViewController *vc = [[NormalStudyViewController alloc] init];
+            vc.title = @"考研";
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         case 2:{
-            
+            NormalStudyViewController *vc = [[NormalStudyViewController alloc] init];
+            vc.title = @"留学";
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         case 3:{
-            
+            NormalStudyViewController *vc = [[NormalStudyViewController alloc] init];
+            vc.title = @"比赛";
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         case 4:{
-            
+            NormalStudyViewController *vc = [[NormalStudyViewController alloc] init];
+            vc.title = @"考证";
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         case 5:{
-            
+            NormalStudyViewController *vc = [[NormalStudyViewController alloc] init];
+            vc.title = @"计算机";
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         case 6:{
-            
+            NormalStudyViewController *vc = [[NormalStudyViewController alloc] init];
+            vc.title = @"大学46级";
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         case 7:{
-            
+            NormalStudyViewController *vc = [[NormalStudyViewController alloc] init];
+            vc.title = @"论文指导";
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         case 8:{
-            
+            NormalStudyViewController *vc = [[NormalStudyViewController alloc] init];
+            vc.title = @"作业指导";
+            [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         default:
@@ -335,6 +352,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.1;
 }
 
