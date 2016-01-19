@@ -39,6 +39,42 @@
     _linePageIndex = 0;
     [self getData];
     [self setupUI];
+    [self addToolBar];
+}
+- (void)addToolBar{
+    
+    UIButton * sortButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    sortButton.frame=CGRectMake(0, 5, 25, 25);
+    [sortButton setImage:[UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchIcon" ofType:@"png" inDirectory:@"temp"]] forState:UIControlStateNormal];
+    [sortButton addTarget:self action:@selector(sortButtonWasClicked)forControlEvents:UIControlEventTouchDown];
+    UIView *rightBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 60, 31)];
+    [rightBarView addSubview:sortButton];
+    
+     UIButton * creatButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [creatButton setFrame:CGRectMake(30, 5, 25, 25)];
+    [creatButton setImage:[UIImage imageNamed:@"c_address.png"] forState:UIControlStateNormal];
+    [creatButton addTarget:self action:@selector(creatButtonWasClicked)forControlEvents:UIControlEventTouchDown];
+    [rightBarView addSubview:creatButton];
+    rightBarView.backgroundColor=[UIColor clearColor];
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithCustomView:rightBarView];
+    
+    self.navigationItem.rightBarButtonItem = rightBtn;
+
+
+}
+
+- (void)sortButtonWasClicked
+{
+
+
+
+}
+- (void)creatButtonWasClicked
+{
+    PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
+    sortsView.typeId = self.type_id;
+    [self.navigationController pushViewController:sortsView animated:YES];
+    
 }
 
 - (void)getData
