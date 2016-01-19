@@ -10,6 +10,8 @@
 #import "PapersSearchViewController.h"
 #import "ExportableWebViewController.h"
 #import "PapersSortsViewController.h"
+#import "GetPapersViewController.h"
+
 #define SEARCHPAGESIZE 30
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
@@ -203,13 +205,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ExportableWebViewController *vc = [[ExportableWebViewController alloc] init];
-    vc.title = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"title"];
-    vc.urlString = @"http://www.baidu.com";
+    GetPapersViewController *getPapersVC = [[GetPapersViewController alloc] init];
+    getPapersVC.title = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"title"];
     /**
      * 跳转页面
      */
-    [AppDelegate.app.nav pushViewController:vc animated:YES];
+    [AppDelegate.app.nav pushViewController:getPapersVC animated:YES];
 }
 
 @end
