@@ -72,8 +72,8 @@
 }
 - (void)creatButtonWasClicked
 {
-    PapersSearchViewController *sortsView = [[PapersSearchViewController alloc]init];
-//    sortsView.typeId = self.type_id;
+    PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
+    sortsView.typeId = self.type_id;
     [self.navigationController pushViewController:sortsView animated:YES];
     
 }
