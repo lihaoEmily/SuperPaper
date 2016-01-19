@@ -122,7 +122,7 @@
     [generatorBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [generatorBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, -20, 5, 0)];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64 -36)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64 -46)];
     tableView.showsVerticalScrollIndicator = NO;
 
     self.tableView = tableView;
@@ -170,7 +170,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //return [self tableView:tableView cellForRowAtIndexPath:indexPath].frame.size.height;
-    return 150;
+    return 140;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
