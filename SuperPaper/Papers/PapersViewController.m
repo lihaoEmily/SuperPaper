@@ -45,6 +45,7 @@
     [self getData];
 }
 
+#pragma mark - 获取数据
 - (void)getData
 {
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"ownertype",nil];
@@ -86,6 +87,8 @@
            NSLog(@"%@",error);
        }];
 }
+
+#pragma mark - 搭建UI
 - (void)setupUI
 {
     UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"bgImg" ofType:@"png" inDirectory:@"Paper"]];
@@ -130,6 +133,7 @@
     [self.view addSubview:tableView];
 }
 
+#pragma mark - Actions
 - (void)clickToCall
 {
     UIWebView *callWebView = [[UIWebView alloc] init];
@@ -149,6 +153,7 @@
     return @"论文";
 }
 
+#pragma mark - UITabelViewDelegate And UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _paperArray.count;

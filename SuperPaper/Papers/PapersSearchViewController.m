@@ -20,7 +20,6 @@
 
 @implementation SearchTableViewCell
 
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -31,14 +30,14 @@
         [self.contentView addSubview:self.titltLabel];
         
         self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titltLabel.frame.origin.x, CGRectGetMaxY(self.titltLabel.frame) + 5, self.titltLabel.frame.size.width, 40)];
-        self.detailLabel.font = [UIFont systemFontOfSize:13.0];
+        self.detailLabel.font = [UIFont systemFontOfSize:15.0];
         self.detailLabel.textColor = [UIColor grayColor];
         self.detailLabel.numberOfLines = 3;
         [self.contentView addSubview:self.detailLabel];
         
         self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 110, CGRectGetMaxY(self.detailLabel.frame) + 5, 100, 20)];
         self.dateLabel.textAlignment = NSTextAlignmentRight;
-        self.dateLabel.font = [UIFont systemFontOfSize:12.0];
+        self.dateLabel.font = [UIFont systemFontOfSize:14.0];
         self.dateLabel.textColor = [UIColor grayColor];
         self.dateLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.dateLabel];

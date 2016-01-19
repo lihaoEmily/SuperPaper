@@ -90,6 +90,8 @@
 		8446943A1C48B889005619D7 /* usercell8.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694311C48B889005619D7 /* usercell8.png */; };
 		8446943B1C48B889005619D7 /* usercell9.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694321C48B889005619D7 /* usercell9.png */; };
 		845A3CBB1C476C2800D58713 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845A3CBA1C476C2800D58713 /* User.storyboard */; };
+		84896FB51C4DFB24009D7103 /* PublicationIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */; };
+		84896FB81C4DFB59009D7103 /* PublicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84896FB71C4DFB59009D7103 /* PublicationViewController.m */; };
 		84B7BD1B1C4796C300E202A6 /* UIImage+BundleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */; };
 		84B7BD1E1C4796CD00E202A6 /* AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD1D1C4796CD00E202A6 /* AppConfig.m */; };
 		84B7BD211C4796E300E202A6 /* TelephoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD201C4796E300E202A6 /* TelephoneView.m */; };
@@ -286,6 +288,10 @@
 		844694311C48B889005619D7 /* usercell8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell8.png; sourceTree = "<group>"; };
 		844694321C48B889005619D7 /* usercell9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell9.png; sourceTree = "<group>"; };
 		845A3CBA1C476C2800D58713 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
+		84896FB31C4DFB24009D7103 /* PublicationIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceViewController.h; path = Study/PublicationIntroduceViewController.h; sourceTree = "<group>"; };
+		84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceViewController.m; path = Study/PublicationIntroduceViewController.m; sourceTree = "<group>"; };
+		84896FB61C4DFB59009D7103 /* PublicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationViewController.h; path = Study/PublicationViewController.h; sourceTree = "<group>"; };
+		84896FB71C4DFB59009D7103 /* PublicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationViewController.m; path = Study/PublicationViewController.m; sourceTree = "<group>"; };
 		84B7BD191C4796C300E202A6 /* UIImage+BundleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+BundleImage.h"; path = "Utils/UIImage+BundleImage.h"; sourceTree = "<group>"; };
 		84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+BundleImage.m"; path = "Utils/UIImage+BundleImage.m"; sourceTree = "<group>"; };
 		84B7BD1C1C4796CD00E202A6 /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = Utils/AppConfig.h; sourceTree = "<group>"; };
@@ -504,6 +510,10 @@
 				F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */,
 				8180BDE01C4DC8190068751C /* NormalStudyViewController.h */,
 				8180BDE11C4DC8190068751C /* NormalStudyViewController.m */,
+				84896FB31C4DFB24009D7103 /* PublicationIntroduceViewController.h */,
+				84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */,
+				84896FB61C4DFB59009D7103 /* PublicationViewController.h */,
+				84896FB71C4DFB59009D7103 /* PublicationViewController.m */,
 			);
 			name = Study;
 			sourceTree = "<group>";
@@ -1057,6 +1067,7 @@
 				0401D4DC1C41E1E3002E2F12 /* AppInfo.m in Sources */,
 				84C1391D1C4628A300284087 /* AFURLSessionManager.m in Sources */,
 				5807C2E41C473B7A002C5F8E /* MJRefreshAutoGifFooter.m in Sources */,
+				84896FB81C4DFB59009D7103 /* PublicationViewController.m in Sources */,
 				8180BDE21C4DC8190068751C /* NormalStudyViewController.m in Sources */,
 				04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */,
 				84C139651C4628DB00284087 /* SDWebImageCompat.m in Sources */,
@@ -1066,6 +1077,7 @@
 				04FFFDF61C410A6200ECCA1C /* LoginViewController.m in Sources */,
 				F6F3487E1C476F4400AB5CFB /* PapersGeneratorViewController.m in Sources */,
 				84C139661C4628DB00284087 /* SDWebImageDecoder.m in Sources */,
+				84896FB51C4DFB24009D7103 /* PublicationIntroduceViewController.m in Sources */,
 				5807C2EE1C473B7A002C5F8E /* MJRefreshConst.m in Sources */,
 				AAFA08641C49292C00FB0DA4 /* UserHeaderView.m in Sources */,
 				5807C2F11C473B7A002C5F8E /* UIView+MJExtension.m in Sources */,
