@@ -1,21 +1,58 @@
 //
-//  PublicationSearchViewController.m
+//  PapersSearchViewController.m
 //  SuperPaper
 //
-//  Created by Emily on 16/1/13.
+//  Created by Emily on 16/1/18.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
-#import "PublicationSearchViewController.h"
-#import "PublicationSearchTableViewCell.h"
-
+#import "PapersSearchViewController.h"
 #define SEARCHPAGESIZE 30
+#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
-@interface PublicationSearchViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface SearchTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) UILabel *titltLabel;
+@property (nonatomic, strong) UILabel *detailLabel;
+@property (nonatomic, strong) UILabel *dateLabel;
 
 @end
 
-@implementation PublicationSearchViewController
+@implementation SearchTableViewCell
+
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.titltLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, kScreenWidth - 30, 20)];
+        self.titltLabel.font = [UIFont systemFontOfSize:17.0];
+        self.titltLabel.textColor = [UIColor blackColor];
+        [self.contentView addSubview:self.titltLabel];
+        
+        self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titltLabel.frame.origin.x, CGRectGetMaxY(self.titltLabel.frame) + 5, self.titltLabel.frame.size.width, 40)];
+        self.detailLabel.font = [UIFont systemFontOfSize:13.0];
+        self.detailLabel.textColor = [UIColor grayColor];
+        self.detailLabel.numberOfLines = 3;
+        [self.contentView addSubview:self.detailLabel];
+        
+        self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 110, CGRectGetMaxY(self.detailLabel.frame) + 5, 100, 20)];
+        self.dateLabel.textAlignment = NSTextAlignmentRight;
+        self.dateLabel.font = [UIFont systemFontOfSize:12.0];
+        self.dateLabel.textColor = [UIColor grayColor];
+        self.dateLabel.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.dateLabel];
+    }
+    return self;
+}
+
+@end
+
+@interface PapersSearchViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+@end
+
+@implementation PapersSearchViewController
 {
     /// 资源图片文件路径
     NSString *_bundleStr;
@@ -24,7 +61,7 @@
     UITextField *_searchBar;
     
     /// 返回数据
-    NSArray *_responseArr;
+    NSMutableArray *_responseArr;
     
     /// 搜索table
     UITableView *_searchTableView;
@@ -43,6 +80,7 @@
     [super viewDidLoad];
     
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    _linePageIndex = 0;
     [self setupUI];
 }
 
@@ -51,24 +89,17 @@
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    
-    /**
-     ** parameters 参数
-     * ownertype  整型    1：教师  其他不明确
-     * keywords   字符串  搜索的关键字
-     * start_pos  整型    表单中获取数据的开始位置。从0开始
-     * list_num   整型    一次获取list数
-     * group_id   整型    ownertype为1时  1：刊物  其他不明确
-     */
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)(SEARCHPAGESIZE * _linePageIndex)], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
-    NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
-    NSLog(@"%@",urlString);
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:1], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_linePageIndex], @"list_num":[NSNumber numberWithInt:(int)(15 + SEARCHPAGESIZE * _linePageIndex)]};
+    NSString *urlString = [NSString stringWithFormat:@"%@searchpaper.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        _responseArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         NSLog(@"%@",responseObject);
+        NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+        _responseArr = [[NSMutableArray alloc] init];
+        [_responseArr addObjectsFromArray:listArray];
+        _searchTableView.delegate = self;
+        _searchTableView.dataSource = self;
         [_searchTableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -98,8 +129,6 @@
 // UI搭建
 - (void)setupUI
 {
-    self.title = @"刊物搜索";
-    _linePageIndex = 0;
     [self setupSearchBar];
     [self setupTableView];
 }
@@ -159,19 +188,17 @@
 {
     _searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - 50 - 64)];
     _searchTableView.showsVerticalScrollIndicator = NO;
-    _searchTableView.delegate = self;
-    _searchTableView.dataSource = self;
     _searchTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:_searchTableView];
     
     // 下拉刷新
     _searchTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-            [self loadPrePageData];
+        [self loadPrePageData];
     }];
     
     // 上拉加载
     _searchTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-            [self loadNextPageData];
+        [self loadNextPageData];
     }];
 }
 
@@ -203,19 +230,20 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cell";
-    PublicationSearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    SearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[PublicationSearchTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    }        
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
-    [cell.iconImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
-    cell.titleLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
+        cell = [[SearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    cell.titltLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
+    cell.detailLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"description"];
+    cell.dateLabel.text = [[[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"createdate"] componentsSeparatedByString:@" "] objectAtIndex:0];
+    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 90;
+    return 100;
 }
 
 #pragma mark - UIScrollViewDelegate
