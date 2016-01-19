@@ -7,7 +7,10 @@
 //
 
 #import "ClassifiedPapersViewController.h"
+#import "PapersSearchViewController.h"
+#import "ExportableWebViewController.h"
 #import "PapersSortsViewController.h"
+#define SEARCHPAGESIZE 30
 
 @interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -17,13 +20,24 @@
 {
     UITableView *_tableView;
     NSArray *_paperArray;
+    
     /// 资源图片文件路径
     NSString *_bundleStr;
+    
+    /// 下拉加载header
+    MJRefreshNormalHeader *header;
+    
+    /// 上拉刷新footer
+    MJRefreshAutoNormalFooter *footer;
+    
+    /// 当前数据页数
+    NSInteger _linePageIndex;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    _linePageIndex = 0;
     [self getData];
     [self setupUI];
     [self addToolBar];
@@ -66,7 +80,7 @@
 
 - (void)getData
 {
-    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":@""};
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:(int)(SEARCHPAGESIZE * _linePageIndex)], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"paper_tagid":@""};
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -90,6 +104,24 @@
        }];
 }
 
+// 加载前一页数据
+- (void)loadPrePageData
+{
+    if (_linePageIndex > 0) {
+        --_linePageIndex;
+    }
+    [self getData];
+    [_tableView.mj_header endRefreshing];
+}
+
+// 加载后一页数据
+- (void)loadNextPageData
+{
+    ++_linePageIndex;
+    [self getData];
+    [_tableView.mj_footer endRefreshing];
+}
+
 - (void)setupUI
 {
     [self setupTitleView];
@@ -99,16 +131,14 @@
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:_tableView];
     
+    // 下拉刷新
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [_tableView.mj_header endRefreshing];
-        });
+        [self loadPrePageData];
     }];
     
-    _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [_tableView.mj_footer endRefreshing];
-        });
+    // 上拉加载
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self loadNextPageData];
     }];
 }
 
@@ -154,6 +184,17 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 100;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ExportableWebViewController *vc = [[ExportableWebViewController alloc] init];
+    vc.title = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"title"];
+    vc.urlString = @"http://www.baidu.com";
+    /**
+     * 跳转页面
+     */
+    [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
 @end
