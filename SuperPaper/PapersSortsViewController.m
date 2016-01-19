@@ -72,7 +72,6 @@
     }
     cell.textLabel.text = [[_sortData objectAtIndex:indexPath.row] objectForKey:@"tagname"];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    NSLog(@"%@",cell.textLabel.text);
     return cell;
 
 }
