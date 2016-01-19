@@ -66,52 +66,25 @@
 
     NSString *tagId;
 
-    
     /// 下拉加载header
     MJRefreshNormalHeader *header;
     
     /// 上拉刷新footer
     MJRefreshAutoNormalFooter *footer;
-    /// 当前数据页数
-    NSInteger _linePageIndex;
-
-
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    _paperArray = [[NSMutableArray alloc] init];
     tagId = @"";
     [self getData];
     [self setupUI];
-}
-- (void)passTypeId:(NSString *)typeId
-{
-    tagId = typeId;
-    [self getData];
-}
-- (void)sortButtonWasClicked
-{
-
-
-
-}
-- (void)creatButtonWasClicked
-{
-    PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
-    sortsView.typeId = self.type_id;
-    sortsView.delegate =self;
-    [self.navigationController pushViewController:sortsView animated:YES];
-    _paperArray = [[NSMutableArray alloc] init];
-    [self getData];
-    [self setupUI];
-
 }
 
 #pragma mark - 网络请求获取数据
 - (void)getData
 {
-    
     NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":tagId};
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
@@ -121,14 +94,39 @@
        parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
            NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                [_paperArray addObjectsFromArray:listData];
-               _tableView.delegate = self;
-               _tableView.dataSource = self;
+               [_tableView reloadData];
+           }
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           NSLog(@"%@",error);
+       }];
+}
+
+- (void)getDifferentTagData
+{
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":tagId};
+    NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager.requestSerializer setTimeoutInterval:15.0f];
+    [manager POST:urlString
+       parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+           
+       } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           
+           NSDictionary * dataDic = [NSDictionary dictionary];
+           dataDic = responseObject;
+           NSLog(@"%@",dataDic);
+           if (dataDic) {
+               NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+               [_paperArray removeAllObjects];
+               [_paperArray addObjectsFromArray:listData];
                [_tableView reloadData];
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -158,6 +156,8 @@
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)];
     _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:_tableView];
     
@@ -202,7 +202,15 @@
 {
     PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
     sortsView.typeId = self.type_id;
+    sortsView.delegate =self;
     [self.navigationController pushViewController:sortsView animated:YES];
+}
+
+#pragma mark - ClassifiedPapersViewControllerDelegate
+- (void)passTypeId:(NSString *)typeId
+{
+    tagId = typeId;
+    [self getDifferentTagData];
 }
 
 #pragma mark - UITableViewDataSource and UITableViewDelegate
