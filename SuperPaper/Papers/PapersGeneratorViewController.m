@@ -36,6 +36,7 @@
     UIScrollView *_paperScrollerView;
     
     UIView *_lineView;
+    
 }
 
 - (void)viewDidLoad {
@@ -162,6 +163,7 @@
     textView.text = _content;
     textView.textColor = [UIColor blackColor];
     textView.font = [UIFont systemFontOfSize:17.0];
+    [textView setEditable:NO];
     [_paperScrollerView addSubview:textView];
 }
 
@@ -176,6 +178,30 @@
         [alert addAction:cancelAction];
         [self presentViewController:alert animated:YES completion:nil];
     }
+    [self getData];
+}
+
+- (void)exportPapers:(UIButton *)sender
+{
+    if (_content) {
+        ASSaveData *data = [[ASSaveData alloc] init];
+        [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"没有可导出的论文" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
+#pragma mark - 获取数据
+- (void)getData
+{
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:54],@"uid",[NSNumber numberWithInteger:1],@"keywordsnum",_searchBar.text,@"keywords",nil];
     NSLog(@"%@",paramDic);
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_create.php",BASE_URL];
@@ -197,17 +223,6 @@
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
        }];
-}
-
-- (void)exportPapers:(UIButton *)sender
-{
-    ASSaveData *data = [[ASSaveData alloc] init];
-    [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

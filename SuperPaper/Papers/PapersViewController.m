@@ -45,6 +45,7 @@
     [self getData];
 }
 
+#pragma mark - 获取数据
 - (void)getData
 {
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"ownertype",nil];
@@ -58,6 +59,7 @@
        parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
 
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [_paperArray removeAllObjects];
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
            NSLog(@"%@",dataDic);
@@ -85,6 +87,8 @@
            NSLog(@"%@",error);
        }];
 }
+
+#pragma mark - 搭建UI
 - (void)setupUI
 {
     UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"bgImg" ofType:@"png" inDirectory:@"Paper"]];
@@ -121,7 +125,7 @@
     [generatorBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [generatorBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, -20, 5, 0)];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64 -36)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64 - 64 -46)];
     tableView.showsVerticalScrollIndicator = NO;
 
     self.tableView = tableView;
@@ -129,6 +133,7 @@
     [self.view addSubview:tableView];
 }
 
+#pragma mark - Actions
 - (void)clickToCall
 {
     UIWebView *callWebView = [[UIWebView alloc] init];
@@ -148,6 +153,7 @@
     return @"论文";
 }
 
+#pragma mark - UITabelViewDelegate And UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _paperArray.count;
@@ -169,7 +175,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //return [self tableView:tableView cellForRowAtIndexPath:indexPath].frame.size.height;
-    return 150;
+    return 140;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
