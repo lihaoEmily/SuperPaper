@@ -11,6 +11,44 @@
 #import "ExportableWebViewController.h"
 #import "PapersSortsViewController.h"
 #define SEARCHPAGESIZE 30
+#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
+
+@interface ClassifiedPapersCell : UITableViewCell
+
+@property (nonatomic, strong) UILabel *titltLabel;
+@property (nonatomic, strong) UILabel *detailLabel;
+@property (nonatomic, strong) UILabel *dateLabel;
+
+@end
+
+@implementation ClassifiedPapersCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.titltLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, kScreenWidth - 30, 20)];
+        self.titltLabel.font = [UIFont systemFontOfSize:17.0];
+        self.titltLabel.textColor = [UIColor blackColor];
+        [self.contentView addSubview:self.titltLabel];
+        
+        self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titltLabel.frame.origin.x, CGRectGetMaxY(self.titltLabel.frame) + 5, self.titltLabel.frame.size.width, 40)];
+        self.detailLabel.font = [UIFont systemFontOfSize:15.0];
+        self.detailLabel.textColor = [UIColor grayColor];
+        self.detailLabel.numberOfLines = 3;
+        [self.contentView addSubview:self.detailLabel];
+        
+        self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 110, CGRectGetMaxY(self.detailLabel.frame) + 5, 100, 20)];
+        self.dateLabel.textAlignment = NSTextAlignmentRight;
+        self.dateLabel.font = [UIFont systemFontOfSize:14.0];
+        self.dateLabel.textColor = [UIColor grayColor];
+        self.dateLabel.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.dateLabel];
+    }
+    return self;
+}
+
+@end
 
 @interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -19,7 +57,7 @@
 @implementation ClassifiedPapersViewController
 {
     UITableView *_tableView;
-    NSArray *_paperArray;
+    NSMutableArray *_paperArray;
     
     /// 资源图片文件路径
     NSString *_bundleStr;
@@ -29,58 +67,20 @@
     
     /// 上拉刷新footer
     MJRefreshAutoNormalFooter *footer;
-    
-    /// 当前数据页数
-    NSInteger _linePageIndex;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
-    _linePageIndex = 0;
+    _paperArray = [[NSMutableArray alloc] init];
     [self getData];
     [self setupUI];
-    [self addToolBar];
-}
-- (void)addToolBar{
-    
-    UIButton * sortButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    sortButton.frame=CGRectMake(0, 5, 25, 25);
-    [sortButton setImage:[UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchIcon" ofType:@"png" inDirectory:@"temp"]] forState:UIControlStateNormal];
-    [sortButton addTarget:self action:@selector(sortButtonWasClicked)forControlEvents:UIControlEventTouchDown];
-    UIView *rightBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 60, 31)];
-    [rightBarView addSubview:sortButton];
-    
-     UIButton * creatButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [creatButton setFrame:CGRectMake(30, 5, 25, 25)];
-    [creatButton setImage:[UIImage imageNamed:@"c_address.png"] forState:UIControlStateNormal];
-    [creatButton addTarget:self action:@selector(creatButtonWasClicked)forControlEvents:UIControlEventTouchDown];
-    [rightBarView addSubview:creatButton];
-    rightBarView.backgroundColor=[UIColor clearColor];
-    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithCustomView:rightBarView];
-    
-    self.navigationItem.rightBarButtonItem = rightBtn;
-
-
 }
 
-- (void)sortButtonWasClicked
-{
-
-
-
-}
-- (void)creatButtonWasClicked
-{
-    PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
-    sortsView.typeId = self.type_id;
-    [self.navigationController pushViewController:sortsView animated:YES];
-    
-}
-
+#pragma mark - 网络请求获取数据
 - (void)getData
 {
-    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:(int)(SEARCHPAGESIZE * _linePageIndex)], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"paper_tagid":@""};
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:(int)_paperArray.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"paper_tagid":@""};
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -93,8 +93,8 @@
            dataDic = responseObject;
            NSLog(@"%@",dataDic);
            if (dataDic) {
-               NSArray * listData = [dataDic objectForKey:@"list"];
-               _paperArray = listData;
+               NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+               [_paperArray addObjectsFromArray:listData];
                _tableView.delegate = self;
                _tableView.dataSource = self;
                [_tableView reloadData];
@@ -107,9 +107,7 @@
 // 加载前一页数据
 - (void)loadPrePageData
 {
-    if (_linePageIndex > 0) {
-        --_linePageIndex;
-    }
+    [_paperArray removeAllObjects];
     [self getData];
     [_tableView.mj_header endRefreshing];
 }
@@ -117,11 +115,11 @@
 // 加载后一页数据
 - (void)loadNextPageData
 {
-    ++_linePageIndex;
     [self getData];
     [_tableView.mj_footer endRefreshing];
 }
 
+#pragma mark - UI搭建
 - (void)setupUI
 {
     [self setupTitleView];
@@ -144,13 +142,35 @@
 
 - (void)setupTitleView
 {
-//    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2, 0, self.view.frame.size.width / 2, 44)];
-//    titleView.backgroundColor = [UIColor yellowColor];
-//    self.navigationItem.titleView = titleView;
-//    UIButton
+    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.frame = CGRectMake(10, 0, 25, 25);
+    [searchBtn setImage:image forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchpPapers) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
     
-//    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    searchBtn setBackgroundImage:<#(nullable UIImage *)#> forState:<#(UIControlState)#>
+    UIButton *sortBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    sortBtn.frame = CGRectMake(10, 0, 25, 25);
+    [sortBtn setImage:image forState:UIControlStateNormal];
+    [sortBtn addTarget:self action:@selector(sortPapers) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortBtn];
+    
+    self.navigationItem.rightBarButtonItems = @[searchItem, sortItem];
+}
+
+#pragma mark - Actions
+- (void)searchpPapers
+{
+    PapersSearchViewController *papersSearchVC = [[PapersSearchViewController alloc] init];
+    papersSearchVC.title = [NSString stringWithFormat:@"%@搜索",self.title];
+    [AppDelegate.app.nav pushViewController:papersSearchVC animated:YES];
+}
+
+- (void)sortPapers
+{
+    PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
+    sortsView.typeId = self.type_id;
+    [self.navigationController pushViewController:sortsView animated:YES];
 }
 
 #pragma mark - UITableViewDataSource and UITableViewDelegate
@@ -162,21 +182,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    ClassifiedPapersCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell = [[ClassifiedPapersCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
-    cell.textLabel.text = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"title"];
-    cell.detailTextLabel.text = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"description"];
-    cell.detailTextLabel.numberOfLines = 3;
-    cell.detailTextLabel.textColor = [UIColor grayColor];
-    
-    UILabel *dataLabel = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 110, 80, 100, 20)];
-    dataLabel.text = [[[[_paperArray objectAtIndex:indexPath.row] valueForKey:@"createdate"] componentsSeparatedByString:@" "] objectAtIndex:0];
-    dataLabel.textAlignment = NSTextAlignmentRight;
-    dataLabel.font = [UIFont systemFontOfSize:12.0];
-    dataLabel.textColor = [UIColor grayColor];
-    [cell.contentView addSubview:dataLabel];
+    if (_paperArray.count == 0) {
+        return cell;
+    }
+    cell.titltLabel.text = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"title"];
+    cell.detailLabel.text = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"description"];
+    cell.dateLabel.text = [[[[_paperArray objectAtIndex:indexPath.row] valueForKey:@"createdate"] componentsSeparatedByString:@" "] objectAtIndex:0];
     
     return cell;
 }
