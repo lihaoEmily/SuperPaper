@@ -20,10 +20,7 @@
 
 
 @interface MainViewController ()<TabBarDelegate>
-/**
- *  TabBar
- */
-@property (strong, nonatomic) TabBar *tabbar;
+
 /**
  *  首页
  */
