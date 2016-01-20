@@ -51,6 +51,11 @@
     _jobTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self pullDownPageData];
     }];
+    
+    // 上拉加载
+    _jobTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self pullUpPageData];
+    }];
 }
 
 // 下拉刷新
@@ -59,6 +64,13 @@
     [_responseNewsInfoArr removeAllObjects];
     [self getJobPageNewsInfo];
     [_jobTableView.mj_header endRefreshing];
+}
+
+// 上拉加载
+- (void)pullUpPageData
+{
+    [self getJobPageNewsInfo];
+    [_jobTableView.mj_footer endRefreshing];
 }
 
 - (NSString *)titleName {
@@ -164,7 +176,7 @@
         cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
         [cell.contentView addSubview:cycleScrollView];
         
-        //         --- 模拟加载延迟
+        // --- 模拟加载延迟
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             cycleScrollView.imageURLStringsGroup = imagesURLStrings;
         });
