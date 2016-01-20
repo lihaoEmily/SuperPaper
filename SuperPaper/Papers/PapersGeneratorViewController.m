@@ -7,11 +7,11 @@
 //
 
 #import "PapersGeneratorViewController.h"
-#import "AFNetworking.h"
+#import "ASSaveData.h"
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-@interface PapersGeneratorViewController ()
+@interface PapersGeneratorViewController ()<UITextFieldDelegate>
 
 @end
 
@@ -36,11 +36,12 @@
     UIScrollView *_paperScrollerView;
     
     UIView *_lineView;
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     [self setupUI];
 }
@@ -76,6 +77,8 @@
     _searchBar.layer.cornerRadius = 5;
     _searchBar.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _searchBar.placeholder = @"请输入论文题目";
+    _searchBar.delegate = self;
+    _searchBar.clearButtonMode = UITextFieldViewModeAlways;
     [searchBarImg addSubview:_searchBar];
     
     // 右侧文字搜索button
@@ -161,6 +164,8 @@
     textView.text = _content;
     textView.textColor = [UIColor blackColor];
     textView.font = [UIFont systemFontOfSize:17.0];
+    textView.returnKeyType = UIReturnKeyDone;
+    [textView setEditable:NO];
     [_paperScrollerView addSubview:textView];
 }
 
@@ -168,12 +173,37 @@
 /// 生成论文
 - (void)clickToGenerator
 {
+    [_searchBar resignFirstResponder];
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入论文题目" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
         [alert addAction:cancelAction];
         [self presentViewController:alert animated:YES completion:nil];
     }
+    [self getData];
+}
+
+- (void)exportPapers:(UIButton *)sender
+{
+    if (_content) {
+        ASSaveData *data = [[ASSaveData alloc] init];
+        [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"没有可导出的论文" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
+#pragma mark - 获取数据
+- (void)getData
+{
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:54],@"uid",[NSNumber numberWithInteger:1],@"keywordsnum",_searchBar.text,@"keywords",nil];
     NSLog(@"%@",paramDic);
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_create.php",BASE_URL];
@@ -197,9 +227,11 @@
        }];
 }
 
-- (void)exportPapers:(UIButton *)sender
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"tag为%ld的btn点击了导出",sender.tag);
+    [_searchBar resignFirstResponder];
+    return YES;
 }
 
 @end
