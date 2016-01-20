@@ -244,7 +244,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 2) {
-        
+        NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
+        normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+        normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+        [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
     }
 }
 

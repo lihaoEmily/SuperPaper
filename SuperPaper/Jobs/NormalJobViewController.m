@@ -8,6 +8,7 @@
 
 #import "NormalJobViewController.h"
 #import "HomeNewsCell.h"
+#import "NormalWebViewController.h"
 
 #define kScreenWidth   [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight   [UIScreen mainScreen].bounds.size.height
@@ -75,7 +76,7 @@
     
     /**
      ** parameters 参数
-     * ownertype  整型    固定值2:学习页
+     * ownertype  整型    固定值 2:学习页
      * group_id   整型    19:公务员，20：事业单位，21：国企单位，22：外企，23：民营，24：兼职
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
@@ -126,6 +127,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 70;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
+    normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+    normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+    [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
 }
 
 @end
