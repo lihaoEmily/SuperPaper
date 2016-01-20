@@ -14,6 +14,10 @@
 #define kScreenHeight   [UIScreen mainScreen].bounds.size.height
 
 @interface NormalJobViewController ()<UITableViewDataSource,UITableViewDelegate>
+/**
+ *  加载进度
+ */
+@property(nonatomic, strong) UIActivityIndicatorView * indicatorView;
 
 @end
 
@@ -27,6 +31,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     _responseNewsInfoArr = [[NSMutableArray alloc] init];
+    
     [self setupUI];
     [self getJobNewsInfo];
 }
@@ -34,6 +39,11 @@
 #pragma mark - UI搭建
 - (void)setupUI
 {
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _indicatorView.frame = CGRectMake(kScreenWidth / 2 - 15, kScreenHeight / 2 - 15, 30, 30);
+    [_indicatorView startAnimating];
+    [self.view addSubview:_indicatorView];
+    
     _jobTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - 64)];
     _jobTableView.dataSource = self;
     _jobTableView.delegate = self;
@@ -88,6 +98,9 @@
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        [_indicatorView stopAnimating];
+        [_indicatorView setHidden:YES];
+        
         NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseNewsInfoArr addObjectsFromArray:myArr];
         NSLog(@"%@",responseObject);
@@ -121,6 +134,7 @@
     NSString *timeString = [[[_responseNewsInfoArr objectAtIndex:indexPath.row] valueForKey:@"createdate"] substringToIndex:10];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: urlString, @"image", [[_responseNewsInfoArr objectAtIndex:indexPath.row] valueForKey:@"title"], @"title", timeString, @"time", nil];
     cell.infoDict = dict;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
