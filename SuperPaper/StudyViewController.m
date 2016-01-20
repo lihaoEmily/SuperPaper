@@ -245,9 +245,7 @@
             
             [imagesURLStrings addObject:iamgeURL];
         }
-        
-        
-        
+
         // >>>>>>>>>>>>>>>>>>>>>>>>> demo轮播图2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
         // 网络加载 --- 创建带标题的图片轮播器
@@ -285,7 +283,7 @@
             serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
             [serviceBtn addTarget:self action:@selector(serviceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [serviceBtn setTitle:dic[@"title"] forState:UIControlStateNormal];
-            [serviceBtn setImage:[UIImage imageWithASName:dic[@"icon"] directory:@"homePage"] forState:UIControlStateNormal];
+            [serviceBtn setImage:[UIImage imageWithASName:dic[@"icon"] directory:@"studyPage"] forState:UIControlStateNormal];
             [cell.contentView addSubview:serviceBtn];
         }
         
@@ -312,6 +310,7 @@
                               timeString,@"time", nil];
         
         cell.infoDict = dict;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         return cell;
         
