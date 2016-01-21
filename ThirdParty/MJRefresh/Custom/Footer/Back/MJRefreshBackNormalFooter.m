@@ -20,9 +20,9 @@
 - (UIImageView *)arrowView
 {
     if (!_arrowView) {
-        UIImage *image = [UIImage imageNamed:MJRefreshSrcName(@"arrow.png")] ?: [UIImage imageNamed:MJRefreshFrameworkSrcName(@"arrow.png")];
-        UIImageView *arrowView = [[UIImageView alloc] initWithImage:image];
-        [self addSubview:_arrowView = arrowView];
+//        UIImage *image = [UIImage imageNamed:MJRefreshSrcName(@"arrow.png")] ?: [UIImage imageNamed:MJRefreshFrameworkSrcName(@"arrow.png")];
+//        UIImageView *arrowView = [[UIImageView alloc] initWithImage:image];
+//        [self addSubview:_arrowView = arrowView];
     }
     return _arrowView;
 }
@@ -33,6 +33,7 @@
     if (!_loadingView) {
         UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:self.activityIndicatorViewStyle];
         loadingView.hidesWhenStopped = YES;
+        loadingView.color = [UIColor whiteColor];
         [self addSubview:_loadingView = loadingView];
     }
     return _loadingView;
