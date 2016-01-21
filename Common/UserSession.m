@@ -16,13 +16,6 @@
 @end
 
 @implementation UserSession
-
-NSString *const kUserRole  = @"UserRole";
-NSString *const kUserName  = @"UserName";
-NSString *const kUserID    = @"UserId";
-NSString *const kUserTel   = @"UserTel";
-NSString *const kUserToken = @"UserToken";
-
 #pragma mark - Create the singleton
 + (UserSession *)sharedInstance {
     static dispatch_once_t onceToken;
@@ -34,25 +27,48 @@ NSString *const kUserToken = @"UserToken";
     return sSharedInstance;
 }
 
-#pragma mark - UserRole Getter
-- (UserRole)currentRole {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults synchronize];
-    id role = [userDefaults valueForKey:kUserRole];
-    
-    if ([role isEqual:@(kUserRoleStudent)]) {
-        return kUserRoleStudent;
-    } else {
-        return kUserRoleTeacher;
+-(instancetype)init
+{
+    if (self = [super init]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *userID = [userDefaults valueForKey:kUserID];
+        if (!userID) {
+            
+        }else{
+            self.currentUserName = [userDefaults valueForKey:kUserName];
+            self.currentUserTelNum = [userDefaults valueForKey:kUserTel];
+            NSNumber *gen = [userDefaults valueForKey:kUserGen];
+            self.currentUserGen = gen.integerValue;
+            NSNumber *age = [userDefaults valueForKey:kUserAge];
+            self.currentUserAge = age.integerValue;
+            NSNumber *role = [userDefaults valueForKey:kUserRole];
+            self.currentRole = role.integerValue;
+            self.currentUserCollege = [userDefaults valueForKey:kUserCollege];
+            
+        }
+        
     }
+    return self;
 }
-
-#pragma mark - UserRole Setter
-- (void)setCurrentRole:(UserRole)currentRole {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setValue:@(currentRole) forKey:kUserRole];
-    [userDefaults synchronize];
-}
+//#pragma mark - UserRole Getter
+//- (UserRole)currentRole {
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults synchronize];
+//    id role = [userDefaults valueForKey:kUserRole];
+//    
+//    if ([role isEqual:@(kUserRoleStudent)]) {
+//        return kUserRoleStudent;
+//    } else {
+//        return kUserRoleTeacher;
+//    }
+//}
+//
+//#pragma mark - UserRole Setter
+//- (void)setCurrentRole:(UserRole)currentRole {
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults setValue:@(currentRole) forKey:kUserRole];
+//    [userDefaults synchronize];
+//}
 
 #pragma mark - Store the information for the current user
 - (void)saveUserProfileWithInfo:(NSDictionary *)infoDic {
@@ -87,9 +103,9 @@ NSString *const kUserToken = @"UserToken";
     NSString * key = nil;
     id value = nil;
     if (self.currentRole == kUserRoleStudent) {
-        keyString = [NSString stringWithFormat:@"%@%@",ROLE_STUDENT,keyString];
+        key = [NSString stringWithFormat:@"%@%@",ROLE_STUDENT,keyString];
     } else {
-        keyString = [NSString stringWithFormat:@"%@%@",ROLE_TEACHER,keyString];
+        key = [NSString stringWithFormat:@"%@%@",ROLE_TEACHER,keyString];
     }
     if (key) {
         value = [userDefaults valueForKey:key];

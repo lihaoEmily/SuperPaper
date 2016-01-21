@@ -32,6 +32,9 @@
     if (!_stateLabel) {
         [self addSubview:_stateLabel = [UILabel label]];
     }
+    
+    //上拉加载时隐藏footer图片和文字
+    _stateLabel.hidden = YES;
     return _stateLabel;
 }
 
