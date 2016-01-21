@@ -132,7 +132,7 @@
                                     <constraint firstAttribute="height" constant="38" id="RFP-c9-VYu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
                                     <outlet property="delegate" destination="kh8-ts-MFN" id="4hU-wa-3NT"/>
                                 </connections>
@@ -140,7 +140,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="输入短信验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mjA-cm-Gon">
                                 <rect key="frame" x="25" y="113" width="550" height="38"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
                                     <outlet property="delegate" destination="kh8-ts-MFN" id="aX5-Vj-gNm"/>
                                 </connections>
@@ -148,7 +148,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="6-16位字母和数字密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xrg-eG-2Ev">
                                 <rect key="frame" x="25" y="176" width="550" height="38"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                 <connections>
                                     <outlet property="delegate" destination="kh8-ts-MFN" id="WYq-KE-VOw"/>
                                 </connections>
@@ -156,7 +156,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="输入确认密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uS3-Q5-lF6">
                                 <rect key="frame" x="25" y="239" width="550" height="38"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                 <connections>
                                     <outlet property="delegate" destination="kh8-ts-MFN" id="UUD-be-CW0"/>
                                 </connections>
@@ -164,7 +164,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="填写推广码抽取大奖爱我去！（可选）" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xNN-b7-X8a">
                                 <rect key="frame" x="25" y="302" width="550" height="38"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                 <connections>
                                     <outlet property="delegate" destination="kh8-ts-MFN" id="Dkd-u3-hNA"/>
                                 </connections>
@@ -313,9 +313,12 @@
                         <outlet property="SMSVerifyCodeTextField" destination="mjA-cm-Gon" id="EGe-6T-a3w"/>
                         <outlet property="agreeBtn" destination="fSn-H6-k3u" id="Ifh-4R-fpH"/>
                         <outlet property="confirmPwdTextField" destination="uS3-Q5-lF6" id="Mnc-7K-iIt"/>
+                        <outlet property="getSMSVerifyCodeBtn" destination="1Nv-FN-O6a" id="aQ2-3Z-RaB"/>
                         <outlet property="pwdTextField" destination="xrg-eG-2Ev" id="HrJ-8K-ONb"/>
                         <outlet property="qRCodeTextField" destination="xNN-b7-X8a" id="sEx-EN-a5G"/>
                         <outlet property="registerBtn" destination="vbj-32-Vaj" id="Et5-Qc-PBc"/>
+                        <outlet property="showConfirmPwdBtn" destination="iWE-ap-Zlz" id="4GH-iQ-fhE"/>
+                        <outlet property="showPwdBtn" destination="G1L-2d-oUv" id="I9C-fF-Zax"/>
                         <outlet property="telNumTextField" destination="DZU-2I-LSu" id="qId-Hg-37a"/>
                     </connections>
                 </viewController>
@@ -345,12 +348,12 @@
                                     <constraint firstAttribute="height" constant="38" id="bz4-z3-hlb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="6-16位字母和数字密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q1A-tX-TiZ">
                                 <rect key="frame" x="25" y="113" width="550" height="38"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMm-JA-ibY">
                                 <rect key="frame" x="528" y="117" width="44" height="30"/>
