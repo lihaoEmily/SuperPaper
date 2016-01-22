@@ -32,6 +32,12 @@
     _leftTable.separatorColor = [UIColor whiteColor];
     _leftTable.separatorInset = UIEdgeInsetsMake(0,0, 0, 0);
     _leftTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_leftTable setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
     [self.view addSubview:_leftTable];
     
     _rightTable = [[UITableView alloc] init];
