@@ -8,6 +8,11 @@
 
 #import "UserViewController.h"
 #import "MainViewController.h"
+#import "UserSession.h"
+#import "UserTableViewCell.h"
+#import "RegisterViewController.h"
+#import "LoginViewController.h"
+#import <CoreTelephony/CTCall.h>
 typedef enum{
     
     UserHeaderTypeLogin,
@@ -17,24 +22,37 @@ typedef enum{
 }UserHeaderType;
 
 
-@interface UserViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface UserViewController () <UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
+{
+    NSArray *_titles;
+}
 
 @property (weak, nonatomic) IBOutlet UITableView *backTableView;
 @property (nonatomic ,strong) UIView *loginHeaderView;
 @property (nonatomic ,strong) UIView *userHeaderView;
-@property (weak, nonatomic)  UILabel *displayTypeLabel;
-@property (weak, nonatomic)  UILabel *paperNumLabel;
-@property (weak, nonatomic)  UILabel *telephoneNumLabel;
-@property (weak, nonatomic) UIButton *loginButton;
-@property (weak, nonatomic) UIButton *registerButton;
-@property (weak, nonatomic) UIButton *userImageButton;
+
+@property (strong, nonatomic) UIButton *loginButton;
+@property (strong, nonatomic) UIButton *registerButton;
+
 
 @end
 
+static NSString *cellIdentifier = @"UserTableViewCell";
 @implementation UserViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _titles = @[@"我的消息",
+                @"个人信息",
+                @"我的账户",
+                @"我的邀请",
+                @"职业选择",
+                @"我的论文",
+                @"关于我们",
+                @"意见反馈",
+                @"客服电话"
+                ];
+
     [self setupLoginHeaderView];
     [self setupUserHeaderView];
     
@@ -73,34 +91,37 @@ typedef enum{
 - (void) setupLoginHeaderView
 {
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 130)];
+    imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:@"bg_mine_head_login"];
     self.loginHeaderView = imageView;
     
-    UIButton *loginBtn = [[UIButton alloc]init];
-    [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
-    [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [loginBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:24]];
-    self.loginButton = loginBtn;
-    loginBtn.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *loginBtnWidthCon = [NSLayoutConstraint constraintWithItem:loginBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
-    NSLayoutConstraint *loginBtnHeightCon = [NSLayoutConstraint constraintWithItem:loginBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:60];
-    NSLayoutConstraint *loginBtnTrailingCon = [NSLayoutConstraint constraintWithItem:loginBtn attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:-24];
-    NSLayoutConstraint *loginBtnCenterYCon = [NSLayoutConstraint constraintWithItem:loginBtn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-    [imageView addSubview:loginBtn];
-    [imageView addConstraints:@[loginBtnWidthCon,loginBtnHeightCon,loginBtnTrailingCon,loginBtnCenterYCon]];
-    
     UIButton *registerBtn = [[UIButton alloc]init];
     [registerBtn setTitle:@"注册" forState:UIControlStateNormal];
-    [registerBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:24]];
     [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [registerBtn addTarget:self action:@selector(userRegister) forControlEvents:UIControlEventTouchUpInside];
+    [registerBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:19]];
     self.registerButton = registerBtn;
     registerBtn.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *registerBtnWidthCon = [NSLayoutConstraint constraintWithItem:registerBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
     NSLayoutConstraint *registerBtnHeightCon = [NSLayoutConstraint constraintWithItem:registerBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:60];
-    NSLayoutConstraint *registerBtnTrailingCon = [NSLayoutConstraint constraintWithItem:registerBtn attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:24];
+    NSLayoutConstraint *registerBtnTrailingCon = [NSLayoutConstraint constraintWithItem:registerBtn attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:-24];
     NSLayoutConstraint *registerBtnCenterYCon = [NSLayoutConstraint constraintWithItem:registerBtn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
     [imageView addSubview:registerBtn];
     [imageView addConstraints:@[registerBtnWidthCon,registerBtnHeightCon,registerBtnTrailingCon,registerBtnCenterYCon]];
+    
+    UIButton *loginBtn = [[UIButton alloc]init];
+    [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+    [loginBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:19]];
+    [loginBtn addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
+    [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.loginButton = loginBtn;
+    loginBtn.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *loginBtnWidthCon = [NSLayoutConstraint constraintWithItem:loginBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
+    NSLayoutConstraint *loginBtnHeightCon = [NSLayoutConstraint constraintWithItem:loginBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:60];
+    NSLayoutConstraint *loginBtnTrailingCon = [NSLayoutConstraint constraintWithItem:loginBtn attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:24];
+    NSLayoutConstraint *loginBtnCenterYCon = [NSLayoutConstraint constraintWithItem:loginBtn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+    [imageView addSubview:loginBtn];
+    [imageView addConstraints:@[loginBtnWidthCon,loginBtnHeightCon,loginBtnTrailingCon,loginBtnCenterYCon]];
     
     
     UIView *whiteLine = [[UIView alloc]init];
@@ -109,7 +130,7 @@ typedef enum{
     NSLayoutConstraint *whiteLineWidthCon = [NSLayoutConstraint constraintWithItem:whiteLine attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:1];
     NSLayoutConstraint *whiteLineCenterXCon = [NSLayoutConstraint constraintWithItem:whiteLine attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
     NSLayoutConstraint *whiteLineCenterYCon = [NSLayoutConstraint constraintWithItem:whiteLine attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-    NSLayoutConstraint *whiteLineHeightCon = [NSLayoutConstraint constraintWithItem:whiteLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:50];
+    NSLayoutConstraint *whiteLineHeightCon = [NSLayoutConstraint constraintWithItem:whiteLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:25];
     [imageView addSubview:whiteLine];
     [imageView addConstraints:@[whiteLineWidthCon,whiteLineHeightCon,whiteLineCenterXCon,whiteLineCenterYCon]];
     
@@ -120,6 +141,7 @@ typedef enum{
 - (void) setupUserHeaderView
 {
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 130)];
+    imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:@"bg_mine_head_login"];
     self.userHeaderView = imageView;
     UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"user_normalIcon"]];
@@ -170,6 +192,44 @@ typedef enum{
     
 }
 
+- (void) userRegister
+{
+    RegisterViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"register"];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+- (void) userLogin
+{
+    LoginViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)popupDisplayTypeChoosingActionSheet
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"学生" otherButtonTitles:@"教师", nil];
+    [sheet showInView:self.view];
+}
+
+//MARK: UIActionSheet Delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (0 == buttonIndex) {
+        if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
+            [UserSession sharedInstance].currentRole = kUserRoleStudent;
+            MainViewController *parentController = (MainViewController *)self.parentViewController;
+            parentController.tabbar.tabBarDisplayType = MainTabBarDisplayTypeStudent;
+            [self.backTableView reloadData];
+        }
+        
+    }else if(1 == buttonIndex){
+        if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
+            [UserSession sharedInstance].currentRole = kUserRoleTeacher;
+            MainViewController *parentController = (MainViewController *)self.parentViewController;
+            parentController.tabbar.tabBarDisplayType = MainTabBarDisplayTypeTeacher;
+            [self.backTableView reloadData];
+        }
+    }
+}
 //MARK: TabelViewDataSource,Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -191,33 +251,27 @@ typedef enum{
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell = nil;
+    UserTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (indexPath.section == 0)
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"userReuse%ld",indexPath.row ]];
-        if (indexPath.row == 4)
-        {
-            self.displayTypeLabel = [cell viewWithTag:178802];
-        }else if (indexPath.row == 5)
-        {
-            self.paperNumLabel = [cell viewWithTag:178803];
-        }
+        cell.titleLabel.text = _titles[indexPath.row];
+        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%lu",indexPath.row + 1]];
+        if (4 == indexPath.row) {
+            cell.contentLabel.text = (kUserRoleStudent == [UserSession sharedInstance].currentRole)?@"学生":@"教师";
+        }else if(5 == indexPath.row){
+            cell.contentLabel.text = @"40";
+        }else
+            cell.contentLabel.text = @"";
+
     }else if (indexPath.section == 1)
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"userCell%ld",indexPath.row ]];
-        if (indexPath.row == 2)
-        {
-            self.telephoneNumLabel = [cell viewWithTag:178804];
-        }
+        cell.titleLabel.text = _titles[indexPath.row + 6];
+        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%lu",indexPath.row + 7]];
+        if (2 == indexPath.row) {
+            cell.contentLabel.text = @"0411-88160257";
+        }else cell.contentLabel.text = @"";
     }
-    
-    if (cell == nil)
-    {
-        NSLog(@"indexpathsection %ld  indexpath.row = %ld",indexPath.section , indexPath.row);
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@""];
-    }
-
     
     return cell;
 }
@@ -239,7 +293,7 @@ typedef enum{
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (0 == section) {
-        return self.userHeaderView;
+        return self.loginHeaderView;
     }else
         return nil;
 }
@@ -262,6 +316,9 @@ typedef enum{
                 break;
             case 3:
                 colorString = @"pink";  // 我的邀请
+                break;
+            case 4:
+                [self popupDisplayTypeChoosingActionSheet];
                 break;
             case 5:
                 colorString = @"gray";  // 我的论文
