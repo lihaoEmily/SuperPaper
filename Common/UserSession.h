@@ -13,6 +13,20 @@ typedef NS_ENUM(NSInteger, UserRole){
     kUserRoleTeacher = 1,
     kUserRoleStudent = 2
 };
+typedef NS_ENUM(NSInteger, UserGen) {
+    kUserGen_Man = 0,
+    kUserGen_Woman = 1
+};
+#pragma mark - Public Keys
+#define kUserRole @"UserRole"
+#define kUserName @"UserName"
+#define kUserGen @"UserGen"
+#define kUserAge @"UserAge"
+#define kUserID @"UserID"
+#define kUserTel @"UserTel"
+#define kUserCollege @"UserCollege"
+#define kUserLastUserTel @"LastUserTel"
+////如还有其实的Key请续断追加
 
 /**
  *  @brief 用户会话，监测用户状态:
@@ -21,38 +35,36 @@ typedef NS_ENUM(NSInteger, UserRole){
  *  3.
  */
 @interface UserSession : NSObject
-#pragma mark - Public Keys
-/**
- *  用户角色 Key
- */
-FOUNDATION_EXTERN NSString *const kUserRole;
-/**
- *  用户名 Key
- */
-FOUNDATION_EXTERN NSString *const kUserName;
-/**
- *  用户ID Key
- */
-FOUNDATION_EXTERN NSString *const kUserID;
-/**
- *  用户电话 Key
- */
-FOUNDATION_EXTERN NSString *const kUserTel;
-/**
- *  用户Token Key
- */
-FOUNDATION_EXTERN NSString *const kUserToken;
-//如还有其实的Key请续断追加
 
 #pragma mark - Public Propeties
 /**
- *  用户角色（老师、学生）
+ *  当前用户角色（老师、学生）
  */
 @property (nonatomic, assign) UserRole currentRole;
 /**
- *  当前用户
+ *  当前用户id
  */
-@property (nonatomic, strong) NSString *currentUser;
+@property (nonatomic ,copy) NSString *currentUserID;
+/**
+ *  当前用户电话
+ */
+@property (nonatomic ,copy) NSString *currentUserTelNum;
+/**
+ *  当前用户性别
+ */
+@property (nonatomic ,assign) UserGen currentUserGen;
+/**
+ *  当前用户姓名
+ */
+@property (nonatomic, strong) NSString *currentUserName;
+/**
+ *  当前用户年龄
+ */
+@property (nonatomic ,assign) NSInteger currentUserAge;
+/**
+ *  当前用户学校名称
+ */
+@property (nonatomic, copy) NSString *currentUserCollege;
 /**
  *  是否已经登录
  */
