@@ -108,6 +108,7 @@
 		844694391C48B889005619D7 /* usercell7.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694301C48B889005619D7 /* usercell7.png */; };
 		8446943A1C48B889005619D7 /* usercell8.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694311C48B889005619D7 /* usercell8.png */; };
 		8446943B1C48B889005619D7 /* usercell9.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694321C48B889005619D7 /* usercell9.png */; };
+		8465A6F81C52162000D0BC23 /* QRCodesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465A6F71C52162000D0BC23 /* QRCodesController.m */; };
 		84896FB51C4DFB24009D7103 /* PublicationIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */; };
 		84896FB81C4DFB59009D7103 /* PublicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84896FB71C4DFB59009D7103 /* PublicationViewController.m */; };
 		84B7BD1B1C4796C300E202A6 /* UIImage+BundleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */; };
@@ -361,6 +362,8 @@
 		844694301C48B889005619D7 /* usercell7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell7.png; sourceTree = "<group>"; };
 		844694311C48B889005619D7 /* usercell8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell8.png; sourceTree = "<group>"; };
 		844694321C48B889005619D7 /* usercell9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell9.png; sourceTree = "<group>"; };
+		8465A6F61C52162000D0BC23 /* QRCodesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodesController.h; sourceTree = "<group>"; };
+		8465A6F71C52162000D0BC23 /* QRCodesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodesController.m; sourceTree = "<group>"; };
 		84896FB31C4DFB24009D7103 /* PublicationIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceViewController.h; path = Study/PublicationIntroduceViewController.h; sourceTree = "<group>"; };
 		84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceViewController.m; path = Study/PublicationIntroduceViewController.m; sourceTree = "<group>"; };
 		84896FB61C4DFB59009D7103 /* PublicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationViewController.h; path = Study/PublicationViewController.h; sourceTree = "<group>"; };
@@ -1189,6 +1192,8 @@
 				F49564311C4F529000CADBDE /* RegisterViewController.m */,
 				F47F931C1C508B510029A3B0 /* RadioButton.h */,
 				F47F931D1C508B510029A3B0 /* RadioButton.m */,
+				8465A6F61C52162000D0BC23 /* QRCodesController.h */,
+				8465A6F71C52162000D0BC23 /* QRCodesController.m */,
 			);
 			name = Register;
 			sourceTree = "<group>";
@@ -1398,6 +1403,7 @@
 				816F32541C4C84B1000D0AE5 /* UIView+SDExtension.m in Sources */,
 				F49564321C4F529000CADBDE /* RegisterViewController.m in Sources */,
 				84C139631C4628DB00284087 /* NSData+ImageContentType.m in Sources */,
+				8465A6F81C52162000D0BC23 /* QRCodesController.m in Sources */,
 				84C139361C4628A800284087 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				F4AA22611C4E297600906CF4 /* PersonalInfoViewController.m in Sources */,
 				5807C2E51C473B7A002C5F8E /* MJRefreshAutoNormalFooter.m in Sources */,
