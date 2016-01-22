@@ -11,6 +11,7 @@
 #import "ExportableWebViewController.h"
 #import "HomeNewsCell.h"
 #import "HomeActivityCell.h"
+#import "ASShare.h"
 #import "PublicationViewController.h"
 
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate>
