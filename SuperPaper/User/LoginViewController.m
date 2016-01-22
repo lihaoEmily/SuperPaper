@@ -24,6 +24,7 @@
     // Do any additional setup after loading the view.
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.userNameTextField.text = self.userTelNum;
     self.userNameTextField.layer.borderColor = TextFieldBorderColor;
     self.userNameTextField.layer.borderWidth = 1;
     self.pwdTextField.layer.borderWidth = 1;
