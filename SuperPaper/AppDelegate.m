@@ -42,7 +42,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    [self registerShareSdkForApplication];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; 
@@ -172,9 +172,9 @@
                             @(SSDKPlatformTypeSMS),
                             @(SSDKPlatformTypeCopy),
                             @(SSDKPlatformTypeWechat),
-                            @(SSDKPlatformTypeQQ),
+                            @(SSDKPlatformTypeQQ)/*,
                             @(SSDKPlatformTypeRenren),
-                            @(SSDKPlatformTypeGooglePlus)]
+                            @(SSDKPlatformTypeGooglePlus)*/]
                  onImport:^(SSDKPlatformType platformType)
      {
          switch (platformType)
