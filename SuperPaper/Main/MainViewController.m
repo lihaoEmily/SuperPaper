@@ -16,7 +16,7 @@
 #import "NavigationController.h"
 #import "TabBar.h"
 #import "IntroViewController.h"
-
+#import "UserSession.h"
 
 
 @interface MainViewController ()<TabBarDelegate>
@@ -112,9 +112,13 @@
         [[NSUserDefaults standardUserDefaults] setObject:currentVersionStr forKey:versionStr];
         [[NSUserDefaults standardUserDefaults] synchronize];
         self.introPageView = introPageView;
-        [introPageView.studentButton addTarget:self action:@selector(removeScrollViewButton:) forControlEvents:UIControlEventTouchUpInside];
-        [introPageView.teacherButton addTarget:self action:@selector(removeScrollViewButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self performSelector:@selector(removeIntroPageView:) withObject:introPageView afterDelay:5];
+        [introPageView.studentButton addTarget:self
+                                        action:@selector(removeScrollViewButton:)
+                              forControlEvents:UIControlEventTouchUpInside];
+        [introPageView.teacherButton addTarget:self
+                                        action:@selector(removeScrollViewButton:)
+                              forControlEvents:UIControlEventTouchUpInside];
+//        [self performSelector:@selector(removeIntroPageView:) withObject:introPageView afterDelay:5];
     }
 }
 
@@ -248,11 +252,13 @@
 {
     switch (button.tag) {
         case 1111:
-            self.tabbar.tabBarDisplayType = TabBarDisplayTypeStudent;
+            self.tabbar.tabBarDisplayType = MainTabBarDisplayTypeTeacher;
+            [[UserSession sharedInstance] setCurrentRole:kUserRoleTeacher];
             [self removeIntroPageView:nil];
             break;
         case 1112:
-            self.tabbar.tabBarDisplayType = TabBarDisplayTypeTeacher;
+            self.tabbar.tabBarDisplayType = MainTabBarDisplayTypeStudent;
+            [[UserSession sharedInstance] setCurrentRole:kUserRoleStudent];
             [self removeIntroPageView:nil];
 
             break;
@@ -260,6 +266,7 @@
         default:
             break;
     }
+    
 }
 
 
