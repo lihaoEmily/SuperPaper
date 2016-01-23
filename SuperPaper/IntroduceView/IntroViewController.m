@@ -100,15 +100,26 @@
         [self.scrollView addSubview:imageView];
         self.scrollView.contentSize = CGSizeMake((index + 1) * size.width, 0);
         if (index == [self.arrayOfImageSource count] - 1) {
-            self.teacherButton = [[UIButton alloc]initWithFrame:CGRectMake(size.width*(index + 1) - 320, SCREEN_HEIGHT - 200, 320, 60)];
-            [self.teacherButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-            [self.teacherButton setTitle:@"我是老师" forState:UIControlStateNormal];
-            self.teacherButton.tag = 1111;
+            self.teacherButton = [[UIButton alloc]initWithFrame:CGRectMake(size.width * index + 60, SCREEN_HEIGHT - 180, SCREEN_WIDTH - 120, 50)];
+            [self.teacherButton.layer setCornerRadius:5.0];
+            [self.teacherButton.layer setMasksToBounds:YES];
+            [self.teacherButton setBackgroundColor:[UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]];
+            [self.teacherButton setTag:1111];
+            [self.teacherButton setTitle:@"我是老师"
+                                forState:UIControlStateNormal];
+            [self.teacherButton setTitleColor:[UIColor whiteColor]
+                                     forState:UIControlStateNormal];
             
-            self.studentButton = [[UIButton alloc]initWithFrame:CGRectMake(size.width*(index + 1) - 320, SCREEN_HEIGHT - 150, 320, 60)];
-            self.teacherButton.tag = 1112;
-            [self.studentButton setTitle:@"我是学生" forState:UIControlStateNormal];
-            [self.studentButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            
+            self.studentButton = [[UIButton alloc]initWithFrame:CGRectMake(size.width * index + 60, SCREEN_HEIGHT - 120, SCREEN_WIDTH - 120, 50)];
+            [self.studentButton.layer setCornerRadius:5.0];
+            [self.studentButton.layer setMasksToBounds:YES];
+            [self.studentButton setBackgroundColor:[UIColor whiteColor]];
+            [self.studentButton setTag:1112];
+            [self.studentButton setTitle:@"我是学生"
+                                forState:UIControlStateNormal];
+            [self.studentButton setTitleColor:[UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
+                                     forState:UIControlStateNormal];
 
             [self.scrollView addSubview:self.studentButton];
             [self.scrollView addSubview:self.teacherButton];
