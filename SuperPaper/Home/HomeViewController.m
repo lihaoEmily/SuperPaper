@@ -47,7 +47,7 @@
     UIButton *btnWeb = [[UIButton alloc] initWithFrame:CGRectMake(108,64,100, 100)];
     btnWeb.backgroundColor = kSelColor;
     btnWeb.tag = 101;
-    [btnWeb setTitle:@"WebView" forState:UIControlStateNormal];
+    [btnWeb setTitle:@"ShareSDK" forState:UIControlStateNormal];
     [btnWeb setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:btnWeb];
     [btnWeb addTarget:self
@@ -113,13 +113,15 @@
         }
         case 101:
         {
-            NormalWebViewController *vc = [[NormalWebViewController alloc] init];
-            vc.title = @"网页展示";
-            vc.urlString = @"http://www.baidu.com";
-            /**
-             * 跳转页面
-             */
-            [AppDelegate.app.nav pushViewController:vc animated:YES];
+//            NormalWebViewController *vc = [[NormalWebViewController alloc] init];
+//            vc.title = @"网页展示";
+//            vc.urlString = @"http://www.baidu.com";
+//            /**
+//             * 跳转页面
+//             */
+//            [AppDelegate.app.nav pushViewController:vc animated:YES];
+            [ASShare commonShareWithData:nil];
+            break;
         }
         case 102:
         {

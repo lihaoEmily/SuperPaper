@@ -34,7 +34,7 @@
     
     navBar.backgroundColor = [UIColor clearColor];
     [navBar setTintColor:[UIColor whiteColor]];
-    [navBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:22],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [navBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20],NSForegroundColorAttributeName:[UIColor whiteColor]}];
 
     
     UIBarButtonItem *btnItem = [UIBarButtonItem appearance];
