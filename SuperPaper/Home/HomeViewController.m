@@ -11,13 +11,11 @@
 #import "ExportableWebViewController.h"
 #import "HomeNewsCell.h"
 #import "HomeActivityCell.h"
-#import "PublicationViewController.h"
-
-@interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate>
-{
-    UITableView *_tableView;
-    NSDictionary *dict;
-}
+#import "ASShare.h"
+#import "SDCycleScrollView.h"
+#import "ServiceButton.h"
+@interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
+@property (nonatomic, strong) UITableView *studyTableView;
 @end
 
 @implementation HomeViewController{
