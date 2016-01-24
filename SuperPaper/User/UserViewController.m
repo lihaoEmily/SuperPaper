@@ -252,6 +252,9 @@ static NSString *cellIdentifier = @"UserTableViewCell";
             [self.backTableView reloadData];
         }
     }
+    UserRole currentRole = [[UserSession sharedInstance] currentRole];
+    NSDictionary *info = @{kUserRole:@(currentRole)};
+    [[UserSession sharedInstance] saveUserProfileWithInfo:info];
 }
 //MARK: TabelViewDataSource,Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

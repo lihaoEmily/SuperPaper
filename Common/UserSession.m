@@ -8,8 +8,8 @@
 
 #import "UserSession.h"
 
-#define ROLE_TEACHER @"Teacher"
-#define ROLE_STUDENT @"Student"
+#define ROLE_TEACHER @""
+#define ROLE_STUDENT @""
 
 @interface UserSession()
 

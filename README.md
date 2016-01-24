@@ -6,11 +6,11 @@
 * Utils *工具库*
 
 #SuperPaper/Common:
-* UserSession.h
+* UserSession.h*记录当前用户信息*
 * UserSession.m
 
 # SuperPaper/Utils:
-* AppInfo.h
+* AppInfo.h*应用程序信息*
 * AppInfo.m
 
 # SuperPaper//ThirdParty:
