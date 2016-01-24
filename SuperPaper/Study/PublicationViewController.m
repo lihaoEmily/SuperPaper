@@ -24,7 +24,7 @@
     _leftTable.frame = CGRectMake(0, 0, self.view.bounds.size.width/4, self.view.bounds.size.height);
     _leftTable.dataSource = self;
     _leftTable.delegate = self;
-    _leftTable.backgroundColor = [UIColor grayColor];
+//    _leftTable.backgroundColor = [UIColor grayColor];
 //    _leftTable.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _leftTable.showsVerticalScrollIndicator = NO;
 //    _leftTable.tableFooterView = [[UIView alloc] init];
@@ -32,6 +32,12 @@
     _leftTable.separatorColor = [UIColor whiteColor];
     _leftTable.separatorInset = UIEdgeInsetsMake(0,0, 0, 0);
     _leftTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_leftTable setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
     [self.view addSubview:_leftTable];
     
     _rightTable = [[UITableView alloc] init];
@@ -71,6 +77,7 @@
         }
         
         cell.textLabel.text = @"left";
+        cell.backgroundColor = [UIColor grayColor];
         return cell;
     }else{
         static NSString *CellIdentifier2 = @"Cell2";

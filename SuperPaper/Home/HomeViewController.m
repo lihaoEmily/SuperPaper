@@ -469,9 +469,8 @@
     switch (btn.tag) {
         case 100:
         {
-            UIViewController *vc = [[UIViewController alloc] init];
-            vc.title = @"新页面";
-            vc.view.backgroundColor = [UIColor yellowColor];
+            UIViewController *vc = [[PublicationViewController alloc] init];
+            vc.title = @"刊物";
             /**
              * 跳转页面
              */
