@@ -30,12 +30,16 @@
 -(instancetype)init
 {
     if (self = [super init]) {
+        NSLog(@"初始化Usersession");
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *userID = [userDefaults valueForKey:kUserID];
-        if (!userID) {
-            
+        NSInteger userID = [userDefaults integerForKey:kUserID];
+        if (0 == userID) {
+            self.currentRole = kUserRoleStudent;
         }else{
+            self.currentUserID = userID;
+            self.currentUserHeadImageName = [userDefaults valueForKey:kUserHeadImage];
             self.currentUserName = [userDefaults valueForKey:kUserName];
+            self.currentUserNickname = [userDefaults valueForKey:kUserNickname];
             self.currentUserTelNum = [userDefaults valueForKey:kUserTel];
             NSNumber *gen = [userDefaults valueForKey:kUserGen];
             self.currentUserGen = gen.integerValue;
@@ -113,4 +117,13 @@
     return value;
 }
 
+- (void)logout
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:0 forKey:kUserID];
+    
+    [userDefaults setValue:nil forKey:kUserName];
+
+    [userDefaults setValue:nil forKey:kUserTel];
+}
 @end

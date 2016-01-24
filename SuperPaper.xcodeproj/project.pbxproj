@@ -126,6 +126,17 @@
 		92AF175A1C50D56300797B0E /* assessmment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92AF17571C50D56300797B0E /* assessmment.plist */; };
 		92AF175B1C50D56300797B0E /* NormalAssessmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AF17591C50D56300797B0E /* NormalAssessmentViewController.m */; };
 		9A5A30501C4E87DF00813FF9 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */; };
+		9A6B47751C5282FD00A04101 /* ForgetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47741C5282FD00A04101 /* ForgetPwdViewController.m */; };
+		9A6B47781C52888400A04101 /* ServiceNoticesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47771C52888400A04101 /* ServiceNoticesViewController.m */; };
+		9A6B477B1C534BB500A04101 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B477A1C534BB500A04101 /* SettingViewController.m */; };
+		9A6B477E1C534FB300A04101 /* UserSettingHasNextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B477D1C534FB300A04101 /* UserSettingHasNextTableViewCell.m */; };
+		9A6B47811C534FF200A04101 /* UserSettingRadioTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47801C534FF200A04101 /* UserSettingRadioTableViewCell.m */; };
+		9A6B47841C53501700A04101 /* UserSettingTextShowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47831C53501700A04101 /* UserSettingTextShowTableViewCell.m */; };
+		9AEB04B61C536D9000D34FBE /* UserSettingLogoutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB04B51C536D9000D34FBE /* UserSettingLogoutTableViewCell.m */; };
+		9AEB04B81C537E4500D34FBE /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AEB04B71C537E4500D34FBE /* right_arrow.png */; };
+		9AEB04BD1C53AABD00D34FBE /* ChangeUserHeadImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB04BC1C53AABD00D34FBE /* ChangeUserHeadImageViewController.m */; };
+		9AEB04C01C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB04BF1C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m */; };
+		9AEB04C41C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB04C31C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m */; };
 		AAFA086A1C49294400FB0DA4 /* bg_mine_head_login.png in Resources */ = {isa = PBXBuildFile; fileRef = AAFA08661C49294400FB0DA4 /* bg_mine_head_login.png */; };
 		AAFA086B1C49294400FB0DA4 /* bg_mine_head_notlogin.png in Resources */ = {isa = PBXBuildFile; fileRef = AAFA08671C49294400FB0DA4 /* bg_mine_head_notlogin.png */; };
 		AAFA086C1C49294400FB0DA4 /* user_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AAFA08681C49294400FB0DA4 /* user_camera.png */; };
@@ -386,6 +397,27 @@
 		92AF17591C50D56300797B0E /* NormalAssessmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalAssessmentViewController.m; path = AssessmentTitle/NormalAssessmentViewController.m; sourceTree = "<group>"; };
 		9A5A304E1C4E87DF00813FF9 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = User/UserTableViewCell.h; sourceTree = "<group>"; };
 		9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = User/UserTableViewCell.m; sourceTree = "<group>"; };
+		9A6B47731C5282FD00A04101 /* ForgetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgetPwdViewController.h; path = User/ForgetPwdViewController.h; sourceTree = "<group>"; };
+		9A6B47741C5282FD00A04101 /* ForgetPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForgetPwdViewController.m; path = User/ForgetPwdViewController.m; sourceTree = "<group>"; };
+		9A6B47761C52888400A04101 /* ServiceNoticesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServiceNoticesViewController.h; path = User/ServiceNoticesViewController.h; sourceTree = "<group>"; };
+		9A6B47771C52888400A04101 /* ServiceNoticesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServiceNoticesViewController.m; path = User/ServiceNoticesViewController.m; sourceTree = "<group>"; };
+		9A6B47791C534BB500A04101 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = User/SettingViewController.h; sourceTree = "<group>"; };
+		9A6B477A1C534BB500A04101 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = User/SettingViewController.m; sourceTree = "<group>"; };
+		9A6B477C1C534FB300A04101 /* UserSettingHasNextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingHasNextTableViewCell.h; path = User/UserSettingHasNextTableViewCell.h; sourceTree = "<group>"; };
+		9A6B477D1C534FB300A04101 /* UserSettingHasNextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingHasNextTableViewCell.m; path = User/UserSettingHasNextTableViewCell.m; sourceTree = "<group>"; };
+		9A6B477F1C534FF200A04101 /* UserSettingRadioTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingRadioTableViewCell.h; path = User/UserSettingRadioTableViewCell.h; sourceTree = "<group>"; };
+		9A6B47801C534FF200A04101 /* UserSettingRadioTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingRadioTableViewCell.m; path = User/UserSettingRadioTableViewCell.m; sourceTree = "<group>"; };
+		9A6B47821C53501700A04101 /* UserSettingTextShowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingTextShowTableViewCell.h; path = User/UserSettingTextShowTableViewCell.h; sourceTree = "<group>"; };
+		9A6B47831C53501700A04101 /* UserSettingTextShowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingTextShowTableViewCell.m; path = User/UserSettingTextShowTableViewCell.m; sourceTree = "<group>"; };
+		9AEB04B41C536D9000D34FBE /* UserSettingLogoutTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingLogoutTableViewCell.h; path = User/UserSettingLogoutTableViewCell.h; sourceTree = "<group>"; };
+		9AEB04B51C536D9000D34FBE /* UserSettingLogoutTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingLogoutTableViewCell.m; path = User/UserSettingLogoutTableViewCell.m; sourceTree = "<group>"; };
+		9AEB04B71C537E4500D34FBE /* right_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow.png; sourceTree = "<group>"; };
+		9AEB04BB1C53AABD00D34FBE /* ChangeUserHeadImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeUserHeadImageViewController.h; path = User/ChangeUserHeadImageViewController.h; sourceTree = "<group>"; };
+		9AEB04BC1C53AABD00D34FBE /* ChangeUserHeadImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeUserHeadImageViewController.m; path = User/ChangeUserHeadImageViewController.m; sourceTree = "<group>"; };
+		9AEB04BE1C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeUserHeadImageHasNextTableViewCell.h; path = User/ChangeUserHeadImageHasNextTableViewCell.h; sourceTree = "<group>"; };
+		9AEB04BF1C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeUserHeadImageHasNextTableViewCell.m; path = User/ChangeUserHeadImageHasNextTableViewCell.m; sourceTree = "<group>"; };
+		9AEB04C21C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeUserHeadImageTextShowTableViewCell.h; path = User/ChangeUserHeadImageTextShowTableViewCell.h; sourceTree = "<group>"; };
+		9AEB04C31C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeUserHeadImageTextShowTableViewCell.m; path = User/ChangeUserHeadImageTextShowTableViewCell.m; sourceTree = "<group>"; };
 		AAFA08661C49294400FB0DA4 /* bg_mine_head_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_mine_head_login.png; sourceTree = "<group>"; };
 		AAFA08671C49294400FB0DA4 /* bg_mine_head_notlogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_mine_head_notlogin.png; sourceTree = "<group>"; };
 		AAFA08681C49294400FB0DA4 /* user_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_camera.png; sourceTree = "<group>"; };
@@ -600,6 +632,8 @@
 		04FFFDEB1C40F77000ECCA1C /* User */ = {
 			isa = PBXGroup;
 			children = (
+				9AEB04BA1C53AA8700D34FBE /* ChangeUserHeadImage */,
+				9AEB04B91C53AA7600D34FBE /* Setting */,
 				F495642F1C4F3E4400CADBDE /* Register */,
 				F495642E1C4F3E3900CADBDE /* Login */,
 				F4AA224C1C4E28F500906CF4 /* Feedback */,
@@ -614,6 +648,8 @@
 				04FFFDFE1C410C2900ECCA1C /* UserViewController.m */,
 				9A5A304E1C4E87DF00813FF9 /* UserTableViewCell.h */,
 				9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */,
+				F47F931C1C508B510029A3B0 /* RadioButton.h */,
+				F47F931D1C508B510029A3B0 /* RadioButton.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -1003,9 +1039,40 @@
 			path = ThirdParty/SDWebImage;
 			sourceTree = "<group>";
 		};
+		9AEB04B91C53AA7600D34FBE /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				9A6B47791C534BB500A04101 /* SettingViewController.h */,
+				9A6B477A1C534BB500A04101 /* SettingViewController.m */,
+				9A6B477C1C534FB300A04101 /* UserSettingHasNextTableViewCell.h */,
+				9A6B477D1C534FB300A04101 /* UserSettingHasNextTableViewCell.m */,
+				9A6B477F1C534FF200A04101 /* UserSettingRadioTableViewCell.h */,
+				9A6B47801C534FF200A04101 /* UserSettingRadioTableViewCell.m */,
+				9A6B47821C53501700A04101 /* UserSettingTextShowTableViewCell.h */,
+				9A6B47831C53501700A04101 /* UserSettingTextShowTableViewCell.m */,
+				9AEB04B41C536D9000D34FBE /* UserSettingLogoutTableViewCell.h */,
+				9AEB04B51C536D9000D34FBE /* UserSettingLogoutTableViewCell.m */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
+		9AEB04BA1C53AA8700D34FBE /* ChangeUserHeadImage */ = {
+			isa = PBXGroup;
+			children = (
+				9AEB04BB1C53AABD00D34FBE /* ChangeUserHeadImageViewController.h */,
+				9AEB04BC1C53AABD00D34FBE /* ChangeUserHeadImageViewController.m */,
+				9AEB04BE1C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.h */,
+				9AEB04BF1C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m */,
+				9AEB04C21C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.h */,
+				9AEB04C31C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m */,
+			);
+			name = ChangeUserHeadImage;
+			sourceTree = "<group>";
+		};
 		F47F931F1C508D810029A3B0 /* Register */ = {
 			isa = PBXGroup;
 			children = (
+				9AEB04B71C537E4500D34FBE /* right_arrow.png */,
 				F47F93201C508DDD0029A3B0 /* RadioButton-Selected.png */,
 				F47F93211C508DDD0029A3B0 /* RadioButton-Unselected.png */,
 			);
@@ -1017,6 +1084,8 @@
 			children = (
 				F49564331C4F6B8200CADBDE /* LoginViewController.h */,
 				F49564341C4F6B8200CADBDE /* LoginViewController.m */,
+				9A6B47731C5282FD00A04101 /* ForgetPwdViewController.h */,
+				9A6B47741C5282FD00A04101 /* ForgetPwdViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1026,8 +1095,8 @@
 			children = (
 				F49564301C4F529000CADBDE /* RegisterViewController.h */,
 				F49564311C4F529000CADBDE /* RegisterViewController.m */,
-				F47F931C1C508B510029A3B0 /* RadioButton.h */,
-				F47F931D1C508B510029A3B0 /* RadioButton.m */,
+				9A6B47761C52888400A04101 /* ServiceNoticesViewController.h */,
+				9A6B47771C52888400A04101 /* ServiceNoticesViewController.m */,
 			);
 			name = Register;
 			sourceTree = "<group>";
@@ -1195,6 +1264,7 @@
 				92AF175A1C50D56300797B0E /* assessmment.plist in Resources */,
 				AAFA086D1C49294400FB0DA4 /* user_normalIcon.png in Resources */,
 				844694361C48B889005619D7 /* usercell4.png in Resources */,
+				9AEB04B81C537E4500D34FBE /* right_arrow.png in Resources */,
 				F47F93231C508DDD0029A3B0 /* RadioButton-Unselected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1214,19 +1284,24 @@
 				84C1391B1C4628A300284087 /* AFURLRequestSerialization.m in Sources */,
 				84B7BD1B1C4796C300E202A6 /* UIImage+BundleImage.m in Sources */,
 				F6F9B3891C4E09F000B013AF /* GetPapersViewController.m in Sources */,
+				9AEB04BD1C53AABD00D34FBE /* ChangeUserHeadImageViewController.m in Sources */,
+				9A6B47781C52888400A04101 /* ServiceNoticesViewController.m in Sources */,
 				04FFFDFF1C410C2900ECCA1C /* UserViewController.m in Sources */,
+				9AEB04B61C536D9000D34FBE /* UserSettingLogoutTableViewCell.m in Sources */,
 				F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */,
 				84B7BD211C4796E300E202A6 /* TelephoneView.m in Sources */,
 				816F324F1C4C84B1000D0AE5 /* TAAnimatedDotView.m in Sources */,
 				F4AA22561C4E295E00906CF4 /* AboutUsHasNextTableViewCell.m in Sources */,
 				5807C2E01C473B7A002C5F8E /* MJRefreshBackFooter.m in Sources */,
 				F4AA22791C4E29B800906CF4 /* MyMessageViewController.m in Sources */,
+				9A6B47841C53501700A04101 /* UserSettingTextShowTableViewCell.m in Sources */,
 				5807C2E91C473B7A002C5F8E /* MJRefreshBackStateFooter.m in Sources */,
 				04FFFDD41C40F63D00ECCA1C /* ViewController.m in Sources */,
 				04F8906B1C4A939200891ABF /* ExportableWebViewController.m in Sources */,
 				84C1396F1C4628DB00284087 /* UIImageView+HighlightedWebCache.m in Sources */,
 				816F324E1C4C84B1000D0AE5 /* TAAbstractDotView.m in Sources */,
 				84C139391C4628A800284087 /* UIProgressView+AFNetworking.m in Sources */,
+				9A6B47751C5282FD00A04101 /* ForgetPwdViewController.m in Sources */,
 				F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */,
 				7F477B5D1C49FA1000612850 /* HomeNewsCell.m in Sources */,
 				816F32541C4C84B1000D0AE5 /* UIView+SDExtension.m in Sources */,
@@ -1242,6 +1317,7 @@
 				58F312511C4CD165006CAE3E /* PapersSortsViewController.m in Sources */,
 				F4AA22731C4E29AB00906CF4 /* InvitationsViewController.m in Sources */,
 				5807C2E81C473B7A002C5F8E /* MJRefreshBackNormalFooter.m in Sources */,
+				9A6B477E1C534FB300A04101 /* UserSettingHasNextTableViewCell.m in Sources */,
 				F6B69F001C462E0500CBFEB3 /* PublicationSearchViewController.m in Sources */,
 				92AF175B1C50D56300797B0E /* NormalAssessmentViewController.m in Sources */,
 				5807C2EB1C473B7A002C5F8E /* MJRefreshNormalHeader.m in Sources */,
@@ -1260,6 +1336,7 @@
 				84C139691C4628DB00284087 /* SDWebImageManager.m in Sources */,
 				04FFFE281C414CB000ECCA1C /* NormalTableViewCell.m in Sources */,
 				84C139641C4628DB00284087 /* SDImageCache.m in Sources */,
+				9AEB04C01C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m in Sources */,
 				F6F3487E1C476F4400AB5CFB /* PapersGeneratorViewController.m in Sources */,
 				84C139661C4628DB00284087 /* SDWebImageDecoder.m in Sources */,
 				84896FB51C4DFB24009D7103 /* PublicationIntroduceViewController.m in Sources */,
@@ -1292,6 +1369,7 @@
 				84C139331C4628A800284087 /* AFAutoPurgingImageCache.m in Sources */,
 				04FFFE0A1C4122E200ECCA1C /* UserSession.m in Sources */,
 				5807C2F01C473B7A002C5F8E /* UIScrollView+MJRefresh.m in Sources */,
+				9AEB04C41C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m in Sources */,
 				9A5A30501C4E87DF00813FF9 /* UserTableViewCell.m in Sources */,
 				84C139341C4628A800284087 /* AFImageDownloader.m in Sources */,
 				04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */,
@@ -1307,10 +1385,12 @@
 				F4AA22601C4E297600906CF4 /* PersonalInfoTableViewCell.m in Sources */,
 				04FFFE1F1C4146EC00ECCA1C /* BaseView.m in Sources */,
 				84C139381C4628A800284087 /* UIImageView+AFNetworking.m in Sources */,
+				9A6B477B1C534BB500A04101 /* SettingViewController.m in Sources */,
 				5807C3141C478059002C5F8E /* IntroViewController.m in Sources */,
 				84C1396C1C4628DB00284087 /* UIImage+GIF.m in Sources */,
 				04FFFE061C41207C00ECCA1C /* AssessmentTitleViewController.m in Sources */,
 				04FFFE161C4123F100ECCA1C /* MainViewController.m in Sources */,
+				9A6B47811C534FF200A04101 /* UserSettingRadioTableViewCell.m in Sources */,
 				04FFFE171C4123F100ECCA1C /* NavigationController.m in Sources */,
 				F65E83241C4F394600CE31D2 /* NormalJobViewController.m in Sources */,
 				84C139621C4628DB00284087 /* MKAnnotationView+WebCache.m in Sources */,

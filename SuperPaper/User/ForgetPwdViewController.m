@@ -1,51 +1,43 @@
 //
-//  RegisterViewController.m
+//  ForgetPwdViewController.m
 //  SuperPaper
 //
-//  Created by  mapbar_ios on 16/1/20.
+//  Created by yu on 16/1/22.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
-#import "RegisterViewController.h"
-#import "LoginViewController.h"
+#import "ForgetPwdViewController.h"
 #import "AppConfig.h"
+#import "UserSession.h"
 
 #define TextFieldBorderColor [UIColor colorWithRed:233.0f/255 green:233.0f/255 blue:216.0/255 alpha:1].CGColor;
-
 #define smsVerifyBaseURL @"http://sh2.ipyy.com/smsJson.aspx"
-
-@interface RegisterViewController ()<UITextFieldDelegate>{
+@interface ForgetPwdViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
+{
+    NSTimer *_timer;
+    int _verifyCode;
+    NSString *_pwd;
+    NSString *_confirmPwd;
     UITextField *_editingTextField;
     BOOL _showPwd;
     BOOL _showConfirmPwd;
-    NSString *_pwd;
-    NSString *_confirmPwd;
-    int _verifyCode;
     int _currentSMSTime;
-    BOOL _agree;
-    NSTimer *_timer;
 }
-
 @property (weak, nonatomic) IBOutlet UITextField *telNumTextField;
-@property (weak, nonatomic) IBOutlet UIButton *registerBtn;
-@property (weak, nonatomic) IBOutlet UITextField *SMSVerifyCodeTextField;
-@property (weak, nonatomic) IBOutlet UIButton *getSMSVerifyCodeBtn;
 @property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
-@property (weak, nonatomic) IBOutlet UIButton *showPwdBtn;
+@property (weak, nonatomic) IBOutlet UITextField *smsVerifyCodeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confirmPwdTextField;
+@property (weak, nonatomic) IBOutlet UIButton *getVerifyCodeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *showPwdBtn;
 @property (weak, nonatomic) IBOutlet UIButton *showConfirmPwdBtn;
-@property (weak, nonatomic) IBOutlet UITextField *qRCodeTextField;
-@property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
-@property (weak, nonatomic) IBOutlet UIButton *getQRCodeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *resetPwdBtn;
 @end
 
-@implementation RegisterViewController
+@implementation ForgetPwdViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    _agree = YES;
     _pwd = @"";
     _confirmPwd = @"";
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -54,44 +46,39 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
+    
     self.telNumTextField.layer.borderColor = TextFieldBorderColor;
     self.telNumTextField.layer.borderWidth = 1;
-    self.SMSVerifyCodeTextField.layer.borderColor = TextFieldBorderColor;
-    self.SMSVerifyCodeTextField.layer.borderWidth = 1;
-    self.getSMSVerifyCodeBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
-    [self.getSMSVerifyCodeBtn sizeToFit];
+    self.smsVerifyCodeTextField.layer.borderColor = TextFieldBorderColor;
+    self.smsVerifyCodeTextField.layer.borderWidth = 1;
+    self.getVerifyCodeBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
+    [self.getVerifyCodeBtn sizeToFit];
     self.showPwdBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 18, 0, 18);
     [self.showPwdBtn sizeToFit];
-    [self.view bringSubviewToFront:self.showPwdBtn];
-    
     self.showConfirmPwdBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 18, 0, 18);
     [self.showConfirmPwdBtn sizeToFit];
-    self.getQRCodeBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
-    [self.getQRCodeBtn sizeToFit];
     self.pwdTextField.layer.borderColor = TextFieldBorderColor;
     self.pwdTextField.layer.borderWidth = 1;
     self.confirmPwdTextField.layer.borderColor = TextFieldBorderColor;
     self.confirmPwdTextField.layer.borderWidth = 1;
-    self.qRCodeTextField.layer.borderColor = TextFieldBorderColor;
-    self.qRCodeTextField.layer.borderWidth = 1;
-    [self.agreeBtn sizeToFit];
-    self.registerBtn.layer.masksToBounds = YES;
-    self.registerBtn.layer.cornerRadius = 4;
+
     
+    self.resetPwdBtn.layer.masksToBounds = YES;
+    self.resetPwdBtn.layer.cornerRadius = 4;
 
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [_timer invalidate];
     [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = nil;
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 //MARK:Helper
@@ -105,7 +92,7 @@
         return NO;
     }
     _verifyCode = 1000;
-    if (![self.SMSVerifyCodeTextField.text isEqualToString:[NSString stringWithFormat:@"%d",_verifyCode]]) {
+    if (![self.smsVerifyCodeTextField.text isEqualToString:[NSString stringWithFormat:@"%d",_verifyCode]]) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"短信验证码输入有误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
         return NO;
@@ -121,30 +108,13 @@
         return NO;
     }
     
-    if (!_agree) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请同意《服务条款》" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:@"", nil];
-        [av show];
-        return NO;
-    }
     return YES;
 }
 
-- (void)retransmit:(NSTimer *)timer
+- (void)popViewControler
 {
-    _currentSMSTime ++;
-    if (_currentSMSTime < 60) {
-        [self.getSMSVerifyCodeBtn setTitle:[NSString stringWithFormat:@"重新获取（%d）",60 - _currentSMSTime] forState:UIControlStateNormal];
-        [self.getSMSVerifyCodeBtn sizeToFit];
-        
-    }else{
-        [timer invalidate];
-        _currentSMSTime = 0;
-        [self.getSMSVerifyCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        self.getSMSVerifyCodeBtn.userInteractionEnabled = YES;
-        [self.getSMSVerifyCodeBtn sizeToFit];
-    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
 - (void)dismissKeyboard
 {
     [_editingTextField resignFirstResponder];
@@ -165,6 +135,29 @@
     return image;
 }
 
+- (void)retransmit:(NSTimer *)timer
+{
+    _currentSMSTime ++;
+    if (_currentSMSTime < 60) {
+        [self.getVerifyCodeBtn setTitle:[NSString stringWithFormat:@"重新获取（%d）",60 - _currentSMSTime] forState:UIControlStateNormal];
+        [self.getVerifyCodeBtn sizeToFit];
+        
+    }else{
+        [timer invalidate];
+        _currentSMSTime = 0;
+        [self.getVerifyCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        self.getVerifyCodeBtn.userInteractionEnabled = YES;
+        [self.getVerifyCodeBtn sizeToFit];
+    }
+}
+
+//MARK:UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (1 == alertView.tag) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 //MARK: UITextFieldDelegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -181,7 +174,7 @@
                 textField.text = [textField.text stringByReplacingCharactersInRange:range withString:@"•"];
             }else
                 textField.text = [textField.text stringByReplacingCharactersInRange:range withString:@""];
-
+            
             return NO;
         }
         
@@ -202,9 +195,9 @@
     NSString *mobile = self.telNumTextField.text;
     NSPredicate *telNumPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",@"^1[3-8][0-9]{9}$"];
     if (![telNumPredicate evaluateWithObject:mobile]) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请输入正确的手机号码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请输入正确手机号码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
-
+        
     }else{
         NSString *userid = @"conferplat";
         NSString *account = @"jksc227";
@@ -213,39 +206,56 @@
         NSString *content = [NSString stringWithFormat:@"您的验证码是%d,请不要把验证码泄露给其他人。如非本人操作，可不用理会！【超级论文】",verifyCode];
         
         NSString *params = [[NSString stringWithFormat:@"action=send&userid=%@&account=%@&password=%@&mobile=%@&content=%@&sendTime=&extno=",userid,account,password,mobile,content]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];;
+        NSURL *url = [NSURL URLWithString:smsVerifyBaseURL];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+        [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+        [request setHTTPMethod:@"POST"];
         
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-        [manager POST:smsVerifyBaseURL parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-            
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSString *success = [responseObject valueForKey:@"returnstatus"];
-            
-            if (![success isEqualToString:@"Success"]) {//短信发送失败
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"短信发送失败！请重新发送" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
-                
-            }else{//短信发送成功
-                _verifyCode = verifyCode;
+        NSURLSessionDataTask *task = [[NSURLSession sharedSession]dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (data) {
+                NSError *newError;
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&newError];
+                if (newError) {//json解析出错
+                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:newError.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [av show];
+                    });
+                    
+                }else{
+                    NSString *success = [dic valueForKey:@"returnstatus"];
+                    
+                    if (![success isEqualToString:@"Success"]) {//短信发送失败
+                        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"短信发送失败！请重新发送" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [av show];
+                        });
+                        
+                    }else{//短信发送成功
+                        _verifyCode = verifyCode;
+                    }
+                }
+            }else{
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [av show];
+                });
             }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [av show];
+            
         }];
-        
+        [task resume];
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(retransmit:) userInfo:nil repeats:YES];
         _timer = timer;
         _currentSMSTime = 0;
         _verifyCode = 0;
-        [self.getSMSVerifyCodeBtn setTitle:[NSString stringWithFormat:@"重新获取（60）"] forState:UIControlStateNormal];
-        [self.getSMSVerifyCodeBtn sizeToFit];
-        self.getSMSVerifyCodeBtn.userInteractionEnabled = NO;
+        [self.getVerifyCodeBtn setTitle:[NSString stringWithFormat:@"重新获取（60）"] forState:UIControlStateNormal];
+        [self.getVerifyCodeBtn sizeToFit];
+        self.getVerifyCodeBtn.userInteractionEnabled = NO;
         
     }
     
 }
 - (IBAction)showOrHidePwd:(id)sender {
-    NSLog(@"显示或者隐藏密码");
+    
     _showPwd = !_showPwd;
     if (_showPwd) {
         [self.showPwdBtn setTitle:@"隐藏" forState:UIControlStateNormal];
@@ -279,64 +289,31 @@
     }
     [self.showConfirmPwdBtn sizeToFit];
 }
-- (IBAction)scanQRCode:(id)sender {
-}
-- (IBAction)agreeOrNot:(id)sender {
-    _agree = !_agree;
-    if (_agree) {
-        [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
+- (IBAction)resetPwd:(id)sender {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSString *urlString = [NSString stringWithFormat:@"%@findpassword.php",BASE_URL];
+    NSString *params = [NSString stringWithFormat:@"userinfo=%@&password=%@",[UserSession sharedInstance].currentUserTelNum,_pwd];
+    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
-    }else
-        [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
-}
-- (IBAction)serviceItemsChecking:(id)sender {
-}
-- (IBAction)userRegister:(id)sender {
-    if ([self checkInput]) {
-        
-        NSString *mobile = self.telNumTextField.text;
-        NSString *pwd = _pwd;
-        NSString *urlString = [NSString stringWithFormat:@"%@regist.php",BASE_URL];
-        NSString *params = [NSString stringWithFormat:@"mobile=%@&password=%@",mobile,pwd];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-        
-        [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-            
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"注册%@",responseObject);
-            NSNumber *result = [responseObject valueForKey:@"result"];
-            
-            if (0 == result.integerValue) {//注册成功
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"注册成功！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
-                LoginViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
-                vc.userTelNum = mobile;
-                [self.navigationController pushViewController:vc animated:YES];
-                //TODO: 跳转到登录页面
-                
-                
-            }else if(1 == result.integerValue)//注册失败
-            {
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"注册失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
-            }else if (2 == result.integerValue){
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"这个手机号已经被注册" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
-            }else if(3 == result.integerValue){
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"邀请码有误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
-            }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSNumber *result = responseObject[@"result"];
+        if (0 == result.integerValue) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"登录密码修改成功！" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            av.tag = 1;
             [av show];
-        }];
+            
+            
+        }else{
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"登录密码修改失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         
-        
-    }
+        [av show];
+    }];
 }
-
-
 
 /*
 #pragma mark - Navigation
