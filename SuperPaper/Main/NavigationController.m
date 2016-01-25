@@ -61,9 +61,9 @@
 
 - (void)back{
     [self popViewControllerAnimated:YES];
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+//    [self dismissViewControllerAnimated:YES completion:^{
+    
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
