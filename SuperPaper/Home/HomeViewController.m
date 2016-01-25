@@ -322,13 +322,14 @@
                 return cell;
             }
             
-            NSString *urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_responseNewsInfoArr objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_responseActivityInfoArr objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
             NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                                   urlString,@"image",
                                   [[_responseActivityInfoArr objectAtIndex:indexPath.row] valueForKey:@"title"],@"title", nil];
             
             cell.infoDict = dict;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             
             return cell;
         }
@@ -375,7 +376,7 @@
         if (isNews) {
             return 70;
         }else{
-            return 120;
+            return 140;
         }
     }
     return 70;
