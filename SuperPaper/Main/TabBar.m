@@ -8,6 +8,7 @@
 
 #import "TabBar.h"
 #import "TabBarItem.h"
+#import "UserSession.h"
 
 #define TABBARITEMTAG 22222
 #define kWidth [UIScreen mainScreen].bounds.size.width
@@ -100,7 +101,8 @@
             }
         }
         
-        self.tabBarDisplayType = TabBarDisplayTypeTeacher;
+        
+        self.tabBarDisplayType = ([[UserSession sharedInstance] currentRole] == kUserRoleTeacher) ? TabBarDisplayTypeTeacher : TabBarDisplayTypeStudent;
         self.selectIndex = 0;
         _selType = SelectedButtonTypeHome;
         
