@@ -65,21 +65,21 @@ static NSString *const SubmitIdentifier = @"submit";
         NSNumber *result = responseObject[@"result"];
         if (0 == result.integerValue) {//成功
             self.name = responseObject[@"realname"]?responseObject[@"realname"]:nil;
-            if ([responseObject[@"sex"] isMemberOfClass:[NSNumber class]]) {
+            if ([responseObject[@"sex"] isKindOfClass:[NSNumber class]]) {
                 self.gender = 0 == [responseObject[@"sex"]integerValue]?@"男":@"女";
             }else
                 self.gender = @"";
-            if ([responseObject[@"age"] isMemberOfClass:[NSNumber class]]) {
+            if ([responseObject[@"age"] isKindOfClass:[NSNumber class]]) {
                 self.age = [responseObject[@"age"]integerValue];
             }else
                 self.age = 0;
             
-            if ([responseObject[@"jobtitle"] isMemberOfClass:[NSNumber class]]) {
+            if ([responseObject[@"jobtitle"] isKindOfClass:[NSNumber class]]) {
                 self.career = 0 == [responseObject[@"jobtitle"]integerValue]?@"老师":@"学生";
             }else
                 self.career = @"";
             
-            if ([responseObject[@"school"]isMemberOfClass:[NSString class]]) {
+            if ([responseObject[@"school"]isKindOfClass:[NSString class]]) {
                 self.college = responseObject[@"school"];
             }else
                 self.college = @"";

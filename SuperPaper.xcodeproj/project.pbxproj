@@ -108,7 +108,6 @@
 		844694391C48B889005619D7 /* usercell7.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694301C48B889005619D7 /* usercell7.png */; };
 		8446943A1C48B889005619D7 /* usercell8.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694311C48B889005619D7 /* usercell8.png */; };
 		8446943B1C48B889005619D7 /* usercell9.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694321C48B889005619D7 /* usercell9.png */; };
-		8465A6F81C52162000D0BC23 /* QRCodesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465A6F71C52162000D0BC23 /* QRCodesController.m */; };
 		84896FB51C4DFB24009D7103 /* PublicationIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */; };
 		84896FB81C4DFB59009D7103 /* PublicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84896FB71C4DFB59009D7103 /* PublicationViewController.m */; };
 		84B7BD1B1C4796C300E202A6 /* UIImage+BundleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */; };
@@ -153,6 +152,7 @@
 		9A2A358E1C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35881C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m */; };
 		9A2A358F1C5653ED00FB2DD3 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A358A1C5653ED00FB2DD3 /* PersonalInfoViewController.m */; };
 		9A2A35901C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A358C1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m */; };
+		9A2A35941C56841400FB2DD3 /* QRCodesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35921C5683AE00FB2DD3 /* QRCodesController.m */; };
 		9A5A30501C4E87DF00813FF9 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */; };
 		9A6B47751C5282FD00A04101 /* ForgetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47741C5282FD00A04101 /* ForgetPwdViewController.m */; };
 		9A6B47781C52888400A04101 /* ServiceNoticesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47771C52888400A04101 /* ServiceNoticesViewController.m */; };
@@ -375,8 +375,6 @@
 		844694301C48B889005619D7 /* usercell7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell7.png; sourceTree = "<group>"; };
 		844694311C48B889005619D7 /* usercell8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell8.png; sourceTree = "<group>"; };
 		844694321C48B889005619D7 /* usercell9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell9.png; sourceTree = "<group>"; };
-		8465A6F61C52162000D0BC23 /* QRCodesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodesController.h; sourceTree = "<group>"; };
-		8465A6F71C52162000D0BC23 /* QRCodesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodesController.m; sourceTree = "<group>"; };
 		84896FB31C4DFB24009D7103 /* PublicationIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceViewController.h; path = Study/PublicationIntroduceViewController.h; sourceTree = "<group>"; };
 		84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceViewController.m; path = Study/PublicationIntroduceViewController.m; sourceTree = "<group>"; };
 		84896FB61C4DFB59009D7103 /* PublicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationViewController.h; path = Study/PublicationViewController.h; sourceTree = "<group>"; };
@@ -469,6 +467,8 @@
 		9A2A358A1C5653ED00FB2DD3 /* PersonalInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoViewController.m; sourceTree = "<group>"; };
 		9A2A358B1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSubmitTableViewCell.h; sourceTree = "<group>"; };
 		9A2A358C1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSubmitTableViewCell.m; sourceTree = "<group>"; };
+		9A2A35911C5683AE00FB2DD3 /* QRCodesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodesController.h; sourceTree = "<group>"; };
+		9A2A35921C5683AE00FB2DD3 /* QRCodesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodesController.m; sourceTree = "<group>"; };
 		9A5A304E1C4E87DF00813FF9 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = User/UserTableViewCell.h; sourceTree = "<group>"; };
 		9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = User/UserTableViewCell.m; sourceTree = "<group>"; };
 		9A6B47731C5282FD00A04101 /* ForgetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgetPwdViewController.h; path = User/ForgetPwdViewController.h; sourceTree = "<group>"; };
@@ -1267,6 +1267,8 @@
 				F49564311C4F529000CADBDE /* RegisterViewController.m */,
 				9A6B47761C52888400A04101 /* ServiceNoticesViewController.h */,
 				9A6B47771C52888400A04101 /* ServiceNoticesViewController.m */,
+				9A2A35911C5683AE00FB2DD3 /* QRCodesController.h */,
+				9A2A35921C5683AE00FB2DD3 /* QRCodesController.m */,
 			);
 			name = Register;
 			sourceTree = "<group>";
@@ -1457,6 +1459,7 @@
 			files = (
 				F49564351C4F6B8200CADBDE /* LoginViewController.m in Sources */,
 				84C1396B1C4628DB00284087 /* UIButton+WebCache.m in Sources */,
+				9A2A35941C56841400FB2DD3 /* QRCodesController.m in Sources */,
 				816F32501C4C84B1000D0AE5 /* TADotView.m in Sources */,
 				84B7BD1E1C4796CD00E202A6 /* AppConfig.m in Sources */,
 				84C139371C4628A800284087 /* UIButton+AFNetworking.m in Sources */,
@@ -1487,7 +1490,6 @@
 				816F32541C4C84B1000D0AE5 /* UIView+SDExtension.m in Sources */,
 				F49564321C4F529000CADBDE /* RegisterViewController.m in Sources */,
 				84C139631C4628DB00284087 /* NSData+ImageContentType.m in Sources */,
-				8465A6F81C52162000D0BC23 /* QRCodesController.m in Sources */,
 				84C139361C4628A800284087 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				5807C2E51C473B7A002C5F8E /* MJRefreshAutoNormalFooter.m in Sources */,
 				F4AA22581C4E295E00906CF4 /* VersionTableViewCell.m in Sources */,

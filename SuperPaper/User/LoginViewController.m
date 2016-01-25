@@ -112,7 +112,7 @@
     
     if (textField == self.pwdTextField) {
         _pwd = [_pwd stringByReplacingCharactersInRange:range withString:string];
-        NSLog(@"%@",_pwd);
+        
         if (!_showPwd) {
             if (![string isEqualToString:@""]) {
                 textField.text = [textField.text stringByReplacingCharactersInRange:range withString:@"•"];
@@ -162,18 +162,31 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            NSLog(@"%@",responseObject);
+            NSLog(@"%@",task);
             
             NSNumber *result = [responseObject valueForKey:@"result"];
             
             if (0 == result.integerValue) {//注册成功
                 NSInteger userId = [responseObject[@"id"] integerValue];
-                NSString *userName = responseObject[@"username"];
-                NSString *mobile = responseObject[@"mobile"];
+                NSString *userName;
+                if ([responseObject[@"username"] isKindOfClass:[NSString class]]) {
+                    userName = responseObject[@"username"];
+                }else
+                    userName = @"";
+                NSString *mobile;
+                if ([responseObject[@"mobile"]isKindOfClass:[NSString class]]) {
+                    mobile = responseObject[@"mobile"];
+                }else
+                    mobile = @"";
+                NSString *headImageName;
+                if ([responseObject[@"headpic"]isKindOfClass:[NSString class]]) {
+                    headImageName = responseObject[@"headpic"];
+                }else
+                    headImageName = @"";
                 [UserSession sharedInstance].currentUserID = userId;
                 [UserSession sharedInstance].currentUserName = userName;
                 [UserSession sharedInstance].currentUserTelNum = mobile;
-                
+                [UserSession sharedInstance].currentUserHeadImageName = headImageName;
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 
