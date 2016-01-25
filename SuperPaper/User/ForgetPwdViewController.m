@@ -291,7 +291,7 @@
 }
 - (IBAction)resetPwd:(id)sender {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *urlString = [NSString stringWithFormat:@"%@findpassword.php",BASE_URL];
     NSDictionary *params = @{@"userinfo":self.telNumTextField.text,@"password":_pwd};
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {

@@ -155,7 +155,7 @@
         NSString *mobile = self.userNameTextField.text;
         NSString *pwd = _pwd;
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         NSString *urlString = [NSString stringWithFormat:@"%@login.php",BASE_URL];
         NSDictionary *params = @{@"mobile":mobile,@"password":pwd};
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -168,27 +168,13 @@
             
             if (0 == result.integerValue) {//注册成功
                 NSInteger userId = [responseObject[@"id"] integerValue];
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setInteger:userId forKey:kUserID];
-                
                 NSString *userName = responseObject[@"username"];
-                [userDefaults setValue:userName forKey:kUserName];
-                
                 NSString *mobile = responseObject[@"mobile"];
-                [userDefaults setValue:mobile forKey:kUserTel];
+                [UserSession sharedInstance].currentUserID = userId;
+                [UserSession sharedInstance].currentUserName = userName;
+                [UserSession sharedInstance].currentUserTelNum = mobile;
                 
-                if ([userDefaults synchronize]) {
-                    [UserSession sharedInstance].currentUserID = userId;
-                    [UserSession sharedInstance].currentUserName = userName;
-                    [UserSession sharedInstance].currentUserTelNum = mobile;
-                    
-                    NSLog(@"我要跳回去了啊！");
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                    
-                }else{
-                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"用户信息保存本地失败！" message:@"请重新登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [av show];
-                }
+                [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 
                 

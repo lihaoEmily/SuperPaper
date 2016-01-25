@@ -215,7 +215,7 @@
         
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         [manager POST:smsVerifyBaseURL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -299,7 +299,7 @@
         NSString *urlString = [NSString stringWithFormat:@"%@regist.php",BASE_URL];
         NSDictionary *dic = @{@"mobile":mobile,@"password":pwd};
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         
         [manager POST:urlString parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
