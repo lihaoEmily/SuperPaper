@@ -21,23 +21,25 @@
 @implementation HomeViewController{
     // 返回主页资讯数据
     NSMutableArray *_responseNewsInfoArr;
+    // 返回主页活动数据
     NSMutableArray *_responseActivityInfoArr;
     // 返回广告信息数据
     NSArray *_responseAdInfoArr;
+    
+    NSMutableArray *imagesURLString;
+    SDCycleScrollView *cycleScrollView;
     BOOL isNews;
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    //TODO: for testing
 //    [self viewTest];
     isNews = YES;
-    [self initData];
     
+    [self initData];
     [self getHomePageNewsInfo];
-    [self getStudyPageAdInfo];
+    [self getHomePageAdInfo];
 }
 
 - (void)initData {
@@ -48,6 +50,7 @@
     _studyTableView.sectionHeaderHeight = 10;
     _studyTableView.sectionFooterHeight = 10;
     [self.view addSubview:_studyTableView];
+    [self creatHeaderView];
     
     //变量初始化
     
@@ -106,20 +109,15 @@
      * list_num   整型    一次获取list数
      */
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",@"1",@"ownertype", nil];
-    NSLog(@"parameters %@",parameters);
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_newsinfo.php",BASE_URL];
-    NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-        NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseNewsInfoArr addObjectsFromArray:myArr];
-        NSLog(@"%@",responseObject);
         [_studyTableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
     }];
 }
 //获取首页资讯接口
@@ -134,48 +132,44 @@
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
-    NSDictionary *parameters = @{@"ownertype":@"1", @"start_pos":[NSNumber numberWithInt:(int)_responseActivityInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
-    NSLog(@"parameters %@",parameters);
+    NSDictionary *parameters = @{@"ownertype":@"2", @"start_pos":[NSNumber numberWithInt:(int)_responseActivityInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_activityinfo.php",BASE_URL];
-    NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-        NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseActivityInfoArr addObjectsFromArray:myArr];
-        NSLog(@"%@",responseObject);
         [_studyTableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
     }];
 }
 
 
 //获取广告信息
-- (void)getStudyPageAdInfo
+- (void)getHomePageAdInfo
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
      ** parameters 参数
-     * ownertype  整型    1：学习主页
+     * ownertype  整型
      */
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1]};
     NSString *urlString = [NSString stringWithFormat:@"%@getadinfo.php",BASE_URL];
-    NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-        NSLog(@"POST %@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _responseAdInfoArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-        NSLog(@"responseObject %@",responseObject);
-        [_studyTableView reloadData];
-        
+        for (NSDictionary *dic in _responseAdInfoArr) {
+            NSString *iamgeURL = [NSString stringWithFormat:@"%@%@",IMGURL,[dic valueForKey:@"adpicname"]];
+            [imagesURLString addObject:iamgeURL];
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            cycleScrollView.imageURLStringsGroup = imagesURLString;
+        });
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error %@",error);
     }];
 }
 
@@ -185,12 +179,14 @@
         case 100:{
             button.selected = !button.selected;
             isNews = YES;
+            [_responseNewsInfoArr removeAllObjects];
             [self getHomePageNewsInfo];
         }
             break;
         case 101:{
             button.selected = !button.selected;
             isNews = NO;
+            [_responseActivityInfoArr removeAllObjects];
             [self getHomePageActivityInfo];
         }
             break;
@@ -199,54 +195,47 @@
     }
 }
 
+-(void)creatHeaderView
+{
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 240)];
+    //采用网络图片实现
+    imagesURLString = [[NSMutableArray alloc]init];
+    // 网络加载 --- 创建带标题的图片轮播器
+    cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+    
+    cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
+    cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
+    [headerView addSubview:cycleScrollView];
+    NSArray *nameArray = [NSArray arrayWithObjects:@"新闻",@"活动", nil];
+    for (int i = 0; i < nameArray.count; i ++) {
+        UIButton *serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        serviceBtn.frame = CGRectMake((i%2)*OWIDTH/2, CGRectGetMaxY(cycleScrollView.frame), OWIDTH/2, 60);
+        serviceBtn.tag = i+100;
+        serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
+        serviceBtn.layer.borderWidth = 1;
+        [serviceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
+        [serviceBtn addTarget:self action:@selector(serviceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [serviceBtn setTitle:nameArray[i] forState:UIControlStateNormal];\
+        [headerView addSubview:serviceBtn];
+    }
+    _studyTableView.tableHeaderView = headerView;
+}
+
 #pragma mark - TableView dataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     if (0 == indexPath.section) {
-        
-        static NSString *ID = @"Cell0";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-        }
-        
-        
-        
-        //采用网络图片实现
-        NSMutableArray *imagesURLStrings = [[NSMutableArray alloc]init];
-        
-        for (NSDictionary *dic in _responseAdInfoArr) {
-            NSString *iamgeURL = [NSString stringWithFormat:@"%@%@",IMGURL,[dic valueForKey:@"adpicname"]];
-            
-            
-            [imagesURLStrings addObject:iamgeURL];
-        }
-        
-        // >>>>>>>>>>>>>>>>>>>>>>>>> demo轮播图2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        
-        // 网络加载 --- 创建带标题的图片轮播器
-        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
-        
-        cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
-        cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
-        [cell.contentView addSubview:cycleScrollView];
-        
-        //         --- 模拟加载延迟
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            cycleScrollView.imageURLStringsGroup = imagesURLStrings;
-        });
-        
-        
-        return cell;
-    }
-    else if (1 == indexPath.section) {
         
         static NSString *ID = @"Cell1";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
         }
-        
+        else{
+            for (UIView *subView in cell.contentView.subviews) {
+                [subView removeFromSuperview];
+            }
+        }
         NSArray *nameArray = [NSArray arrayWithObjects:@"新闻",@"活动", nil];
         for (int i = 0; i < nameArray.count; i ++) {
             UIButton *serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -340,7 +329,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if ((0 == section) || (1 == section)) {
+    if ((0 == section)) {
         
         return 1;
     }
@@ -360,16 +349,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 3;
+    return 2;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (0 == indexPath.section) {
-        return 180;
-    }
-    else if (1 == indexPath.section) {
         return  60;
     }
     else {
@@ -403,7 +389,6 @@
             vc.title = [[_responseActivityInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
             vc.urlString = [[_responseActivityInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
         }
-        
         /**
          * 跳转页面
          */
