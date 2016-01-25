@@ -34,6 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _pwd = @"";
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     
@@ -111,7 +112,7 @@
     
     if (textField == self.pwdTextField) {
         _pwd = [_pwd stringByReplacingCharactersInRange:range withString:string];
-        
+        NSLog(@"%@",_pwd);
         if (!_showPwd) {
             if (![string isEqualToString:@""]) {
                 textField.text = [textField.text stringByReplacingCharactersInRange:range withString:@"•"];
@@ -154,9 +155,9 @@
         NSString *mobile = self.userNameTextField.text;
         NSString *pwd = _pwd;
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         NSString *urlString = [NSString stringWithFormat:@"%@login.php",BASE_URL];
-        NSString *params = [NSString stringWithFormat:@"username=%@&password=%@",mobile,pwd];
+        NSDictionary *params = @{@"mobile":mobile,@"password":pwd};
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

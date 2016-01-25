@@ -147,6 +147,11 @@
 		84C139711C4628DB00284087 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C139611C4628DB00284087 /* UIView+WebCacheOperation.m */; };
 		92AF175A1C50D56300797B0E /* assessmment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92AF17571C50D56300797B0E /* assessmment.plist */; };
 		92AF175B1C50D56300797B0E /* NormalAssessmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AF17591C50D56300797B0E /* NormalAssessmentViewController.m */; };
+		9A2A35841C5652E800FB2DD3 /* ReadMyMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35831C5652E800FB2DD3 /* ReadMyMessagesViewController.m */; };
+		9A2A358D1C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35861C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m */; };
+		9A2A358E1C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35881C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m */; };
+		9A2A358F1C5653ED00FB2DD3 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A358A1C5653ED00FB2DD3 /* PersonalInfoViewController.m */; };
+		9A2A35901C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A358C1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m */; };
 		9A5A30501C4E87DF00813FF9 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */; };
 		9A6B47751C5282FD00A04101 /* ForgetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47741C5282FD00A04101 /* ForgetPwdViewController.m */; };
 		9A6B47781C52888400A04101 /* ServiceNoticesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47771C52888400A04101 /* ServiceNoticesViewController.m */; };
@@ -174,9 +179,6 @@
 		F4AA22561C4E295E00906CF4 /* AboutUsHasNextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA22511C4E295E00906CF4 /* AboutUsHasNextTableViewCell.m */; };
 		F4AA22571C4E295E00906CF4 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA22531C4E295E00906CF4 /* AboutUsViewController.m */; };
 		F4AA22581C4E295E00906CF4 /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA22551C4E295E00906CF4 /* VersionTableViewCell.m */; };
-		F4AA225F1C4E297600906CF4 /* PersonalInfoHasSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA225A1C4E297600906CF4 /* PersonalInfoHasSelectionTableViewCell.m */; };
-		F4AA22601C4E297600906CF4 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA225C1C4E297600906CF4 /* PersonalInfoTableViewCell.m */; };
-		F4AA22611C4E297600906CF4 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA225E1C4E297600906CF4 /* PersonalInfoViewController.m */; };
 		F4AA22661C4E298400906CF4 /* MyPapersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA22631C4E298400906CF4 /* MyPapersTableViewCell.m */; };
 		F4AA22671C4E298400906CF4 /* MyPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA22651C4E298400906CF4 /* MyPapersViewController.m */; };
 		F4AA226C1C4E299700906CF4 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA22691C4E299700906CF4 /* AccountTableViewCell.m */; };
@@ -454,6 +456,16 @@
 		92AF17571C50D56300797B0E /* assessmment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = assessmment.plist; path = AssessmentTitle/assessmment.plist; sourceTree = "<group>"; };
 		92AF17581C50D56300797B0E /* NormalAssessmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalAssessmentViewController.h; path = AssessmentTitle/NormalAssessmentViewController.h; sourceTree = "<group>"; };
 		92AF17591C50D56300797B0E /* NormalAssessmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalAssessmentViewController.m; path = AssessmentTitle/NormalAssessmentViewController.m; sourceTree = "<group>"; };
+		9A2A35821C5652E800FB2DD3 /* ReadMyMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadMyMessagesViewController.h; sourceTree = "<group>"; };
+		9A2A35831C5652E800FB2DD3 /* ReadMyMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadMyMessagesViewController.m; sourceTree = "<group>"; };
+		9A2A35851C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoHasSelectionTableViewCell.h; sourceTree = "<group>"; };
+		9A2A35861C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoHasSelectionTableViewCell.m; sourceTree = "<group>"; };
+		9A2A35871C5653ED00FB2DD3 /* PersonalInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoTableViewCell.h; sourceTree = "<group>"; };
+		9A2A35881C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoTableViewCell.m; sourceTree = "<group>"; };
+		9A2A35891C5653ED00FB2DD3 /* PersonalInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoViewController.h; sourceTree = "<group>"; };
+		9A2A358A1C5653ED00FB2DD3 /* PersonalInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoViewController.m; sourceTree = "<group>"; };
+		9A2A358B1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSubmitTableViewCell.h; sourceTree = "<group>"; };
+		9A2A358C1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSubmitTableViewCell.m; sourceTree = "<group>"; };
 		9A5A304E1C4E87DF00813FF9 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = User/UserTableViewCell.h; sourceTree = "<group>"; };
 		9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = User/UserTableViewCell.m; sourceTree = "<group>"; };
 		9A6B47731C5282FD00A04101 /* ForgetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgetPwdViewController.h; path = User/ForgetPwdViewController.h; sourceTree = "<group>"; };
@@ -497,12 +509,6 @@
 		F4AA22531C4E295E00906CF4 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsViewController.m; path = User/AboutUsViewController.m; sourceTree = "<group>"; };
 		F4AA22541C4E295E00906CF4 /* VersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VersionTableViewCell.h; path = User/VersionTableViewCell.h; sourceTree = "<group>"; };
 		F4AA22551C4E295E00906CF4 /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VersionTableViewCell.m; path = User/VersionTableViewCell.m; sourceTree = "<group>"; };
-		F4AA22591C4E297600906CF4 /* PersonalInfoHasSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalInfoHasSelectionTableViewCell.h; path = User/PersonalInfoHasSelectionTableViewCell.h; sourceTree = "<group>"; };
-		F4AA225A1C4E297600906CF4 /* PersonalInfoHasSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalInfoHasSelectionTableViewCell.m; path = User/PersonalInfoHasSelectionTableViewCell.m; sourceTree = "<group>"; };
-		F4AA225B1C4E297600906CF4 /* PersonalInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalInfoTableViewCell.h; path = User/PersonalInfoTableViewCell.h; sourceTree = "<group>"; };
-		F4AA225C1C4E297600906CF4 /* PersonalInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalInfoTableViewCell.m; path = User/PersonalInfoTableViewCell.m; sourceTree = "<group>"; };
-		F4AA225D1C4E297600906CF4 /* PersonalInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalInfoViewController.h; path = User/PersonalInfoViewController.h; sourceTree = "<group>"; };
-		F4AA225E1C4E297600906CF4 /* PersonalInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalInfoViewController.m; path = User/PersonalInfoViewController.m; sourceTree = "<group>"; };
 		F4AA22621C4E298400906CF4 /* MyPapersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPapersTableViewCell.h; path = User/MyPapersTableViewCell.h; sourceTree = "<group>"; };
 		F4AA22631C4E298400906CF4 /* MyPapersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyPapersTableViewCell.m; path = User/MyPapersTableViewCell.m; sourceTree = "<group>"; };
 		F4AA22641C4E298400906CF4 /* MyPapersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPapersViewController.h; path = User/MyPapersViewController.h; sourceTree = "<group>"; };
@@ -1280,6 +1286,8 @@
 				F4AA22751C4E29B800906CF4 /* MyMessageTableViewCell.m */,
 				F4AA22761C4E29B800906CF4 /* MyMessageViewController.h */,
 				F4AA22771C4E29B800906CF4 /* MyMessageViewController.m */,
+				9A2A35821C5652E800FB2DD3 /* ReadMyMessagesViewController.h */,
+				9A2A35831C5652E800FB2DD3 /* ReadMyMessagesViewController.m */,
 			);
 			name = MyMessages;
 			sourceTree = "<group>";
@@ -1309,12 +1317,14 @@
 		F4AA224A1C4E28DB00906CF4 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				F4AA22591C4E297600906CF4 /* PersonalInfoHasSelectionTableViewCell.h */,
-				F4AA225A1C4E297600906CF4 /* PersonalInfoHasSelectionTableViewCell.m */,
-				F4AA225B1C4E297600906CF4 /* PersonalInfoTableViewCell.h */,
-				F4AA225C1C4E297600906CF4 /* PersonalInfoTableViewCell.m */,
-				F4AA225D1C4E297600906CF4 /* PersonalInfoViewController.h */,
-				F4AA225E1C4E297600906CF4 /* PersonalInfoViewController.m */,
+				9A2A35851C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.h */,
+				9A2A35861C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m */,
+				9A2A35871C5653ED00FB2DD3 /* PersonalInfoTableViewCell.h */,
+				9A2A35881C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m */,
+				9A2A35891C5653ED00FB2DD3 /* PersonalInfoViewController.h */,
+				9A2A358A1C5653ED00FB2DD3 /* PersonalInfoViewController.m */,
+				9A2A358B1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.h */,
+				9A2A358C1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1454,6 +1464,7 @@
 				9A6B47781C52888400A04101 /* ServiceNoticesViewController.m in Sources */,
 				04FFFDFF1C410C2900ECCA1C /* UserViewController.m in Sources */,
 				9AEB04B61C536D9000D34FBE /* UserSettingLogoutTableViewCell.m in Sources */,
+				9A2A35841C5652E800FB2DD3 /* ReadMyMessagesViewController.m in Sources */,
 				F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */,
 				84B7BD211C4796E300E202A6 /* TelephoneView.m in Sources */,
 				816F324F1C4C84B1000D0AE5 /* TAAnimatedDotView.m in Sources */,
@@ -1474,7 +1485,6 @@
 				F49564321C4F529000CADBDE /* RegisterViewController.m in Sources */,
 				84C139631C4628DB00284087 /* NSData+ImageContentType.m in Sources */,
 				84C139361C4628A800284087 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
-				F4AA22611C4E297600906CF4 /* PersonalInfoViewController.m in Sources */,
 				5807C2E51C473B7A002C5F8E /* MJRefreshAutoNormalFooter.m in Sources */,
 				F4AA22581C4E295E00906CF4 /* VersionTableViewCell.m in Sources */,
 				5807C2DF1C473B7A002C5F8E /* MJRefreshAutoFooter.m in Sources */,
@@ -1512,6 +1522,7 @@
 				5807C2F11C473B7A002C5F8E /* UIView+MJExtension.m in Sources */,
 				04E3F3B61C4C8A9A00DEE217 /* ASSaveData.m in Sources */,
 				04FFFDFC1C410BB900ECCA1C /* PapersViewController.m in Sources */,
+				9A2A358F1C5653ED00FB2DD3 /* PersonalInfoViewController.m in Sources */,
 				F4AA22671C4E298400906CF4 /* MyPapersViewController.m in Sources */,
 				816F32531C4C84B1000D0AE5 /* SDCycleScrollView.m in Sources */,
 				84C1393F1C4628D500284087 /* UIImage+ImageEffects.m in Sources */,
@@ -1528,6 +1539,7 @@
 				5807C2E11C473B7A002C5F8E /* MJRefreshComponent.m in Sources */,
 				5807C2E71C473B7A002C5F8E /* MJRefreshBackGifFooter.m in Sources */,
 				04FFFE191C4123F100ECCA1C /* TabBarItem.m in Sources */,
+				9A2A35901C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m in Sources */,
 				84C1396D1C4628DB00284087 /* UIImage+MultiFormat.m in Sources */,
 				816F32511C4C84B1000D0AE5 /* TAPageControl.m in Sources */,
 				84C1396E1C4628DB00284087 /* UIImage+WebP.m in Sources */,
@@ -1541,14 +1553,13 @@
 				04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */,
 				5807C2E21C473B7A002C5F8E /* MJRefreshFooter.m in Sources */,
 				84C139351C4628A800284087 /* AFNetworkActivityIndicatorManager.m in Sources */,
-				F4AA225F1C4E297600906CF4 /* PersonalInfoHasSelectionTableViewCell.m in Sources */,
 				F6F21CB81C48B8D000AD6A6D /* ClassifiedPapersViewController.m in Sources */,
 				84C139181C4628A300284087 /* AFHTTPSessionManager.m in Sources */,
+				9A2A358E1C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m in Sources */,
 				84C139711C4628DB00284087 /* UIView+WebCacheOperation.m in Sources */,
 				5807C2EF1C473B7A002C5F8E /* UIScrollView+MJExtension.m in Sources */,
 				84C1396A1C4628DB00284087 /* SDWebImagePrefetcher.m in Sources */,
 				04FFFE151C4123F100ECCA1C /* BaseViewController.m in Sources */,
-				F4AA22601C4E297600906CF4 /* PersonalInfoTableViewCell.m in Sources */,
 				040F80161C511E19000D8CAA /* ASShare.m in Sources */,
 				04FFFE1F1C4146EC00ECCA1C /* BaseView.m in Sources */,
 				84C139381C4628A800284087 /* UIImageView+AFNetworking.m in Sources */,
@@ -1570,6 +1581,7 @@
 				84C1393B1C4628A800284087 /* UIWebView+AFNetworking.m in Sources */,
 				5807C2EC1C473B7A002C5F8E /* MJRefreshStateHeader.m in Sources */,
 				84C139701C4628DB00284087 /* UIImageView+WebCache.m in Sources */,
+				9A2A358D1C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m in Sources */,
 				84C1391C1C4628A300284087 /* AFURLResponseSerialization.m in Sources */,
 				04FFFE181C4123F100ECCA1C /* TabBar.m in Sources */,
 			);

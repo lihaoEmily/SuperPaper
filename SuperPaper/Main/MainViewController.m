@@ -17,6 +17,7 @@
 #import "TabBar.h"
 #import "IntroViewController.h"
 #import "SettingViewController.h"
+#import "UserSession.h"
 
 
 @interface MainViewController ()<TabBarDelegate>

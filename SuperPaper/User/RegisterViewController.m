@@ -211,12 +211,12 @@
         NSString *password = @"jksc22766";
         int verifyCode = arc4random_uniform(9000) + 1000;
         NSString *content = [NSString stringWithFormat:@"您的验证码是%d,请不要把验证码泄露给其他人。如非本人操作，可不用理会！【超级论文】",verifyCode];
+        NSDictionary *dic = @{@"action":@"send",@"userid":userid,@"account":account,@"password":password,@"mobile":mobile,@"content":[content stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"sendTime":@"",@"extno":@""};
         
-        NSString *params = [[NSString stringWithFormat:@"action=send&userid=%@&account=%@&password=%@&mobile=%@&content=%@&sendTime=&extno=",userid,account,password,mobile,content]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];;
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-        [manager POST:smsVerifyBaseURL parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        [manager POST:smsVerifyBaseURL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *success = [responseObject valueForKey:@"returnstatus"];
@@ -297,11 +297,11 @@
         NSString *mobile = self.telNumTextField.text;
         NSString *pwd = _pwd;
         NSString *urlString = [NSString stringWithFormat:@"%@regist.php",BASE_URL];
-        NSString *params = [NSString stringWithFormat:@"mobile=%@&password=%@",mobile,pwd];
+        NSDictionary *dic = @{@"mobile":mobile,@"password":pwd};
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         
-        [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        [manager POST:urlString parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSLog(@"注册%@",responseObject);
@@ -313,7 +313,7 @@
                 LoginViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
                 vc.userTelNum = mobile;
                 [self.navigationController pushViewController:vc animated:YES];
-                //TODO: 跳转到登录页面
+                
                 
                 
             }else if(1 == result.integerValue)//注册失败
