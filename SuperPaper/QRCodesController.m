@@ -33,20 +33,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
-    self.view.alpha = 0.4;
+    self.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
     self.title = @"扫一扫";
+    
+    self.cameraImageView.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
+    CGRect cameraRect = self.cameraImageView.frame;
     [self.view addSubview:self.cameraImageView];
-    self.cameraImageView.center = self.view.center;
+    _preview.frame = self.cameraImageView.frame;
 
     
+    UIImage *image = [UIImage imageWithASName:@"lineView" directory:@"user"];
+    self.lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(cameraRect.origin.x, cameraRect.origin.y, cameraRect.size.width, 1)];
+    self.lineImageView.image = image;
+    [self.view addSubview:self.lineImageView];
+    
+    self.textLabel.center = CGPointMake(self.view.center.x, CGRectGetMaxY(self.cameraImageView.frame)+ self.textLabel.frame.size.height );
     [self.view addSubview:self.textLabel];
-    
-    
-    UIImageView *lineImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lineView"]];
-    lineImageView.frame = CGRectZero;
-    [self.view addSubview:lineImageView];
-    self.lineImageView = lineImageView;
     
     timer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(lineAnimation:) userInfo:nil repeats:YES];
 
@@ -127,6 +129,8 @@
 #pragma mark AVCaptureMetadataOutputObjectsDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
 {
+    [timer invalidate];
+    [_session stopRunning];
     if (metadataObjects.count > 0 )
     {
         NSLog(@"%@",[[metadataObjects firstObject] stringValue]);
@@ -139,8 +143,6 @@
         self.ScanResult(@"false",NO);
     }
     
-    [timer invalidate];
-    [_session stopRunning];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -150,8 +152,8 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.cameraImageView.center = self.view.center;
-    self.textLabel.center = CGPointMake(self.view.center.x, CGRectGetMaxY(self.cameraImageView.frame)+ self.textLabel.frame.size.height );
+//    self.cameraImageView.center = self.view.center;
+//    self.textLabel.center = CGPointMake(self.view.center.x, CGRectGetMaxY(self.cameraImageView.frame)+ self.textLabel.frame.size.height );
     
     _preview.frame = self.cameraImageView.frame;
 
@@ -172,8 +174,9 @@
 {
     if (!_cameraImageView)
     {
-        _cameraImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cameraImage"]];
+        _cameraImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithASName:@"cameraImage" directory:@"user"]];
         _cameraImageView.frame = CGRectMake(0, 0, 200, 200);
+        _cameraImageView.clipsToBounds = YES;
         _cameraImageView.clipsToBounds = YES;
     }
     

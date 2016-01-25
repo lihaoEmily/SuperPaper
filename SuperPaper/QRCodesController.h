@@ -10,24 +10,22 @@
 
 /*
  if ([QRCodesController isCameraAvailable])
-     {
-     QRCodesController *qr = [[QRCodesController alloc] init];
-     [self.navigationController pushViewController:qr animated:YES];
-     qr.ScanResult = ^(NSString *result,BOOL isSucceed){
-     
-     if (isSucceed)
-     {
-     NSLog(@"在这里处理结果 %@",result);
-     
-     }
-     
-     };
-     }else
-     {
-     NSLog(@"请开启摄像头");
-     }
+ {
+ QRCodesController *qr = [[QRCodesController alloc] init];
+ [self.navigationController pushViewController:qr animated:YES];
+ qr.ScanResult = ^(NSString *result,BOOL isSucceed){
  
+ if (isSucceed)
+ {
+ NSLog(@"在这里处理结果 %@",result);
  
+ }
+ 
+ };
+ }else
+ {
+ NSLog(@"请开启摄像头");
+ }
  */
 
 @interface QRCodesController : UIViewController
