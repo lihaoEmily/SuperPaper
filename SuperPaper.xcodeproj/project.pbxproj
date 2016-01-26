@@ -79,7 +79,6 @@
 		5807C2EF1C473B7A002C5F8E /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807C2DA1C473B7A002C5F8E /* UIScrollView+MJExtension.m */; };
 		5807C2F01C473B7A002C5F8E /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807C2DC1C473B7A002C5F8E /* UIScrollView+MJRefresh.m */; };
 		5807C2F11C473B7A002C5F8E /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807C2DE1C473B7A002C5F8E /* UIView+MJExtension.m */; };
-		5807C2F51C473C64002C5F8E /* libPushSDK-1.8.8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2F41C473C64002C5F8E /* libPushSDK-1.8.8.a */; };
 		5807C2F71C473D33002C5F8E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2F61C473D33002C5F8E /* Security.framework */; };
 		5807C2F91C473D4B002C5F8E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2F81C473D4B002C5F8E /* SystemConfiguration.framework */; };
 		5807C2FB1C473D7F002C5F8E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807C2FA1C473D7F002C5F8E /* libz.tbd */; };
@@ -145,6 +144,7 @@
 		84C1396F1C4628DB00284087 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1395D1C4628DB00284087 /* UIImageView+HighlightedWebCache.m */; };
 		84C139701C4628DB00284087 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1395F1C4628DB00284087 /* UIImageView+WebCache.m */; };
 		84C139711C4628DB00284087 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C139611C4628DB00284087 /* UIView+WebCacheOperation.m */; };
+		92888FE51C5718D200D3BBC8 /* jpush-ios-2.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92888FE31C5718D200D3BBC8 /* jpush-ios-2.1.0.a */; };
 		92AF175A1C50D56300797B0E /* assessmment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92AF17571C50D56300797B0E /* assessmment.plist */; };
 		92AF175B1C50D56300797B0E /* NormalAssessmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AF17591C50D56300797B0E /* NormalAssessmentViewController.m */; };
 		9A2A35841C5652E800FB2DD3 /* ReadMyMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35831C5652E800FB2DD3 /* ReadMyMessagesViewController.m */; };
@@ -332,8 +332,6 @@
 		5807C2DC1C473B7A002C5F8E /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		5807C2DD1C473B7A002C5F8E /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		5807C2DE1C473B7A002C5F8E /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
-		5807C2F31C473C64002C5F8E /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
-		5807C2F41C473C64002C5F8E /* libPushSDK-1.8.8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.8.a"; sourceTree = "<group>"; };
 		5807C2F61C473D33002C5F8E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5807C2F81C473D4B002C5F8E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5807C2FA1C473D7F002C5F8E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -455,6 +453,8 @@
 		84C1395F1C4628DB00284087 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		84C139601C4628DB00284087 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		84C139611C4628DB00284087 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		92888FE31C5718D200D3BBC8 /* jpush-ios-2.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.0.a"; sourceTree = "<group>"; };
+		92888FE41C5718D200D3BBC8 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		92AF17571C50D56300797B0E /* assessmment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = assessmment.plist; path = AssessmentTitle/assessmment.plist; sourceTree = "<group>"; };
 		92AF17581C50D56300797B0E /* NormalAssessmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalAssessmentViewController.h; path = AssessmentTitle/NormalAssessmentViewController.h; sourceTree = "<group>"; };
 		92AF17591C50D56300797B0E /* NormalAssessmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalAssessmentViewController.m; path = AssessmentTitle/NormalAssessmentViewController.m; sourceTree = "<group>"; };
@@ -560,6 +560,7 @@
 				040F800D1C5113EA000D8CAA /* ImageIO.framework in Frameworks */,
 				040F800B1C5113D3000D8CAA /* JavaScriptCore.framework in Frameworks */,
 				040F80091C5113BB000D8CAA /* libstdc++.tbd in Frameworks */,
+				92888FE51C5718D200D3BBC8 /* jpush-ios-2.1.0.a in Frameworks */,
 				040F80071C5113A2000D8CAA /* libicucore.tbd in Frameworks */,
 				040F7FFE1C511306000D8CAA /* MOBFoundation.framework in Frameworks */,
 				5807C2FB1C473D7F002C5F8E /* libz.tbd in Frameworks */,
@@ -576,7 +577,6 @@
 				040F7FFA1C511306000D8CAA /* libWeiboSDK.a in Frameworks */,
 				04C3B82E1C43D5E2009D48E4 /* CoreFoundation.framework in Frameworks */,
 				04C3B82C1C43D5D0009D48E4 /* CFNetwork.framework in Frameworks */,
-				5807C2F51C473C64002C5F8E /* libPushSDK-1.8.8.a in Frameworks */,
 				04C3B82A1C43D5B4009D48E4 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1036,8 +1036,8 @@
 		5807C2F21C473C64002C5F8E /* JPush */ = {
 			isa = PBXGroup;
 			children = (
-				5807C2F31C473C64002C5F8E /* APService.h */,
-				5807C2F41C473C64002C5F8E /* libPushSDK-1.8.8.a */,
+				92888FE31C5718D200D3BBC8 /* jpush-ios-2.1.0.a */,
+				92888FE41C5718D200D3BBC8 /* JPUSHService.h */,
 			);
 			name = JPush;
 			path = ThirdParty/JPush;
