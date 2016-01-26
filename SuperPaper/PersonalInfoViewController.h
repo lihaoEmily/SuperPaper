@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PersonalInfoViewController : UIViewController
-
+- (void)submit;
 @end

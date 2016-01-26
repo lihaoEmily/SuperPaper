@@ -42,7 +42,12 @@ static NSString *const SubmitIdentifier = @"submit";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.telNo = [UserSession sharedInstance].currentUserTelNum;
+    self.name = [UserSession sharedInstance].currentUserName;
+    self.gender = kUserGen_Man == [UserSession sharedInstance].currentUserGen?@"男":@"女";
+    self.age = [UserSession sharedInstance].currentUserAge;
+    self.career = kUserRoleTeacher == [UserSession sharedInstance].currentRole?@"老师":@"学生";
+    self.college = [UserSession sharedInstance].currentUserCollege;
     _currentGen = [UserSession sharedInstance].currentUserGen;
     _currentRole = [UserSession sharedInstance].currentRole;
 }
@@ -65,16 +70,20 @@ static NSString *const SubmitIdentifier = @"submit";
         NSNumber *result = responseObject[@"result"];
         if (0 == result.integerValue) {//成功
             self.name = responseObject[@"realname"]?responseObject[@"realname"]:nil;
-            if ([responseObject[@"sex"] isKindOfClass:[NSNumber class]]) {
+            
+            if ([responseObject[@"sex"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.gender = 0 == [responseObject[@"sex"]integerValue]?@"男":@"女";
-            }else
+                
+            }else{
+                
                 self.gender = @"";
-            if ([responseObject[@"age"] isKindOfClass:[NSNumber class]]) {
+            }
+            if ([responseObject[@"age"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.age = [responseObject[@"age"]integerValue];
             }else
                 self.age = 0;
             
-            if ([responseObject[@"jobtitle"] isKindOfClass:[NSNumber class]]) {
+            if ([responseObject[@"jobtitle"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.career = 0 == [responseObject[@"jobtitle"]integerValue]?@"老师":@"学生";
             }else
                 self.career = @"";
@@ -83,7 +92,7 @@ static NSString *const SubmitIdentifier = @"submit";
                 self.college = responseObject[@"school"];
             }else
                 self.college = @"";
-            self.telNo = [UserSession sharedInstance].currentUserTelNum;
+            
             [self.tableView reloadData];
         }else{
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取个人信息失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -574,6 +583,7 @@ static NSString *const SubmitIdentifier = @"submit";
         return cell;
     }else if(6 == indexPath.row){
         ProfileSubmitTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SubmitIdentifier];
+        cell.superController = self;
         return cell;
     }
     PersonalInfoHasSelectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HasNextIdentifier];

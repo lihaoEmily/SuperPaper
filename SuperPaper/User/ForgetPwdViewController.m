@@ -73,13 +73,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [_timer invalidate];
-    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = nil;
-}
 
 //MARK:Helper
 

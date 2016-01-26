@@ -157,13 +157,12 @@
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         NSString *urlString = [NSString stringWithFormat:@"%@login.php",BASE_URL];
-        NSDictionary *params = @{@"mobile":mobile,@"password":pwd};
+        NSDictionary *params = @{@"username":mobile,@"password":pwd};
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            NSLog(@"%@",task);
-            
+            NSLog(@"登录%@",responseObject);
             NSNumber *result = [responseObject valueForKey:@"result"];
             
             if (0 == result.integerValue) {//注册成功

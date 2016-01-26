@@ -19,9 +19,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
-    self.textView.text = self.messageTitle;
+    self.textView.text = self.messageContent;
     self.title = self.messageTitle;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *urlString = [NSString stringWithFormat:@"%@readusernotice.php",BASE_URL];
     NSDictionary *params = @{@"id":@(self.messageID)};
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {

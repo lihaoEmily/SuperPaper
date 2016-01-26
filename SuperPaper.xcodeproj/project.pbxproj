@@ -174,6 +174,7 @@
 		F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F931D1C508B510029A3B0 /* RadioButton.m */; };
 		F47F93221C508DDD0029A3B0 /* RadioButton-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F47F93201C508DDD0029A3B0 /* RadioButton-Selected.png */; };
 		F47F93231C508DDD0029A3B0 /* RadioButton-Unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = F47F93211C508DDD0029A3B0 /* RadioButton-Unselected.png */; };
+		F4819C131C57178000C3E24B /* VoucherIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4819C121C57178000C3E24B /* VoucherIntroViewController.m */; };
 		F49564321C4F529000CADBDE /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49564311C4F529000CADBDE /* RegisterViewController.m */; };
 		F49564351C4F6B8200CADBDE /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49564341C4F6B8200CADBDE /* LoginViewController.m */; };
 		F4AA224F1C4E294300906CF4 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA224E1C4E294300906CF4 /* FeedbackViewController.m */; };
@@ -500,6 +501,8 @@
 		F47F931D1C508B510029A3B0 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RadioButton.m; path = User/RadioButton.m; sourceTree = "<group>"; };
 		F47F93201C508DDD0029A3B0 /* RadioButton-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RadioButton-Selected.png"; path = "register/RadioButton-Selected.png"; sourceTree = "<group>"; };
 		F47F93211C508DDD0029A3B0 /* RadioButton-Unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RadioButton-Unselected.png"; path = "register/RadioButton-Unselected.png"; sourceTree = "<group>"; };
+		F4819C111C57178000C3E24B /* VoucherIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoucherIntroViewController.h; path = User/VoucherIntroViewController.h; sourceTree = "<group>"; };
+		F4819C121C57178000C3E24B /* VoucherIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoucherIntroViewController.m; path = User/VoucherIntroViewController.m; sourceTree = "<group>"; };
 		F49564301C4F529000CADBDE /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = User/RegisterViewController.h; sourceTree = "<group>"; };
 		F49564311C4F529000CADBDE /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = User/RegisterViewController.m; sourceTree = "<group>"; };
 		F49564331C4F6B8200CADBDE /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = User/LoginViewController.h; sourceTree = "<group>"; };
@@ -1280,6 +1283,8 @@
 				F4AA22691C4E299700906CF4 /* AccountTableViewCell.m */,
 				F4AA226A1C4E299700906CF4 /* AccountViewController.h */,
 				F4AA226B1C4E299700906CF4 /* AccountViewController.m */,
+				F4819C111C57178000C3E24B /* VoucherIntroViewController.h */,
+				F4819C121C57178000C3E24B /* VoucherIntroViewController.m */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -1545,6 +1550,7 @@
 				5807C2E11C473B7A002C5F8E /* MJRefreshComponent.m in Sources */,
 				5807C2E71C473B7A002C5F8E /* MJRefreshBackGifFooter.m in Sources */,
 				04FFFE191C4123F100ECCA1C /* TabBarItem.m in Sources */,
+				F4819C131C57178000C3E24B /* VoucherIntroViewController.m in Sources */,
 				9A2A35901C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m in Sources */,
 				84C1396D1C4628DB00284087 /* UIImage+MultiFormat.m in Sources */,
 				816F32511C4C84B1000D0AE5 /* TAPageControl.m in Sources */,

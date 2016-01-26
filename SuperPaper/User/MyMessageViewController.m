@@ -28,7 +28,6 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     // Do any additional setup after loading the view.
     [self.tableView setTableFooterView:[UIView new]];
     _list = @[];
-    _total_num = 0;
     _messageIDDic = [NSMutableDictionary dictionary];
     
 }
@@ -38,6 +37,7 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     NSString *urlString = [NSString stringWithFormat:@"%@mynotice.php",BASE_URL];
     NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@(0),@"list_num":@(10)};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
