@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface InvitationsTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIView *seperatorLine;
+@property (weak, nonatomic) IBOutlet UILabel *idLabel;
+@property (weak, nonatomic) IBOutlet UILabel *progressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @end

@@ -18,5 +18,5 @@
 #define NAVIGATIONBAR_HEIGHT 64
 #define TABBAR_HEIGHT 49
 + (UIColor *)appNaviColor;
-
++ (UIColor *)viewBackgroundColor;
 @end

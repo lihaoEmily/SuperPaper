@@ -14,15 +14,18 @@ typedef NS_ENUM(NSInteger, UserRole){
     kUserRoleStudent = 2
 };
 typedef NS_ENUM(NSInteger, UserGen) {
-    kUserGen_Man = 0,
-    kUserGen_Woman = 1
+    kUserGEN_Unknown = 0,
+    kUserGen_Man = 1,
+    kUserGen_Woman = 2
 };
 #pragma mark - Public Keys
 #define kUserRole @"UserRole"
 #define kUserName @"UserName"
+#define kUserNickname @"UserNickname"
 #define kUserGen @"UserGen"
 #define kUserAge @"UserAge"
 #define kUserID @"UserID"
+#define kUserHeadImage @"UserHeadImage"
 #define kUserTel @"UserTel"
 #define kUserCollege @"UserCollege"
 #define kUserLastUserTel @"LastUserTel"
@@ -42,9 +45,17 @@ typedef NS_ENUM(NSInteger, UserGen) {
  */
 @property (nonatomic, assign) UserRole currentRole;
 /**
- *  当前用户id
+ *  当前用户id，0表示用户不存在
  */
-@property (nonatomic ,copy) NSString *currentUserID;
+@property (nonatomic ,assign) NSInteger currentUserID;
+/**
+ *  当前用户昵称
+ */
+@property (nonatomic, copy) NSString *currentUserNickname;
+/**
+ *  当前用户头像名称
+ */
+@property (nonatomic, copy) NSString *currentUserHeadImageName;
 /**
  *  当前用户电话
  */
@@ -65,6 +76,10 @@ typedef NS_ENUM(NSInteger, UserGen) {
  *  当前用户学校名称
  */
 @property (nonatomic, copy) NSString *currentUserCollege;
+/**
+ *  上一个用户电话（相当于缓存）
+ */
+@property (nonatomic, copy) NSString *lastUserTelNum;
 /**
  *  是否已经登录
  */
@@ -97,5 +112,8 @@ typedef NS_ENUM(NSInteger, UserGen) {
  *  @return 用户信息数据
  */
 - (id)currentUserProfileForKey:(NSString *)keyString;
-
+/**
+ *  当前用户退出登录
+ */
+- (void)logout;
 @end

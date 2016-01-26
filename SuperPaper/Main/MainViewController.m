@@ -16,6 +16,7 @@
 #import "NavigationController.h"
 #import "TabBar.h"
 #import "IntroViewController.h"
+#import "SettingViewController.h"
 #import "UserSession.h"
 
 
@@ -225,7 +226,8 @@
 #pragma mark -  event response
 - (void)settingButtonAction:(UIBarButtonItem *)button
 {
-    NSLog(@"%s 设置按钮",__FUNCTION__);
+    SettingViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"setting"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)removeIntroPageView:(IntroViewController *)introPageView
