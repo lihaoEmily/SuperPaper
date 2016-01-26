@@ -12,6 +12,7 @@
 #import "UserTableViewCell.h"
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
+#import "ChangeUserHeadImageViewController.h"
 #import <CoreTelephony/CTCall.h>
 typedef enum{
     
@@ -25,6 +26,9 @@ typedef enum{
 @interface UserViewController () <UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 {
     NSArray *_titles;
+    BOOL _hasCurrentUser;
+    UILabel *_userTelLabel;
+    UIButton *_userHeaderImageBtn;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *backTableView;
@@ -58,6 +62,28 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //TODO: 登陆成功返回刷新页面
+    if ([UserSession sharedInstance].currentUserID != 0) {//用户已经登录
+        if ([UserSession sharedInstance].currentUserHeadImageName) {
+            [_userHeaderImageBtn setBackgroundImage:[UIImage imageNamed:[UserSession sharedInstance].currentUserHeadImageName] forState:UIControlStateNormal];
+        }else
+            [_userHeaderImageBtn setBackgroundImage:[UIImage imageNamed:@"user_normalIcon"] forState:UIControlStateNormal];
+        _userTelLabel.text = [UserSession sharedInstance].currentUserTelNum;
+        if (!_hasCurrentUser) {
+            _hasCurrentUser = YES;
+            [self.backTableView reloadData];
+        }
+    }else{//用户还未登录
+        if (_hasCurrentUser) {
+            _hasCurrentUser = NO;
+            [self.backTableView reloadData];
+        }
+    }
+    
+}
 - (void)userHeaderType:(UserHeaderType)type
 {
     switch (type) {
@@ -144,50 +170,42 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:@"bg_mine_head_login"];
     self.userHeaderView = imageView;
-    UIImageView *headImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"user_normalIcon"]];
-    headImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *headImageViewWidthCon = [NSLayoutConstraint constraintWithItem:headImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
-    NSLayoutConstraint *headImageViewHeightCon = [NSLayoutConstraint constraintWithItem:headImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
-    NSLayoutConstraint *headImageViewCenterXCon = [NSLayoutConstraint constraintWithItem:headImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    NSLayoutConstraint *headImageViewCenterYCon = [NSLayoutConstraint constraintWithItem:headImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-17];
-    [imageView addSubview:headImageView];
-    [imageView addConstraints:@[headImageViewWidthCon,headImageViewHeightCon,headImageViewCenterYCon,headImageViewCenterXCon]];
+    UIButton *headImageBtn = [[UIButton alloc]init];
+    _userHeaderImageBtn = headImageBtn;
+    [headImageBtn addTarget:self action:@selector(changeUserHeadImage) forControlEvents:UIControlEventTouchUpInside];
+    headImageBtn.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *headImageBtnWidthCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
+    NSLayoutConstraint *headImageBtnHeightCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
+    NSLayoutConstraint *headImageBtnCenterXCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    NSLayoutConstraint *headImageBtnCenterYCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-17];
+    [imageView addSubview:headImageBtn];
+    [imageView addConstraints:@[headImageBtnWidthCon,headImageBtnHeightCon,headImageBtnCenterYCon,headImageBtnCenterXCon]];
     
-    UIControl *control = [[UIControl alloc]init];
-    control.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *controlWidthCon = [NSLayoutConstraint constraintWithItem:control attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:44];
-    NSLayoutConstraint *controlHeightCon = [NSLayoutConstraint constraintWithItem:control attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:44];
-    NSLayoutConstraint *controlTrailingCon = [NSLayoutConstraint constraintWithItem:control attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:headImageView attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
-    NSLayoutConstraint *controlBottomCon = [NSLayoutConstraint constraintWithItem:control attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:headImageView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    [imageView addSubview:control];
-    [imageView addConstraints:@[controlWidthCon,controlHeightCon,controlBottomCon,controlTrailingCon]];
     
-    UIButton *cameraBtn = [[UIButton alloc]init];
-    [cameraBtn setImage:[UIImage imageNamed:@"user_camera"] forState:UIControlStateNormal];
-    cameraBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    cameraBtn.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *cameraBtnWidthCon = [NSLayoutConstraint constraintWithItem:cameraBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:30];
-    NSLayoutConstraint *cameraBtnHeightCon = [NSLayoutConstraint constraintWithItem:cameraBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:30];
-    NSLayoutConstraint *cameraBtnTrailingCon = [NSLayoutConstraint constraintWithItem:cameraBtn attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:control attribute:NSLayoutAttributeTrailing multiplier:1 constant:-5];
-    NSLayoutConstraint *cameraBtnBottomCon = [NSLayoutConstraint constraintWithItem:cameraBtn attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:control attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    [control addSubview:cameraBtn];
-    [control addConstraints:@[cameraBtnBottomCon,cameraBtnHeightCon,cameraBtnTrailingCon,cameraBtnWidthCon]];
+    
+    UIImageView *cameraImageView = [[UIImageView alloc]init];
+    cameraImageView.image = [UIImage imageNamed:@"user_camera"];
+
+    cameraImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *cameraImageViewWidthCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:30];
+    NSLayoutConstraint *cameraImageViewHeightCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:30];
+    NSLayoutConstraint *cameraImageViewTrailingCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:headImageBtn attribute:NSLayoutAttributeTrailing multiplier:1 constant:-5];
+    NSLayoutConstraint *cameraImageViewBottomCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:headImageBtn attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    [headImageBtn addSubview:cameraImageView];
+    [headImageBtn addConstraints:@[cameraImageViewBottomCon,cameraImageViewHeightCon,cameraImageViewTrailingCon,cameraImageViewWidthCon]];
     
     UILabel *telLabel = [[UILabel alloc]init];
-    telLabel.text = @"18525358682";
     telLabel.textAlignment = NSTextAlignmentCenter;
     telLabel.textColor = [UIColor whiteColor];
     telLabel.font = [UIFont systemFontOfSize:15];
+    _userTelLabel = telLabel;
     telLabel.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *telLabelWidthCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:194];
     NSLayoutConstraint *telLabelHeightCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:21];
-    NSLayoutConstraint *telLabelTopCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:headImageView attribute:NSLayoutAttributeBottom multiplier:1 constant:8];
+    NSLayoutConstraint *telLabelTopCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:headImageBtn attribute:NSLayoutAttributeBottom multiplier:1 constant:8];
     NSLayoutConstraint *telLabelCenterXCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
     [imageView addSubview:telLabel];
     [imageView addConstraints:@[telLabelCenterXCon,telLabelHeightCon,telLabelTopCon,telLabelWidthCon]];
-    
-    
-    
     
     
 }
@@ -204,6 +222,11 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)changeUserHeadImage
+{
+    ChangeUserHeadImageViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"changeuserheadimage"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 - (void)popupDisplayTypeChoosingActionSheet
 {
     UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"学生" otherButtonTitles:@"教师", nil];
@@ -296,7 +319,10 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (0 == section) {
-        return self.loginHeaderView;
+        if (!_hasCurrentUser) {
+            return self.loginHeaderView;
+        }else
+            return self.userHeaderView;
     }else
         return nil;
 }
