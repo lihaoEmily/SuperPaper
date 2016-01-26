@@ -36,6 +36,7 @@
 		04C3B82C1C43D5D0009D48E4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82B1C43D5D0009D48E4 /* CFNetwork.framework */; };
 		04C3B82E1C43D5E2009D48E4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82D1C43D5E2009D48E4 /* CoreFoundation.framework */; };
 		04C3B8301C43D5F1009D48E4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C3B82F1C43D5F1009D48E4 /* CoreTelephony.framework */; };
+		04C558CA1C55074D008AF3E5 /* JournalsPressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C558C91C55074D008AF3E5 /* JournalsPressView.m */; };
 		04E3F3B61C4C8A9A00DEE217 /* ASSaveData.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3F3B51C4C8A9A00DEE217 /* ASSaveData.m */; };
 		04F8906B1C4A939200891ABF /* ExportableWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8906A1C4A939200891ABF /* ExportableWebViewController.m */; };
 		04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FFFDCD1C40F63D00ECCA1C /* main.m */; };
@@ -235,6 +236,8 @@
 		04C3B82B1C43D5D0009D48E4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		04C3B82D1C43D5E2009D48E4 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		04C3B82F1C43D5F1009D48E4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		04C558C81C55074D008AF3E5 /* JournalsPressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JournalsPressView.h; path = CommonView/JournalsPressView.h; sourceTree = "<group>"; };
+		04C558C91C55074D008AF3E5 /* JournalsPressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JournalsPressView.m; path = CommonView/JournalsPressView.m; sourceTree = "<group>"; };
 		04E3F3B41C4C8A9A00DEE217 /* ASSaveData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASSaveData.h; path = Utils/ASSaveData.h; sourceTree = "<group>"; };
 		04E3F3B51C4C8A9A00DEE217 /* ASSaveData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASSaveData.m; path = Utils/ASSaveData.m; sourceTree = "<group>"; };
 		04F890691C4A939200891ABF /* ExportableWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExportableWebViewController.h; path = WebView/ExportableWebViewController.h; sourceTree = "<group>"; };
@@ -876,6 +879,8 @@
 				7F477B5C1C49FA1000612850 /* HomeNewsCell.m */,
 				7F477B5F1C4A0D6600612850 /* HomeActivityCell.h */,
 				7F477B601C4A0D6600612850 /* HomeActivityCell.m */,
+				04C558C81C55074D008AF3E5 /* JournalsPressView.h */,
+				04C558C91C55074D008AF3E5 /* JournalsPressView.m */,
 			);
 			name = CommonView;
 			sourceTree = "<group>";
@@ -1447,6 +1452,7 @@
 				812021B41C478D6A000D05A4 /* ServiceButton.m in Sources */,
 				F4AA226C1C4E299700906CF4 /* AccountTableViewCell.m in Sources */,
 				812021B91C478D95000D05A4 /* StudyViewController.m in Sources */,
+				04C558CA1C55074D008AF3E5 /* JournalsPressView.m in Sources */,
 				04FFFDF31C410A2500ECCA1C /* HomeViewController.m in Sources */,
 				5807C2E11C473B7A002C5F8E /* MJRefreshComponent.m in Sources */,
 				5807C2E71C473B7A002C5F8E /* MJRefreshBackGifFooter.m in Sources */,
