@@ -7,8 +7,11 @@
 //
 
 #import "PublicationViewController.h"
+#import "JournalsPressView.h"
 
 @interface PublicationViewController ()
+
+@property (nonatomic, strong) JournalsPressView *contentView;
 
 @end
 
@@ -16,6 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _contentView = [[JournalsPressView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    self.view = _contentView;
     // Do any additional setup after loading the view.
 }
 
