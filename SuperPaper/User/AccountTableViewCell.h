@@ -11,5 +11,6 @@
 @interface AccountTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *voucherImageView;
 
+@property (weak, nonatomic) IBOutlet UIView *seperatorLine;
 
 @end

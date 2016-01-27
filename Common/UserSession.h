@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, UserGen) {
 #define kUserTel @"UserTel"
 #define kUserCollege @"UserCollege"
 #define kUserLastUserTel @"LastUserTel"
+#define kUserInviteCode @"UserInviteCode"
 ////如还有其实的Key请续断追加
 
 /**
@@ -80,6 +81,10 @@ typedef NS_ENUM(NSInteger, UserGen) {
  *  上一个用户电话（相当于缓存）
  */
 @property (nonatomic, copy) NSString *lastUserTelNum;
+/**
+ *  当前用户自己的邀请码
+ */
+@property (nonatomic ,copy) NSString *currentUserInviteCode;
 /**
  *  是否已经登录
  */

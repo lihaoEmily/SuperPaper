@@ -22,6 +22,7 @@
     BOOL _showPwd;
     BOOL _showConfirmPwd;
     int _currentSMSTime;
+    UIActivityIndicatorView *_webIndicator;
 }
 @property (weak, nonatomic) IBOutlet UITextField *telNumTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
@@ -65,6 +66,10 @@
     
     self.resetPwdBtn.layer.masksToBounds = YES;
     self.resetPwdBtn.layer.cornerRadius = 4;
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    _webIndicator = indicator;
 
 }
 
@@ -205,6 +210,8 @@
         [request setHTTPMethod:@"POST"];
         
         NSURLSessionDataTask *task = [[NSURLSession sharedSession]dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
             if (data) {
                 NSError *newError;
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&newError];
@@ -236,6 +243,8 @@
             
         }];
         [task resume];
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(retransmit:) userInfo:nil repeats:YES];
         _timer = timer;
         _currentSMSTime = 0;
@@ -301,11 +310,16 @@
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"登录密码修改失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    [_webIndicator startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 
 /*

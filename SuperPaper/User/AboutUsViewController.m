@@ -7,6 +7,8 @@
 //
 
 #import "AboutUsViewController.h"
+#import "CheckAboutUsViewController.h"
+#import "ServiceNoticesViewController.h"
 #import "AboutUsHasNextTableViewCell.h"
 #import "VersionTableViewCell.h"
 
@@ -14,6 +16,7 @@
 {
     NSArray *_titles;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @end
 
 static NSString *const HasNextIdentifier = @"HasNext";
@@ -26,6 +29,7 @@ static NSString *const VersionIdentifier = @"Version";
     _titles = @[@"服务条款",
                 @"关于我们"
                 ];
+    self.imageView.image = [UIImage imageWithASName:@"default_image" directory:@"common"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,7 +51,21 @@ static NSString *const VersionIdentifier = @"Version";
         return cell;
     }else{
         VersionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VersionIdentifier];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
+        NSString *version = infoDictionary[(NSString*)kCFBundleVersionKey];
+        cell.versionLabel.text = [NSString stringWithFormat:@"版本V%@",version];
         return cell;
+    }
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (0 == indexPath.row) {
+        ServiceNoticesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"serviceitems"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if(1 == indexPath.row){
+        CheckAboutUsViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"aboutus"];
+        vc.content = self.content;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 /*
