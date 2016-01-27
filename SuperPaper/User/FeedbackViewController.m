@@ -7,9 +7,10 @@
 //
 
 #import "FeedbackViewController.h"
+#import "JSTextView.h"
+@interface FeedbackViewController ()
+@property (weak, nonatomic) IBOutlet JSTextView *textView;
 
-@interface FeedbackViewController ()<UITextViewDelegate>
-@property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @property (weak, nonatomic) IBOutlet UIImageView *FAQImageView;
@@ -29,41 +30,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-//MARK: TextViewDelegate
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
+//MARK: 功能
+- (IBAction)submit:(id)sender {
     
-    if([[textView.text stringByReplacingCharactersInRange:range withString:text] isEqualToString:@""]&&![text isEqualToString:@""]){
-        textView.text = @"乐意聆听您对本客户端的任何意见和建议！  ";
-        textView.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.7];
-    }else
-        textView.textColor = [UIColor blackColor];
-    
-    return YES;
 }
--(void)textViewDidBeginEditing:(UITextView *)textView
-{
-    if([textView.text isEqualToString:@"乐意聆听您对本客户端的任何意见和建议！"]){
-        textView.text = @"";
-        textView.textColor = [UIColor blackColor];
-    }
+- (IBAction)faq:(id)sender {
+    
 }
 
--(void)textViewDidEndEditing:(UITextView *)textView
-{
-    if([textView.text isEqualToString:@""]){
-        textView.text = @"乐意聆听您对本客户端的任何意见和建议！  ";
-        textView.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.7];
-    }
-}
 //MARK: Helper
 - (void)setupUI
 {
     self.view.backgroundColor = [UIColor whiteColor];
-    self.textView.textContainerInset = UIEdgeInsetsMake(0, 5, 0, 5);
-    self.textView.text = @"乐意聆听您对本客户端的任何意见和建议！";
-    self.textView.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.7];
+    self.textView.textContainerInset = UIEdgeInsetsMake(2, 5, 2, 5);
+    self.textView.myPlaceholder = @"乐意聆听您对本客户端的任何意见和建议！";
+    self.textView.myPlaceholderColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.7];
     self.submitBtn.layer.masksToBounds = YES;
     self.submitBtn.layer.cornerRadius = 5;
     self.textView.layer.borderColor = [UIColor lightGrayColor].CGColor;

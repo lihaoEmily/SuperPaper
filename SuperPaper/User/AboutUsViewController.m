@@ -7,6 +7,8 @@
 //
 
 #import "AboutUsViewController.h"
+#import "CheckAboutUsViewController.h"
+#import "ServiceNoticesViewController.h"
 #import "AboutUsHasNextTableViewCell.h"
 #import "VersionTableViewCell.h"
 
@@ -47,7 +49,21 @@ static NSString *const VersionIdentifier = @"Version";
         return cell;
     }else{
         VersionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VersionIdentifier];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
+        NSString *version = infoDictionary[(NSString*)kCFBundleVersionKey];
+        cell.versionLabel.text = [NSString stringWithFormat:@"版本V%@",version];
         return cell;
+    }
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (0 == indexPath.row) {
+        ServiceNoticesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"serviceitems"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if(1 == indexPath.row){
+        CheckAboutUsViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"aboutus"];
+        vc.content = self.content;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 /*

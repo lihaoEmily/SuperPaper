@@ -9,10 +9,12 @@
 #import "UserViewController.h"
 #import "MainViewController.h"
 #import "UserSession.h"
+#import "UIImageView+WebCache.h"
 #import "UserTableViewCell.h"
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
 #import "ChangeUserHeadImageViewController.h"
+#import "AboutUsViewController.h"
 #import <CoreTelephony/CTCall.h>
 typedef enum{
     
@@ -29,6 +31,10 @@ typedef enum{
     BOOL _hasCurrentUser;
     UILabel *_userTelLabel;
     UIButton *_userHeaderImageBtn;
+    NSString *_unReadMessageCountStr;
+    NSString *_papersCountStr;
+    NSString *_aboutMeStr;
+    NSString *_service_telStr;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *backTableView;
@@ -67,40 +73,54 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     [super viewWillAppear:animated];
     //TODO: 登陆成功返回刷新页面
     if ([UserSession sharedInstance].currentUserID != 0) {//用户已经登录
-        if ([UserSession sharedInstance].currentUserHeadImageName) {
-            [_userHeaderImageBtn setBackgroundImage:[UIImage imageNamed:[UserSession sharedInstance].currentUserHeadImageName] forState:UIControlStateNormal];
+        if ([UserSession sharedInstance].currentUserHeadImageName && ![[UserSession sharedInstance].currentUserHeadImageName isEqualToString:@""]) {
+            NSLog(@"用户已登录且有头像！%@",[UserSession sharedInstance].currentUserHeadImageName);
+            [_userHeaderImageBtn.imageView sd_setImageWithURL:[NSURL URLWithString:[UserSession sharedInstance].currentUserHeadImageName] placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
         }else
             [_userHeaderImageBtn setBackgroundImage:[UIImage imageNamed:@"user_normalIcon"] forState:UIControlStateNormal];
         _userTelLabel.text = [UserSession sharedInstance].currentUserTelNum;
-        if (!_hasCurrentUser) {
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@getmeinfo.php",BASE_URL];
+        NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID]};
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+                NSNumber *result = responseObject[@"result"];
+                if (0 == result.integerValue) {//获取我的主页信息接口成功
+                    _unReadMessageCountStr = responseObject[@"notice_num"];
+                    if ([_unReadMessageCountStr isEqualToString:@"0"]) {
+                        _unReadMessageCountStr = @"";
+                    }
+                    _papersCountStr = responseObject[@"paper_num"];
+                    _aboutMeStr = responseObject[@"service_aboutme"];
+                    _service_telStr = responseObject[@"service_tel"];
+                    [self.backTableView reloadData];
+                    
+                }else{
+                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的信息失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [av show];
+                }
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+        }];
+        if (!_hasCurrentUser) {//通知tableviewheader为用户头像header
             _hasCurrentUser = YES;
             [self.backTableView reloadData];
         }
     }else{//用户还未登录
-        if (_hasCurrentUser) {
+        if (_hasCurrentUser) {//通知tableViewheader为注册header
             _hasCurrentUser = NO;
             [self.backTableView reloadData];
         }
     }
     
 }
-- (void)userHeaderType:(UserHeaderType)type
-{
-    switch (type) {
-        case UserHeaderTypeCamera:
-            NSLog(@"UserHeaderTypeCamera");
-            break;
-        case UserHeaderTypeLogin:
-            NSLog(@"UserHeaderTypeLogin");
-            break;
-        case UserHeaderTypeRegister:
-            NSLog(@"UserHeaderTypeRegister");
-            break;
-            
-        default:
-            break;
-    }
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -283,10 +303,15 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     {
         cell.titleLabel.text = _titles[indexPath.row];
         cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%lu",indexPath.row + 1]];
-        if (4 == indexPath.row) {
+        if (0 == indexPath.row) {
+            cell.contentLabel.text = _unReadMessageCountStr;
+            cell.contentLabel.textColor = [UIColor redColor];
+        }else if (4 == indexPath.row) {
             cell.contentLabel.text = (kUserRoleStudent == [UserSession sharedInstance].currentRole)?@"学生":@"教师";
+            cell.contentLabel.textColor = [UIColor blackColor];
         }else if(5 == indexPath.row){
-            cell.contentLabel.text = @"40";
+            cell.contentLabel.text = _papersCountStr;
+            cell.contentLabel.textColor = [UIColor redColor];
         }else
             cell.contentLabel.text = @"";
 
@@ -295,7 +320,8 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         cell.titleLabel.text = _titles[indexPath.row + 6];
         cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%lu",indexPath.row + 7]];
         if (2 == indexPath.row) {
-            cell.contentLabel.text = @"0411-88160257";
+            cell.contentLabel.text = _service_telStr;
+            cell.contentLabel.textColor = [UIColor blackColor];
         }else cell.contentLabel.text = @"";
     }
     
@@ -338,7 +364,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
                 colorString = @"green"; // 我的消息
                 break;
             case 1:
-                colorString = @"yellow"; // 我的信息
+                colorString = @"yellow"; // 个人信息
                 break;
             case 2:
                 colorString = @"orange"; // 我的账户
@@ -378,15 +404,21 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"blue"]) {
+        AboutUsViewController *vc = segue.destinationViewController;
+        vc.content = _aboutMeStr;
+        
+    }
+    
 }
-*/
+
 
 
 @end

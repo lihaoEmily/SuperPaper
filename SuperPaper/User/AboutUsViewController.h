@@ -12,5 +12,5 @@
  *  @brief 关于我们
  */
 @interface AboutUsViewController : UIViewController
-
+@property (nonatomic, copy) NSString *content;
 @end

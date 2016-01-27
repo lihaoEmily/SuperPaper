@@ -162,7 +162,6 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            NSLog(@"登录%@",responseObject);
             NSNumber *result = [responseObject valueForKey:@"result"];
             
             if (0 == result.integerValue) {//注册成功
@@ -182,10 +181,13 @@
                     headImageName = responseObject[@"headpic"];
                 }else
                     headImageName = @"";
+                NSString *inviteCode = responseObject[@"myinvite_code"];
                 [UserSession sharedInstance].currentUserID = userId;
                 [UserSession sharedInstance].currentUserName = userName;
                 [UserSession sharedInstance].currentUserTelNum = mobile;
                 [UserSession sharedInstance].currentUserHeadImageName = headImageName;
+                [UserSession sharedInstance].currentUserInviteCode = inviteCode;
+                NSLog(@"邀请码%@",inviteCode);
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 
@@ -200,8 +202,7 @@
             }
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
             
         }];

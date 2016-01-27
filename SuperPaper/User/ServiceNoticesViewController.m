@@ -9,6 +9,7 @@
 #import "ServiceNoticesViewController.h"
 
 @interface ServiceNoticesViewController ()
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @end
 
@@ -17,6 +18,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
+    NSString *urlString = [NSString stringWithFormat:@"%@service_protocol.php",BASE_URL];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (0 == [responseObject[@"result"]integerValue]) {
+            self.textView.text = responseObject[@"service_protocol"];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

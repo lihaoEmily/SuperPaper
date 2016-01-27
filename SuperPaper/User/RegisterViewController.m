@@ -8,6 +8,7 @@
 
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
+#import "ServiceNoticesViewController.h"
 #import "AppConfig.h"
 
 #define TextFieldBorderColor [UIColor colorWithRed:233.0f/255 green:233.0f/255 blue:216.0/255 alpha:1].CGColor;
@@ -229,7 +230,7 @@
                 _verifyCode = verifyCode;
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }];
         
@@ -245,7 +246,6 @@
     
 }
 - (IBAction)showOrHidePwd:(id)sender {
-    NSLog(@"显示或者隐藏密码");
     _showPwd = !_showPwd;
     if (_showPwd) {
         [self.showPwdBtn setTitle:@"隐藏" forState:UIControlStateNormal];
@@ -290,6 +290,8 @@
         [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
 }
 - (IBAction)serviceItemsChecking:(id)sender {
+    ServiceNoticesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"serviceitems"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)userRegister:(id)sender {
     if ([self checkInput]) {
@@ -304,7 +306,6 @@
         [manager POST:urlString parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"注册%@",responseObject);
             NSNumber *result = [responseObject valueForKey:@"result"];
             
             if (0 == result.integerValue) {//注册成功
@@ -328,7 +329,7 @@
                 [av show];
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }];
         
