@@ -31,45 +31,129 @@
 {
     if (self = [super init]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *userID = [userDefaults valueForKey:kUserID];
-        if (userID) {
-            
+        NSInteger userID = [userDefaults integerForKey:kUserID];
+        if (0 == userID) {
+            self.currentRole = kUserRoleStudent;
         }else{
-            self.currentUserName = [userDefaults valueForKey:kUserName];
-            self.currentUserTelNum = [userDefaults valueForKey:kUserTel];
-            NSNumber *gen = [userDefaults valueForKey:kUserGen];
-            self.currentUserGen = gen.integerValue;
-            NSNumber *age = [userDefaults valueForKey:kUserAge];
-            self.currentUserAge = age.integerValue;
-            NSNumber *role = [userDefaults valueForKey:kUserRole];
-            self.currentRole = role.integerValue;
-            self.currentUserCollege = [userDefaults valueForKey:kUserCollege];
+            self.currentUserID = userID;
             
         }
         
     }
     return self;
 }
-//#pragma mark - UserRole Getter
-//- (UserRole)currentRole {
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults synchronize];
-//    id role = [userDefaults valueForKey:kUserRole];
-//    
-//    if ([role isEqual:@(kUserRoleStudent)]) {
-//        return kUserRoleStudent;
-//    } else {
-//        return kUserRoleTeacher;
-//    }
-//}
-//
-//#pragma mark - UserRole Setter
-//- (void)setCurrentRole:(UserRole)currentRole {
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults setValue:@(currentRole) forKey:kUserRole];
-//    [userDefaults synchronize];
-//}
+//#pragma mark - Getter
+- (UserRole)currentRole {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *role = [userDefaults valueForKey:kUserRole];
+    
+    return role.integerValue;
+}
 
+- (NSInteger)currentUserAge
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *age = [userDefaults valueForKey:kUserAge];
+    return age.integerValue;
+}
+-(NSString *)currentUserCollege
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *college = [userDefaults valueForKey:kUserCollege];
+    return college;
+}
+-(UserGen)currentUserGen
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *gender = [userDefaults valueForKey:kUserGen];
+    return gender.integerValue;
+}
+-(NSString *)currentUserHeadImageName
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *headImageName = [userDefaults valueForKey:kUserHeadImage];
+    return headImageName;
+}
+
+-(NSInteger)currentUserID
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *userID = [userDefaults valueForKey:kUserID];
+    return userID.integerValue;
+}
+-(NSString *)currentUserName
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *name = [userDefaults valueForKey:kUserName];
+    return name;
+}
+-(NSString *)currentUserNickname
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *nickname = [userDefaults valueForKey:kUserNickname];
+    return nickname;
+}
+-(NSString *)currentUserTelNum
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *telNum = [userDefaults valueForKey:kUserTel];
+    return telNum;
+}
+
+#pragma mark - Setter
+- (void)setCurrentRole:(UserRole)currentRole {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:@(currentRole) forKey:kUserRole];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserAge:(NSInteger)currentUserAge
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:@(currentUserAge) forKey:kUserAge];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserCollege:(NSString *)currentUserCollege
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:currentUserCollege forKey:kUserCollege];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserGen:(UserGen)currentUserGen
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:@(currentUserGen) forKey:kUserGen];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserHeadImageName:(NSString *)currentUserHeadImageName
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:currentUserHeadImageName forKey:kUserHeadImage];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserID:(NSInteger)currentUserID
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:@(currentUserID) forKey:kUserID];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserName:(NSString *)currentUserName
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:currentUserName forKey:kUserName];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserNickname:(NSString *)currentUserNickname
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:currentUserNickname forKey:kUserNickname];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserTelNum:(NSString *)currentUserTelNum
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:currentUserTelNum forKey:kUserTel];
+    [userDefaults synchronize];
+}
 #pragma mark - Store the information for the current user
 - (void)saveUserProfileWithInfo:(NSDictionary *)infoDic {
     if ([infoDic count] == 0 || infoDic == nil) {
@@ -113,4 +197,13 @@
     return value;
 }
 
+- (void)logout
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:0 forKey:kUserID];
+    
+    [userDefaults setValue:nil forKey:kUserName];
+
+    [userDefaults setValue:nil forKey:kUserTel];
+}
 @end
