@@ -7,8 +7,11 @@
 //
 
 #import "PublicationViewController.h"
+#import "JournalsPressView.h"
 
 @interface PublicationViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic, strong) JournalsPressView *contentView;
 
 @end
 

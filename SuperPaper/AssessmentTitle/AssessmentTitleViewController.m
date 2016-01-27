@@ -19,10 +19,10 @@
 @end
 
 @implementation AssessmentTitleViewController{
-    // 返回学习主页资讯数据
+    // 返回评职主页资讯数据
     NSMutableArray *_responseNewsInfoArr;
     
-    // 返回学习广告信息数据
+    // 返回评职广告信息数据
     NSArray *_responseAdInfoArr;
 }
 
@@ -103,7 +103,7 @@
     
     /**
      ** parameters 参数
-     * ownertype  整型    2：学生
+     * ownertype  整型    1：老师
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
@@ -129,7 +129,7 @@
     }];
 }
 
-//获取学习广告信息
+//获取评职广告信息
 - (void)getStudyPageAdInfo
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -137,7 +137,7 @@
     
     /**
      ** parameters 参数
-     * ownertype  整型    4：学习主页
+     * ownertype  整型    3：老师主页
      */
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:3]};
     NSString *urlString = [NSString stringWithFormat:@"%@getadinfo.php",BASE_URL];
@@ -231,7 +231,7 @@
     
     if (0 == indexPath.section) {
         
-        static NSString *ID = @"Cell0";
+        static NSString *ID = @"Cell5";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
