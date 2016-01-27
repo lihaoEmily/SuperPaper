@@ -1,27 +1,26 @@
 //
-//  PublicationViewController.m
+//  VoucherIntroViewController.m
 //  SuperPaper
 //
-//  Created by admin on 16/1/19.
+//  Created by  mapbar_ios on 16/1/26.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
-#import "PublicationViewController.h"
-#import "JournalsPressView.h"
+#import "VoucherIntroViewController.h"
 
-@interface PublicationViewController ()
+@interface VoucherIntroViewController ()
 
-@property (nonatomic, strong) JournalsPressView *contentView;
-
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 @end
 
-@implementation PublicationViewController
+@implementation VoucherIntroViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _contentView = [[JournalsPressView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    self.view = _contentView;
     // Do any additional setup after loading the view.
+    self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
+    self.textView.text = self.content;
+    
 }
 
 - (void)didReceiveMemoryWarning {

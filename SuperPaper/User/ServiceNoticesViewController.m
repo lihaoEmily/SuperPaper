@@ -1,26 +1,21 @@
 //
-//  PublicationViewController.m
+//  ServiceNoticesViewController.m
 //  SuperPaper
 //
-//  Created by admin on 16/1/19.
+//  Created by yu on 16/1/22.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
-#import "PublicationViewController.h"
-#import "JournalsPressView.h"
+#import "ServiceNoticesViewController.h"
 
-@interface PublicationViewController ()
-
-@property (nonatomic, strong) JournalsPressView *contentView;
+@interface ServiceNoticesViewController ()
 
 @end
 
-@implementation PublicationViewController
+@implementation ServiceNoticesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _contentView = [[JournalsPressView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    self.view = _contentView;
     // Do any additional setup after loading the view.
 }
 
