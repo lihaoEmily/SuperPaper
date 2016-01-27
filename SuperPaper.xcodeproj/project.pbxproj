@@ -166,6 +166,8 @@
 		9AEB04BD1C53AABD00D34FBE /* ChangeUserHeadImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB04BC1C53AABD00D34FBE /* ChangeUserHeadImageViewController.m */; };
 		9AEB04C01C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB04BF1C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m */; };
 		9AEB04C41C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB04C31C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m */; };
+		A2455F631C58C00C008CF9B1 /* HomeDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2455F611C58C00C008CF9B1 /* HomeDetailController.m */; };
+		A2455F641C58C00C008CF9B1 /* HomeDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2455F621C58C00C008CF9B1 /* HomeDetailController.xib */; };
 		AAFA086A1C49294400FB0DA4 /* bg_mine_head_login.png in Resources */ = {isa = PBXBuildFile; fileRef = AAFA08661C49294400FB0DA4 /* bg_mine_head_login.png */; };
 		AAFA086B1C49294400FB0DA4 /* bg_mine_head_notlogin.png in Resources */ = {isa = PBXBuildFile; fileRef = AAFA08671C49294400FB0DA4 /* bg_mine_head_notlogin.png */; };
 		AAFA086C1C49294400FB0DA4 /* user_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AAFA08681C49294400FB0DA4 /* user_camera.png */; };
@@ -496,6 +498,9 @@
 		9AEB04BF1C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeUserHeadImageHasNextTableViewCell.m; path = User/ChangeUserHeadImageHasNextTableViewCell.m; sourceTree = "<group>"; };
 		9AEB04C21C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeUserHeadImageTextShowTableViewCell.h; path = User/ChangeUserHeadImageTextShowTableViewCell.h; sourceTree = "<group>"; };
 		9AEB04C31C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeUserHeadImageTextShowTableViewCell.m; path = User/ChangeUserHeadImageTextShowTableViewCell.m; sourceTree = "<group>"; };
+		A2455F601C58C00C008CF9B1 /* HomeDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeDetailController.h; path = Home/HomeDetailController.h; sourceTree = "<group>"; };
+		A2455F611C58C00C008CF9B1 /* HomeDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeDetailController.m; path = Home/HomeDetailController.m; sourceTree = "<group>"; };
+		A2455F621C58C00C008CF9B1 /* HomeDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HomeDetailController.xib; path = Home/HomeDetailController.xib; sourceTree = "<group>"; };
 		AAFA08661C49294400FB0DA4 /* bg_mine_head_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_mine_head_login.png; sourceTree = "<group>"; };
 		AAFA08671C49294400FB0DA4 /* bg_mine_head_notlogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_mine_head_notlogin.png; sourceTree = "<group>"; };
 		AAFA08681C49294400FB0DA4 /* user_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_camera.png; sourceTree = "<group>"; };
@@ -747,6 +752,9 @@
 			children = (
 				04FFFDF11C410A2500ECCA1C /* HomeViewController.h */,
 				04FFFDF21C410A2500ECCA1C /* HomeViewController.m */,
+				A2455F601C58C00C008CF9B1 /* HomeDetailController.h */,
+				A2455F611C58C00C008CF9B1 /* HomeDetailController.m */,
+				A2455F621C58C00C008CF9B1 /* HomeDetailController.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -1441,6 +1449,7 @@
 				040F80041C511306000D8CAA /* ShareSDKUI.bundle in Resources */,
 				844694371C48B889005619D7 /* usercell5.png in Resources */,
 				8446943A1C48B889005619D7 /* usercell8.png in Resources */,
+				A2455F641C58C00C008CF9B1 /* HomeDetailController.xib in Resources */,
 				040F7FF91C511306000D8CAA /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				844694351C48B889005619D7 /* usercell3.png in Resources */,
 				F23480351C45FEC500813AEC /* (null) in Resources */,
@@ -1548,6 +1557,7 @@
 				5807C2E31C473B7A002C5F8E /* MJRefreshHeader.m in Sources */,
 				84C139671C4628DB00284087 /* SDWebImageDownloader.m in Sources */,
 				04FFFDDA1C40F63D00ECCA1C /* SuperPaper.xcdatamodeld in Sources */,
+				A2455F631C58C00C008CF9B1 /* HomeDetailController.m in Sources */,
 				812021B41C478D6A000D05A4 /* ServiceButton.m in Sources */,
 				F4AA226C1C4E299700906CF4 /* AccountTableViewCell.m in Sources */,
 				812021B91C478D95000D05A4 /* StudyViewController.m in Sources */,
