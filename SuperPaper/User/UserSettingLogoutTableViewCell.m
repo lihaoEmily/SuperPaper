@@ -24,7 +24,7 @@
     // Configure the view for the selected state
 }
 - (IBAction)logout:(id)sender {
-    [self.superVC performSelector:NSSelectorFromString(@"logout")];
+    [self.superVC performSelector:@selector(logout)];
 }
 
 @end

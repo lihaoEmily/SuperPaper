@@ -15,7 +15,7 @@
 {
     NSArray *_list;
     NSInteger _total_num;
-    NSMutableDictionary *_messageIDDic;
+    UIActivityIndicatorView *_webIndicator;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
@@ -28,14 +28,18 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     // Do any additional setup after loading the view.
     [self.tableView setTableFooterView:[UIView new]];
     _list = @[];
-    _messageIDDic = [NSMutableDictionary dictionary];
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+
+    _webIndicator = indicator;
     
 }
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSString *urlString = [NSString stringWithFormat:@"%@mynotice.php",BASE_URL];
-    NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@(0),@"list_num":@(10)};
+    NSString *urlString = [NSString stringWithFormat:@"%@mynotice.php",BASE_URL];
+    NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@"0",@"list_num":@"10"};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -50,10 +54,16 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的消息列表出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    [_webIndicator startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -65,14 +75,20 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
 {
     return _list.count;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dic = _list[indexPath.row];
+    NSString *content = dic[@"content"];
+    CGFloat contentHeight = [content boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.height;
+    return contentHeight + 21 + 21 + 8;
+
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MyMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MessageTableViewCellIdentifier];
     NSDictionary *dic = _list[indexPath.row];
-    NSInteger messageID = [dic[@"id"] integerValue];
     NSString *content = dic[@"content"];
     NSString *title = dic[@"title"];
-    [_messageIDDic setValuesForKeysWithDictionary:@{[NSString stringWithFormat:@"%lu",indexPath.row]:@(messageID),@"content":content,@"title":title}];
     cell.timeLabel.text = dic[@"createdate"];
     
     cell.titleLabel.text = title;
@@ -83,9 +99,10 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger messageID = [_messageIDDic[[NSString stringWithFormat:@"%lu",indexPath.row]] integerValue];
-    NSString *title = _messageIDDic[@"title"];
-    NSString *content = _messageIDDic[@"content"];
+    NSDictionary *dic = _list[indexPath.row];
+    NSInteger messageID = [dic[@"id"]integerValue];
+    NSString *title = dic[@"title"];
+    NSString *content = dic[@"content"];
     ReadMyMessagesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"readmymessage"];
     vc.messageID = messageID;
     vc.messageTitle = title;
