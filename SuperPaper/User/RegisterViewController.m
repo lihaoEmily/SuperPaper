@@ -8,6 +8,7 @@
 
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
+#import "ServiceNoticesViewController.h"
 #import "AppConfig.h"
 
 #define TextFieldBorderColor [UIColor colorWithRed:233.0f/255 green:233.0f/255 blue:216.0/255 alpha:1].CGColor;
@@ -24,6 +25,7 @@
     int _currentSMSTime;
     BOOL _agree;
     NSTimer *_timer;
+    UIActivityIndicatorView *_webIndicator;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *telNumTextField;
@@ -79,6 +81,10 @@
     self.registerBtn.layer.cornerRadius = 4;
     
 
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+
+    _webIndicator = indicator;
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -228,11 +234,18 @@
             }else{//短信发送成功
                 _verifyCode = verifyCode;
             }
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         }];
-        
+        if (![_webIndicator isAnimating]) {
+            [_webIndicator startAnimating];
+            [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+        }
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(retransmit:) userInfo:nil repeats:YES];
         _timer = timer;
         _currentSMSTime = 0;
@@ -245,7 +258,6 @@
     
 }
 - (IBAction)showOrHidePwd:(id)sender {
-    NSLog(@"显示或者隐藏密码");
     _showPwd = !_showPwd;
     if (_showPwd) {
         [self.showPwdBtn setTitle:@"隐藏" forState:UIControlStateNormal];
@@ -290,6 +302,8 @@
         [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
 }
 - (IBAction)serviceItemsChecking:(id)sender {
+    ServiceNoticesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"serviceitems"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)userRegister:(id)sender {
     if ([self checkInput]) {
@@ -304,7 +318,6 @@
         [manager POST:urlString parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"注册%@",responseObject);
             NSNumber *result = [responseObject valueForKey:@"result"];
             
             if (0 == result.integerValue) {//注册成功
@@ -327,11 +340,18 @@
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"邀请码有误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];
             }
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         }];
-        
+        if (!_webIndicator.isAnimating) {
+            [_webIndicator startAnimating];
+            [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+        }
         
     }
 }
