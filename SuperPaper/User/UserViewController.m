@@ -66,18 +66,23 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     [self setupLoginHeaderView];
     [self setupUserHeaderView];
     
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    
+    _webIndicator = indicator;
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //TODO: 登陆成功返回刷新页面
     if ([UserSession sharedInstance].currentUserID != 0) {//用户已经登录
         if ([UserSession sharedInstance].currentUserHeadImageName && ![[UserSession sharedInstance].currentUserHeadImageName isEqualToString:@""]) {
             NSLog(@"用户已登录且有头像！%@",[UserSession sharedInstance].currentUserHeadImageName);
             [_userHeaderImageBtn.imageView sd_setImageWithURL:[NSURL URLWithString:[UserSession sharedInstance].currentUserHeadImageName] placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
         }else
-            [_userHeaderImageBtn setBackgroundImage:[UIImage imageNamed:@"user_normalIcon"] forState:UIControlStateNormal];
+            [_userHeaderImageBtn setImage:[UIImage imageNamed:@"user_normalIcon"] forState:UIControlStateNormal];
         _userTelLabel.text = [UserSession sharedInstance].currentUserTelNum;
         
         NSString *urlString = [NSString stringWithFormat:@"%@getmeinfo.php",BASE_URL];

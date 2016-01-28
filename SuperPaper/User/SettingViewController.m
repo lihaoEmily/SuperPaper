@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "ResetPasswordViewController.h"
 #import "UserSession.h"
 #import "AppConfig.h"
 #import "UserSettingHasNextTableViewCell.h"
@@ -186,8 +187,9 @@ static NSString *logoutIdentifier = @"logout";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_currentUserHasLogin) {
-        if (0 == indexPath.section) {//TODO: 进入修改密码页面
-            
+        if (0 == indexPath.section) {
+            ResetPasswordViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"resetpwd"];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }

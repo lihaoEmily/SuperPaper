@@ -16,6 +16,7 @@
 {
     NSArray *_titles;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @end
 
 static NSString *const HasNextIdentifier = @"HasNext";
@@ -28,6 +29,7 @@ static NSString *const VersionIdentifier = @"Version";
     _titles = @[@"服务条款",
                 @"关于我们"
                 ];
+    self.imageView.image = [UIImage imageWithASName:@"default_image" directory:@"common"];
 }
 
 - (void)didReceiveMemoryWarning {

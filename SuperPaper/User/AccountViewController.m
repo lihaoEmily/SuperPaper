@@ -17,7 +17,7 @@
     NSInteger _total_num;
     NSInteger _valid_num;
     NSString *_intro;
-    
+    UIActivityIndicatorView *_webIndicator;
     
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -33,7 +33,9 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
     // Do any additional setup after loading the view.
     _list = @[];
     _intro = @"";
-
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    _webIndicator = indicator;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,10 +69,15 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的账户信息出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }
+        [_webIndicator stopAnimating];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
     }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+    }
 }
 - (IBAction)introduce:(id)sender {
     VoucherIntroViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"voucherintro"];
@@ -127,11 +134,16 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"现金券使用失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];
             }
-            
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }];
+        if (!_webIndicator.isAnimating) {
+            [_webIndicator startAnimating];
+            [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+        }
     }else if(2 == status){
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"该现金券已被冻结" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];

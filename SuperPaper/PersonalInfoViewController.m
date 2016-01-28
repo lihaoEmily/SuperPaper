@@ -24,6 +24,7 @@
     UIButton *_teacherBtn;
     UIButton *_studentBtn;
     UserRole _currentRole;
+    UIActivityIndicatorView *_webIndicator;
 }
 @property (nonatomic, copy) NSString *telNo;
 @property (nonatomic, copy) NSString *name;
@@ -50,6 +51,10 @@ static NSString *const SubmitIdentifier = @"submit";
     self.college = [UserSession sharedInstance].currentUserCollege;
     _currentGen = [UserSession sharedInstance].currentUserGen;
     _currentRole = [UserSession sharedInstance].currentRole;
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    _webIndicator = indicator;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,10 +103,18 @@ static NSString *const SubmitIdentifier = @"submit";
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取个人信息失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+    }
 }
 
 
@@ -555,10 +568,18 @@ static NSString *const SubmitIdentifier = @"submit";
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取个人信息失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+    }
 
 }
 //MARK:TableViewDataSource,Delegate
