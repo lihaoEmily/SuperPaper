@@ -156,6 +156,7 @@
 		9A2A35941C56841400FB2DD3 /* QRCodesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35921C5683AE00FB2DD3 /* QRCodesController.m */; };
 		9A2A35971C57CBA400FB2DD3 /* CheckAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35961C57CBA400FB2DD3 /* CheckAboutUsViewController.m */; };
 		9A2A359A1C57DCF800FB2DD3 /* JSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35991C57DCF800FB2DD3 /* JSTextView.m */; };
+		9A3121111C5A1EF600DEF1C7 /* FAQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3121101C5A1EF600DEF1C7 /* FAQViewController.m */; };
 		9A5A30501C4E87DF00813FF9 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */; };
 		9A6B47751C5282FD00A04101 /* ForgetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47741C5282FD00A04101 /* ForgetPwdViewController.m */; };
 		9A6B47781C52888400A04101 /* ServiceNoticesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B47771C52888400A04101 /* ServiceNoticesViewController.m */; };
@@ -481,6 +482,8 @@
 		9A2A35961C57CBA400FB2DD3 /* CheckAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckAboutUsViewController.m; path = User/CheckAboutUsViewController.m; sourceTree = "<group>"; };
 		9A2A35981C57DCF800FB2DD3 /* JSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTextView.h; path = User/JSTextView.h; sourceTree = "<group>"; };
 		9A2A35991C57DCF800FB2DD3 /* JSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTextView.m; path = User/JSTextView.m; sourceTree = "<group>"; };
+		9A31210F1C5A1EF600DEF1C7 /* FAQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FAQViewController.h; path = User/FAQViewController.h; sourceTree = "<group>"; };
+		9A3121101C5A1EF600DEF1C7 /* FAQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FAQViewController.m; path = User/FAQViewController.m; sourceTree = "<group>"; };
 		9A5A304E1C4E87DF00813FF9 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = User/UserTableViewCell.h; sourceTree = "<group>"; };
 		9A5A304F1C4E87DF00813FF9 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = User/UserTableViewCell.m; sourceTree = "<group>"; };
 		9A6B47731C5282FD00A04101 /* ForgetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgetPwdViewController.h; path = User/ForgetPwdViewController.h; sourceTree = "<group>"; };
@@ -1380,6 +1383,8 @@
 			children = (
 				F4AA224D1C4E294300906CF4 /* FeedbackViewController.h */,
 				F4AA224E1C4E294300906CF4 /* FeedbackViewController.m */,
+				9A31210F1C5A1EF600DEF1C7 /* FAQViewController.h */,
+				9A3121101C5A1EF600DEF1C7 /* FAQViewController.m */,
 				9A2A35981C57DCF800FB2DD3 /* JSTextView.h */,
 				9A2A35991C57DCF800FB2DD3 /* JSTextView.m */,
 			);
@@ -1572,6 +1577,7 @@
 				04FFFDDA1C40F63D00ECCA1C /* SuperPaper.xcdatamodeld in Sources */,
 				812021B41C478D6A000D05A4 /* ServiceButton.m in Sources */,
 				F4AA226C1C4E299700906CF4 /* AccountTableViewCell.m in Sources */,
+				9A3121111C5A1EF600DEF1C7 /* FAQViewController.m in Sources */,
 				812021B91C478D95000D05A4 /* StudyViewController.m in Sources */,
 				04C558CA1C55074D008AF3E5 /* JournalsPressView.m in Sources */,
 				04FFFDF31C410A2500ECCA1C /* HomeViewController.m in Sources */,

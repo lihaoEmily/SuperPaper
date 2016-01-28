@@ -16,6 +16,7 @@
     NSArray *_list;
     NSInteger _total_num;
     BOOL _showFriend;
+    UIActivityIndicatorView *_webIndicator;
     
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -36,6 +37,10 @@ static NSString *const InvitationIdentifier = @"Invitation";
     _showFriend = YES;
     self.topView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.topView.layer.borderWidth = 1.5;
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    _webIndicator = indicator;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,10 +101,16 @@ static NSString *const InvitationIdentifier = @"Invitation";
                 [av show];
             }
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    [_webIndicator startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 //MARK:TableViewDataSource, Delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -111,7 +122,13 @@ static NSString *const InvitationIdentifier = @"Invitation";
 {
     InvitationsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:InvitationIdentifier];
     NSDictionary *dic = _list[indexPath.row];
-    cell.idLabel.text = dic[@"username"];
+    NSString *userName = dic[@"username"];
+    NSString *dotString = @"";
+    for (int i = 0; i < userName.length - 6; i++) {
+        dotString = [dotString stringByAppendingString:@"*"];
+    }
+    
+    cell.idLabel.text = [[[userName substringToIndex:3]stringByAppendingString:dotString]stringByAppendingString:[userName substringFromIndex:userName.length - 3]];
     cell.progressLabel.text = dic[@"status"];
     NSString *timeString = dic[@"createdate"];
     cell.timeLabel.text = [timeString componentsSeparatedByString:@" "][0];

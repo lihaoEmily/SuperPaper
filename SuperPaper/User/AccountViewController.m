@@ -70,13 +70,16 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
             [av show];
         }
         [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
         [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
     if (!_webIndicator.isAnimating) {
         [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
     }
 }
 - (IBAction)introduce:(id)sender {
@@ -97,7 +100,8 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
     
     if (dic[@"picname"] != [NSNull null]) {
         NSString *imageName = dic[@"picname"];
-        [cell.voucherImageView sd_setImageWithURL:[NSURL URLWithString:imageName] placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+        NSString *imageURL = [NSString stringWithFormat:@"%@%@",IMGURL,imageName];
+        [cell.voucherImageView sd_setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
     }else{
         cell.voucherImageView.image = [UIImage imageWithASName:@"default_image" directory:@"common"];
     }
@@ -139,6 +143,8 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         }];
         if (!_webIndicator.isAnimating) {
             [_webIndicator startAnimating];

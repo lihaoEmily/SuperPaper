@@ -9,6 +9,7 @@
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
 #import "ServiceNoticesViewController.h"
+#import "QRCodesController.h"
 #import "AppConfig.h"
 
 #define TextFieldBorderColor [UIColor colorWithRed:233.0f/255 green:233.0f/255 blue:216.0/255 alpha:1].CGColor;
@@ -292,6 +293,21 @@
     [self.showConfirmPwdBtn sizeToFit];
 }
 - (IBAction)scanQRCode:(id)sender {
+    if ([QRCodesController isCameraAvailable]) {
+        QRCodesController *vc = [[QRCodesController alloc]init];
+        vc.ScanResult = ^(NSString *result,BOOL success){
+            if (success) {
+                
+            }else{
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"扫描二维码失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [av show];
+            }
+        };
+    }else{
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"摄像头当前不可用！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+    }
+    
 }
 - (IBAction)agreeOrNot:(id)sender {
     _agree = !_agree;

@@ -9,7 +9,7 @@
 #import "UserViewController.h"
 #import "MainViewController.h"
 #import "UserSession.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 #import "UserTableViewCell.h"
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
@@ -35,6 +35,7 @@ typedef enum{
     NSString *_papersCountStr;
     NSString *_aboutMeStr;
     NSString *_service_telStr;
+    UIActivityIndicatorView *_webIndicator;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *backTableView;
@@ -77,12 +78,17 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:kSelColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = nil;
     if ([UserSession sharedInstance].currentUserID != 0) {//用户已经登录
         if ([UserSession sharedInstance].currentUserHeadImageName && ![[UserSession sharedInstance].currentUserHeadImageName isEqualToString:@""]) {
-            NSLog(@"用户已登录且有头像！%@",[UserSession sharedInstance].currentUserHeadImageName);
-            [_userHeaderImageBtn.imageView sd_setImageWithURL:[NSURL URLWithString:[UserSession sharedInstance].currentUserHeadImageName] placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
-        }else
+            NSString *imageURL = [NSString stringWithFormat:@"%@%@",IMGURL,[UserSession sharedInstance].currentUserHeadImageName];
+            [_userHeaderImageBtn sd_setImageWithURL:[NSURL URLWithString:imageURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"user_normalIcon"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                [self getRoundedRectImageFromImage:image onReferenceView:_userHeaderImageBtn.imageView withCornerRadius:40];
+            }];
+        }else{
             [_userHeaderImageBtn setImage:[UIImage imageNamed:@"user_normalIcon"] forState:UIControlStateNormal];
+        }
         _userTelLabel.text = [UserSession sharedInstance].currentUserTelNum;
         
         NSString *urlString = [NSString stringWithFormat:@"%@getmeinfo.php",BASE_URL];
@@ -109,18 +115,55 @@ static NSString *cellIdentifier = @"UserTableViewCell";
                     [av show];
                 }
             }
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         }];
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
         if (!_hasCurrentUser) {//通知tableviewheader为用户头像header
             _hasCurrentUser = YES;
             [self.backTableView reloadData];
         }
     }else{//用户还未登录
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@getservice_tel",BASE_URL];
+        [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+                NSNumber *result = responseObject[@"result"];
+                if (0 == result.integerValue) {
+                    _service_telStr = responseObject[@"service_tel"];
+                    
+                }else{
+                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取客服电话失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [av show];
+                    _service_telStr = @"";
+                }
+            }
+            [self.backTableView reloadData];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            _service_telStr = @"";
+            [self.backTableView reloadData];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
+        }];
+        if (![_webIndicator isAnimating]) {
+            [_webIndicator startAnimating];
+            [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+        }
         if (_hasCurrentUser) {//通知tableViewheader为注册header
             _hasCurrentUser = NO;
-            [self.backTableView reloadData];
+            
         }
     }
     
@@ -139,11 +182,26 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 }
 
 //MARK: Helper
+- (UIImage *)imageWithColor:(UIColor *)color
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 - (void) setupLoginHeaderView
 {
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 130)];
     imageView.userInteractionEnabled = YES;
-    imageView.image = [UIImage imageNamed:@"bg_mine_head_login"];
+    imageView.image = [UIImage imageNamed:@"bg_mine_head_notlogin"];
     self.loginHeaderView = imageView;
     
     UIButton *registerBtn = [[UIButton alloc]init];
@@ -197,6 +255,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     self.userHeaderView = imageView;
     UIButton *headImageBtn = [[UIButton alloc]init];
     _userHeaderImageBtn = headImageBtn;
+
     [headImageBtn addTarget:self action:@selector(changeUserHeadImage) forControlEvents:UIControlEventTouchUpInside];
     headImageBtn.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *headImageBtnWidthCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
@@ -213,7 +272,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 
     cameraImageView.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *cameraImageViewWidthCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:30];
-    NSLayoutConstraint *cameraImageViewHeightCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:30];
+    NSLayoutConstraint *cameraImageViewHeightCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:30 * 38 / 50.f];
     NSLayoutConstraint *cameraImageViewTrailingCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:headImageBtn attribute:NSLayoutAttributeTrailing multiplier:1 constant:-5];
     NSLayoutConstraint *cameraImageViewBottomCon = [NSLayoutConstraint constraintWithItem:cameraImageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:headImageBtn attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
     [headImageBtn addSubview:cameraImageView];
@@ -235,6 +294,17 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     
 }
 
+- (void)getRoundedRectImageFromImage :(UIImage *)image onReferenceView :(UIImageView*)imageView withCornerRadius :(float)cornerRadius
+{
+    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, 1.0);
+    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds
+                                cornerRadius:cornerRadius] addClip];
+    [image drawInRect:imageView.bounds];
+    UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [_userHeaderImageBtn setImage:finalImage forState:UIControlStateNormal];
+}
 - (void) userRegister
 {
     RegisterViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"register"];
@@ -363,28 +433,32 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     NSString *colorString = nil;
     if (indexPath.section == 0)
     {
-        switch (indexPath.row)
-        {
-            case 0:
-                colorString = @"green"; // 我的消息
-                break;
-            case 1:
-                colorString = @"yellow"; // 个人信息
-                break;
-            case 2:
-                colorString = @"orange"; // 我的账户
-                break;
-            case 3:
-                colorString = @"pink";  // 我的邀请
-                break;
-            case 4:
-                [self popupDisplayTypeChoosingActionSheet];
-                break;
-            case 5:
-                colorString = @"gray";  // 我的论文
-                break;
-            default:
-                break;
+        if (0 != [UserSession sharedInstance].currentUserID) {
+            switch (indexPath.row)
+            {
+                case 0:
+                    colorString = @"green"; // 我的消息
+                    break;
+                case 1:
+                    colorString = @"yellow"; // 个人信息
+                    break;
+                case 2:
+                    colorString = @"orange"; // 我的账户
+                    break;
+                case 3:
+                    colorString = @"pink";  // 我的邀请
+                    break;
+                case 4:
+                    [self popupDisplayTypeChoosingActionSheet];
+                    break;
+                case 5:
+                    colorString = @"gray";  // 我的论文
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            [self userLogin];
         }
     }else if (indexPath.section == 1){
         switch (indexPath.row) {

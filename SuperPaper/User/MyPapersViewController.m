@@ -15,6 +15,7 @@
 {
     NSArray *_list;
     NSInteger _total_num;
+    UIActivityIndicatorView *_webIndicator;
     
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -28,6 +29,9 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _list = @[];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    _webIndicator = indicator;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,10 +64,16 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
                 [av show];
             }
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    [_webIndicator startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 
 
