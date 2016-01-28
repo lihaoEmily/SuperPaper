@@ -133,7 +133,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         
-        NSString *urlString = [NSString stringWithFormat:@"%@getservice_tel",BASE_URL];
+        NSString *urlString = [NSString stringWithFormat:@"%@getservice_tel.php",BASE_URL];
         [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -457,8 +457,10 @@ static NSString *cellIdentifier = @"UserTableViewCell";
                 default:
                     break;
             }
-        }else{
+        }else if(indexPath.row != 4){
             [self userLogin];
+        }else{
+            [self popupDisplayTypeChoosingActionSheet];
         }
     }else if (indexPath.section == 1){
         switch (indexPath.row) {
