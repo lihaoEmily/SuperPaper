@@ -103,7 +103,6 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
     vc.paperTitle = dic[@"title"];
     vc.dateString = dic[@"createdate"];
     vc.content = dic[@"description"];
-    NSLog(@"噜噜噜%@",vc.content);
     vc.paperID = dic[@"id"];
     [self.navigationController pushViewController:vc animated:YES];
 }

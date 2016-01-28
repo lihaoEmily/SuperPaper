@@ -63,7 +63,7 @@
 //MARK: 功能
 - (void) shareThisMessage
 {
-    NSLog(@"我要分享这条信息");
+    //TODO: 分享我的信息
 }
 /*
 #pragma mark - Navigation
