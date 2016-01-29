@@ -222,7 +222,7 @@
         
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", nil];
         [manager POST:smsVerifyBaseURL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -238,7 +238,8 @@
             [_webIndicator stopAnimating];
             [_webIndicator removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:error.localizedDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            
             [av show];
             [_webIndicator stopAnimating];
             [_webIndicator removeFromSuperview];
