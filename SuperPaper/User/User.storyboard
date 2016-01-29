@@ -355,6 +355,7 @@
                         <outlet property="showConfirmPwdBtn" destination="iWE-ap-Zlz" id="4GH-iQ-fhE"/>
                         <outlet property="showPwdBtn" destination="G1L-2d-oUv" id="I9C-fF-Zax"/>
                         <outlet property="telNumTextField" destination="DZU-2I-LSu" id="qId-Hg-37a"/>
+                        <outlet property="topCon" destination="toU-3b-gOQ" id="57G-FK-MGI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cnP-hx-htC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1159,6 +1160,7 @@
                         <outlet property="showPwdBtn" destination="MMV-C5-hlS" id="u7D-qw-Mdf"/>
                         <outlet property="smsVerifyCodeTextField" destination="LHl-KJ-JAc" id="wDC-Nw-5X9"/>
                         <outlet property="telNumTextField" destination="Ayx-dh-IV3" id="ENq-UV-Ruo"/>
+                        <outlet property="topCon" destination="ea2-q0-9Wq" id="U5C-QE-du3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gYI-cP-xaf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1681,6 +1683,7 @@
                         <outlet property="submitBtn" destination="q8O-cU-UrM" id="Jwk-oM-52U"/>
                         <outlet property="textField" destination="IrT-Xo-zyr" id="GFz-ie-fag"/>
                         <outlet property="textView" destination="noa-aF-2oN" id="iaj-hD-S6A"/>
+                        <outlet property="topCon" destination="3Am-6E-ckd" id="12q-qd-6UU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B4a-5J-Vok" userLabel="First Responder" sceneMemberID="firstResponder"/>

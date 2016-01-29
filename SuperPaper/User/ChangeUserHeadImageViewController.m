@@ -17,6 +17,8 @@
     UITextField *_nickNameTextField;
     UIView *_popupView;
     UIActivityIndicatorView *_webIndicator;
+    UIView *_inputView;
+    CGRect _originalFrame;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -29,6 +31,9 @@ static NSString *const ShowTextIdentifier = @"showtext";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     
@@ -40,6 +45,12 @@ static NSString *const ShowTextIdentifier = @"showtext";
     // Dispose of any resources that can be recreated.
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+//MARK: UITableViewDataSource,Delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 3;
@@ -77,6 +88,39 @@ static NSString *const ShowTextIdentifier = @"showtext";
 }
 
 //MARK: Helper
+//键盘弹出
+- (void)keyboardShow:(NSNotification *)noti
+{
+    
+    _originalFrame = _inputView.frame;
+    
+    NSDictionary *info  = noti.userInfo;
+    NSValue      *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame      = [value CGRectValue];
+    CGRect keyboardFrame = [_popupView convertRect:rawFrame fromView:nil];
+    CGFloat moveDistance = keyboardFrame.origin.y - CGRectGetMaxY(_originalFrame);
+    if (CGRectGetMaxY(_originalFrame) > keyboardFrame.origin.y) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            _inputView.frame =  CGRectOffset(_inputView.frame, 0, moveDistance);
+        } completion:nil];
+    }
+    
+    
+}
+//键盘收起
+- (void)keyboardHide:(NSNotification *)noti
+{
+    
+    if (_originalFrame.origin.y > _inputView.frame.origin.y) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            _inputView.frame =  CGRectOffset(_inputView.frame, 0, _originalFrame.origin.y - _inputView.frame.origin.y);
+        } completion:nil];
+    }
+    
+}
+
+
 - (void) popupChangeHeadImageView
 {
     UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
@@ -186,7 +230,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(25, 10, middleView.bounds.size.width - 50, 40)];
     textField.text = [UserSession sharedInstance].currentUserNickname;
     [textField setFont:[UIFont systemFontOfSize:16]];
-    [textField becomeFirstResponder];
+    
     _nickNameTextField = textField;
     [middleView addSubview:textField];
     
@@ -230,9 +274,11 @@ static NSString *const ShowTextIdentifier = @"showtext";
     [view addSubview:doneBtn];
     [bgView addSubview:view];
     _popupView = bgView;
+    _inputView = view;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [bgView addGestureRecognizer:tap];
     [[[UIApplication sharedApplication]keyWindow]addSubview:_popupView];
+    [textField becomeFirstResponder];
 }
 
 - (void) doneWithNickName
@@ -277,6 +323,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
 {
     [_popupView removeFromSuperview];
     _popupView = nil;
+    _inputView = nil;
 }
 
 - (void) dismissKeyboard

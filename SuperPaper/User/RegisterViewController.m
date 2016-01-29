@@ -27,7 +27,9 @@
     BOOL _agree;
     NSTimer *_timer;
     UIActivityIndicatorView *_webIndicator;
+    CGFloat _originalTopCon;
 }
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topCon;
 
 @property (weak, nonatomic) IBOutlet UITextField *telNumTextField;
 @property (weak, nonatomic) IBOutlet UIButton *registerBtn;
@@ -51,9 +53,12 @@
     _agree = YES;
     _pwd = @"";
     _confirmPwd = @"";
+    _originalTopCon = self.topCon.constant;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -100,8 +105,45 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
 
 //MARK:Helper
+//键盘弹出
+- (void)keyboardShow:(NSNotification *)noti
+{
+    
+    NSDictionary *info  = noti.userInfo;
+    NSValue      *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame      = [value CGRectValue];
+    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    CGFloat moveDistance = keyboardFrame.origin.y - CGRectGetMaxY(_editingTextField.frame);
+    if (moveDistance < 0) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            self.topCon.constant += moveDistance;
+            [self.view layoutIfNeeded];
+        } completion:nil];
+    }
+    
+    
+}
+//键盘收起
+- (void)keyboardHide:(NSNotification *)noti
+{
+    CGFloat moveDistance = _originalTopCon - self.topCon.constant;
+    if (moveDistance > 0) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            self.topCon.constant += moveDistance;
+            [self.view layoutIfNeeded];
+        } completion:nil];
+    }
+    
+}
+
 
 - (BOOL) checkInput
 {
