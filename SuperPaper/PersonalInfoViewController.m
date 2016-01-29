@@ -24,6 +24,9 @@
     UIButton *_teacherBtn;
     UIButton *_studentBtn;
     UserRole _currentRole;
+    UIView *_inputView;
+    UIActivityIndicatorView *_webIndicator;
+    CGRect _originalFrame;
 }
 @property (nonatomic, copy) NSString *telNo;
 @property (nonatomic, copy) NSString *name;
@@ -50,6 +53,13 @@ static NSString *const SubmitIdentifier = @"submit";
     self.college = [UserSession sharedInstance].currentUserCollege;
     _currentGen = [UserSession sharedInstance].currentUserGen;
     _currentRole = [UserSession sharedInstance].currentRole;
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    _webIndicator = indicator;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,7 +86,7 @@ static NSString *const SubmitIdentifier = @"submit";
                 
             }else{
                 
-                self.gender = @"";
+                self.gender = @"男";
             }
             if ([responseObject[@"age"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.age = [responseObject[@"age"]integerValue];
@@ -86,7 +96,7 @@ static NSString *const SubmitIdentifier = @"submit";
             if ([responseObject[@"jobtitle"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.career = 0 == [responseObject[@"jobtitle"]integerValue]?@"老师":@"学生";
             }else
-                self.career = @"";
+                self.career = @"老师";
             
             if ([responseObject[@"school"]isKindOfClass:[NSString class]]) {
                 self.college = responseObject[@"school"];
@@ -98,14 +108,60 @@ static NSString *const SubmitIdentifier = @"submit";
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取个人信息失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+    }
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+
+//MARK: Helper
+//键盘弹出
+- (void)keyboardShow:(NSNotification *)noti
+{
+    
+    _originalFrame = _inputView.frame;
+    
+    NSDictionary *info  = noti.userInfo;
+    NSValue      *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame      = [value CGRectValue];
+    CGRect keyboardFrame = [_popupView convertRect:rawFrame fromView:nil];
+    CGFloat moveDistance = keyboardFrame.origin.y - CGRectGetMaxY(_originalFrame);
+    if (CGRectGetMaxY(_originalFrame) > keyboardFrame.origin.y) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            _inputView.frame =  CGRectOffset(_inputView.frame, 0, moveDistance);
+        } completion:nil];
+    }
+    
+    
+}
+//键盘收起
+- (void)keyboardHide:(NSNotification *)noti
+{
+    
+    if (_originalFrame.origin.y > _inputView.frame.origin.y) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            _inputView.frame =  CGRectOffset(_inputView.frame, 0, _originalFrame.origin.y - _inputView.frame.origin.y);
+        } completion:nil];
+    }
+    
 }
 
 
-//MARK: Helper
 - (void) dismissKeyboard
 {
     [_currentTextField resignFirstResponder];
@@ -172,7 +228,7 @@ static NSString *const SubmitIdentifier = @"submit";
     UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(25, 10, middleView.bounds.size.width - 50, 40)];
     textField.text = [UserSession sharedInstance].currentUserName;
     [textField setFont:[UIFont systemFontOfSize:16]];
-    [textField becomeFirstResponder];
+
     _currentTextField = textField;
     [middleView addSubview:textField];
     
@@ -215,10 +271,12 @@ static NSString *const SubmitIdentifier = @"submit";
     [doneBtn addTarget:self action:@selector(doneWithName) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:doneBtn];
     [bgView addSubview:view];
+    _inputView = view;
     _popupView = bgView;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [bgView addGestureRecognizer:tap];
     [[[UIApplication sharedApplication]keyWindow]addSubview:_popupView];
+    [textField becomeFirstResponder];
 }
 
 - (void) popupChangeGenderView
@@ -427,7 +485,6 @@ static NSString *const SubmitIdentifier = @"submit";
     _currentTextField = textField;
     textField.text = [UserSession sharedInstance].currentUserCollege;
     [textField setFont:[UIFont systemFontOfSize:16]];
-    [textField becomeFirstResponder];
     [middleView addSubview:textField];
     
     UIBezierPath *maskPath = [UIBezierPath bezierPath];
@@ -469,10 +526,12 @@ static NSString *const SubmitIdentifier = @"submit";
     [doneBtn addTarget:self action:@selector(doneWithCollege) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:doneBtn];
     [bgView addSubview:view];
+    _inputView = view;
     _popupView = bgView;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [bgView addGestureRecognizer:tap];
     [[[UIApplication sharedApplication]keyWindow]addSubview:_popupView];
+    [textField becomeFirstResponder];
 }
 - (void) dismissPopupView
 {
@@ -483,6 +542,7 @@ static NSString *const SubmitIdentifier = @"submit";
     _studentBtn = nil;
     _teacherBtn = nil;
     _datePicker = nil;
+    _inputView = nil;
 }
 - (void) doneWithName
 {
@@ -555,10 +615,18 @@ static NSString *const SubmitIdentifier = @"submit";
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取个人信息失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+    }
 
 }
 //MARK:TableViewDataSource,Delegate

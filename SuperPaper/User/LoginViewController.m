@@ -18,7 +18,7 @@
     BOOL _showPwd;
     UITextField *_editingTextField;
     NSString *_pwd;
-    
+    UIActivityIndicatorView *_webIndicator;
 }
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
@@ -51,6 +51,10 @@
     self.userLoginBtn.layer.masksToBounds = YES;
     self.userLoginBtn.layer.cornerRadius = 4;
     [self.quickRegisterBtn sizeToFit];
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    _webIndicator = indicator;
     
 }
 
@@ -162,7 +166,6 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            NSLog(@"登录%@",responseObject);
             NSNumber *result = [responseObject valueForKey:@"result"];
             
             if (0 == result.integerValue) {//注册成功
@@ -182,10 +185,12 @@
                     headImageName = responseObject[@"headpic"];
                 }else
                     headImageName = @"";
+                NSString *inviteCode = responseObject[@"myinvite_code"];
                 [UserSession sharedInstance].currentUserID = userId;
                 [UserSession sharedInstance].currentUserName = userName;
                 [UserSession sharedInstance].currentUserTelNum = mobile;
                 [UserSession sharedInstance].currentUserHeadImageName = headImageName;
+                [UserSession sharedInstance].currentUserInviteCode = inviteCode;
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 
@@ -198,15 +203,18 @@
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"用户名或密码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];
             }
-            
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
             
         }];
         
-        
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
     }
 }
 - (IBAction)quickRegister:(id)sender {

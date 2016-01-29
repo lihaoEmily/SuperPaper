@@ -22,7 +22,10 @@
     BOOL _showPwd;
     BOOL _showConfirmPwd;
     int _currentSMSTime;
+    UIActivityIndicatorView *_webIndicator;
+    CGFloat _originalTopCon;
 }
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topCon;
 @property (weak, nonatomic) IBOutlet UITextField *telNumTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
 @property (weak, nonatomic) IBOutlet UITextField *smsVerifyCodeTextField;
@@ -40,10 +43,13 @@
     // Do any additional setup after loading the view.
     _pwd = @"";
     _confirmPwd = @"";
+    _originalTopCon = self.topCon.constant;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
@@ -65,6 +71,10 @@
     
     self.resetPwdBtn.layer.masksToBounds = YES;
     self.resetPwdBtn.layer.cornerRadius = 4;
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    _webIndicator = indicator;
 
 }
 
@@ -73,8 +83,43 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
 //MARK:Helper
+//键盘弹出
+- (void)keyboardShow:(NSNotification *)noti
+{
+    
+    NSDictionary *info  = noti.userInfo;
+    NSValue      *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame      = [value CGRectValue];
+    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    CGFloat moveDistance = keyboardFrame.origin.y - CGRectGetMaxY(_editingTextField.frame);
+    if (moveDistance < 0) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            self.topCon.constant += moveDistance;
+            [self.view layoutIfNeeded];
+        } completion:nil];
+    }
+    
+    
+}
+//键盘收起
+- (void)keyboardHide:(NSNotification *)noti
+{
+    CGFloat moveDistance = _originalTopCon - self.topCon.constant;
+    if (moveDistance > 0) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            self.topCon.constant += moveDistance;
+            [self.view layoutIfNeeded];
+        } completion:nil];
+    }
+    
+}
 
 - (BOOL) checkInput
 {
@@ -205,6 +250,8 @@
         [request setHTTPMethod:@"POST"];
         
         NSURLSessionDataTask *task = [[NSURLSession sharedSession]dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
             if (data) {
                 NSError *newError;
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&newError];
@@ -236,6 +283,10 @@
             
         }];
         [task resume];
+        if (!_webIndicator.isAnimating) {
+            [_webIndicator startAnimating];
+        }
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(retransmit:) userInfo:nil repeats:YES];
         _timer = timer;
         _currentSMSTime = 0;
@@ -301,11 +352,18 @@
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"登录密码修改失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
         }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+    }
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 
 /*

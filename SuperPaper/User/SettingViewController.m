@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "ResetPasswordViewController.h"
 #import "UserSession.h"
 #import "AppConfig.h"
 #import "UserSettingHasNextTableViewCell.h"
@@ -107,14 +108,12 @@ static NSString *logoutIdentifier = @"logout";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (!_currentUserHasLogin) {
-        NSLog(@"未登录");
         if (0 == indexPath.row) {
             UserSettingRadioTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:radioIdentifier];
             cell.titleLabel.text = @"音效";
             [cell.titleLabel sizeToFit];
             _soundEffectSwitch = cell.switchView;
             [_soundEffectSwitch addTarget:self action:@selector(soundEffect:) forControlEvents:UIControlEventValueChanged];
-            NSLog(@"fff%@",_soundEffectSwitch);
             
             return cell;
         }else if(1 == indexPath.row){
@@ -134,7 +133,6 @@ static NSString *logoutIdentifier = @"logout";
         }
             
     }else{//当前已登录
-        NSLog(@"已登录");
         if (0 == indexPath.section) {
             UserSettingHasNextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:hasNextIdentifier];
             cell.titleLabel.text = @"修改密码";
@@ -189,8 +187,9 @@ static NSString *logoutIdentifier = @"logout";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_currentUserHasLogin) {
-        if (0 == indexPath.section) {//TODO: 进入修改密码页面
-            
+        if (0 == indexPath.section) {
+            ResetPasswordViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"resetpwd"];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }
@@ -200,55 +199,59 @@ static NSString *logoutIdentifier = @"logout";
 {
     if (sender == _soundEffectSwitch) {
         if (!sender.on) {
-            NSLog(@"音效关");
             
-        }else
-            NSLog(@"音效开");
+        }else{
+            
+        }
+            
     }else{
         if (!sender.on) {
-            NSLog(@"拒绝通知");
-        }else
-            NSLog(@"接受通知");
+            
+        }else{
+            
+        }
+        
     }
 }
 //MARK: 功能
 - (void)logout
 {
     UserSession *session = [UserSession sharedInstance];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
     [session setCurrentUserID:0];
-    [userDefaults setInteger:0 forKey:kUserID];
+    
+    [session setCurrentRole:kUserRoleStudent];
     
     [session setCurrentUserName:nil];
-    [userDefaults setValue:nil forKey:kUserName];
+    
     
     [session setCurrentUserNickname:nil];
-    [userDefaults setValue:nil forKey:kUserNickname];
+    
     
     
     [session setLastUserTelNum:session.currentUserTelNum];
-    [userDefaults setValue:session.currentUserTelNum forKey:kUserLastUserTel];
+    
     
     [session setCurrentUserTelNum:nil];
-    [userDefaults setValue:nil forKey:kUserTel];
     
-    [session setCurrentUserGen:kUserGEN_Unknown];
-    [userDefaults setInteger:kUserGEN_Unknown forKey:kUserGen];
+    
+    [session setCurrentUserGen:kUserGen_Man];
+    
     
     [session setCurrentUserAge:0];
-    [userDefaults setInteger:0 forKey:kUserAge];
+    
     
     [session setCurrentUserHeadImageName:nil];
-    [userDefaults setValue:nil forKey:kUserHeadImage];
+    
     
     [session setCurrentUserCollege:nil];
-    [userDefaults setValue:nil forKey:kUserCollege];
+    
+    [session setCurrentUserInviteCode:nil];
+    
     
     [self.navigationController popViewControllerAnimated:YES];
-    if (![userDefaults synchronize]) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"用户信息保存失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [av show];
-    }
+    
+    
 }
 
 /*
