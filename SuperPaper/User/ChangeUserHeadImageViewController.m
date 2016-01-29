@@ -12,6 +12,7 @@
 #import "UserSession.h"
 #import "AppConfig.h"
 
+
 @interface ChangeUserHeadImageViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     UITextField *_nickNameTextField;
     UIView *_popupView;
@@ -81,7 +82,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
     bgView.layer.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7].CGColor;
     CGSize size = [UIScreen mainScreen].bounds.size;//屏幕尺寸
-    UIButton *cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 200, size.width - 50, 50)];
+    UIButton *cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 200, size.width - 50, 45)];
     [cameraBtn setTitle:@"拍 照" forState:UIControlStateNormal];
     [cameraBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [cameraBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
@@ -89,7 +90,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     [cameraBtn addTarget:self action:@selector(chooseHeadImageFromCamera) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:cameraBtn];
     
-    UIButton *photoLibraryBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 135, size.width - 50, 50)];
+    UIButton *photoLibraryBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 140, size.width - 50, 45)];
     [photoLibraryBtn setTitle:@"从相册选择" forState:UIControlStateNormal];
     [photoLibraryBtn setTitleColor:[UIColor colorWithRed:14.0f/255 green:168.0f/255 blue:221.0f/255 alpha:1] forState:UIControlStateNormal];
     [photoLibraryBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
@@ -97,7 +98,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     [photoLibraryBtn addTarget:self action:@selector(chooseHeadImageFromPhotoLibrary) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:photoLibraryBtn];
     
-    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 70, size.width - 50, 50)];
+    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 80, size.width - 50, 45)];
     [cancelBtn setTitle:@"取 消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor colorWithRed:14.0f/255 green:168.0f/255 blue:221.0f/255 alpha:1] forState:UIControlStateNormal];
     [cancelBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
@@ -111,18 +112,54 @@ static NSString *const ShowTextIdentifier = @"showtext";
 
 - (void) chooseHeadImageFromCamera
 {
-    
+    [self startCamerControllerFromViewController:self usingDelegate:self];
 }
 
+- (BOOL) startCamerControllerFromViewController:(UIViewController *) controller usingDelegate:(id <UIImagePickerControllerDelegate,UINavigationControllerDelegate>)delegate
+{
+    // here, check the device is available  or not
+    if (([UIImagePickerController isSourceTypeAvailable:
+          UIImagePickerControllerSourceTypeCamera] == NO)
+        || (delegate == nil)|| (controller == nil)){
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"当前设备不可用" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        
+        [av show];
+        return NO;
+    }
+    [self dismissPopupView];
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    // Hides the controls for moving & scaling pictures, or for
+    // trimming movies. To instead show the controls, use YES.
+    cameraUI.allowsEditing = YES;
+    cameraUI.delegate = delegate;
+    cameraUI.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:cameraUI animated:YES completion:nil];
+    
+    return YES;
+}
 - (void) chooseHeadImageFromPhotoLibrary
 {
     [self dismissPopupView];
     UIImagePickerController *ipc = [[UIImagePickerController alloc]init];
     [ipc setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     ipc.delegate = self;
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 52, 20, 44, 44)];
+    [btn setTitle:@"返回" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [ipc.view addSubview:btn];
+    ipc.modalTransitionStyle = UIModalTransitionStylePartialCurl;
     [self presentViewController:ipc animated:YES completion:nil];
+    
 }
 
+- ( void)back
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 - (void) popupChangeNickNameView
 {
     UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
@@ -250,7 +287,31 @@ static NSString *const ShowTextIdentifier = @"showtext";
 //MARK: UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
+    if (UIImagePickerControllerSourceTypeCamera == picker.sourceType)
+    {
+        UIImage *originalImage, *editedImage, *imageToSave;
+
+            
+        editedImage = (UIImage *) [info objectForKey:
+                                   UIImagePickerControllerEditedImage];
+        originalImage = (UIImage *) [info objectForKey:
+                                     UIImagePickerControllerOriginalImage];
+        
+        if (editedImage) {
+            imageToSave = editedImage;
+        } else {
+            imageToSave = originalImage;
+        }
+        
+        UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil);
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+    }
     
+}
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 /*
 #pragma mark - Navigation
