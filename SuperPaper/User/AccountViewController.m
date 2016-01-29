@@ -70,13 +70,16 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
             [av show];
         }
         [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
         [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
     }];
     if (!_webIndicator.isAnimating) {
         [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
     }
 }
 - (IBAction)introduce:(id)sender {

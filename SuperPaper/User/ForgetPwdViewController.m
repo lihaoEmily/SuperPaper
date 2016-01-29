@@ -243,7 +243,9 @@
             
         }];
         [task resume];
-        [_webIndicator startAnimating];
+        if (!_webIndicator.isAnimating) {
+            [_webIndicator startAnimating];
+        }
         [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(retransmit:) userInfo:nil repeats:YES];
         _timer = timer;
@@ -318,7 +320,9 @@
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];
     }];
-    [_webIndicator startAnimating];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+    }
     [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 

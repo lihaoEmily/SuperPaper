@@ -220,7 +220,7 @@ static NSString *logoutIdentifier = @"logout";
     
     [session setCurrentUserID:0];
     
-    [session setCurrentRole:kUserRoleDefault];
+    [session setCurrentRole:kUserRoleStudent];
     
     [session setCurrentUserName:nil];
     
@@ -235,7 +235,7 @@ static NSString *logoutIdentifier = @"logout";
     [session setCurrentUserTelNum:nil];
     
     
-    [session setCurrentUserGen:kUserGEN_Unknown];
+    [session setCurrentUserGen:kUserGen_Man];
     
     
     [session setCurrentUserAge:0];

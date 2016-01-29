@@ -81,7 +81,7 @@ static NSString *const SubmitIdentifier = @"submit";
                 
             }else{
                 
-                self.gender = @"";
+                self.gender = @"男";
             }
             if ([responseObject[@"age"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.age = [responseObject[@"age"]integerValue];
@@ -91,7 +91,7 @@ static NSString *const SubmitIdentifier = @"submit";
             if ([responseObject[@"jobtitle"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.career = 0 == [responseObject[@"jobtitle"]integerValue]?@"老师":@"学生";
             }else
-                self.career = @"";
+                self.career = @"老师";
             
             if ([responseObject[@"school"]isKindOfClass:[NSString class]]) {
                 self.college = responseObject[@"school"];

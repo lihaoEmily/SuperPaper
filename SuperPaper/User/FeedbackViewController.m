@@ -7,6 +7,7 @@
 //
 
 #import "FeedbackViewController.h"
+#import "FAQViewController.h"
 #import "JSTextView.h"
 #import "UserSession.h"
 @interface FeedbackViewController (){
@@ -76,6 +77,9 @@
     
 }
 - (IBAction)faq:(id)sender {
+    
+    FAQViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"faq"];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 - (IBAction)dismissKeyboard:(id)sender {
