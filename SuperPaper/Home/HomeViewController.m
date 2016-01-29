@@ -113,9 +113,11 @@
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-        [_responseNewsInfoArr addObjectsFromArray:myArr];
-        [_studyTableView reloadData];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
+            NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            [_responseNewsInfoArr addObjectsFromArray:myArr];
+            [_studyTableView reloadData];
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
@@ -137,9 +139,11 @@
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-        [_responseActivityInfoArr addObjectsFromArray:myArr];
-        [_studyTableView reloadData];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
+            NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            [_responseActivityInfoArr addObjectsFromArray:myArr];
+            [_studyTableView reloadData];
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
@@ -161,14 +165,17 @@
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        _responseAdInfoArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-        for (NSDictionary *dic in _responseAdInfoArr) {
-            NSString *iamgeURL = [NSString stringWithFormat:@"%@%@",IMGURL,[dic valueForKey:@"adpicname"]];
-            [imagesURLString addObject:iamgeURL];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
+            _responseAdInfoArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            for (NSDictionary *dic in _responseAdInfoArr) {
+                NSString *iamgeURL = [NSString stringWithFormat:@"%@%@",IMGURL,[dic valueForKey:@"adpicname"]];
+                [imagesURLString addObject:iamgeURL];
+            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                cycleScrollView.imageURLStringsGroup = imagesURLString;
+            });
         }
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            cycleScrollView.imageURLStringsGroup = imagesURLString;
-        });
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
 }
