@@ -189,6 +189,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     [self dismissPopupView];
     UIImagePickerController *ipc = [[UIImagePickerController alloc]init];
     [ipc setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    ipc.allowsEditing = YES;
     ipc.delegate = self;
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 52, 20, 44, 44)];
     [btn setTitle:@"返回" forState:UIControlStateNormal];
@@ -331,35 +332,76 @@ static NSString *const ShowTextIdentifier = @"showtext";
     [_nickNameTextField resignFirstResponder];
 }
 
+- (void) uploadImageToServerWithImage:(UIImage *)image
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *urlString = [NSString stringWithFormat:@"%@up_file.php",BASE_URL];
+    [manager POST:urlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:UIImagePNGRepresentation(image) name:@"myheadimage" fileName:[NSString stringWithFormat:@"%@_picname",[UserSession sharedInstance].currentUserTelNum] mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+            NSNumber *result = responseObject[@"result"];
+            if (0 == result.integerValue) {
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"更改头像成功！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [av show];
+            }else{
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"更改头像失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [av show];
+            }
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:error.localizedDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+    }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+    }
+}
 //MARK: UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    if (UIImagePickerControllerSourceTypeCamera == picker.sourceType)
-    {
-        UIImage *originalImage, *editedImage, *imageToSave;
+    
 
-            
-        editedImage = (UIImage *) [info objectForKey:
-                                   UIImagePickerControllerEditedImage];
-        originalImage = (UIImage *) [info objectForKey:
-                                     UIImagePickerControllerOriginalImage];
+    UIImage *originalImage, *editedImage, *imageToSave;
+
         
-        if (editedImage) {
-            imageToSave = editedImage;
-        } else {
-            imageToSave = originalImage;
-        }
-        
-        UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil);
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
+    editedImage = (UIImage *) [info objectForKey:
+                               UIImagePickerControllerEditedImage];
+    originalImage = (UIImage *) [info objectForKey:
+                                 UIImagePickerControllerOriginalImage];
+    
+    if (editedImage) {
+        imageToSave = editedImage;
+    } else {
+        imageToSave = originalImage;
     }
+    NSLog(@"选择了");
+    UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil);
+    [self uploadImageToServerWithImage:imageToSave];
+    
+        
     
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+    NSLog(@"取消了");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+//MARK: UINavigationControllerDelegate
+-(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    
+}
+
 /*
 #pragma mark - Navigation
 
