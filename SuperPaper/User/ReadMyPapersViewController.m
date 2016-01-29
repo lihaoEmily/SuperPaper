@@ -8,7 +8,7 @@
 
 #import "ReadMyPapersViewController.h"
 #import "ASSaveData.h"
-@interface ReadMyPapersViewController ()
+@interface ReadMyPapersViewController ()<UIAlertViewDelegate>
 {
     UIActivityIndicatorView *_webIndicator;
 }
@@ -86,36 +86,49 @@
 //MARK: 功能
 - (void) deleteThisPaper
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@mypaper_delete.php",BASE_URL];
-    NSDictionary *params = @{@"paper_id":self.paperID};
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
-            NSNumber *result = responseObject[@"result"];
-            if (0 == result.integerValue) {
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"论文已删除" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
-            }else{
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"论文删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定要删除吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [av show];
+
+}
+
+//MARK: UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (1 == buttonIndex) {
+        NSString *urlString = [NSString stringWithFormat:@"%@mypaper_delete.php",BASE_URL];
+        NSDictionary *params = @{@"paper_id":self.paperID};
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+                NSNumber *result = responseObject[@"result"];
+                if (0 == result.integerValue) {
+                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"论文已删除" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [av show];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"论文删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [av show];
+                }
             }
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
+        }];
+        if (!_webIndicator.isAnimating) {
+            [_webIndicator startAnimating];
+            [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
         }
-        [_webIndicator stopAnimating];
-        [_webIndicator removeFromSuperview];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [av show];
-        [_webIndicator stopAnimating];
-        [_webIndicator removeFromSuperview];
-    }];
-    if (!_webIndicator.isAnimating) {
-        [_webIndicator startAnimating];
-        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+
     }
 }
+
 /*
 #pragma mark - Navigation
 

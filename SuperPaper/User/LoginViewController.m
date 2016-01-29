@@ -191,7 +191,6 @@
                 [UserSession sharedInstance].currentUserTelNum = mobile;
                 [UserSession sharedInstance].currentUserHeadImageName = headImageName;
                 [UserSession sharedInstance].currentUserInviteCode = inviteCode;
-                NSLog(@"邀请码%@",inviteCode);
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 

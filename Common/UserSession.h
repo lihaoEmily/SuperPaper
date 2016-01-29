@@ -9,14 +9,12 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, UserRole){
-    kUserRoleDefault = 0,
-    kUserRoleTeacher = 1,
-    kUserRoleStudent = 2
+    kUserRoleTeacher = 0,
+    kUserRoleStudent = 1
 };
 typedef NS_ENUM(NSInteger, UserGen) {
-    kUserGEN_Unknown = 0,
-    kUserGen_Man = 1,
-    kUserGen_Woman = 2
+    kUserGen_Man = 0,
+    kUserGen_Woman = 1
 };
 #pragma mark - Public Keys
 #define kUserRole @"UserRole"

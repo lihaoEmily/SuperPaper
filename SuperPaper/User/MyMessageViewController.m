@@ -28,11 +28,10 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     // Do any additional setup after loading the view.
     [self.tableView setTableFooterView:[UIView new]];
     _list = @[];
-    
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
-
     _webIndicator = indicator;
+
     
 }
 - (void)viewWillAppear:(BOOL)animated
