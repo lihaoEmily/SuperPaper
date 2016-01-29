@@ -37,9 +37,12 @@
         self.userInteractionEnabled = YES;
         self.showsTouchWhenHighlighted = YES;
         
-        _aSelImage = [UIImage imageWithASName:selImageStr directory:@"tabbar"];
+//        _aSelImage = [UIImage imageWithASName:selImageStr directory:@"tabbar"];
+//        
+//        _aImage = [UIImage imageWithASName:imageStr directory:@"tabbar"];
         
-        _aImage = [UIImage imageWithASName:imageStr directory:@"tabbar"];
+        _aSelImage = [UIImage imageNamed:selImageStr];        
+        _aImage    = [UIImage imageNamed:imageStr];
         
         [self addSubview:self.backImageView];
         

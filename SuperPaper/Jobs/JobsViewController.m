@@ -199,7 +199,9 @@
             serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
             [serviceBtn addTarget:self action:@selector(serviceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [serviceBtn setTitle:dic[@"title"] forState:UIControlStateNormal];
-            [serviceBtn setImage:[UIImage imageWithASName:dic[@"icon"] directory:@"Jobs"] forState:UIControlStateNormal];
+//            [serviceBtn setImage:[UIImage imageWithASName:dic[@"icon"] directory:@"Jobs"] forState:UIControlStateNormal];
+            [serviceBtn setImage:[UIImage imageNamed:dic[@"icon"]]
+                        forState:UIControlStateNormal];
             [cell.contentView addSubview:serviceBtn];
         }
         return cell;
