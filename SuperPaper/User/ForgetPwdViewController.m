@@ -251,7 +251,9 @@
         
         NSURLSessionDataTask *task = [[NSURLSession sharedSession]dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             [_webIndicator stopAnimating];
-            [_webIndicator removeFromSuperview];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_webIndicator removeFromSuperview];
+            });
             if (data) {
                 NSError *newError;
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&newError];
