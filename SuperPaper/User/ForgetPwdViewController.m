@@ -129,7 +129,7 @@
         [av show];
         return NO;
     }
-    _verifyCode = 1000;
+
     if (![self.smsVerifyCodeTextField.text isEqualToString:[NSString stringWithFormat:@"%d",_verifyCode]]) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"短信验证码输入有误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
