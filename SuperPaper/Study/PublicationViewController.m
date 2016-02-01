@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSMutableArray* publicationDataArray;
 @property (nonatomic, strong) NSString* bundleStr;
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
+@property (nonatomic, assign) NSInteger subgroupId;
+@property (nonatomic, strong) NSDictionary* selectedSortDic;
 
 @end
 
@@ -34,6 +36,8 @@
         _publicationDataArray = [NSMutableArray arrayWithCapacity:0];
         _bundleStr = nil;
         _selectedIndexPath = nil;
+        _subgroupId = 0;
+        _selectedSortDic = nil;
     }
     return self;
 }
@@ -49,12 +53,7 @@
     _contentView.rightTableView.dataSource = self;
     _contentView.rightTableView.delegate = self;
     
-    [self getPublicationSort];
-    
-    NSIndexPath* selectedIndex = [NSIndexPath indexPathForRow:0 inSection:0];
-    [_contentView.leftTableView selectRowAtIndexPath:selectedIndex animated:NO scrollPosition:UITableViewScrollPositionNone];
-    [self tableView: _contentView.leftTableView didSelectRowAtIndexPath:selectedIndex];
-    _selectedIndexPath = selectedIndex;
+    [self getPublicationSortData];
     
     [self loadNavigationView];
     
@@ -98,7 +97,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
 
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"group_id":[NSNumber numberWithInt:1],@"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"group_id":[NSNumber numberWithInt:1],@"list_num":[NSNumber numberWithInt:15], @"group_id":[NSNumber numberWithInt:1]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     NSLog(@"URL＝ %@",urlString);
     
@@ -118,22 +117,28 @@
     
 }
 
-- (void)getPublicationSort
+- (void)getPublicationSortData
 {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    NSDictionary *parameters = @{@"group_id":[NSNumber numberWithInt:1]};
+    NSDictionary *parameters = @{@"groupid":[NSNumber numberWithInt:1]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_subgroup.php",BASE_URL];
-    NSLog(@"URL＝ %@",urlString);
+    
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
             NSLog(@"%@",uploadProgress);
         }
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              
             NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
             [_publicationSortArray addObjectsFromArray:array];
-            NSLog(@"%@",responseObject);
             [_contentView.leftTableView reloadData];
+              
+            NSIndexPath* selectedIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+            [_contentView.leftTableView selectRowAtIndexPath:selectedIndex animated:NO scrollPosition:UITableViewScrollPositionNone];
+            [self tableView: _contentView.leftTableView didSelectRowAtIndexPath:selectedIndex];
+            _selectedIndexPath = selectedIndex;
+              
         }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);
@@ -142,23 +147,26 @@
 
 - (void)getPublicationDataWithSort:(NSDictionary*) sortDic
 {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"group_id":[NSNumber numberWithInt:1],@"subgroup_id":[sortDic objectForKey:@"id"],@"tag_id":[NSNumber numberWithInt:0],@"start_pos":[NSNumber numberWithInt:(int)_publicationDataArray.count],@"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInt:0], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
-    NSLog(@"URL＝ %@",urlString);
     
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-        [_publicationSortArray addObjectsFromArray:array];
-        NSLog(@"%@",responseObject);
-        [_contentView.leftTableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
+        }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              
+              NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+              [_publicationDataArray addObjectsFromArray:array];
+              [_contentView.rightTableView reloadData];
+
+          }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              NSLog(@"%@",error);
+          }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -208,6 +216,8 @@
         }
 //        cell.textLabel.text = @"left";
         cell.textLabel.text = [((NSDictionary*)_publicationSortArray[indexPath.row]) objectForKey:@"subgroupname"];
+//        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.font = [UIFont systemFontOfSize:15];
 //        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         cell.backgroundColor = [UIColor grayColor];
         return cell;
@@ -249,8 +259,9 @@
 //        cell.backgroundColor = [UIColor whiteColor];
         cell.textLabel.textColor = [UIColor redColor];
         _selectedIndexPath = indexPath;
+        _selectedSortDic = [_publicationSortArray objectAtIndex:indexPath.row];
         [_publicationDataArray removeAllObjects];
-//        [self getPublicationDataWithSort:_publicationSortArray[indexPath.row]];
+        [self getPublicationDataWithSort:_publicationSortArray[indexPath.row]];
     }
     else{
         //        NSLog(@"tap right tableview index:%ld",(long)indexPath.row);

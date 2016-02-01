@@ -20,8 +20,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _leftTableView = [[UITableView alloc] init];
-        _leftTableView.frame = CGRectMake(0, 0, self.bounds.size.width/4, self.bounds.size.height);
+        _leftTableView = [[UITableView alloc] init];//self.bounds.size.width*3.9/12
+        _leftTableView.frame = CGRectMake(0, 0, 104, self.bounds.size.height);
         //    _leftTable.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _leftTableView.showsVerticalScrollIndicator = NO;
         //    _leftTable.tableFooterView = [[UIView alloc] init];
@@ -29,10 +29,11 @@
         _leftTableView.separatorColor = [UIColor whiteColor];
         _leftTableView.allowsSelection = YES;
         _leftTableView.allowsMultipleSelection = NO;
+//        _leftTableView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:_leftTableView];
         
         _rightTableView = [[UITableView alloc] init];
-        _rightTableView.frame = CGRectMake(self.bounds.size.width/4, 0, self.bounds.size.width*3/4, self.bounds.size.height);
+        _rightTableView.frame = CGRectMake(104, 0, self.bounds.size.width-104, self.bounds.size.height);
         _rightTableView.showsVerticalScrollIndicator = YES;
         _rightTableView.tag = 2000;
         _rightTableView.allowsSelection = YES;
