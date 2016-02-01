@@ -31,7 +31,7 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _list = @[].mutableCopy;
+    _list = [NSMutableArray array];
     _intro = @"";
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         

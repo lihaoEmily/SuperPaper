@@ -27,7 +27,7 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _list = [@[]mutableCopy];
+    _list = [NSMutableArray array];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self pulldownRefresh];
     }];

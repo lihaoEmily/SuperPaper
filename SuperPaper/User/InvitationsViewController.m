@@ -33,7 +33,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _list = [@[]mutableCopy];
+    _list = [NSMutableArray array];
     _showFriend = YES;
     self.topView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.topView.layer.borderWidth = 1.5;
