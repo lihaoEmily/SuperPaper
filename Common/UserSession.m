@@ -99,7 +99,12 @@
     NSString *telNum = [userDefaults valueForKey:kUserTel];
     return telNum;
 }
-
+-(NSString *)currentUserInviteCode
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *inviteCode = [userDefaults valueForKey:kUserInviteCode];
+    return inviteCode;
+}
 #pragma mark - Setter
 - (void)setCurrentRole:(UserRole)currentRole {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -152,6 +157,12 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:currentUserTelNum forKey:kUserTel];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserInviteCode:(NSString *)currentUserInviteCode
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:currentUserInviteCode forKey:kUserInviteCode];
     [userDefaults synchronize];
 }
 #pragma mark - Store the information for the current user

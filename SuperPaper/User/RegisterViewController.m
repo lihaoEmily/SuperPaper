@@ -8,6 +8,8 @@
 
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
+#import "ServiceNoticesViewController.h"
+#import "QRCodesController.h"
 #import "AppConfig.h"
 
 #define TextFieldBorderColor [UIColor colorWithRed:233.0f/255 green:233.0f/255 blue:216.0/255 alpha:1].CGColor;
@@ -24,7 +26,10 @@
     int _currentSMSTime;
     BOOL _agree;
     NSTimer *_timer;
+    UIActivityIndicatorView *_webIndicator;
+    CGFloat _originalTopCon;
 }
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topCon;
 
 @property (weak, nonatomic) IBOutlet UITextField *telNumTextField;
 @property (weak, nonatomic) IBOutlet UIButton *registerBtn;
@@ -48,9 +53,12 @@
     _agree = YES;
     _pwd = @"";
     _confirmPwd = @"";
+    _originalTopCon = self.topCon.constant;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -79,6 +87,10 @@
     self.registerBtn.layer.cornerRadius = 4;
     
 
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+
+    _webIndicator = indicator;
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -93,8 +105,45 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
 
 //MARK:Helper
+//键盘弹出
+- (void)keyboardShow:(NSNotification *)noti
+{
+    
+    NSDictionary *info  = noti.userInfo;
+    NSValue      *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame      = [value CGRectValue];
+    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    CGFloat moveDistance = keyboardFrame.origin.y - CGRectGetMaxY(_editingTextField.frame);
+    if (moveDistance < 0) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            self.topCon.constant += moveDistance;
+            [self.view layoutIfNeeded];
+        } completion:nil];
+    }
+    
+    
+}
+//键盘收起
+- (void)keyboardHide:(NSNotification *)noti
+{
+    CGFloat moveDistance = _originalTopCon - self.topCon.constant;
+    if (moveDistance > 0) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            self.topCon.constant += moveDistance;
+            [self.view layoutIfNeeded];
+        } completion:nil];
+    }
+    
+}
+
 
 - (BOOL) checkInput
 {
@@ -104,7 +153,7 @@
         [av show];
         return NO;
     }
-    _verifyCode = 1000;
+    
     if (![self.SMSVerifyCodeTextField.text isEqualToString:[NSString stringWithFormat:@"%d",_verifyCode]]) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"短信验证码输入有误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
@@ -215,7 +264,7 @@
         
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", nil];
         [manager POST:smsVerifyBaseURL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -228,11 +277,19 @@
             }else{//短信发送成功
                 _verifyCode = verifyCode;
             }
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:error.localizedDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            
             [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         }];
-        
+        if (![_webIndicator isAnimating]) {
+            [_webIndicator startAnimating];
+            [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+        }
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(retransmit:) userInfo:nil repeats:YES];
         _timer = timer;
         _currentSMSTime = 0;
@@ -245,7 +302,6 @@
     
 }
 - (IBAction)showOrHidePwd:(id)sender {
-    NSLog(@"显示或者隐藏密码");
     _showPwd = !_showPwd;
     if (_showPwd) {
         [self.showPwdBtn setTitle:@"隐藏" forState:UIControlStateNormal];
@@ -280,6 +336,21 @@
     [self.showConfirmPwdBtn sizeToFit];
 }
 - (IBAction)scanQRCode:(id)sender {
+    if ([QRCodesController isCameraAvailable]) {
+        QRCodesController *vc = [[QRCodesController alloc]init];
+        vc.ScanResult = ^(NSString *result,BOOL success){
+            if (success) {
+                
+            }else{
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"扫描二维码失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [av show];
+            }
+        };
+    }else{
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"摄像头当前不可用！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+    }
+    
 }
 - (IBAction)agreeOrNot:(id)sender {
     _agree = !_agree;
@@ -290,6 +361,8 @@
         [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
 }
 - (IBAction)serviceItemsChecking:(id)sender {
+    ServiceNoticesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"serviceitems"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)userRegister:(id)sender {
     if ([self checkInput]) {
@@ -304,7 +377,6 @@
         [manager POST:urlString parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"注册%@",responseObject);
             NSNumber *result = [responseObject valueForKey:@"result"];
             
             if (0 == result.integerValue) {//注册成功
@@ -327,11 +399,18 @@
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"邀请码有误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];
             }
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
         }];
-        
+        if (!_webIndicator.isAnimating) {
+            [_webIndicator startAnimating];
+            [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+        }
         
     }
 }
