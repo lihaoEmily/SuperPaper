@@ -45,6 +45,20 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self registerShareSdkForApplication];
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    } else {
+        //categories 必须为nil
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                          UIRemoteNotificationTypeSound |
+                                                          UIRemoteNotificationTypeAlert)
+                                              categories:nil];
+    }
+
     [JPUSHService setupWithOption:launchOptions appKey:appKey channel:channel apsForProduction:FALSE];
    // [self registerJushSDKWith:launchOptions];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -244,6 +258,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     // Required
+    NSLog(@"deviceToken is%@",deviceToken);
     [JPUSHService registerDeviceToken:deviceToken];
 }
 
