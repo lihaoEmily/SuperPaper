@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "NavigationController.h"
+static NSString *appKey = @"e550c163c9dd30914734847c";
+static NSString *channel = @"Publish channel";
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
