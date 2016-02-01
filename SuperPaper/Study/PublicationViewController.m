@@ -163,6 +163,8 @@
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
               [_publicationDataArray addObjectsFromArray:array];
               [_contentView.rightTableView reloadData];
+              
+              
 
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -236,6 +238,18 @@
         cell.textLabel.text = [dataDic objectForKey:@"title"];
         cell.detailTextLabel.text = [dataDic objectForKey:@"description"];
         cell.detailTextLabel.textColor = [UIColor grayColor];
+        
+        
+//        NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
+//        [cell.iconImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+//        cell.titleLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
+//
+//        NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:urlString,@"image",
+//                              [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"],@"title",
+//                              nil];
+//        cell.imageView
+//        UIImageView* cellImageView = [[UIImageView alloc]initWithFrame:CGRectMake(2, 2, 55, 55)];
+//        cell.imageView.image;
         return cell;
     }
 }
