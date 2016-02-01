@@ -12,7 +12,9 @@
 #import "UserSession.h"
 @interface FeedbackViewController (){
     UIActivityIndicatorView *_webIndicator;
+    CGFloat _originalTopCon;
 }
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topCon;
 @property (weak, nonatomic) IBOutlet JSTextView *textView;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
@@ -27,13 +29,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _originalTopCon = self.topCon.constant;
     [self setupUI];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 }
 //MARK: 功能
 - (IBAction)submit:(id)sender {
@@ -88,6 +99,39 @@
 }
 
 //MARK: Helper
+//键盘弹出
+- (void)keyboardShow:(NSNotification *)noti
+{
+    
+    NSDictionary *info  = noti.userInfo;
+    NSValue      *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame      = [value CGRectValue];
+    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    CGFloat moveDistance = keyboardFrame.origin.y - CGRectGetMaxY(self.textField.frame);
+    if (moveDistance < 0) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            self.topCon.constant += moveDistance;
+            [self.view layoutIfNeeded];
+        } completion:nil];
+    }
+    
+    
+}
+//键盘收起
+- (void)keyboardHide:(NSNotification *)noti
+{
+    CGFloat moveDistance = _originalTopCon - self.topCon.constant;
+    if (moveDistance > 0) {
+        [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[noti.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]animations:^{
+            self.topCon.constant += moveDistance;
+            [self.view layoutIfNeeded];
+        } completion:nil];
+    }
+    
+}
+
+
 - (void)setupUI
 {
     self.view.backgroundColor = [UIColor whiteColor];

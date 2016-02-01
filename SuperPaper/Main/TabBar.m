@@ -45,20 +45,20 @@
         // 老师 4个
         {
             TabBarItem *item1 = [[TabBarItem alloc] initTabbarItemTitle:@"首页"
-                                                                  image:@"tabbar_universal_gray_home"
-                                                               selImage:@"tabbar_universal_pink_home"];
+                                                                  image:@"HomeNormal"
+                                                               selImage:@"HomeSelected"];
             item1.tag = TABBARITEMTAG + 0;
             TabBarItem *item2 = [[TabBarItem alloc] initTabbarItemTitle:@"评职"
-                                                                  image:@"tabbar_tercher_gray_jobTitle"
-                                                               selImage:@"tabbar_teacher_pink_jobTitle"];
+                                                                  image:@"AssTitleNormal"
+                                                               selImage:@"AssTitleSelected"];
             item2.tag = TABBARITEMTAG + 1;
             TabBarItem *item3 = [[TabBarItem alloc] initTabbarItemTitle:@"论文"
-                                                                  image:@"tabbar_universal_gray_paper"
-                                                               selImage:@"tabbar_universal_pink_paper"];
+                                                                  image:@"PapersNormal"
+                                                               selImage:@"PapersSelected"];
             item3.tag = TABBARITEMTAG + 2;
             TabBarItem *item4 = [[TabBarItem alloc] initTabbarItemTitle:@"我的"
-                                                                  image:@"tabbar_universal_gray_profile"
-                                                               selImage:@"tabbar_universal_pink_profile"];
+                                                                  image:@"UserNormal"
+                                                               selImage:@"UserSelected"];
             item4.tag = TABBARITEMTAG + 3;
             _teacherArr = [NSArray arrayWithObjects:item1,item2,item3,item4, nil];
             
@@ -73,24 +73,24 @@
         // 学生 5个
         {
             TabBarItem *item1 = [[TabBarItem alloc] initTabbarItemTitle:@"首页"
-                                                                  image:@"tabbar_universal_gray_home"
-                                                               selImage:@"tabbar_universal_pink_home"];
+                                                                  image:@"HomeNormal"
+                                                               selImage:@"HomeSelected"];
             item1.tag = TABBARITEMTAG + 0;
             TabBarItem *item2 = [[TabBarItem alloc] initTabbarItemTitle:@"学习"
-                                                                  image:@"tabbar_student_gray_learn"
-                                                               selImage:@"tabbar_student_pink_learn"];
+                                                                  image:@"StudyNormal"
+                                                               selImage:@"StudySelected"];
             item2.tag = TABBARITEMTAG + 1;
             TabBarItem *item3 = [[TabBarItem alloc] initTabbarItemTitle:@"就业"
-                                                                  image:@"tabbar_student_gray_obtainEmployment"
-                                                               selImage:@"tabbar_student_pink_obtainEmployment"];
+                                                                  image:@"JobsNormal"
+                                                               selImage:@"JobsSelected"];
             item3.tag = TABBARITEMTAG + 2;
             TabBarItem *item4 = [[TabBarItem alloc] initTabbarItemTitle:@"论文"
-                                                                  image:@"tabbar_universal_gray_paper"
-                                                               selImage:@"tabbar_universal_pink_paper"];
+                                                                  image:@"PapersNormal"
+                                                               selImage:@"PapersSelected"];
             item4.tag = TABBARITEMTAG + 3;
             TabBarItem *item5 = [[TabBarItem alloc] initTabbarItemTitle:@"我的"
-                                                                  image:@"tabbar_universal_gray_profile"
-                                                               selImage:@"tabbar_universal_pink_profile"];
+                                                                  image:@"UserNormal"
+                                                               selImage:@"UserSelected"];
             item5.tag = TABBARITEMTAG + 4;
             _studentArr = [NSArray arrayWithObjects:item1,item2,item3,item4,item5, nil];
             for (TabBarItem *item in _studentArr)

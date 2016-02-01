@@ -168,7 +168,7 @@
             
             NSNumber *result = [responseObject valueForKey:@"result"];
             
-            if (0 == result.integerValue) {//注册成功
+            if (0 == result.integerValue) {//登录成功
                 NSInteger userId = [responseObject[@"id"] integerValue];
                 NSString *userName;
                 if ([responseObject[@"username"] isKindOfClass:[NSString class]]) {
