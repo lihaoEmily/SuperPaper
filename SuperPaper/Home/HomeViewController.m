@@ -109,10 +109,17 @@
      * list_num   整型    一次获取list数
      */
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",@"1",@"ownertype", nil];
+
+   // NSLog(@"parameters %@",parameters);
+
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_newsinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+        [_responseNewsInfoArr addObjectsFromArray:myArr];
+      //  NSLog(@"%@",responseObject);
+        [_studyTableView reloadData];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
             [_responseNewsInfoArr addObjectsFromArray:myArr];

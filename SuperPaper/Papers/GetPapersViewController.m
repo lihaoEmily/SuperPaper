@@ -73,7 +73,7 @@
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
-           NSLog(@"%@",responseObject);
+           //NSLog(@"%@",responseObject);
            if (dataDic) {
                _content = [dataDic valueForKey:@"content"];
                _title = [dataDic valueForKey:@"title"];
