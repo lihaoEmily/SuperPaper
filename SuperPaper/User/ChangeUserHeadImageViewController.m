@@ -397,7 +397,6 @@ static NSString *const ShowTextIdentifier = @"showtext";
 }
 
 
-
 /*
 #pragma mark - Navigation
 
