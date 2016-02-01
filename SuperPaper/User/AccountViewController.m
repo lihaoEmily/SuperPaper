@@ -13,7 +13,7 @@
 #import "UIImageView+WebCache.h"
 @interface AccountViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    NSArray *_list;
+    NSMutableArray *_list;
     NSInteger _total_num;
     NSInteger _valid_num;
     NSString *_intro;
@@ -31,8 +31,14 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _list = @[];
+    _list = @[].mutableCopy;
     _intro = @"";
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        
+    }];
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     _webIndicator = indicator;
@@ -46,6 +52,12 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self pullData];
+    
+}
+//MARK: Helper
+- (void) pullData
+{
     NSString *urlString = [NSString stringWithFormat:@"%@mycoupon.php",BASE_URL];
     NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@(0),@"list_num":@(10)};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -56,7 +68,7 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
         NSNumber *result = responseObject[@"result"];
         if (0 == result.integerValue) {//获取我的消息列表成功
             if ([responseObject[@"list"] isKindOfClass:[NSArray class]]) {
-                _list = responseObject[@"list"];
+                _list = [responseObject[@"list"]mutableCopy];
             }
             _total_num = [responseObject[@"total_num"] integerValue];
             _valid_num = [responseObject[@"total_num_ok"] integerValue];
@@ -76,6 +88,93 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
         [av show];
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];
+    }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+    }
+}
+- (void) pulldownRefresh
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@mycoupon.php",BASE_URL];
+    NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@(0),@"list_num":@(10)};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSNumber *result = responseObject[@"result"];
+        if (0 == result.integerValue) {//获取我的消息列表成功
+            if ([responseObject[@"list"] isKindOfClass:[NSArray class]]) {
+                _list = [responseObject[@"list"]mutableCopy];
+            }
+            _total_num = [responseObject[@"total_num"] integerValue];
+            _valid_num = [responseObject[@"total_num_ok"] integerValue];
+            if ([responseObject[@"coupon_info"]isKindOfClass:[NSString class]]) {
+                _intro = responseObject[@"coupon_info"];
+            }
+            self.countLabel.text = [NSString stringWithFormat:@"有%lu张现金券可用",_valid_num];
+            [self.tableView reloadData];
+        }else{//失败
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的账户信息出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+        }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_header endRefreshing];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_header endRefreshing];
+    }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+    }
+}
+- (void) pullupRefresh
+{
+
+    NSString *urlString = [NSString stringWithFormat:@"%@mycoupon.php",BASE_URL];
+    NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@(0),@"list_num":@(10)};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSNumber *result = responseObject[@"result"];
+        if (0 == result.integerValue) {//获取我的消息列表成功
+            if ([responseObject[@"list"] isKindOfClass:[NSArray class]]) {
+                NSArray *list = responseObject[@"list"];
+                
+                if (_list.count + list.count < _total_num) {
+                    [_list addObjectsFromArray:list];
+                }else
+                    _list = [responseObject[@"list"]mutableCopy];
+
+            }
+            _total_num = [responseObject[@"total_num"] integerValue];
+            _valid_num = [responseObject[@"total_num_ok"] integerValue];
+            if ([responseObject[@"coupon_info"]isKindOfClass:[NSString class]]) {
+                _intro = responseObject[@"coupon_info"];
+            }
+            self.countLabel.text = [NSString stringWithFormat:@"有%lu张现金券可用",_valid_num];
+            [self.tableView reloadData];
+        }else{//失败
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的账户信息出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+        }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_footer endRefreshing];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_footer endRefreshing];
     }];
     if (!_webIndicator.isAnimating) {
         [_webIndicator startAnimating];

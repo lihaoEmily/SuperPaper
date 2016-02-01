@@ -13,7 +13,7 @@
 
 @interface MyMessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    NSArray *_list;
+    NSMutableArray *_list;
     NSInteger _total_num;
     UIActivityIndicatorView *_webIndicator;
 }
@@ -26,8 +26,13 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.tableView setTableFooterView:[UIView new]];
-    _list = @[];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self pulldownRefresh];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self pullupRefresh];
+    }];
+    _list = @[].mutableCopy;
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     _webIndicator = indicator;
@@ -37,6 +42,16 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self pullData];
+    
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+//MARK: Helper
+- (void) pullData
+{
     NSString *urlString = [NSString stringWithFormat:@"%@mynotice.php",BASE_URL];
     NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@"0",@"list_num":@"10"};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -46,7 +61,7 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSNumber *result = responseObject[@"result"];
         if (0 == result.integerValue) {//获取我的消息列表成功
-            _list = responseObject[@"list"];
+            _list = [responseObject[@"list"]mutableCopy];
             _total_num = [responseObject[@"total_num"] integerValue];
             [self.tableView reloadData];
         }else{//失败
@@ -64,11 +79,76 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     [_webIndicator startAnimating];
     [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (void) pulldownRefresh
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@mynotice.php",BASE_URL];
+    NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@"0",@"list_num":@"10"};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSNumber *result = responseObject[@"result"];
+        if (0 == result.integerValue) {//获取我的消息列表成功
+            _list = [responseObject[@"list"]mutableCopy];
+            _total_num = [responseObject[@"total_num"] integerValue];
+            [self.tableView reloadData];
+        }else{//失败
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的消息列表出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+        }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_header endRefreshing];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_header endRefreshing];
+    }];
+    [_webIndicator startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 
+- (void) pullupRefresh
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@mynotice.php",BASE_URL];
+    NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@(0),@"list_num":@(10)};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSNumber *result = responseObject[@"result"];
+        if (0 == result.integerValue) {//获取我的消息列表成功
+            NSArray *list = responseObject[@"list"];
+            
+            if (_list.count + list.count < _total_num) {
+                [_list addObjectsFromArray:list];
+            }else
+                _list = [responseObject[@"list"]mutableCopy];
+            
+            _total_num = [responseObject[@"total_num"] integerValue];
+            [self.tableView reloadData];
+        }else{//失败
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的消息列表出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+        }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_footer endRefreshing];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    [_webIndicator startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+}
 //MARK: TableViewDatasource,delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
