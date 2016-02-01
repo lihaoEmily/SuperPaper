@@ -196,7 +196,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [ipc.view addSubview:btn];
-    ipc.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+//    ipc.modalTransitionStyle = UIModalTransitionStylePartialCurl;
     [self presentViewController:ipc animated:YES completion:nil];
     
 }
@@ -335,6 +335,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
 - (void) uploadImageToServerWithImage:(UIImage *)image
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *urlString = [NSString stringWithFormat:@"%@up_file.php",BASE_URL];
     [manager POST:urlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileData:UIImagePNGRepresentation(image) name:@"myheadimage" fileName:[NSString stringWithFormat:@"%@_picname",[UserSession sharedInstance].currentUserTelNum] mimeType:@"image/png"];
@@ -383,8 +384,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     } else {
         imageToSave = originalImage;
     }
-    NSLog(@"选择了");
-    UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil);
+
     [self uploadImageToServerWithImage:imageToSave];
     
         
