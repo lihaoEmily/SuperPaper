@@ -159,11 +159,6 @@
 		92888FE51C5718D200D3BBC8 /* jpush-ios-2.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92888FE31C5718D200D3BBC8 /* jpush-ios-2.1.0.a */; };
 		92AF175A1C50D56300797B0E /* assessmment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92AF17571C50D56300797B0E /* assessmment.plist */; };
 		92AF175B1C50D56300797B0E /* NormalAssessmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AF17591C50D56300797B0E /* NormalAssessmentViewController.m */; };
-		9A2A35841C5652E800FB2DD3 /* ReadMyMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35831C5652E800FB2DD3 /* ReadMyMessagesViewController.m */; };
-		9A2A358D1C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35861C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m */; };
-		9A2A358E1C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35881C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m */; };
-		9A2A358F1C5653ED00FB2DD3 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A358A1C5653ED00FB2DD3 /* PersonalInfoViewController.m */; };
-		9A2A35901C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A358C1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m */; };
 		9A2A35941C56841400FB2DD3 /* QRCodesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35921C5683AE00FB2DD3 /* QRCodesController.m */; };
 		9A2A35971C57CBA400FB2DD3 /* CheckAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35961C57CBA400FB2DD3 /* CheckAboutUsViewController.m */; };
 		9A2A359A1C57DCF800FB2DD3 /* JSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A35991C57DCF800FB2DD3 /* JSTextView.m */; };
@@ -208,6 +203,11 @@
 		F4AA22781C4E29B800906CF4 /* MyMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA22751C4E29B800906CF4 /* MyMessageTableViewCell.m */; };
 		F4AA22791C4E29B800906CF4 /* MyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA22771C4E29B800906CF4 /* MyMessageViewController.m */; };
 		F4AA227B1C4E29C600906CF4 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4AA227A1C4E29C600906CF4 /* User.storyboard */; };
+		F4CDBD511C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD4A1C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.m */; };
+		F4CDBD521C5EF174009FEADD /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD4C1C5EF174009FEADD /* PersonalInfoTableViewCell.m */; };
+		F4CDBD531C5EF174009FEADD /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD4E1C5EF174009FEADD /* PersonalInfoViewController.m */; };
+		F4CDBD541C5EF174009FEADD /* ProfileSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD501C5EF174009FEADD /* ProfileSubmitTableViewCell.m */; };
+		F4CDBD571C5EF184009FEADD /* ReadMyMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD561C5EF184009FEADD /* ReadMyMessagesViewController.m */; };
 		F65E83211C4F358C00CE31D2 /* JobService.plist in Resources */ = {isa = PBXBuildFile; fileRef = F65E83201C4F358C00CE31D2 /* JobService.plist */; };
 		F65E83241C4F394600CE31D2 /* NormalJobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65E83231C4F394600CE31D2 /* NormalJobViewController.m */; };
 		F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */; };
@@ -501,16 +501,6 @@
 		92AF17571C50D56300797B0E /* assessmment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = assessmment.plist; path = AssessmentTitle/assessmment.plist; sourceTree = "<group>"; };
 		92AF17581C50D56300797B0E /* NormalAssessmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalAssessmentViewController.h; path = AssessmentTitle/NormalAssessmentViewController.h; sourceTree = "<group>"; };
 		92AF17591C50D56300797B0E /* NormalAssessmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalAssessmentViewController.m; path = AssessmentTitle/NormalAssessmentViewController.m; sourceTree = "<group>"; };
-		9A2A35821C5652E800FB2DD3 /* ReadMyMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadMyMessagesViewController.h; sourceTree = "<group>"; };
-		9A2A35831C5652E800FB2DD3 /* ReadMyMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadMyMessagesViewController.m; sourceTree = "<group>"; };
-		9A2A35851C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoHasSelectionTableViewCell.h; sourceTree = "<group>"; };
-		9A2A35861C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoHasSelectionTableViewCell.m; sourceTree = "<group>"; };
-		9A2A35871C5653ED00FB2DD3 /* PersonalInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoTableViewCell.h; sourceTree = "<group>"; };
-		9A2A35881C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoTableViewCell.m; sourceTree = "<group>"; };
-		9A2A35891C5653ED00FB2DD3 /* PersonalInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoViewController.h; sourceTree = "<group>"; };
-		9A2A358A1C5653ED00FB2DD3 /* PersonalInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoViewController.m; sourceTree = "<group>"; };
-		9A2A358B1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSubmitTableViewCell.h; sourceTree = "<group>"; };
-		9A2A358C1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSubmitTableViewCell.m; sourceTree = "<group>"; };
 		9A2A35911C5683AE00FB2DD3 /* QRCodesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodesController.h; sourceTree = "<group>"; };
 		9A2A35921C5683AE00FB2DD3 /* QRCodesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodesController.m; sourceTree = "<group>"; };
 		9A2A35951C57CBA400FB2DD3 /* CheckAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckAboutUsViewController.h; path = User/CheckAboutUsViewController.h; sourceTree = "<group>"; };
@@ -587,6 +577,16 @@
 		F4AA22761C4E29B800906CF4 /* MyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyMessageViewController.h; path = User/MyMessageViewController.h; sourceTree = "<group>"; };
 		F4AA22771C4E29B800906CF4 /* MyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyMessageViewController.m; path = User/MyMessageViewController.m; sourceTree = "<group>"; };
 		F4AA227A1C4E29C600906CF4 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = User.storyboard; path = User/User.storyboard; sourceTree = "<group>"; };
+		F4CDBD491C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalInfoHasSelectionTableViewCell.h; path = User/PersonalInfoHasSelectionTableViewCell.h; sourceTree = "<group>"; };
+		F4CDBD4A1C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalInfoHasSelectionTableViewCell.m; path = User/PersonalInfoHasSelectionTableViewCell.m; sourceTree = "<group>"; };
+		F4CDBD4B1C5EF174009FEADD /* PersonalInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalInfoTableViewCell.h; path = User/PersonalInfoTableViewCell.h; sourceTree = "<group>"; };
+		F4CDBD4C1C5EF174009FEADD /* PersonalInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalInfoTableViewCell.m; path = User/PersonalInfoTableViewCell.m; sourceTree = "<group>"; };
+		F4CDBD4D1C5EF174009FEADD /* PersonalInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalInfoViewController.h; path = User/PersonalInfoViewController.h; sourceTree = "<group>"; };
+		F4CDBD4E1C5EF174009FEADD /* PersonalInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalInfoViewController.m; path = User/PersonalInfoViewController.m; sourceTree = "<group>"; };
+		F4CDBD4F1C5EF174009FEADD /* ProfileSubmitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileSubmitTableViewCell.h; path = User/ProfileSubmitTableViewCell.h; sourceTree = "<group>"; };
+		F4CDBD501C5EF174009FEADD /* ProfileSubmitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileSubmitTableViewCell.m; path = User/ProfileSubmitTableViewCell.m; sourceTree = "<group>"; };
+		F4CDBD551C5EF184009FEADD /* ReadMyMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadMyMessagesViewController.h; path = User/ReadMyMessagesViewController.h; sourceTree = "<group>"; };
+		F4CDBD561C5EF184009FEADD /* ReadMyMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadMyMessagesViewController.m; path = User/ReadMyMessagesViewController.m; sourceTree = "<group>"; };
 		F65E83201C4F358C00CE31D2 /* JobService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = JobService.plist; sourceTree = "<group>"; };
 		F65E83221C4F394600CE31D2 /* NormalJobViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalJobViewController.h; path = Jobs/NormalJobViewController.h; sourceTree = "<group>"; };
 		F65E83231C4F394600CE31D2 /* NormalJobViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalJobViewController.m; path = Jobs/NormalJobViewController.m; sourceTree = "<group>"; };
@@ -1405,8 +1405,8 @@
 				F4AA22751C4E29B800906CF4 /* MyMessageTableViewCell.m */,
 				F4AA22761C4E29B800906CF4 /* MyMessageViewController.h */,
 				F4AA22771C4E29B800906CF4 /* MyMessageViewController.m */,
-				9A2A35821C5652E800FB2DD3 /* ReadMyMessagesViewController.h */,
-				9A2A35831C5652E800FB2DD3 /* ReadMyMessagesViewController.m */,
+				F4CDBD551C5EF184009FEADD /* ReadMyMessagesViewController.h */,
+				F4CDBD561C5EF184009FEADD /* ReadMyMessagesViewController.m */,
 			);
 			name = MyMessages;
 			sourceTree = "<group>";
@@ -1438,14 +1438,14 @@
 		F4AA224A1C4E28DB00906CF4 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				9A2A35851C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.h */,
-				9A2A35861C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m */,
-				9A2A35871C5653ED00FB2DD3 /* PersonalInfoTableViewCell.h */,
-				9A2A35881C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m */,
-				9A2A35891C5653ED00FB2DD3 /* PersonalInfoViewController.h */,
-				9A2A358A1C5653ED00FB2DD3 /* PersonalInfoViewController.m */,
-				9A2A358B1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.h */,
-				9A2A358C1C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m */,
+				F4CDBD491C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.h */,
+				F4CDBD4A1C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.m */,
+				F4CDBD4B1C5EF174009FEADD /* PersonalInfoTableViewCell.h */,
+				F4CDBD4C1C5EF174009FEADD /* PersonalInfoTableViewCell.m */,
+				F4CDBD4D1C5EF174009FEADD /* PersonalInfoViewController.h */,
+				F4CDBD4E1C5EF174009FEADD /* PersonalInfoViewController.m */,
+				F4CDBD4F1C5EF174009FEADD /* ProfileSubmitTableViewCell.h */,
+				F4CDBD501C5EF174009FEADD /* ProfileSubmitTableViewCell.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1601,9 +1601,9 @@
 				F6F9B3891C4E09F000B013AF /* GetPapersViewController.m in Sources */,
 				9AEB04BD1C53AABD00D34FBE /* ChangeUserHeadImageViewController.m in Sources */,
 				9A6B47781C52888400A04101 /* ServiceNoticesViewController.m in Sources */,
+				F4CDBD571C5EF184009FEADD /* ReadMyMessagesViewController.m in Sources */,
 				04FFFDFF1C410C2900ECCA1C /* UserViewController.m in Sources */,
 				9AEB04B61C536D9000D34FBE /* UserSettingLogoutTableViewCell.m in Sources */,
-				9A2A35841C5652E800FB2DD3 /* ReadMyMessagesViewController.m in Sources */,
 				F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */,
 				84B7BD211C4796E300E202A6 /* TelephoneView.m in Sources */,
 				816F324F1C4C84B1000D0AE5 /* TAAnimatedDotView.m in Sources */,
@@ -1658,11 +1658,11 @@
 				84896FB51C4DFB24009D7103 /* PublicationIntroduceViewController.m in Sources */,
 				5807C2EE1C473B7A002C5F8E /* MJRefreshConst.m in Sources */,
 				F4AA22721C4E29AB00906CF4 /* InvitationsTableViewCell.m in Sources */,
+				F4CDBD541C5EF174009FEADD /* ProfileSubmitTableViewCell.m in Sources */,
 				F4AA224F1C4E294300906CF4 /* FeedbackViewController.m in Sources */,
 				5807C2F11C473B7A002C5F8E /* UIView+MJExtension.m in Sources */,
 				04E3F3B61C4C8A9A00DEE217 /* ASSaveData.m in Sources */,
 				04FFFDFC1C410BB900ECCA1C /* PapersViewController.m in Sources */,
-				9A2A358F1C5653ED00FB2DD3 /* PersonalInfoViewController.m in Sources */,
 				9A2A359A1C57DCF800FB2DD3 /* JSTextView.m in Sources */,
 				F4AA22671C4E298400906CF4 /* MyPapersViewController.m in Sources */,
 				816F32531C4C84B1000D0AE5 /* SDCycleScrollView.m in Sources */,
@@ -1684,7 +1684,6 @@
 				04FFFE191C4123F100ECCA1C /* TabBarItem.m in Sources */,
 				F24FB53D1C591B0B005703EA /* PublicationView.m in Sources */,
 				F4819C131C57178000C3E24B /* VoucherIntroViewController.m in Sources */,
-				9A2A35901C5653ED00FB2DD3 /* ProfileSubmitTableViewCell.m in Sources */,
 				84C1396D1C4628DB00284087 /* UIImage+MultiFormat.m in Sources */,
 				816F32511C4C84B1000D0AE5 /* TAPageControl.m in Sources */,
 				84C1396E1C4628DB00284087 /* UIImage+WebP.m in Sources */,
@@ -1694,6 +1693,7 @@
 				04FFFE0A1C4122E200ECCA1C /* UserSession.m in Sources */,
 				5807C2F01C473B7A002C5F8E /* UIScrollView+MJRefresh.m in Sources */,
 				9AEB04C41C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m in Sources */,
+				F4CDBD511C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.m in Sources */,
 				9A5A30501C4E87DF00813FF9 /* UserTableViewCell.m in Sources */,
 				84C139341C4628A800284087 /* AFImageDownloader.m in Sources */,
 				04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */,
@@ -1701,7 +1701,6 @@
 				84C139351C4628A800284087 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				F6F21CB81C48B8D000AD6A6D /* ClassifiedPapersViewController.m in Sources */,
 				84C139181C4628A300284087 /* AFHTTPSessionManager.m in Sources */,
-				9A2A358E1C5653ED00FB2DD3 /* PersonalInfoTableViewCell.m in Sources */,
 				84C139711C4628DB00284087 /* UIView+WebCacheOperation.m in Sources */,
 				5807C2EF1C473B7A002C5F8E /* UIScrollView+MJExtension.m in Sources */,
 				84C1396A1C4628DB00284087 /* SDWebImagePrefetcher.m in Sources */,
@@ -1718,6 +1717,7 @@
 				04FFFE171C4123F100ECCA1C /* NavigationController.m in Sources */,
 				F65E83241C4F394600CE31D2 /* NormalJobViewController.m in Sources */,
 				84C139621C4628DB00284087 /* MKAnnotationView+WebCache.m in Sources */,
+				F4CDBD521C5EF174009FEADD /* PersonalInfoTableViewCell.m in Sources */,
 				84C1391A1C4628A300284087 /* AFSecurityPolicy.m in Sources */,
 				84C139681C4628DB00284087 /* SDWebImageDownloaderOperation.m in Sources */,
 				04FFFE031C41205900ECCA1C /* JobsViewController.m in Sources */,
@@ -1726,8 +1726,8 @@
 				F4AA226D1C4E299700906CF4 /* AccountViewController.m in Sources */,
 				84C1393B1C4628A800284087 /* UIWebView+AFNetworking.m in Sources */,
 				5807C2EC1C473B7A002C5F8E /* MJRefreshStateHeader.m in Sources */,
+				F4CDBD531C5EF174009FEADD /* PersonalInfoViewController.m in Sources */,
 				84C139701C4628DB00284087 /* UIImageView+WebCache.m in Sources */,
-				9A2A358D1C5653ED00FB2DD3 /* PersonalInfoHasSelectionTableViewCell.m in Sources */,
 				84C1391C1C4628A300284087 /* AFURLResponseSerialization.m in Sources */,
 				04FFFE181C4123F100ECCA1C /* TabBar.m in Sources */,
 				9A2A35971C57CBA400FB2DD3 /* CheckAboutUsViewController.m in Sources */,
