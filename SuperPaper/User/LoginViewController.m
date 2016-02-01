@@ -186,6 +186,7 @@
                 }else
                     headImageName = @"";
                 NSString *inviteCode = responseObject[@"myinvite_code"];
+                NSLog(@"登录返回username = %@",userName);
                 [UserSession sharedInstance].currentUserID = userId;
                 [UserSession sharedInstance].currentUserName = userName;
                 [UserSession sharedInstance].currentUserTelNum = mobile;
