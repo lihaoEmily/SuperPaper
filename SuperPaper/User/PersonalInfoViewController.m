@@ -80,7 +80,7 @@ static NSString *const SubmitIdentifier = @"submit";
         NSNumber *result = responseObject[@"result"];
         if (0 == result.integerValue) {//成功
             self.name = responseObject[@"realname"]?responseObject[@"realname"]:nil;
-            
+            [UserSession sharedInstance].currentUserName = self.name;
             if ([responseObject[@"sex"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.gender = 0 == [responseObject[@"sex"]integerValue]?@"男":@"女";
                 
@@ -88,21 +88,22 @@ static NSString *const SubmitIdentifier = @"submit";
                 
                 self.gender = @"男";
             }
+            [UserSession sharedInstance].currentUserGen = [responseObject[@"sex"]integerValue];
             if ([responseObject[@"age"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.age = [responseObject[@"age"]integerValue];
             }else
                 self.age = 0;
-            
+            [UserSession sharedInstance].currentUserAge = self.age;
             if ([responseObject[@"jobtitle"] respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 self.career = 0 == [responseObject[@"jobtitle"]integerValue]?@"老师":@"学生";
             }else
                 self.career = @"老师";
-            
+            [UserSession sharedInstance].currentRole = [responseObject[@"jobtitle"]integerValue];
             if ([responseObject[@"school"]isKindOfClass:[NSString class]]) {
                 self.college = responseObject[@"school"];
             }else
                 self.college = @"";
-            
+            [UserSession sharedInstance].currentUserCollege = self.college;
             [self.tableView reloadData];
         }else{
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取个人信息失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
