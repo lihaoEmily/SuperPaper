@@ -396,11 +396,6 @@ static NSString *const ShowTextIdentifier = @"showtext";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//MARK: UINavigationControllerDelegate
--(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    
-}
 
 /*
 #pragma mark - Navigation
