@@ -34,10 +34,10 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
     _list = [NSMutableArray array];
     _intro = @"";
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
+        [self pulldownRefresh];
     }];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        
+        [self pullupRefresh];
     }];
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
