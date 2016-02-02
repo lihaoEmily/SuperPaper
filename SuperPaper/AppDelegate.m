@@ -79,7 +79,7 @@
     [UMSocialData setAppKey:@"56af0b3be0f55ab9b1001511"];
     
     //设置微信AppId、appSecret，分享url
-    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@""];
+    [UMSocialWechatHandler setWXAppId:@"wx1bb4e3dee024af61" appSecret:@"513ad74a27c611b9afac24f3226b897d" url:@""];
     
     //设置手机QQ 的AppId，Appkey，和分享URL
     [UMSocialQQHandler setQQWithAppId:@"1104770869" appKey:@"GBjkYtbypyf8uQHW" url:@""];

@@ -8,8 +8,8 @@
 
 // 友盟APIKey
 #define UMeng_APIKey        @"56af0b3be0f55ab9b1001511"
-#define WX_APP_KEY          @"wxd930ea5d5a258f4f"
-#define WX_APP_SECRET       @"db426a9829e4b49a0dcac7b4162da6b6"
+#define WX_APP_KEY          @"wx1bb4e3dee024af61"
+#define WX_APP_SECRET       @"513ad74a27c611b9afac24f3226b897d"
 #define QQ_APP_KEY          @"1104770869"
 #define QQ_APP_SECRET       @"GBjkYtbypyf8uQHW"
 #define share_title         @"渠道系统APP下载地址共享"
