@@ -276,6 +276,7 @@
                               timeString,@"time", nil];
         
         cell.infoDict = dict;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
