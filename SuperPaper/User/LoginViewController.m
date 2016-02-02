@@ -186,6 +186,7 @@
                 }else
                     headImageName = @"";
                 NSString *inviteCode = responseObject[@"myinvite_code"];
+                
                 [UserSession sharedInstance].currentUserID = userId;
                 [UserSession sharedInstance].currentUserName = userName;
                 [UserSession sharedInstance].currentUserTelNum = mobile;

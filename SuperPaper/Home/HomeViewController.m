@@ -14,6 +14,8 @@
 #import "ASShare.h"
 #import "SDCycleScrollView.h"
 #import "ServiceButton.h"
+#import "HomeDetailController.h"
+
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 @property (nonatomic, strong) UITableView *studyTableView;
 @end
@@ -193,27 +195,33 @@
     switch (button.tag) {
         case 100:{
             if (button.selected) {
-                button.backgroundColor = kSelColor;
                 UIButton *btn = (UIButton *)[self.view viewWithTag:101];
                 btn.selected = NO;
-                btn.backgroundColor = [UIColor whiteColor];
             }
             
             isNews = YES;
-            [_responseNewsInfoArr removeAllObjects];
-            [self getHomePageNewsInfo];
+//            [_responseNewsInfoArr removeAllObjects];
+            if (_responseNewsInfoArr.count > 0) {
+                [_studyTableView reloadData];
+            }
+            else{
+               [self getHomePageNewsInfo];
+            }
         }
             break;
         case 101:{
             if (button.selected) {
-                button.backgroundColor = kSelColor;
                 UIButton *btn = (UIButton *)[self.view viewWithTag:100];
                 btn.selected = NO;
-                btn.backgroundColor = [UIColor whiteColor];
             }
             isNews = NO;
-            [_responseActivityInfoArr removeAllObjects];
-            [self getHomePageActivityInfo];
+//            [_responseActivityInfoArr removeAllObjects];
+            if (_responseActivityInfoArr.count > 0) {
+                [_studyTableView reloadData];
+            }
+            else{
+                [self getHomePageActivityInfo];
+            }
         }
             break;
         default:
@@ -223,7 +231,7 @@
 
 -(void)creatHeaderView
 {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 240)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 224)];
     //采用网络图片实现
     imagesURLString = [[NSMutableArray alloc]init];
     // 网络加载 --- 创建带标题的图片轮播器
@@ -235,18 +243,22 @@
     NSArray *nameArray = [NSArray arrayWithObjects:@"新闻",@"活动", nil];
     for (int i = 0; i < nameArray.count; i ++) {
         UIButton *serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        serviceBtn.frame = CGRectMake((i%2)*OWIDTH/2, CGRectGetMaxY(cycleScrollView.frame), OWIDTH/2, 60);
+        serviceBtn.frame = CGRectMake((i%2)*OWIDTH/2, CGRectGetMaxY(cycleScrollView.frame), OWIDTH/2, 44);
         serviceBtn.tag = i+100;
         serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
         serviceBtn.layer.borderWidth = 1;
         [serviceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
         [serviceBtn addTarget:self action:@selector(serviceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [serviceBtn setTitle:nameArray[i] forState:UIControlStateNormal];\
         [headerView addSubview:serviceBtn];
         if (i==0) {
             serviceBtn.selected = YES;
-            serviceBtn.backgroundColor = kSelColor;
+            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"activity_select" directory:@"home"] forState:UIControlStateSelected];
+            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"activity" directory:@"home"] forState:UIControlStateNormal];
+        }
+        else{
+            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"news_select" directory:@"home"] forState:UIControlStateSelected];
+            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"news" directory:@"home"] forState:UIControlStateNormal];
         }
     }
     _studyTableView.tableHeaderView = headerView;
@@ -274,6 +286,7 @@
                               timeString,@"time", nil];
         
         cell.infoDict = dict;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -337,25 +350,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NormalWebViewController *vc = [[NormalWebViewController alloc]init];
-
+    HomeDetailController *detailVC = [[HomeDetailController alloc]init];
+    NSDictionary *dicNews = [_responseNewsInfoArr objectAtIndex:indexPath.row];
+    NSString *strNews = [NSString stringWithFormat:@"%@",dicNews[@"url"]];
     if (isNews) {
-        if ([[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"]) {
-            vc.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-            vc.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+        if (strNews.length > 0) {
+            vc.title = [NSString stringWithFormat:@"%@",dicNews[@"title"]];
+            vc.urlString = strNews;
             [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
         else{
-            
+            detailVC.passId = [NSString stringWithFormat:@"%@",dicNews[@"id"]];
+            detailVC.title = [NSString stringWithFormat:@"%@",dicNews[@"title"]];
+            detailVC.isNews = YES;
+            [AppDelegate.app.nav pushViewController:detailVC animated:YES];
         }
     }
     else{
-        if ([[_responseActivityInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"]) {
-            vc.title = [[_responseActivityInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-            vc.urlString = [[_responseActivityInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+        NSDictionary *dicActivity = [_responseActivityInfoArr objectAtIndex:indexPath.row];
+        NSString *strActivity = [NSString stringWithFormat:@"%@",dicActivity[@"url"]];
+        if (strActivity.length > 0) {
+            vc.title = [NSString stringWithFormat:@"%@",dicActivity[@"title"]];;
+            vc.urlString = strActivity;
             [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
         else{
-            
+            detailVC.passId = [NSString stringWithFormat:@"%@",dicActivity[@"id"]];
+            detailVC.title = [NSString stringWithFormat:@"%@",dicActivity[@"title"]];
+            detailVC.isNews = NO;
+            [AppDelegate.app.nav pushViewController:detailVC animated:YES];
         }
     }
     

@@ -21,6 +21,10 @@
 #import "WeiboSDK.h"
 //JPush
 #import "JPUSHService.h"
+// UMSocialSDK
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
 
 @interface AppDelegate ()
 
@@ -45,6 +49,20 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self registerShareSdkForApplication];
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    } else {
+        //categories 必须为nil
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                          UIRemoteNotificationTypeSound |
+                                                          UIRemoteNotificationTypeAlert)
+                                              categories:nil];
+    }
+
     [JPUSHService setupWithOption:launchOptions appKey:appKey channel:channel apsForProduction:FALSE];
    // [self registerJushSDKWith:launchOptions];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -52,6 +70,20 @@
     self.window.rootViewController = AppDelegate.app.nav; 
     [self.window makeKeyAndVisible];
     NSLog(@"----> upload url %@", UPLOAD_SERVER);
+    
+    // 友盟社会化分享
+    // 隐藏未安装的应用
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+    
+    // 设置友盟APPKey
+    [UMSocialData setAppKey:@"56af0b3be0f55ab9b1001511"];
+    
+    //设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:@"wx1bb4e3dee024af61" appSecret:@"513ad74a27c611b9afac24f3226b897d" url:@""];
+    
+    //设置手机QQ 的AppId，Appkey，和分享URL
+    [UMSocialQQHandler setQQWithAppId:@"1104770869" appKey:@"GBjkYtbypyf8uQHW" url:@""];
+    
     return YES;
 }
 
@@ -244,6 +276,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     // Required
+    NSLog(@"deviceToken is%@",deviceToken);
     [JPUSHService registerDeviceToken:deviceToken];
 }
 
