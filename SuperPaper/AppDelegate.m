@@ -21,6 +21,10 @@
 #import "WeiboSDK.h"
 //JPush
 #import "JPUSHService.h"
+// UMSocialSDK
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
 
 @interface AppDelegate ()
 
@@ -51,6 +55,20 @@
     self.window.rootViewController = AppDelegate.app.nav; 
     [self.window makeKeyAndVisible];
     NSLog(@"----> upload url %@", UPLOAD_SERVER);
+    
+    // 友盟社会化分享
+    // 隐藏未安装的应用
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+    
+    // 设置友盟APPKey
+    [UMSocialData setAppKey:@"56af0b3be0f55ab9b1001511"];
+    
+    //设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@""];
+    
+    //设置手机QQ 的AppId，Appkey，和分享URL
+    [UMSocialQQHandler setQQWithAppId:@"1104770869" appKey:@"GBjkYtbypyf8uQHW" url:@""];
+    
     return YES;
 }
 
