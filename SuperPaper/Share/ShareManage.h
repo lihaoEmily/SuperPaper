@@ -1,9 +1,9 @@
 //
 //  ShareManage.h
-//  KONKA_MARKET
+//  SuperPaper
 //
-//  Created by wxxu on 14/12/18.
-//  Copyright (c) 2014年 archon. All rights reserved.
+//  Created by Emily on 16/2/1.
+//  Copyright © 2016年 Share technology. All rights reserved.
 //  分享管理
 
 // 友盟APIKey
@@ -24,21 +24,21 @@
 
 - (void)shareConfig;
 
-/**微信分享**/
-- (void)wxShareWithViewControll:(UIViewController *)viewC;
-
-/**新浪微博分享**/
-- (void)wbShareWithViewControll:(UIViewController *)viewC;
+/**微信好友分享**/
+- (void)wxShareWithViewControll:(UIViewController *)viewC text:(NSString *)text urlString:(NSString *)urlString title:(NSString *)title;
 
 /**微信朋友圈分享**/
-- (void)wxpyqShareWithViewControll:(UIViewController *)viewC;
+- (void)wxpyqShareWithViewControll:(UIViewController *)viewC text:(NSString *)text urlString:(NSString *)urlString title:(NSString *)title;
+
+/**QQ好友分享**/
+- (void)QQFriendsShareWithViewControll:(UIViewController *)viewC text:(NSString *)text urlString:(NSString *)urlString title:(NSString *)title;
+
+/**QQ空间分享**/
+- (void)QzoneShareWithViewControll:(UIViewController *)viewC text:(NSString *)text urlString:(NSString *)urlString title:(NSString *)title;
 
 /**短信分享**/
 - (void)smsShareWithViewControll:(UIViewController *)viewC;
 
-/**QQ空间分享**/
-- (void)QzoneShareWithViewControll:(UIViewController *)viewC;
-
-/**QQ好友分享**/
-- (void)QQFriendsShareWithViewControll:(UIViewController *)viewC;
+/**新浪微博分享**/
+- (void)wbShareWithViewControll:(UIViewController *)viewC;
 @end
