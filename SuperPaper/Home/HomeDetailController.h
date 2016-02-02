@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface HomeDetailController : BaseViewController
-
+@property (nonatomic, strong) NSString *passId;
+@property (nonatomic, assign) BOOL isNews;
 @end
