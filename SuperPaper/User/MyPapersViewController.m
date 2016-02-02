@@ -13,10 +13,9 @@
 
 @interface MyPapersViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    NSArray *_list;
+    NSMutableArray *_list;
     NSInteger _total_num;
     UIActivityIndicatorView *_webIndicator;
-    
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -28,7 +27,13 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _list = @[];
+    _list = [NSMutableArray array];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self pulldownRefresh];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self pullupRrefresh];
+    }];
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     _webIndicator = indicator;
@@ -42,6 +47,12 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self pullData];
+}
+
+//MARK: Helper
+- (void) pullData
+{
     NSString *urlString = [NSString stringWithFormat:@"%@mypaper_list.php",BASE_URL];
     NSDictionary *params = @{@"uid":@([UserSession sharedInstance].currentUserID),@"start_pos":@(0),@"list_num":@(10)};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -57,7 +68,8 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
                     
                 }
                 
-                _list = responseObject[@"list"];
+                _list = [responseObject[@"list"]mutableCopy];
+                
                 [self.tableView reloadData];
             }else{
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的论文列表失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -76,7 +88,87 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
     [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 
+- (void) pulldownRefresh
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@mypaper_list.php",BASE_URL];
+    NSDictionary *params = @{@"uid":@([UserSession sharedInstance].currentUserID),@"start_pos":@(0),@"list_num":@(10)};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+            NSNumber *result = responseObject[@"result"];
+            if (0 == result.integerValue) {//获取我的论文列表成功
+                if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+                    _total_num = [responseObject[@"total_num"] integerValue];
+                    
+                }
+                
+                _list = [responseObject[@"list"]mutableCopy];
+                [self.tableView reloadData];
+            }else{
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的论文列表失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [av show];
+            }
+        }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_header endRefreshing];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_header endRefreshing];
+    }];
+    [_webIndicator startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+}
+- (void) pullupRrefresh
+{
 
+    NSString *urlString = [NSString stringWithFormat:@"%@mypaper_list.php",BASE_URL];
+    NSDictionary *params = @{@"uid":@([UserSession sharedInstance].currentUserID),@"start_pos":@(0),@"list_num":@(10)};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+            NSNumber *result = responseObject[@"result"];
+            if (0 == result.integerValue) {//获取我的论文列表成功
+                if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+                    _total_num = [responseObject[@"total_num"] integerValue];
+                    
+                }
+                
+                NSArray *list = responseObject[@"list"];
+                
+                if (_list.count + list.count < _total_num) {
+                    [_list addObjectsFromArray:list];
+                }else
+                    _list = [responseObject[@"list"]mutableCopy];
+                NSLog(@"目前list有%lu条数据,,%lu",_list.count,_total_num);
+                [self.tableView reloadData];
+            }else{
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的论文列表失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [av show];
+            }
+        }
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_footer endRefreshing];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        [_webIndicator stopAnimating];
+        [_webIndicator removeFromSuperview];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    [_webIndicator startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+}
 //MARK: TableviewDatasource,Delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
