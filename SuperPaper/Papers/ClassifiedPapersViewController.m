@@ -172,7 +172,6 @@
 
 - (void)setupTitleView
 {
-//    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
     UIImage *image = [UIImage imageNamed:@"searchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(10, 0, 25, 25);
