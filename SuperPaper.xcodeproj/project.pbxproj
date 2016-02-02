@@ -212,6 +212,7 @@
 		F4CDBD541C5EF174009FEADD /* ProfileSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD501C5EF174009FEADD /* ProfileSubmitTableViewCell.m */; };
 		F4CDBD571C5EF184009FEADD /* ReadMyMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD561C5EF184009FEADD /* ReadMyMessagesViewController.m */; };
 		F65E83241C4F394600CE31D2 /* NormalJobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65E83231C4F394600CE31D2 /* NormalJobViewController.m */; };
+		F6A50ABC1C607C480092D78D /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A50ABB1C607C480092D78D /* ShareView.m */; };
 		F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */; };
 		F6B69F001C462E0500CBFEB3 /* PublicationSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */; };
 		F6F21CB81C48B8D000AD6A6D /* ClassifiedPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F21CB71C48B8D000AD6A6D /* ClassifiedPapersViewController.m */; };
@@ -601,6 +602,8 @@
 		F4CDBD561C5EF184009FEADD /* ReadMyMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadMyMessagesViewController.m; path = User/ReadMyMessagesViewController.m; sourceTree = "<group>"; };
 		F65E83221C4F394600CE31D2 /* NormalJobViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalJobViewController.h; path = Jobs/NormalJobViewController.h; sourceTree = "<group>"; };
 		F65E83231C4F394600CE31D2 /* NormalJobViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalJobViewController.m; path = Jobs/NormalJobViewController.m; sourceTree = "<group>"; };
+		F6A50ABA1C607C480092D78D /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
+		F6A50ABB1C607C480092D78D /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		F6B69EFB1C462E0500CBFEB3 /* PublicationSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSearchTableViewCell.h; path = Study/PublicationSearchTableViewCell.h; sourceTree = "<group>"; };
 		F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSearchTableViewCell.m; path = Study/PublicationSearchTableViewCell.m; sourceTree = "<group>"; };
 		F6B69EFD1C462E0500CBFEB3 /* PublicationSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSearchViewController.h; path = Study/PublicationSearchViewController.h; sourceTree = "<group>"; };
@@ -1514,6 +1517,8 @@
 			children = (
 				F6F6931D1C5F27990025697E /* ShareManage.h */,
 				F6F6931E1C5F27990025697E /* ShareManage.m */,
+				F6A50ABA1C607C480092D78D /* ShareView.h */,
+				F6A50ABB1C607C480092D78D /* ShareView.m */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -1772,6 +1777,7 @@
 				9AEB04C41C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m in Sources */,
 				F4CDBD511C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.m in Sources */,
 				F6F693201C5F27990025697E /* ShareManage.m in Sources */,
+				F6A50ABC1C607C480092D78D /* ShareView.m in Sources */,
 				9A5A30501C4E87DF00813FF9 /* UserTableViewCell.m in Sources */,
 				84C139341C4628A800284087 /* AFImageDownloader.m in Sources */,
 				04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */,
