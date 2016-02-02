@@ -91,7 +91,7 @@
            
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
-           NSLog(@"%@",dataDic);
+          // NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                [_paperArray addObjectsFromArray:listData];
@@ -116,7 +116,7 @@
            
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
-           NSLog(@"%@",dataDic);
+          // NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                [_paperArray removeAllObjects];

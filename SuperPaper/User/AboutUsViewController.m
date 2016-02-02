@@ -11,6 +11,7 @@
 #import "ServiceNoticesViewController.h"
 #import "AboutUsHasNextTableViewCell.h"
 #import "VersionTableViewCell.h"
+#import "AppInfo.h"
 
 @interface AboutUsViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -51,9 +52,7 @@ static NSString *const VersionIdentifier = @"Version";
         return cell;
     }else{
         VersionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VersionIdentifier];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
-        NSString *version = infoDictionary[(NSString*)kCFBundleVersionKey];
-        cell.versionLabel.text = [NSString stringWithFormat:@"版本V%@",version];
+         cell.versionLabel.text = [NSString stringWithFormat:@"版本V%@",[AppInfo appCurrentVersion]];
         return cell;
     }
 }

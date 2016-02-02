@@ -392,7 +392,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    NSLog(@"取消了");
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

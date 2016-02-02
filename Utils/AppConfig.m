@@ -12,7 +12,8 @@
 
 + (UIColor *)appNaviColor
 {
-    return [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f];
+    //ff066c
+    return [UIColor colorWithRed:255/255.0 green:6/255.0 blue:108/255.0 alpha:1.0f];
 }
 + (UIColor *)viewBackgroundColor
 {

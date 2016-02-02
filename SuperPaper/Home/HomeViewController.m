@@ -14,6 +14,8 @@
 #import "ASShare.h"
 #import "SDCycleScrollView.h"
 #import "ServiceButton.h"
+#import "HomeDetailController.h"
+
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 @property (nonatomic, strong) UITableView *studyTableView;
 @end
@@ -109,10 +111,17 @@
      * list_num   整型    一次获取list数
      */
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",@"1",@"ownertype", nil];
+
+   // NSLog(@"parameters %@",parameters);
+
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_newsinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+        [_responseNewsInfoArr addObjectsFromArray:myArr];
+      //  NSLog(@"%@",responseObject);
+        [_studyTableView reloadData];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
             [_responseNewsInfoArr addObjectsFromArray:myArr];
@@ -330,25 +339,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NormalWebViewController *vc = [[NormalWebViewController alloc]init];
-
+    HomeDetailController *detailVC = [[HomeDetailController alloc]init];
+    NSDictionary *dicNews = [_responseNewsInfoArr objectAtIndex:indexPath.row];
+    NSString *strNews = [NSString stringWithFormat:@"%@",dicNews[@"url"]];
     if (isNews) {
-        if ([[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"]) {
-            vc.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-            vc.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+        if (strNews.length > 0) {
+            vc.title = [NSString stringWithFormat:@"%@",dicNews[@"title"]];
+            vc.urlString = strNews;
             [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
         else{
-            
+            detailVC.passId = [NSString stringWithFormat:@"%@",dicNews[@"id"]];
+            detailVC.title = [NSString stringWithFormat:@"%@",dicNews[@"title"]];
+            detailVC.isNews = YES;
+            [AppDelegate.app.nav pushViewController:detailVC animated:YES];
         }
     }
     else{
-        if ([[_responseActivityInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"]) {
-            vc.title = [[_responseActivityInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-            vc.urlString = [[_responseActivityInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+        NSDictionary *dicActivity = [_responseActivityInfoArr objectAtIndex:indexPath.row];
+        NSString *strActivity = [NSString stringWithFormat:@"%@",dicActivity[@"url"]];
+        if (strActivity.length > 0) {
+            vc.title = [NSString stringWithFormat:@"%@",dicActivity[@"title"]];;
+            vc.urlString = strActivity;
             [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
         else{
-            
+            detailVC.passId = [NSString stringWithFormat:@"%@",dicActivity[@"id"]];
+            detailVC.title = [NSString stringWithFormat:@"%@",dicActivity[@"title"]];
+            detailVC.isNews = NO;
+            [AppDelegate.app.nav pushViewController:detailVC animated:YES];
         }
     }
     
