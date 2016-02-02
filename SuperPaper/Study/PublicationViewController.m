@@ -10,10 +10,14 @@
 #import "JournalsPressView.h"
 #import "PublicationView.h"
 #import "UserSession.h"
+#import "PublicationViewTableViewCell.h"
+#import "PublicationSearchViewController.h"
+#import "PublicationSortsViewController.h"
+#import "PublicationIntroduceViewController.m"
 
 #define SEARCHPAGESIZE 30
 
-@interface PublicationViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface PublicationViewController ()<UITableViewDataSource,UITableViewDelegate,ClassifiedPublicationViewControllerDelegate>
 
 //@property (nonatomic, strong) JournalsPressView *contentView;
 @property (nonatomic, strong) PublicationView* contentView;
@@ -23,6 +27,7 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, assign) NSInteger subgroupId;
 @property (nonatomic, strong) NSDictionary* selectedSortDic;
+@property (nonatomic ,assign) NSInteger tagId;
 
 @end
 
@@ -38,6 +43,7 @@
         _selectedIndexPath = nil;
         _subgroupId = 0;
         _selectedSortDic = nil;
+        _tagId = 0;
     }
     return self;
 }
@@ -52,6 +58,7 @@
     _contentView.leftTableView.delegate = self;
     _contentView.rightTableView.dataSource = self;
     _contentView.rightTableView.delegate = self;
+    _tagId = 0;
     
     [self getPublicationSortData];
     
@@ -76,8 +83,8 @@
 - (void)loadNavigationView
 {
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
-//    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
-    UIImage *image = [UIImage imageNamed:@"SearchImage"];
+    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
+//    UIImage *image = [UIImage imageNamed:@"SearchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(10, 0, 25, 25);
     [searchBtn setImage:image forState:UIControlStateNormal];
@@ -95,27 +102,15 @@
 }
 
 - (void) searchPublication :(id) sender{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"group_id":[NSNumber numberWithInt:1],@"list_num":[NSNumber numberWithInt:15], @"group_id":[NSNumber numberWithInt:1]};
-    NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
-    NSLog(@"URL＝ %@",urlString);
-    
-    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-            NSLog(@"%@",uploadProgress);
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-            [_publicationSortArray addObjectsFromArray:array];
-            NSLog(@"%@",responseObject);
-            [_contentView.leftTableView reloadData];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
-        }];
+    PublicationSearchViewController *vc = [[PublicationSearchViewController alloc] init];
+    [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
 - (void) sortPublication:(id) sender{
-    
+    PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
+    sortsView.typeId = 1;
+    sortsView.delegate = self;
+    [self.navigationController pushViewController:sortsView animated:YES];
 }
 
 - (void)getPublicationSortData
@@ -151,7 +146,7 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInt:0], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -186,6 +181,15 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+#pragma mark - ClassifiedPublicationViewControllerDelegate
+- (void)passTypeId:(NSInteger)groupid
+{
+    _tagId = groupid;
+    [self getPublicationDataWithSort:_selectedSortDic];
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -203,7 +207,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView.tag == 2000) {
-        return 50;
+        return 60;
     }
     return 44;
 }
@@ -227,29 +231,22 @@
     }
     else{
         static NSString *CellIdentifierPublicationRight = @"rightCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierPublicationRight];
+        PublicationViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierPublicationRight];
         
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
+            cell = [[PublicationViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
         }
         
 //        cell.textLabel.text = @"right";
-        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
-        cell.textLabel.text = [dataDic objectForKey:@"title"];
-        cell.detailTextLabel.text = [dataDic objectForKey:@"description"];
-        cell.detailTextLabel.textColor = [UIColor grayColor];
+//        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
+//        cell.textLabel.text = [dataDic objectForKey:@"title"];
+//        cell.detailTextLabel.text = [dataDic objectForKey:@"description"];
+//        cell.detailTextLabel.textColor = [UIColor grayColor];
         
-        
-//        NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
-//        [cell.iconImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
-//        cell.titleLabel.text = [[_responseArr objectAtIndex:indexPath.row] valueForKey:@"title"];
-//
-//        NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:urlString,@"image",
-//                              [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"],@"title",
-//                              nil];
-//        cell.imageView
-//        UIImageView* cellImageView = [[UIImageView alloc]initWithFrame:CGRectMake(2, 2, 55, 55)];
-//        cell.imageView.image;
+        NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
+        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+        cell.titleLabel.text = [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"];
+
         return cell;
     }
 }
@@ -279,7 +276,9 @@
         [self getPublicationDataWithSort:_publicationSortArray[indexPath.row]];
     }
     else{
-        //        NSLog(@"tap right tableview index:%ld",(long)indexPath.row);
+        PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
+        vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

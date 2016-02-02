@@ -7,7 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface PublicationIntroduceViewController : UIViewController
+@interface PublicationDetailData : NSObject
+
+@property (nonatomic, assign) NSInteger result;
+@property (nonatomic, strong) NSString* selftitle;
+@property (nonatomic, strong) NSString* content;
+@property (nonatomic, strong) NSString* keywords;
+@property (nonatomic, assign) NSInteger viewnum;
+@property (nonatomic, strong) NSString* content_pic_name;
+@property (nonatomic, strong) NSString* createdate;
+@property (nonatomic, assign) NSInteger emptyflg;
+@property (nonatomic, strong) NSString* tel;
+
+@end
+
+
+@interface PublicationIntroduceViewController : BaseViewController
+
+@property (nonatomic,assign) NSInteger publicationID;
 
 @end

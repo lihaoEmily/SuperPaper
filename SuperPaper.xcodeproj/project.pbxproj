@@ -185,6 +185,9 @@
 		F23480351C45FEC500813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F23480371C45FED400813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F24FB53D1C591B0B005703EA /* PublicationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FB53C1C591B0B005703EA /* PublicationView.m */; };
+		F264AFEE1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */; };
+		F264AFF11C5F534D00FF9EE5 /* PublicationSortsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */; };
+		F264AFF41C60841D00FF9EE5 /* PublicationIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFF31C60841D00FF9EE5 /* PublicationIntroduceView.m */; };
 		F448C30D1C58CB600076576F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448C30C1C58CB600076576F /* ResetPasswordViewController.m */; };
 		F47131811C5771B40081C9D5 /* ReadMyPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47131801C5771B40081C9D5 /* ReadMyPapersViewController.m */; };
 		F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F931D1C508B510029A3B0 /* RadioButton.m */; };
@@ -544,6 +547,12 @@
 		AAFA08691C49294400FB0DA4 /* user_normalIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_normalIcon.png; sourceTree = "<group>"; };
 		F24FB53B1C591B0B005703EA /* PublicationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationView.h; path = Study/PublicationView.h; sourceTree = "<group>"; };
 		F24FB53C1C591B0B005703EA /* PublicationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationView.m; path = Study/PublicationView.m; sourceTree = "<group>"; };
+		F264AFEC1C5F39D400FF9EE5 /* PublicationViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationViewTableViewCell.h; path = Study/PublicationViewTableViewCell.h; sourceTree = "<group>"; };
+		F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationViewTableViewCell.m; path = Study/PublicationViewTableViewCell.m; sourceTree = "<group>"; };
+		F264AFEF1C5F534D00FF9EE5 /* PublicationSortsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSortsViewController.h; path = Study/PublicationSortsViewController.h; sourceTree = "<group>"; };
+		F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSortsViewController.m; path = Study/PublicationSortsViewController.m; sourceTree = "<group>"; };
+		F264AFF21C60841D00FF9EE5 /* PublicationIntroduceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceView.h; path = Study/PublicationIntroduceView.h; sourceTree = "<group>"; };
+		F264AFF31C60841D00FF9EE5 /* PublicationIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceView.m; path = Study/PublicationIntroduceView.m; sourceTree = "<group>"; };
 		F448C30B1C58CB600076576F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResetPasswordViewController.h; path = User/ResetPasswordViewController.h; sourceTree = "<group>"; };
 		F448C30C1C58CB600076576F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResetPasswordViewController.m; path = User/ResetPasswordViewController.m; sourceTree = "<group>"; };
 		F471317F1C5771B40081C9D5 /* ReadMyPapersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadMyPapersViewController.h; path = User/ReadMyPapersViewController.h; sourceTree = "<group>"; };
@@ -880,6 +889,8 @@
 		04FFFDE81C40F73A00ECCA1C /* Study */ = {
 			isa = PBXGroup;
 			children = (
+				F264AFEF1C5F534D00FF9EE5 /* PublicationSortsViewController.h */,
+				F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */,
 				04D92B5E1C5F030E00C936DC /* StudyViewController.h */,
 				04D92B5F1C5F030E00C936DC /* StudyViewController.m */,
 				04D92B5C1C5F02AF00C936DC /* Service.plist */,
@@ -895,6 +906,10 @@
 				84896FB71C4DFB59009D7103 /* PublicationViewController.m */,
 				F24FB53B1C591B0B005703EA /* PublicationView.h */,
 				F24FB53C1C591B0B005703EA /* PublicationView.m */,
+				F264AFEC1C5F39D400FF9EE5 /* PublicationViewTableViewCell.h */,
+				F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */,
+				F264AFF21C60841D00FF9EE5 /* PublicationIntroduceView.h */,
+				F264AFF31C60841D00FF9EE5 /* PublicationIntroduceView.m */,
 			);
 			name = Study;
 			sourceTree = "<group>";
@@ -1633,6 +1648,7 @@
 				816F324E1C4C84B1000D0AE5 /* TAAbstractDotView.m in Sources */,
 				84C139391C4628A800284087 /* UIProgressView+AFNetworking.m in Sources */,
 				9A6B47751C5282FD00A04101 /* ForgetPwdViewController.m in Sources */,
+				F264AFF41C60841D00FF9EE5 /* PublicationIntroduceView.m in Sources */,
 				F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */,
 				816F32541C4C84B1000D0AE5 /* UIView+SDExtension.m in Sources */,
 				F49564321C4F529000CADBDE /* RegisterViewController.m in Sources */,
@@ -1685,6 +1701,7 @@
 				040AD9901C4675F8000AB02A /* Reachability.m in Sources */,
 				5807C2E31C473B7A002C5F8E /* MJRefreshHeader.m in Sources */,
 				84C139671C4628DB00284087 /* SDWebImageDownloader.m in Sources */,
+				F264AFF11C5F534D00FF9EE5 /* PublicationSortsViewController.m in Sources */,
 				04FFFDDA1C40F63D00ECCA1C /* SuperPaper.xcdatamodeld in Sources */,
 				A2455F631C58C00C008CF9B1 /* HomeDetailController.m in Sources */,
 				F4AA226C1C4E299700906CF4 /* AccountTableViewCell.m in Sources */,
@@ -1693,6 +1710,7 @@
 				5807C2E11C473B7A002C5F8E /* MJRefreshComponent.m in Sources */,
 				5807C2E71C473B7A002C5F8E /* MJRefreshBackGifFooter.m in Sources */,
 				04FFFE191C4123F100ECCA1C /* TabBarItem.m in Sources */,
+				F264AFEE1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m in Sources */,
 				F24FB53D1C591B0B005703EA /* PublicationView.m in Sources */,
 				F4819C131C57178000C3E24B /* VoucherIntroViewController.m in Sources */,
 				84C1396D1C4628DB00284087 /* UIImage+MultiFormat.m in Sources */,
