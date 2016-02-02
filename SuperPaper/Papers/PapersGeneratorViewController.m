@@ -43,6 +43,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    _content = @"";
     [self setupUI];
 }
 
@@ -50,6 +51,7 @@
 - (void)setupUI
 {
     _searchBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
+    
     [self.view addSubview:_searchBgView];
     
     // 灰色背景图片
@@ -153,10 +155,12 @@
 - (void)setupScrollView
 {
     CGFloat labelHeight;
-    if (_content) {
+    if (_content.length > 0) {
         labelHeight = [_content sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0]}].height;
     }else{
         labelHeight = 0.0;
+        UIAlertView *alterView = [[UIAlertView alloc]initWithTitle:@"超级论文" message:@"无内容生成" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+        [alterView show];
     }
     _paperScrollerView.contentSize = CGSizeMake(kScreenWidth, labelHeight + 31);
     
@@ -218,7 +222,7 @@
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
            NSLog(@"%@",responseObject);
-           if (dataDic) {
+           if (![dataDic valueForKey:@"content"]) {
                _content = [dataDic valueForKey:@"content"];
            }
            [self setupScrollView];
