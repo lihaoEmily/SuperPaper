@@ -200,8 +200,13 @@
             }
             
             isNews = YES;
-            [_responseNewsInfoArr removeAllObjects];
-            [self getHomePageNewsInfo];
+//            [_responseNewsInfoArr removeAllObjects];
+            if (_responseNewsInfoArr.count > 0) {
+                [_studyTableView reloadData];
+            }
+            else{
+               [self getHomePageNewsInfo];
+            }
         }
             break;
         case 101:{
@@ -210,8 +215,13 @@
                 btn.selected = NO;
             }
             isNews = NO;
-            [_responseActivityInfoArr removeAllObjects];
-            [self getHomePageActivityInfo];
+//            [_responseActivityInfoArr removeAllObjects];
+            if (_responseActivityInfoArr.count > 0) {
+                [_studyTableView reloadData];
+            }
+            else{
+                [self getHomePageActivityInfo];
+            }
         }
             break;
         default:
