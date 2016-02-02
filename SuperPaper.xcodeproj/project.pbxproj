@@ -212,10 +212,17 @@
 		F4CDBD541C5EF174009FEADD /* ProfileSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD501C5EF174009FEADD /* ProfileSubmitTableViewCell.m */; };
 		F4CDBD571C5EF184009FEADD /* ReadMyMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CDBD561C5EF184009FEADD /* ReadMyMessagesViewController.m */; };
 		F65E83241C4F394600CE31D2 /* NormalJobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65E83231C4F394600CE31D2 /* NormalJobViewController.m */; };
+		F6A50ABC1C607C480092D78D /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A50ABB1C607C480092D78D /* ShareView.m */; };
 		F6B69EFF1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */; };
 		F6B69F001C462E0500CBFEB3 /* PublicationSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */; };
 		F6F21CB81C48B8D000AD6A6D /* ClassifiedPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F21CB71C48B8D000AD6A6D /* ClassifiedPapersViewController.m */; };
 		F6F3487E1C476F4400AB5CFB /* PapersGeneratorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */; };
+		F6F693201C5F27990025697E /* ShareManage.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F6931E1C5F27990025697E /* ShareManage.m */; };
+		F6F6932E1C5F2EF50025697E /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F693241C5F2EF50025697E /* libSocialQQ.a */; };
+		F6F6932F1C5F2EF50025697E /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F693251C5F2EF50025697E /* TencentOpenAPI.framework */; };
+		F6F693301C5F2EF50025697E /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F6F693261C5F2EF50025697E /* TencentOpenApi_IOS_Bundle.bundle */; };
+		F6F693311C5F2EF50025697E /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F693291C5F2EF50025697E /* libSocialWechat.a */; };
+		F6F693321C5F2EF50025697E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F6932A1C5F2EF50025697E /* libWeChatSDK.a */; };
 		F6F9B3891C4E09F000B013AF /* GetPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F9B3881C4E09F000B013AF /* GetPapersViewController.m */; };
 		F6FC3FAD1C4CDB67008DF895 /* PapersSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6FC3FAC1C4CDB67008DF895 /* PapersSearchViewController.m */; };
 /* End PBXBuildFile section */
@@ -595,6 +602,8 @@
 		F4CDBD561C5EF184009FEADD /* ReadMyMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadMyMessagesViewController.m; path = User/ReadMyMessagesViewController.m; sourceTree = "<group>"; };
 		F65E83221C4F394600CE31D2 /* NormalJobViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalJobViewController.h; path = Jobs/NormalJobViewController.h; sourceTree = "<group>"; };
 		F65E83231C4F394600CE31D2 /* NormalJobViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalJobViewController.m; path = Jobs/NormalJobViewController.m; sourceTree = "<group>"; };
+		F6A50ABA1C607C480092D78D /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
+		F6A50ABB1C607C480092D78D /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		F6B69EFB1C462E0500CBFEB3 /* PublicationSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSearchTableViewCell.h; path = Study/PublicationSearchTableViewCell.h; sourceTree = "<group>"; };
 		F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSearchTableViewCell.m; path = Study/PublicationSearchTableViewCell.m; sourceTree = "<group>"; };
 		F6B69EFD1C462E0500CBFEB3 /* PublicationSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSearchViewController.h; path = Study/PublicationSearchViewController.h; sourceTree = "<group>"; };
@@ -603,6 +612,17 @@
 		F6F21CB71C48B8D000AD6A6D /* ClassifiedPapersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassifiedPapersViewController.m; path = Papers/ClassifiedPapersViewController.m; sourceTree = "<group>"; };
 		F6F3487C1C476F4400AB5CFB /* PapersGeneratorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PapersGeneratorViewController.h; path = Papers/PapersGeneratorViewController.h; sourceTree = "<group>"; };
 		F6F3487D1C476F4400AB5CFB /* PapersGeneratorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PapersGeneratorViewController.m; path = Papers/PapersGeneratorViewController.m; sourceTree = "<group>"; };
+		F6F6931D1C5F27990025697E /* ShareManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareManage.h; sourceTree = "<group>"; };
+		F6F6931E1C5F27990025697E /* ShareManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareManage.m; sourceTree = "<group>"; };
+		F6F693241C5F2EF50025697E /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialQQ.a; sourceTree = "<group>"; };
+		F6F693251C5F2EF50025697E /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		F6F693261C5F2EF50025697E /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		F6F693271C5F2EF50025697E /* UMSocialQQHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialQQHandler.h; sourceTree = "<group>"; };
+		F6F693291C5F2EF50025697E /* libSocialWechat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialWechat.a; sourceTree = "<group>"; };
+		F6F6932A1C5F2EF50025697E /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		F6F6932B1C5F2EF50025697E /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
+		F6F6932C1C5F2EF50025697E /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		F6F6932D1C5F2EF50025697E /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		F6F9B3871C4E09F000B013AF /* GetPapersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetPapersViewController.h; path = Papers/GetPapersViewController.h; sourceTree = "<group>"; };
 		F6F9B3881C4E09F000B013AF /* GetPapersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetPapersViewController.m; path = Papers/GetPapersViewController.m; sourceTree = "<group>"; };
 		F6FC3FAB1C4CDB67008DF895 /* PapersSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PapersSearchViewController.h; path = Papers/PapersSearchViewController.h; sourceTree = "<group>"; };
@@ -615,17 +635,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				040F80131C51141C000D8CAA /* MessageUI.framework in Frameworks */,
+				F6F6932F1C5F2EF50025697E /* TencentOpenAPI.framework in Frameworks */,
 				040F80111C511407000D8CAA /* libsqlite3.tbd in Frameworks */,
 				040F800F1C5113F5000D8CAA /* AdSupport.framework in Frameworks */,
 				040F800D1C5113EA000D8CAA /* ImageIO.framework in Frameworks */,
 				040F800B1C5113D3000D8CAA /* JavaScriptCore.framework in Frameworks */,
+				F6F693311C5F2EF50025697E /* libSocialWechat.a in Frameworks */,
 				040F80091C5113BB000D8CAA /* libstdc++.tbd in Frameworks */,
 				92888FE51C5718D200D3BBC8 /* jpush-ios-2.1.0.a in Frameworks */,
+				F6F693321C5F2EF50025697E /* libWeChatSDK.a in Frameworks */,
 				040F80071C5113A2000D8CAA /* libicucore.tbd in Frameworks */,
 				040F7FFE1C511306000D8CAA /* MOBFoundation.framework in Frameworks */,
 				04AD200D1C5D1010000A8984 /* libUMSocial_Sdk_4.4.a in Frameworks */,
 				5807C2FB1C473D7F002C5F8E /* libz.tbd in Frameworks */,
 				040F80021C511306000D8CAA /* ShareSDKExtension.framework in Frameworks */,
+				F6F6932E1C5F2EF50025697E /* libSocialQQ.a in Frameworks */,
 				040F80051C511306000D8CAA /* ShareSDKUI.framework in Frameworks */,
 				040F7FF81C511306000D8CAA /* TencentOpenAPI.framework in Frameworks */,
 				040F80011C511306000D8CAA /* ShareSDKConnector.framework in Frameworks */,
@@ -830,6 +854,7 @@
 		04FFFDCB1C40F63D00ECCA1C /* SuperPaper */ = {
 			isa = PBXGroup;
 			children = (
+				F6F693191C5F27990025697E /* Share */,
 				04D92B651C5F041600C936DC /* CommonView */,
 				5807C3011C47727B002C5F8E /* IntroduceView */,
 				04FFFE221C414B4700ECCA1C /* WebView */,
@@ -990,6 +1015,7 @@
 		04FFFDEE1C40F7DD00ECCA1C /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				F6F693221C5F2EF50025697E /* UMSocial_Sdk_Extra_Frameworks */,
 				04AD1FF11C5D1010000A8984 /* UMSocial_Sdk_4.4 */,
 				040F7FCD1C511306000D8CAA /* ShareSDK3.1.5 */,
 				816F323E1C4C84B1000D0AE5 /* SDCycleScrollView */,
@@ -1486,6 +1512,49 @@
 			name = Feedback;
 			sourceTree = "<group>";
 		};
+		F6F693191C5F27990025697E /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				F6F6931D1C5F27990025697E /* ShareManage.h */,
+				F6F6931E1C5F27990025697E /* ShareManage.m */,
+				F6A50ABA1C607C480092D78D /* ShareView.h */,
+				F6A50ABB1C607C480092D78D /* ShareView.m */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
+		F6F693221C5F2EF50025697E /* UMSocial_Sdk_Extra_Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F6F693231C5F2EF50025697E /* TencentOpenAPI */,
+				F6F693281C5F2EF50025697E /* Wechat */,
+			);
+			path = UMSocial_Sdk_Extra_Frameworks;
+			sourceTree = "<group>";
+		};
+		F6F693231C5F2EF50025697E /* TencentOpenAPI */ = {
+			isa = PBXGroup;
+			children = (
+				F6F693241C5F2EF50025697E /* libSocialQQ.a */,
+				F6F693251C5F2EF50025697E /* TencentOpenAPI.framework */,
+				F6F693261C5F2EF50025697E /* TencentOpenApi_IOS_Bundle.bundle */,
+				F6F693271C5F2EF50025697E /* UMSocialQQHandler.h */,
+			);
+			path = TencentOpenAPI;
+			sourceTree = "<group>";
+		};
+		F6F693281C5F2EF50025697E /* Wechat */ = {
+			isa = PBXGroup;
+			children = (
+				F6F693291C5F2EF50025697E /* libSocialWechat.a */,
+				F6F6932A1C5F2EF50025697E /* libWeChatSDK.a */,
+				F6F6932B1C5F2EF50025697E /* UMSocialWechatHandler.h */,
+				F6F6932C1C5F2EF50025697E /* WXApi.h */,
+				F6F6932D1C5F2EF50025697E /* WXApiObject.h */,
+			);
+			path = Wechat;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1586,6 +1655,7 @@
 				844694341C48B889005619D7 /* usercell2.png in Resources */,
 				04FFFE1C1C412F8C00ECCA1C /* Resources.bundle in Resources */,
 				04D92B5D1C5F02AF00C936DC /* Service.plist in Resources */,
+				F6F693301C5F2EF50025697E /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				8446943B1C48B889005619D7 /* usercell9.png in Resources */,
 				04D92B581C5F01FA00C936DC /* JobService.plist in Resources */,
 				04AD200C1C5D1010000A8984 /* UMSocialLocalizable.strings in Resources */,
@@ -1706,6 +1776,8 @@
 				5807C2F01C473B7A002C5F8E /* UIScrollView+MJRefresh.m in Sources */,
 				9AEB04C41C53AB3100D34FBE /* ChangeUserHeadImageTextShowTableViewCell.m in Sources */,
 				F4CDBD511C5EF174009FEADD /* PersonalInfoHasSelectionTableViewCell.m in Sources */,
+				F6F693201C5F27990025697E /* ShareManage.m in Sources */,
+				F6A50ABC1C607C480092D78D /* ShareView.m in Sources */,
 				9A5A30501C4E87DF00813FF9 /* UserTableViewCell.m in Sources */,
 				84C139341C4628A800284087 /* AFImageDownloader.m in Sources */,
 				04FFFDCE1C40F63D00ECCA1C /* main.m in Sources */,
@@ -1883,6 +1955,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries",
+					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SuperPaper/SuperPaper.pch";
 				INFOPLIST_FILE = SuperPaper/Info.plist;
@@ -1894,6 +1967,8 @@
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_4.4",
+					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
+					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharetechnology.SuperPapers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1911,6 +1986,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries",
+					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SuperPaper/SuperPaper.pch";
 				INFOPLIST_FILE = SuperPaper/Info.plist;
@@ -1922,6 +1998,8 @@
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_4.4",
+					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
+					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharetechnology.SuperPapers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
