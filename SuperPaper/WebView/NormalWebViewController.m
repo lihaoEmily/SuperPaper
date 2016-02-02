@@ -7,8 +7,10 @@
 //
 
 #import "NormalWebViewController.h"
+#import "ShareManage.h"
+#import "UMSocial.h"
 
-@interface NormalWebViewController ()<UIWebViewDelegate>
+@interface NormalWebViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
 /**
  *  网页视图
  */
@@ -35,6 +37,8 @@
     [_indicatorView setHidden:YES];
     [self.view addSubview:_indicatorView];
     [self layoutWebView];
+    
+    [self setupTitleView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -49,6 +53,89 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setupTitleView
+{
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    shareBtn.frame = CGRectMake(0, 0, 40, 30);
+    [shareBtn setTitle:@"分享" forState:UIControlStateNormal];
+    [shareBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
+    self.navigationItem.rightBarButtonItem = shareItem;
+}
+
+#pragma mark - Actions
+- (void)share
+{
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:@"56af0b3be0f55ab9b1001511" shareText:@"更多精彩内容尽在[超级论文]" shareImage:nil shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
+    
+    // 分享的图片
+    UIImage *image = [UIImage imageNamed:@"LOGO-181"];
+    
+    // 微信好友
+    [UMSocialData defaultData].extConfig.wechatSessionData.fileData = UIImagePNGRepresentation(image);
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = self.urlString;
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.title;
+    [UMSocialData defaultData].extConfig.wechatSessionData.shareImage = image;
+    
+    // 微信朋友圈
+    [UMSocialData defaultData].extConfig.wechatTimelineData.fileData = UIImagePNGRepresentation(image);
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.urlString;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.title;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.shareImage = image;
+    
+    // QQ好友
+    [UMSocialData defaultData].extConfig.qqData.url = self.urlString;
+    [UMSocialData defaultData].extConfig.qqData.title = self.title;
+    [UMSocialData defaultData].extConfig.qqData.shareImage = image;
+    
+    // QQ空间
+    [UMSocialData defaultData].extConfig.qzoneData.url = self.urlString;
+    [UMSocialData defaultData].extConfig.qzoneData.title = self.title;
+    [UMSocialData defaultData].extConfig.qzoneData.shareImage = image;
+    
+    // 以下是自定义分享view，同android线上版
+//    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(50, ([UIScreen mainScreen].bounds.size.height - 64) / 2 - (([UIScreen mainScreen].bounds.size.width - 100) / 4 + 20) / 2, [UIScreen mainScreen].bounds.size.width - 100, ([UIScreen mainScreen].bounds.size.width - 100) / 4 + 40)];
+//    shareView.backgroundColor = [UIColor whiteColor];
+//    [_webView addSubview:shareView];
+//    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, shareView.frame.size.width - 20, 20)];
+//    label.text = @"分享到社交平台";
+//    [shareView addSubview:label];
+//    
+//    NSArray *imageArr = @[@"icon_study_cet",@"icon_study_cet",@"icon_study_cet",@"icon_study_cet"];
+//    for (int i = 0; i < imageArr.count; i ++) {
+//        UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        menuBtn.frame = CGRectMake(10 + shareView.frame.size.width / 4 * i , 50 , shareView.frame.size.width / 4 - 20, shareView.frame.size.width / 4 - 20);
+//        menuBtn.tag = 1000 + i;
+//        [menuBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
+//        [menuBtn addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [shareView addSubview:menuBtn];
+//    }
+}
+
+#pragma mark 选择分享按钮点击
+- (void)shareBtnClick:(UIButton *)sender
+{
+    switch (sender.tag) {
+        case 1000:
+            [[ShareManage shareManage] QQFriendsShareWithViewControll:self];
+            break;
+        case 1001:
+            [[ShareManage shareManage] QzoneShareWithViewControll:self];
+            break;
+        case 1002:
+            [[ShareManage shareManage] wxShareWithViewControll:self];
+            break;
+        case 1003:
+            [[ShareManage shareManage] wxpyqShareWithViewControll:self];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 /**
@@ -137,6 +224,22 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [_indicatorView stopAnimating];
     [_indicatorView setHidden:YES];
+}
+
+#pragma mark - UMSocialUIDelegate
+-(BOOL)isDirectShareInIconActionSheet
+{
+    return YES;
+}
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        //得到分享到的微博平台名
+        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
+    }
 }
 
 @end
