@@ -243,22 +243,28 @@
     NSArray *nameArray = [NSArray arrayWithObjects:@"新闻",@"活动", nil];
     for (int i = 0; i < nameArray.count; i ++) {
         UIButton *serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        serviceBtn.frame = CGRectMake((i%2)*OWIDTH/2, CGRectGetMaxY(cycleScrollView.frame), OWIDTH/2, 44);
+        serviceBtn.frame = CGRectMake(i*OWIDTH/2, CGRectGetMaxY(cycleScrollView.frame), OWIDTH/2, 44);
         serviceBtn.tag = i+100;
         serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
-        serviceBtn.layer.borderWidth = 1;
+        serviceBtn.layer.borderWidth = 0;
         [serviceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        [serviceBtn addTarget:self action:@selector(serviceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [serviceBtn addTarget:self
+                       action:@selector(serviceBtnClick:)
+             forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:serviceBtn];
         if (i==0) {
             serviceBtn.selected = YES;
-            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"activity_select" directory:@"home"] forState:UIControlStateSelected];
-            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"activity" directory:@"home"] forState:UIControlStateNormal];
+            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"news_select"]
+                                  forState:UIControlStateSelected];
+            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"news"]
+                                  forState:UIControlStateNormal];
         }
         else{
-            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"news_select" directory:@"home"] forState:UIControlStateSelected];
-            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"news" directory:@"home"] forState:UIControlStateNormal];
+            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"activity_select"]
+                                  forState:UIControlStateSelected];
+            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"activity"]
+                                  forState:UIControlStateNormal];
         }
     }
     _studyTableView.tableHeaderView = headerView;

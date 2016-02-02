@@ -1957,7 +1957,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries",
-					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SuperPaper/SuperPaper.pch";
@@ -1970,8 +1969,6 @@
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_4.4",
-					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
@@ -1992,7 +1989,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries",
-					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SuperPaper/SuperPaper.pch";
@@ -2005,8 +2001,6 @@
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ThirdParty/ShareSDK3.1.5/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_4.4",
-					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/ThirdParty/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
