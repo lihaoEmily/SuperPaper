@@ -16,21 +16,63 @@
 
 @interface PublicationIntroduceViewController ()
 
-@property (nonatomic, strong) PublicationDetailData* detailData;
+//@property (nonatomic, strong) PublicationDetailData* detailData;
 
 @end
 
 
 @implementation PublicationIntroduceViewController
 {
-    NSString *_bundleStr;
+    NSString* _bundleStr;
+    UIView* _leftColorView;
+    UILabel* _titleLabel;
+    UILabel* _keyLabel;
+    UILabel* _numOfReader;
+    UIImageView* _imageView;
+    UIImageView* _centerImageView;
+    UILabel* _contentLabel;
+    UIScrollView* _scrollView;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+
+    }
+    
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+    
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kWidth, kHeight)];
+    [self.view addSubview:_scrollView];
+    
+    _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(5, 15, 8, 44)];
+    _leftColorView.backgroundColor = kSelColor;
+    [_scrollView addSubview:_leftColorView];
+    
+    //    标题
+    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_leftColorView.frame)+15, 15, kWidth-CGRectGetMaxX(_leftColorView.frame)-15 - 15, 44)];
+    _titleLabel.font = [UIFont systemFontOfSize:21];
+    _titleLabel.numberOfLines = 2;
+    [_scrollView addSubview:_titleLabel];
+    
+    //    中间的图片
+    _centerImageView = [[UIImageView alloc]init];
+    _centerImageView.frame = CGRectMake((kWidth-100)/2,CGRectGetMaxY(_leftColorView.frame) + 40, 100, 140);
+    [_scrollView addSubview:_centerImageView];
+    
+    _contentLabel= [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_centerImageView.frame) + 20, kWidth - 20, 10000)];
+    _contentLabel.font = [UIFont systemFontOfSize:14];
+    _contentLabel.numberOfLines = 0;
+    [_scrollView addSubview:_contentLabel];
+    
     [self getPublicationDetailData];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,29 +96,48 @@
               
               NSDictionary* dataDic = (NSDictionary*)responseObject;
               if (dataDic) {
-                  _detailData.p_title = [dataDic valueForKey:@"title"];
-                  _detailData.p_content = [dataDic valueForKey:@"content"];
-                  _detailData.p_keywords = [dataDic valueForKey:@"keywords"];
-                  _detailData.p_viewnum = [[dataDic valueForKey:@"viewnum"]integerValue];
-                  _detailData.p_content_pic_name = [dataDic valueForKey:@"content_pic_name"];
-                  _detailData.p_createdate = [dataDic valueForKey:@"createdate"];
-                  _detailData.p_emptyflg = [[dataDic valueForKey:@"emptyflg"]integerValue];
-                  _detailData.p_tel = [dataDic valueForKey:@"tel"];
+                  [self reloadViewDateWithdict:dataDic];
               }
-              //              [self setupTextView];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
           }];
 }
 
-//- (void)setupTextView
-//{
-//    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_topInfoView.frame) + 20, kScreenWidth - 20, kScreenHeight - 64 - TOP_WIEW_HEIGHT - 20)];
-//    textView.text = _content;
-//    textView.font = [UIFont systemFontOfSize:16.0];
-//    [textView setEditable:NO];
-//    [self.view addSubview:textView];
-//}
+-(void)reloadViewDateWithdict:(NSDictionary *)dic
+{
+    self.title = dic[@"title"];
+    _titleLabel.text = dic[@"title"];
+    [_titleLabel sizeToFit];
+    
+    _contentLabel.text = dic[@"content"];
+    [_contentLabel sizeToFit];
+
+    NSString *imageUrl = [NSString stringWithFormat:@"%@",dic[@"content_pic_name"]];
+    NSString *url = [NSString stringWithFormat:@"%@%@",IMGURL,dic[@"content_pic_name"]];
+    if ([self isBlankString:imageUrl]||[imageUrl isEqualToString:@"<null>"]) {
+        CGRect rect = _contentLabel.frame;
+        rect.origin.y = CGRectGetMaxY(_leftColorView.frame) + 10;
+        rect.size.height = _contentLabel.frame.size.height;
+        _contentLabel.frame = rect;
+        _centerImageView.hidden = YES;
+    }
+    else{
+        [_centerImageView sd_setImageWithURL:[NSURL URLWithString:url]];
+        _centerImageView.hidden = NO;
+    }
+    _scrollView.contentSize = CGSizeMake(kWidth, CGRectGetMaxY(_contentLabel.frame) + 64 + 10);
+}
+
+- (BOOL)isBlankString:(NSString *)string
+{
+    if (string == nil || string == NULL) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
+        return YES;
+    }
+    return NO;
+}
 
 @end

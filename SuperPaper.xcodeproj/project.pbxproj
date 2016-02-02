@@ -187,7 +187,6 @@
 		F264AFEE1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */; };
 		F264AFF11C5F534D00FF9EE5 /* PublicationSortsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */; };
 		F264AFFD1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */; };
-		F264B0001C60F28D00FF9EE5 /* PublicationIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFFF1C60F28D00FF9EE5 /* PublicationIntroduceView.m */; };
 		F448C30D1C58CB600076576F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448C30C1C58CB600076576F /* ResetPasswordViewController.m */; };
 		F47131811C5771B40081C9D5 /* ReadMyPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47131801C5771B40081C9D5 /* ReadMyPapersViewController.m */; };
 		F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F931D1C508B510029A3B0 /* RadioButton.m */; };
@@ -558,8 +557,6 @@
 		F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSortsViewController.m; path = Study/PublicationSortsViewController.m; sourceTree = "<group>"; };
 		F264AFFB1C60B5C400FF9EE5 /* PublicationIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceViewController.h; path = Study/PublicationIntroduceViewController.h; sourceTree = "<group>"; };
 		F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceViewController.m; path = Study/PublicationIntroduceViewController.m; sourceTree = "<group>"; };
-		F264AFFE1C60F28D00FF9EE5 /* PublicationIntroduceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceView.h; path = Study/PublicationIntroduceView.h; sourceTree = "<group>"; };
-		F264AFFF1C60F28D00FF9EE5 /* PublicationIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceView.m; path = Study/PublicationIntroduceView.m; sourceTree = "<group>"; };
 		F448C30B1C58CB600076576F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResetPasswordViewController.h; path = User/ResetPasswordViewController.h; sourceTree = "<group>"; };
 		F448C30C1C58CB600076576F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResetPasswordViewController.m; path = User/ResetPasswordViewController.m; sourceTree = "<group>"; };
 		F471317F1C5771B40081C9D5 /* ReadMyPapersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadMyPapersViewController.h; path = User/ReadMyPapersViewController.h; sourceTree = "<group>"; };
@@ -914,8 +911,6 @@
 		04FFFDE81C40F73A00ECCA1C /* Study */ = {
 			isa = PBXGroup;
 			children = (
-				F264AFFE1C60F28D00FF9EE5 /* PublicationIntroduceView.h */,
-				F264AFFF1C60F28D00FF9EE5 /* PublicationIntroduceView.m */,
 				F264AFEF1C5F534D00FF9EE5 /* PublicationSortsViewController.h */,
 				F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */,
 				04D92B5E1C5F030E00C936DC /* StudyViewController.h */,
@@ -1718,7 +1713,6 @@
 				816F324E1C4C84B1000D0AE5 /* TAAbstractDotView.m in Sources */,
 				84C139391C4628A800284087 /* UIProgressView+AFNetworking.m in Sources */,
 				9A6B47751C5282FD00A04101 /* ForgetPwdViewController.m in Sources */,
-				F264B0001C60F28D00FF9EE5 /* PublicationIntroduceView.m in Sources */,
 				F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */,
 				816F32541C4C84B1000D0AE5 /* UIView+SDExtension.m in Sources */,
 				F49564321C4F529000CADBDE /* RegisterViewController.m in Sources */,

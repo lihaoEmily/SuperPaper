@@ -14,10 +14,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.cellImg = [[UIImageView alloc] initWithFrame:CGRectMake(2, 2, 55, 55)];
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.cellImg.frame) + 10, self.cellImg.frame.origin.y, [UIScreen mainScreen].bounds.size.width - 150, 40)];
+        self.cellImg = [[UIImageView alloc] initWithFrame:CGRectMake(2, 7, 55, 55)];
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.cellImg.frame) + 10, self.cellImg.frame.origin.y, [UIScreen mainScreen].bounds.size.width - 175, 60)];
         self.titleLabel.textColor = [UIColor blackColor];
-        self.titleLabel.numberOfLines = 1;
+        self.titleLabel.numberOfLines = 3;
         self.titleLabel.font = [UIFont systemFontOfSize:18.0];
         [self.contentView addSubview:self.cellImg];
         [self.contentView addSubview:self.titleLabel];

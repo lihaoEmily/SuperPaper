@@ -60,6 +60,13 @@
     _contentView.rightTableView.delegate = self;
     _tagId = 0;
     
+    _contentView.rightTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self pulldownRefresh:_selectedSortDic];
+    }];
+    _contentView.rightTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self pullupRefresh:_selectedSortDic];
+    }];
+    
     [self getPublicationSortData];
     
     [self loadNavigationView];
@@ -158,12 +165,62 @@
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
               [_publicationDataArray addObjectsFromArray:array];
               [_contentView.rightTableView reloadData];
-              
-              
 
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+          }];
+}
+
+- (void)pulldownRefresh:(NSDictionary*) sortDic
+{
+    [_publicationDataArray removeAllObjects];
+    
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
+    
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%@",uploadProgress);
+    }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              
+              NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+              [_publicationDataArray addObjectsFromArray:array];
+              [_contentView.rightTableView reloadData];
+              [_contentView.rightTableView.mj_header endRefreshing];
+          }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              NSLog(@"%@",error);
+              [_contentView.rightTableView.mj_header endRefreshing];
+          }];
+}
+
+- (void)pullupRefresh:(NSDictionary*) sortDic
+{
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
+    
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%@",uploadProgress);
+    }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              
+              NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+              [_publicationDataArray addObjectsFromArray:array];
+              [_contentView.rightTableView reloadData];
+              [_contentView.rightTableView.mj_footer endRefreshing];
+          }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              NSLog(@"%@",error);
+              [_contentView.rightTableView.mj_footer endRefreshing];
           }];
 }
 
@@ -207,7 +264,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView.tag == 2000) {
-        return 60;
+        return 70;
     }
     return 44;
 }
@@ -245,6 +302,7 @@
         
         NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
         [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+        cell.titleLabel.font = [UIFont systemFontOfSize:14];
         cell.titleLabel.text = [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"];
 
         return cell;
@@ -276,9 +334,9 @@
         [self getPublicationDataWithSort:_publicationSortArray[indexPath.row]];
     }
     else{
-//        PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
-//        vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
-//        [self.navigationController pushViewController:vc animated:YES];
+        PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
+        vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
+        [self.navigationController pushViewController:vc animated:NO];
     }
 }
 
