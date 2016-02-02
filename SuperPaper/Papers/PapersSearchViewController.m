@@ -89,8 +89,13 @@
         NSLog(@"%@",responseObject);
         if (responseObject) {
             NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-            [_responseArr addObjectsFromArray:listArray];
-            [_searchTableView reloadData];
+            NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+            if (_responseArr.count >= total_num) {
+                return;
+            }else{
+                [_responseArr addObjectsFromArray:listArray];
+                [_searchTableView reloadData];
+            }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
