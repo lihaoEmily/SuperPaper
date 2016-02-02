@@ -91,7 +91,7 @@
            
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
-           NSLog(@"%@",dataDic);
+          // NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                [_paperArray addObjectsFromArray:listData];
@@ -116,7 +116,7 @@
            
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
-           NSLog(@"%@",dataDic);
+          // NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                [_paperArray removeAllObjects];
@@ -172,7 +172,8 @@
 
 - (void)setupTitleView
 {
-    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
+//    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
+    UIImage *image = [UIImage imageNamed:@"SearchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(10, 0, 25, 25);
     [searchBtn setImage:image forState:UIControlStateNormal];
@@ -181,7 +182,7 @@
     
     UIButton *sortBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     sortBtn.frame = CGRectMake(10, 0, 25, 25);
-    [sortBtn setImage:image forState:UIControlStateNormal];
+    [sortBtn setImage:[UIImage imageNamed:@"FilterImage"] forState:UIControlStateNormal];
     [sortBtn addTarget:self action:@selector(sortPapers) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortBtn];
     

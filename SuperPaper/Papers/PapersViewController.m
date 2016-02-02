@@ -63,7 +63,7 @@
             [_paperArray removeAllObjects];
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
-           NSLog(@"%@",dataDic);
+          // NSLog(@"%@",dataDic);
            if (dataDic) {
                NSArray * listData = [dataDic objectForKey:@"list"];
                _nextpageData = listData;
