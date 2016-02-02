@@ -33,10 +33,11 @@
     UIView *_searchBgView;
     
     /// 显示论文的scrollView
-    UIScrollView *_paperScrollerView;
+    UITextView *_paperTextView;
     
     UIView *_lineView;
     
+    UIActivityIndicatorView *_activity;
 }
 
 - (void)viewDidLoad {
@@ -134,22 +135,30 @@
     exportBtn.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [exportBoxImg addSubview:exportBtn];
     
-    _paperScrollerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBgView.frame), kScreenWidth, kScreenHeight - 64 - 50 - 60)];
-    _paperScrollerView.contentSize = CGSizeMake(kScreenWidth, 50);
-    _paperScrollerView.scrollEnabled = YES;
-    [self.view addSubview:_paperScrollerView];
-    
     /// 正文预览
-    UILabel *textPreviewLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth / 2 - 80, 5, 160, 30)];
+    UILabel *textPreviewLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth / 2 - 80, CGRectGetMaxY(_searchBgView.frame) + 5, 160, 30)];
     textPreviewLabel.font = [UIFont systemFontOfSize:20.0];
     textPreviewLabel.text = @"正文预览";
     textPreviewLabel.textAlignment = NSTextAlignmentCenter;
     textPreviewLabel.textColor = [UIColor blackColor];
-    [_paperScrollerView addSubview:textPreviewLabel];
+    [self.view addSubview:textPreviewLabel];
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(textPreviewLabel.frame) + 5, kScreenWidth - 20, 1)];
     _lineView.backgroundColor = [UIColor lightGrayColor];
-    [_paperScrollerView addSubview:_lineView];
+    [self.view addSubview:_lineView];
+    
+    _paperTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_lineView.frame), kScreenWidth, kScreenHeight - 64 - 50 - 60 - 36)];
+    _paperTextView.textColor = [UIColor blackColor];
+    _paperTextView.font = [UIFont systemFontOfSize:17.0];
+    _paperTextView.returnKeyType = UIReturnKeyDone;
+    [_paperTextView setEditable:NO];
+    [self.view addSubview:_paperTextView];
+    
+    /// 指示器
+    _activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [_activity setCenter:CGPointMake(kScreenWidth / 2, CGRectGetMidY(_paperTextView.frame) - 60)];
+    [_activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+    [_paperTextView addSubview:_activity];
 }
 
 - (void)setupScrollView
@@ -162,21 +171,14 @@
         UIAlertView *alterView = [[UIAlertView alloc]initWithTitle:@"超级论文" message:@"无内容生成" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
         [alterView show];
     }
-    _paperScrollerView.contentSize = CGSizeMake(kScreenWidth, labelHeight + 31);
-    
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_lineView.frame) + 10, kScreenWidth - 20, labelHeight)];
-    textView.text = _content;
-    textView.textColor = [UIColor blackColor];
-    textView.font = [UIFont systemFontOfSize:17.0];
-    textView.returnKeyType = UIReturnKeyDone;
-    [textView setEditable:NO];
-    [_paperScrollerView addSubview:textView];
+    _paperTextView.text = _content;
 }
 
 #pragma mark - action
 /// 生成论文
 - (void)clickToGenerator
 {
+    [_activity startAnimating];
     [_searchBar resignFirstResponder];
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入论文题目" preferredStyle:UIAlertControllerStyleAlert];
@@ -219,10 +221,11 @@
        parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           [_activity stopAnimating];
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
            NSLog(@"%@",responseObject);
-           if (![dataDic valueForKey:@"content"]) {
+           if ([dataDic valueForKey:@"content"]) {
                _content = [dataDic valueForKey:@"content"];
            }
            [self setupScrollView];
