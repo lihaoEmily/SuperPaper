@@ -2,24 +2,24 @@
 //  PublicationIntroduceViewController.h
 //  SuperPaper
 //
-//  Created by admin on 16/1/19.
+//  Created by mapbarios on 16/2/2.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "UIKit+AFNetworking.h"
 
 @interface PublicationDetailData : NSObject
 
-@property (nonatomic, assign) NSInteger result;
-@property (nonatomic, strong) NSString* selftitle;
-@property (nonatomic, strong) NSString* content;
-@property (nonatomic, strong) NSString* keywords;
-@property (nonatomic, assign) NSInteger viewnum;
-@property (nonatomic, strong) NSString* content_pic_name;
-@property (nonatomic, strong) NSString* createdate;
-@property (nonatomic, assign) NSInteger emptyflg;
-@property (nonatomic, strong) NSString* tel;
+@property (nonatomic, assign) NSInteger p_result;
+@property (nonatomic, strong) NSString* p_title;
+@property (nonatomic, strong) NSString* p_content;
+@property (nonatomic, strong) NSString* p_keywords;
+@property (nonatomic, assign) NSInteger p_viewnum;
+@property (nonatomic, strong) NSString* p_content_pic_name;
+@property (nonatomic, strong) NSString* p_createdate;
+@property (nonatomic, assign) NSInteger p_emptyflg;
+@property (nonatomic, strong) NSString* p_tel;
 
 @end
 
@@ -29,3 +29,4 @@
 @property (nonatomic,assign) NSInteger publicationID;
 
 @end
+

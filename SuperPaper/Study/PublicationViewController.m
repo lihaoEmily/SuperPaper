@@ -13,7 +13,7 @@
 #import "PublicationViewTableViewCell.h"
 #import "PublicationSearchViewController.h"
 #import "PublicationSortsViewController.h"
-#import "PublicationIntroduceViewController.m"
+#import "PublicationIntroduceViewController.h"
 
 #define SEARCHPAGESIZE 30
 
@@ -276,9 +276,9 @@
         [self getPublicationDataWithSort:_publicationSortArray[indexPath.row]];
     }
     else{
-        PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
-        vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
-        [self.navigationController pushViewController:vc animated:YES];
+//        PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
+//        vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
+//        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

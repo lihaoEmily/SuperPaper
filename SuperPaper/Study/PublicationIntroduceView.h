@@ -11,17 +11,17 @@
 
 @interface PublicationIntroduceView : BaseView
 
-/**
- *  论文标题
- */
-@property(nonatomic, strong) UILabel* publicationTitleLabel;
-/**
- *  顶部View
- */
-@property(nonatomic, strong) UIView   * topInfoView;
-/**
- *  投稿提示
- */
-@property(nonatomic, strong) UILabel  * contributeLabel;
+///**
+// *  论文标题
+// */
+//@property(nonatomic, strong) UILabel* publicationTitleLabel;
+///**
+// *  顶部View
+// */
+//@property(nonatomic, strong) UIView   * topInfoView;
+///**
+// *  投稿提示
+// */
+//@property(nonatomic, strong) UILabel  * contributeLabel;
 
 @end
