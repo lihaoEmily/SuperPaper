@@ -127,7 +127,6 @@
 		844694391C48B889005619D7 /* usercell7.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694301C48B889005619D7 /* usercell7.png */; };
 		8446943A1C48B889005619D7 /* usercell8.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694311C48B889005619D7 /* usercell8.png */; };
 		8446943B1C48B889005619D7 /* usercell9.png in Resources */ = {isa = PBXBuildFile; fileRef = 844694321C48B889005619D7 /* usercell9.png */; };
-		84896FB51C4DFB24009D7103 /* PublicationIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */; };
 		84896FB81C4DFB59009D7103 /* PublicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84896FB71C4DFB59009D7103 /* PublicationViewController.m */; };
 		84B7BD1B1C4796C300E202A6 /* UIImage+BundleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */; };
 		84B7BD1E1C4796CD00E202A6 /* AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B7BD1D1C4796CD00E202A6 /* AppConfig.m */; };
@@ -190,6 +189,9 @@
 		F23480351C45FEC500813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F23480371C45FED400813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F24FB53D1C591B0B005703EA /* PublicationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FB53C1C591B0B005703EA /* PublicationView.m */; };
+		F264AFEE1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */; };
+		F264AFF11C5F534D00FF9EE5 /* PublicationSortsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */; };
+		F264AFFD1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */; };
 		F448C30D1C58CB600076576F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448C30C1C58CB600076576F /* ResetPasswordViewController.m */; };
 		F47131811C5771B40081C9D5 /* ReadMyPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47131801C5771B40081C9D5 /* ReadMyPapersViewController.m */; };
 		F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F931D1C508B510029A3B0 /* RadioButton.m */; };
@@ -440,8 +442,6 @@
 		844694301C48B889005619D7 /* usercell7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell7.png; sourceTree = "<group>"; };
 		844694311C48B889005619D7 /* usercell8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell8.png; sourceTree = "<group>"; };
 		844694321C48B889005619D7 /* usercell9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usercell9.png; sourceTree = "<group>"; };
-		84896FB31C4DFB24009D7103 /* PublicationIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceViewController.h; path = Study/PublicationIntroduceViewController.h; sourceTree = "<group>"; };
-		84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceViewController.m; path = Study/PublicationIntroduceViewController.m; sourceTree = "<group>"; };
 		84896FB61C4DFB59009D7103 /* PublicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationViewController.h; path = Study/PublicationViewController.h; sourceTree = "<group>"; };
 		84896FB71C4DFB59009D7103 /* PublicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationViewController.m; path = Study/PublicationViewController.m; sourceTree = "<group>"; };
 		84B7BD191C4796C300E202A6 /* UIImage+BundleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+BundleImage.h"; path = "Utils/UIImage+BundleImage.h"; sourceTree = "<group>"; };
@@ -560,6 +560,12 @@
 		AAFA08691C49294400FB0DA4 /* user_normalIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_normalIcon.png; sourceTree = "<group>"; };
 		F24FB53B1C591B0B005703EA /* PublicationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationView.h; path = Study/PublicationView.h; sourceTree = "<group>"; };
 		F24FB53C1C591B0B005703EA /* PublicationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationView.m; path = Study/PublicationView.m; sourceTree = "<group>"; };
+		F264AFEC1C5F39D400FF9EE5 /* PublicationViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationViewTableViewCell.h; path = Study/PublicationViewTableViewCell.h; sourceTree = "<group>"; };
+		F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationViewTableViewCell.m; path = Study/PublicationViewTableViewCell.m; sourceTree = "<group>"; };
+		F264AFEF1C5F534D00FF9EE5 /* PublicationSortsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSortsViewController.h; path = Study/PublicationSortsViewController.h; sourceTree = "<group>"; };
+		F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSortsViewController.m; path = Study/PublicationSortsViewController.m; sourceTree = "<group>"; };
+		F264AFFB1C60B5C400FF9EE5 /* PublicationIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceViewController.h; path = Study/PublicationIntroduceViewController.h; sourceTree = "<group>"; };
+		F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceViewController.m; path = Study/PublicationIntroduceViewController.m; sourceTree = "<group>"; };
 		F448C30B1C58CB600076576F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResetPasswordViewController.h; path = User/ResetPasswordViewController.h; sourceTree = "<group>"; };
 		F448C30C1C58CB600076576F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResetPasswordViewController.m; path = User/ResetPasswordViewController.m; sourceTree = "<group>"; };
 		F471317F1C5771B40081C9D5 /* ReadMyPapersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadMyPapersViewController.h; path = User/ReadMyPapersViewController.h; sourceTree = "<group>"; };
@@ -938,6 +944,8 @@
 		04FFFDE81C40F73A00ECCA1C /* Study */ = {
 			isa = PBXGroup;
 			children = (
+				F264AFEF1C5F534D00FF9EE5 /* PublicationSortsViewController.h */,
+				F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */,
 				04D92B5E1C5F030E00C936DC /* StudyViewController.h */,
 				04D92B5F1C5F030E00C936DC /* StudyViewController.m */,
 				04D92B5C1C5F02AF00C936DC /* Service.plist */,
@@ -947,12 +955,14 @@
 				F6B69EFC1C462E0500CBFEB3 /* PublicationSearchTableViewCell.m */,
 				F6B69EFD1C462E0500CBFEB3 /* PublicationSearchViewController.h */,
 				F6B69EFE1C462E0500CBFEB3 /* PublicationSearchViewController.m */,
-				84896FB31C4DFB24009D7103 /* PublicationIntroduceViewController.h */,
-				84896FB41C4DFB24009D7103 /* PublicationIntroduceViewController.m */,
 				84896FB61C4DFB59009D7103 /* PublicationViewController.h */,
 				84896FB71C4DFB59009D7103 /* PublicationViewController.m */,
 				F24FB53B1C591B0B005703EA /* PublicationView.h */,
 				F24FB53C1C591B0B005703EA /* PublicationView.m */,
+				F264AFEC1C5F39D400FF9EE5 /* PublicationViewTableViewCell.h */,
+				F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */,
+				F264AFFB1C60B5C400FF9EE5 /* PublicationIntroduceViewController.h */,
+				F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */,
 			);
 			name = Study;
 			sourceTree = "<group>";
@@ -1731,13 +1741,13 @@
 				84896FB81C4DFB59009D7103 /* PublicationViewController.m in Sources */,
 				F4AA22571C4E295E00906CF4 /* AboutUsViewController.m in Sources */,
 				04FFFDD11C40F63D00ECCA1C /* AppDelegate.m in Sources */,
+				F264AFFD1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m in Sources */,
 				84C139651C4628DB00284087 /* SDWebImageCompat.m in Sources */,
 				84C139691C4628DB00284087 /* SDWebImageManager.m in Sources */,
 				84C139641C4628DB00284087 /* SDImageCache.m in Sources */,
 				9AEB04C01C53AB1700D34FBE /* ChangeUserHeadImageHasNextTableViewCell.m in Sources */,
 				F6F3487E1C476F4400AB5CFB /* PapersGeneratorViewController.m in Sources */,
 				84C139661C4628DB00284087 /* SDWebImageDecoder.m in Sources */,
-				84896FB51C4DFB24009D7103 /* PublicationIntroduceViewController.m in Sources */,
 				5807C2EE1C473B7A002C5F8E /* MJRefreshConst.m in Sources */,
 				F4AA22721C4E29AB00906CF4 /* InvitationsTableViewCell.m in Sources */,
 				F4CDBD541C5EF174009FEADD /* ProfileSubmitTableViewCell.m in Sources */,
@@ -1756,6 +1766,7 @@
 				040AD9901C4675F8000AB02A /* Reachability.m in Sources */,
 				5807C2E31C473B7A002C5F8E /* MJRefreshHeader.m in Sources */,
 				84C139671C4628DB00284087 /* SDWebImageDownloader.m in Sources */,
+				F264AFF11C5F534D00FF9EE5 /* PublicationSortsViewController.m in Sources */,
 				04FFFDDA1C40F63D00ECCA1C /* SuperPaper.xcdatamodeld in Sources */,
 				A2455F631C58C00C008CF9B1 /* HomeDetailController.m in Sources */,
 				F4AA226C1C4E299700906CF4 /* AccountTableViewCell.m in Sources */,
@@ -1764,6 +1775,7 @@
 				5807C2E11C473B7A002C5F8E /* MJRefreshComponent.m in Sources */,
 				5807C2E71C473B7A002C5F8E /* MJRefreshBackGifFooter.m in Sources */,
 				04FFFE191C4123F100ECCA1C /* TabBarItem.m in Sources */,
+				F264AFEE1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m in Sources */,
 				F24FB53D1C591B0B005703EA /* PublicationView.m in Sources */,
 				F4819C131C57178000C3E24B /* VoucherIntroViewController.m in Sources */,
 				84C1396D1C4628DB00284087 /* UIImage+MultiFormat.m in Sources */,
