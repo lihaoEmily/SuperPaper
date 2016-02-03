@@ -32,6 +32,8 @@
     UIImageView* _centerImageView;
     UILabel* _contentLabel;
     UIScrollView* _scrollView;
+    UIButton* _telBtn;
+    NSString* _telNum;
 }
 
 - (instancetype)init
@@ -71,6 +73,22 @@
     _contentLabel.font = [UIFont systemFontOfSize:14];
     _contentLabel.numberOfLines = 0;
     [_scrollView addSubview:_contentLabel];
+    
+    _telBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _telBtn.frame = CGRectMake(0, 0, self.view.frame.size.width, 35);
+    _telBtn.backgroundColor = kSelColor;
+    [_telBtn addTarget:self action:@selector(clickToCall) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_telBtn];
+    _telBtn.hidden = YES;
+    
+    UIImage *telIconImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"telcon" ofType:@"png" inDirectory:@"Paper"]];
+    [_telBtn setImage:telIconImage forState:UIControlStateNormal];
+    [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 17, 10, _telBtn.frame.size.width - 37)];
+    
+    _telBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
+    [_telBtn setTitle:@"拨打联系电话" forState:UIControlStateNormal];
+    [_telBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_telBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, -10, 5, 0)];
     
     [self getPublicationDetailData];
 }
@@ -127,6 +145,11 @@
         _centerImageView.hidden = NO;
     }
     _scrollView.contentSize = CGSizeMake(kWidth, CGRectGetMaxY(_contentLabel.frame) + 64 + 10);
+    
+    _telNum = dic[@"tel"];
+    if (_telNum && _telNum.length) {
+        _telBtn.hidden = NO;
+    }
 }
 
 - (BOOL)isBlankString:(NSString *)string
@@ -139,5 +162,31 @@
     }
     return NO;
 }
+
+- (void)clickToCall
+{
+    UIWebView *callWebView = [[UIWebView alloc] init];
+    NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",_telNum]];
+    [callWebView loadRequest:[NSURLRequest requestWithURL:telURL]];
+    [self.view addSubview:callWebView];
+}
+
+//- (void)onCallButtonClicked:(UIButton*) button
+//{
+//    NSString* url = [NSString stringWithFormat:@"telprompt://%@", _poiPhoneNumber];
+//        
+//    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]])
+//    {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"此设备不支持通话"
+//                                                            message:nil
+//                                                            delegate:nil
+//                                                            cancelButtonTitle:nil otherButtonTitles:@"知道了", nil];
+//        [alertView show];
+//    }
+//    else
+//    {
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+//    }
+//}
 
 @end
