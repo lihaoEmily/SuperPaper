@@ -42,10 +42,8 @@
        parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-           NSDictionary * dataDic = [NSDictionary dictionary];
-           dataDic = responseObject;
-           if (dataDic) {
-               NSArray * listData = [dataDic objectForKey:@"list"];
+           if (responseObject) {
+               NSArray * listData = [responseObject objectForKey:@"list"];
                 _sortData = [NSMutableArray arrayWithArray:listData];
                NSDictionary * firstDic = [NSDictionary dictionaryWithObjectsAndKeys:@"全部",@"tagname",@"",@"id",nil];
                [_sortData insertObject:firstDic atIndex:0];
