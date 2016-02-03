@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "UIKit+AFNetworking.h"
+#import "BaseView.h"
 
-@interface PublicationView : UIView
+@interface PublicationView : BaseView
 
 @property (nonatomic, strong) UITableView *leftTableView;
 @property (nonatomic, strong) UITableView *rightTableView;
