@@ -8,19 +8,25 @@
 
 #import "InvitationsViewController.h"
 #import "InvitationsTableViewCell.h"
+#import "MyInvitationShareView.h"
+#import "ShareManage.h"
 #import "UserSession.h"
 #import "AppConfig.h"
 
-@interface InvitationsViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface InvitationsViewController ()<UITableViewDelegate,UITableViewDataSource,shareCustomDelegate>
 {
     NSMutableArray *_list;
     NSInteger _total_num;
     BOOL _showFriend;
     UIActivityIndicatorView *_webIndicator;
     
+    NSString *_shareUrlString;
+    
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet MyInvitationShareView *shareView;
 @property (weak, nonatomic) IBOutlet UIView *topView;
+@property (weak, nonatomic) IBOutlet UIView *labelView;
 @property (weak, nonatomic) IBOutlet UIButton *myFriendBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (weak, nonatomic) IBOutlet UILabel *friendNumLabel;
@@ -43,6 +49,15 @@ static NSString *const InvitationIdentifier = @"Invitation";
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [self pullupRefresh];
     }];
+    
+    // 以下是自定义分享view
+    _shareUrlString = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
+    self.shareView = [[[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil]lastObject];
+    self.shareView.shareDelegate = self;
+    self.shareView.shareString = _shareUrlString;
+    
+    self.shareView.hidden = YES;
+    
     
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
@@ -67,8 +82,11 @@ static NSString *const InvitationIdentifier = @"Invitation";
         [self.myFriendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.shareBtn setBackgroundColor:[UIColor whiteColor]];
         [self.shareBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.friendNumLabel setTextColor:[UIColor whiteColor]];
         [self getInvitationsListFromWeb];
         self.tableView.hidden = NO;
+        self.labelView.hidden = NO;
+        self.shareView.hidden = YES;
     }
 }
 - (IBAction)iwanttoshare:(id)sender {
@@ -78,7 +96,35 @@ static NSString *const InvitationIdentifier = @"Invitation";
         [self.shareBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.myFriendBtn setBackgroundColor:[UIColor whiteColor]];
         [self.myFriendBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.friendNumLabel setTextColor:[UIColor blackColor]];
         self.tableView.hidden = YES;
+        self.labelView.hidden = YES;
+        self.shareView.hidden = NO;
+
+    }
+}
+
+//MARK: ShareCustomDelegate
+- (void)shareBtnClickWithIndex:(NSInteger)tag
+{
+    NSString *text = @"更多精彩内容尽在[超级论文]";
+    NSString *urlString = _shareUrlString;
+    switch (tag) {
+        case 1000:
+            [[ShareManage shareManage] QQFriendsShareWithViewControll:self text:text urlString:urlString title:self.title];
+            break;
+        case 1001:
+            [[ShareManage shareManage] QzoneShareWithViewControll:self text:text urlString:urlString title:self.title];
+            break;
+        case 1002:
+            [[ShareManage shareManage] wxShareWithViewControll:self text:text urlString:urlString title:self.title];
+            break;
+        case 1003:
+            [[ShareManage shareManage] wxpyqShareWithViewControll:self text:text urlString:urlString title:self.title];
+            break;
+            
+        default:
+            break;
     }
 }
 
