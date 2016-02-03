@@ -61,11 +61,8 @@
 
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [_paperArray removeAllObjects];
-           NSDictionary * dataDic = [NSDictionary dictionary];
-           dataDic = responseObject;
-          // NSLog(@"%@",dataDic);
-           if (dataDic) {
-               NSArray * listData = [dataDic objectForKey:@"list"];
+           if (responseObject) {
+               NSArray * listData = [responseObject objectForKey:@"list"];
                _nextpageData = listData;
                
                for (NSDictionary * dic in listData) {
@@ -82,7 +79,7 @@
                self.tableView.dataSource = self;
                [self.tableView reloadData];
                
-               _paper_tel = [dataDic valueForKey:@"paper_tel"];
+               _paper_tel = [responseObject valueForKey:@"paper_tel"];
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);

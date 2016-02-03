@@ -71,12 +71,9 @@
        parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-           NSDictionary * dataDic = [NSDictionary dictionary];
-           dataDic = responseObject;
-           //NSLog(@"%@",responseObject);
-           if (dataDic) {
-               _content = [dataDic valueForKey:@"content"];
-               _title = [dataDic valueForKey:@"title"];
+           if (responseObject) {
+               _content = [responseObject valueForKey:@"content"];
+               _title = [responseObject valueForKey:@"title"];
            }
            [self setupTextView];
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
