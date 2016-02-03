@@ -34,6 +34,7 @@
     UIScrollView* _scrollView;
     UIButton* _telBtn;
     NSString* _telNum;
+    UILabel* _contributeLab;
 }
 
 - (instancetype)init
@@ -60,13 +61,23 @@
     
     //    标题
     _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_leftColorView.frame)+15, 15, kWidth-CGRectGetMaxX(_leftColorView.frame)-15 - 15, 44)];
-    _titleLabel.font = [UIFont systemFontOfSize:21];
+    _titleLabel.font = [UIFont systemFontOfSize:20];
     _titleLabel.numberOfLines = 2;
     [_scrollView addSubview:_titleLabel];
     
+    // 投稿
+    _contributeLab = [[UILabel alloc]initWithFrame:CGRectMake(kWidth - 15-60, CGRectGetMaxY(_leftColorView.frame)+7, 60, 25)];
+    _contributeLab.backgroundColor = [UIColor whiteColor];
+    _contributeLab.layer.cornerRadius = 8.0;
+    _contributeLab.layer.borderColor = [UIColor whiteColor].CGColor;
+    _contributeLab.layer.borderWidth = 2;
+    _contributeLab.textAlignment = NSTextAlignmentCenter;
+    _contributeLab.font = [UIFont systemFontOfSize:13];
+    [_scrollView addSubview:_contributeLab];
+    
     //    中间的图片
     _centerImageView = [[UIImageView alloc]init];
-    _centerImageView.frame = CGRectMake((kWidth-100)/2,CGRectGetMaxY(_leftColorView.frame) + 40, 100, 140);
+    _centerImageView.frame = CGRectMake((kWidth-120)/2,CGRectGetMaxY(_leftColorView.frame) + 40, 120, 170);
     [_scrollView addSubview:_centerImageView];
     
     _contentLabel= [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_centerImageView.frame) + 20, kWidth - 20, 10000)];
@@ -75,20 +86,19 @@
     [_scrollView addSubview:_contentLabel];
     
     _telBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _telBtn.frame = CGRectMake(0, 0, self.view.frame.size.width, 35);
+    _telBtn.frame = CGRectMake(0, kHeight-40-64, self.view.frame.size.width, 40);
     _telBtn.backgroundColor = kSelColor;
     [_telBtn addTarget:self action:@selector(clickToCall) forControlEvents:UIControlEventTouchUpInside];
+    _telBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
+    [_telBtn setTitle:@"拨打联系电话" forState:UIControlStateNormal];
+    [_telBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [_telBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, -20, 5, 0)];
     [self.view addSubview:_telBtn];
     _telBtn.hidden = YES;
     
     UIImage *telIconImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"telcon" ofType:@"png" inDirectory:@"Paper"]];
     [_telBtn setImage:telIconImage forState:UIControlStateNormal];
-    [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(10, 17, 10, _telBtn.frame.size.width - 37)];
-    
-    _telBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
-    [_telBtn setTitle:@"拨打联系电话" forState:UIControlStateNormal];
-    [_telBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_telBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, -10, 5, 0)];
+    [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(7, 10, 7, 10)];
     
     [self getPublicationDetailData];
 }
@@ -128,6 +138,17 @@
     _titleLabel.text = dic[@"title"];
     [_titleLabel sizeToFit];
     
+    if ([dic[@"emptyflg"]integerValue] == 0) {
+        _contributeLab.text = @"可投稿";
+        _contributeLab.textColor = kSelColor;
+        _contributeLab.layer.borderColor = kSelColor.CGColor;
+    }
+    else {
+        _contributeLab.text = @"版面已满";
+        _contributeLab.textColor = [UIColor lightGrayColor];
+        _contributeLab.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    }
+    
     _contentLabel.text = dic[@"content"];
     [_contentLabel sizeToFit];
 
@@ -144,7 +165,7 @@
         [_centerImageView sd_setImageWithURL:[NSURL URLWithString:url]];
         _centerImageView.hidden = NO;
     }
-    _scrollView.contentSize = CGSizeMake(kWidth, CGRectGetMaxY(_contentLabel.frame) + 64 + 10);
+    _scrollView.contentSize = CGSizeMake(kWidth, CGRectGetMaxY(_contentLabel.frame) + 64 + 10+40);
     
     _telNum = dic[@"tel"];
     if (_telNum && _telNum.length) {

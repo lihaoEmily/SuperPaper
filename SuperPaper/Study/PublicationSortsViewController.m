@@ -9,13 +9,15 @@
 #import "PublicationSortsViewController.h"
 
 @interface PublicationSortsViewController ()<UITableViewDataSource,UITableViewDelegate>
-{
-    NSMutableArray *_sortData;
-    NSInteger _tagId;
-}
+
+@property (nonatomic ,strong)UITableView *tableView;
+
 @end
 
 @implementation PublicationSortsViewController
+{
+    NSMutableArray *_sortData;
+}
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -26,14 +28,14 @@
 
 - (void)setUpTableView{
 
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, OWIDTH, OHIGHT - 36) style:UITableViewStyleGrouped ];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, OWIDTH, OHIGHT+8) style:UITableViewStyleGrouped ];
     [self.view addSubview:self.tableView];
 
 }
 
 -(void)getData
 {
-    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.typeId],@"groupid",nil];
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.groupId],@"groupid",nil];
     NSString *urlString =  [NSString stringWithFormat:@"%@confer_tag.php",BASE_URL];
     
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
@@ -75,6 +77,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = [[_sortData objectAtIndex:indexPath.row] objectForKey:@"tagname"];
+    cell.textLabel.textColor = [UIColor blackColor];
+    if (_tagId == [[[_sortData objectAtIndex: indexPath.row] objectForKey:@"id"]integerValue]) {
+        cell.textLabel.textColor = kSelColor;
+    }
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     return cell;
 }
@@ -82,7 +88,9 @@
 #pragma -mark tableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.delegate passTypeId:[[[_sortData objectAtIndex: indexPath.row] objectForKey:@"id"]integerValue]];
+    _tagId = [[[_sortData objectAtIndex: indexPath.row] objectForKey:@"id"]integerValue];
+
+    [self.delegate searchByTagid:_tagId];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

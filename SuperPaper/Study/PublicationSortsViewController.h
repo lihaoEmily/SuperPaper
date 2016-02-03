@@ -10,14 +10,15 @@
 
 @protocol ClassifiedPublicationViewControllerDelegate
 
--(void)passTypeId:(NSInteger) typeId;
+-(void)searchByTagid:(NSInteger) tagId;
 
 @end
 
+
 @interface PublicationSortsViewController : BaseViewController
 
-@property (nonatomic ,strong)UITableView *tableView;
-@property (nonatomic ,assign)NSInteger typeId;
+@property (nonatomic ,assign)NSInteger tagId;
+@property (nonatomic ,assign)NSInteger groupId;
 @property (nonatomic ,weak)id<ClassifiedPublicationViewControllerDelegate> delegate;
 
 @end

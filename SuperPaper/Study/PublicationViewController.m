@@ -115,7 +115,8 @@
 
 - (void) sortPublication:(id) sender{
     PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
-    sortsView.typeId = 1;
+    sortsView.tagId = _tagId;
+    sortsView.groupId = 1;
     sortsView.delegate = self;
     [self.navigationController pushViewController:sortsView animated:YES];
 }
@@ -241,9 +242,10 @@
 
 
 #pragma mark - ClassifiedPublicationViewControllerDelegate
-- (void)passTypeId:(NSInteger)groupid
+- (void)searchByTagid:(NSInteger)tagid
 {
-    _tagId = groupid;
+    _tagId = tagid;
+    [_publicationDataArray removeAllObjects];
     [self getPublicationDataWithSort:_selectedSortDic];
 }
 
@@ -327,9 +329,10 @@
     if (tableView.tag == 1000) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 //        cell.backgroundColor = [UIColor whiteColor];
-        cell.textLabel.textColor = [UIColor redColor];
+        cell.textLabel.textColor = kSelColor;
         _selectedIndexPath = indexPath;
         _selectedSortDic = [_publicationSortArray objectAtIndex:indexPath.row];
+        
         [_publicationDataArray removeAllObjects];
         [self getPublicationDataWithSort:_publicationSortArray[indexPath.row]];
     }
