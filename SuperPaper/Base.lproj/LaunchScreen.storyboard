@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -17,6 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchimage.png" translatesAutoresizingMaskIntoConstraints="NO" id="gEi-to-SAT">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="超级论文" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6V-fK-DCS">
                                 <rect key="frame" x="56" y="146" width="488" height="89"/>
                                 <constraints>
@@ -29,9 +32,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gEi-to-SAT" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8dX-Y2-CXO"/>
                             <constraint firstItem="f6V-fK-DCS" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="126" id="Inh-UU-STh"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="gEi-to-SAT" secondAttribute="bottom" id="Xir-xX-3Ky"/>
+                            <constraint firstItem="gEi-to-SAT" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Xiv-Ey-r1x"/>
                             <constraint firstItem="f6V-fK-DCS" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="56" id="aub-hu-jCU"/>
+                            <constraint firstAttribute="trailing" secondItem="gEi-to-SAT" secondAttribute="trailing" id="h18-6W-Csx"/>
                             <constraint firstAttribute="trailing" secondItem="f6V-fK-DCS" secondAttribute="trailing" constant="56" id="lMF-hp-PIP"/>
+                            <constraint firstItem="gEi-to-SAT" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="oLA-IX-GcT"/>
+                            <constraint firstItem="gEi-to-SAT" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="s2P-ub-jBa"/>
                             <constraint firstItem="f6V-fK-DCS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="vG7-yW-hba"/>
                         </constraints>
                     </view>
@@ -41,4 +50,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="launchimage.png" width="375" height="567"/>
+    </resources>
 </document>
