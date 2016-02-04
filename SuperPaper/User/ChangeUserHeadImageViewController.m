@@ -60,14 +60,14 @@ static NSString *const ShowTextIdentifier = @"showtext";
 {
     if (0 == indexPath.row) {
         ChangeUserHeadImageHasNextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HasNextIdentifier];
-        cell.titleImageView.image = [UIImage imageNamed:@"usercell1"];
+        cell.titleImageView.image = [UIImage imageNamed:@"电话图标"];
         cell.titleLabel.text = @"头像上传";
-        cell.contentLabel.text = @"";
+        cell.contentLabel.text = nil;
         return cell;
         
     }else if(1 == indexPath.row){
         ChangeUserHeadImageHasNextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HasNextIdentifier];
-        cell.titleImageView.image = [UIImage imageNamed:@"usercell2"];
+        cell.titleImageView.image = [UIImage imageNamed:@"icon_personal_username"];
         cell.titleLabel.text = @"昵称";
         cell.contentLabel.text = [UserSession sharedInstance].currentUserNickname;
         return cell;
