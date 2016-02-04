@@ -171,8 +171,8 @@ static NSString *const SubmitIdentifier = @"submit";
 {
     if (_currentGen != kUserGen_Man) {
         _currentGen = kUserGen_Man;
-        [_manBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
-        [_womanBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
+        [_manBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
+        [_womanBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
     }
 }
 
@@ -180,8 +180,8 @@ static NSString *const SubmitIdentifier = @"submit";
 {
     if (_currentGen != kUserGen_Woman) {
         _currentGen = kUserGen_Woman;
-        [_manBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
-        [_womanBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
+        [_manBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
+        [_womanBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
     }
 }
 
@@ -189,8 +189,8 @@ static NSString *const SubmitIdentifier = @"submit";
 {
     if (_currentRole != kUserRoleTeacher) {
         _currentRole = kUserRoleTeacher;
-        [_teacherBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
-        [_studentBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
+        [_teacherBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
+        [_studentBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
     }
 }
 
@@ -198,8 +198,8 @@ static NSString *const SubmitIdentifier = @"submit";
 {
     if (_currentRole != kUserRoleStudent) {
         _currentRole = kUserRoleStudent;
-        [_teacherBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
-        [_studentBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
+        [_teacherBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
+        [_studentBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
     }
 }
 
@@ -319,11 +319,11 @@ static NSString *const SubmitIdentifier = @"submit";
     _womanBtn = womanBtn;
     [middleView addSubview:womanBtn];
     if (kUserGen_Man == _currentGen) {
-        [manBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
-        [womanBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
+        [manBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
+        [womanBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
     }else{
-        [manBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
-        [womanBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
+        [manBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
+        [womanBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
     }
     [view addSubview:middleView];
     
@@ -424,11 +424,11 @@ static NSString *const SubmitIdentifier = @"submit";
     _studentBtn = studentBtn;
     [middleView addSubview:studentBtn];
     if (kUserRoleTeacher == _currentRole) {
-        [teacherBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
-        [studentBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
+        [teacherBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
+        [studentBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
     }else{
-        [teacherBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
-        [studentBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
+        [teacherBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
+        [studentBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
     }
     [view addSubview:middleView];
     
