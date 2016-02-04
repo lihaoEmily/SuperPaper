@@ -1990,7 +1990,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharetechnology.SuperPapers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e574ec9f-49d1-437c-85d2-a2c4db22c9d2";
+				PROVISIONING_PROFILE = "7137017b-47ae-4aa1-9f24-fba61c9e42c7";
 			};
 			name = Debug;
 		};
@@ -2022,7 +2022,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharetechnology.SuperPapers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e574ec9f-49d1-437c-85d2-a2c4db22c9d2";
+				PROVISIONING_PROFILE = "7137017b-47ae-4aa1-9f24-fba61c9e42c7";
 			};
 			name = Release;
 		};
