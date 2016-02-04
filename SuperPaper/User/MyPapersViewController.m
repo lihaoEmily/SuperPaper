@@ -149,7 +149,7 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
                     [_list addObjectsFromArray:list];
                 }else
                     _list = [responseObject[@"list"]mutableCopy];
-                NSLog(@"目前list有%lu条数据,,%lu",_list.count,_total_num);
+
                 [self.tableView reloadData];
             }else{
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的论文列表失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];

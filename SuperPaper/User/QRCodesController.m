@@ -133,7 +133,6 @@
     [_session stopRunning];
     if (metadataObjects.count > 0 )
     {
-        NSLog(@"%@",[[metadataObjects firstObject] stringValue]);
         NSString *resultStr = [[metadataObjects firstObject] stringValue];
         if (self.ScanResult) {
             self.ScanResult(resultStr,YES);

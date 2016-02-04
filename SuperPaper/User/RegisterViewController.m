@@ -50,7 +50,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _agree = YES;
     _pwd = @"";
     _confirmPwd = @"";
     _originalTopCon = self.topCon.constant;
@@ -82,7 +81,8 @@
     self.confirmPwdTextField.layer.borderWidth = 1;
     self.qRCodeTextField.layer.borderColor = TextFieldBorderColor;
     self.qRCodeTextField.layer.borderWidth = 1;
-    [self.agreeBtn sizeToFit];
+
+    self.agreeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
     self.registerBtn.layer.masksToBounds = YES;
     self.registerBtn.layer.cornerRadius = 4;
     
@@ -355,10 +355,10 @@
 - (IBAction)agreeOrNot:(id)sender {
     _agree = !_agree;
     if (_agree) {
-        [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
+        [self.agreeBtn setImage:[UIImage imageNamed:@"复选框-2"] forState:UIControlStateNormal];
         
     }else
-        [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
+        [self.agreeBtn setImage:[UIImage imageNamed:@"复选框-1"] forState:UIControlStateNormal];
 }
 - (IBAction)serviceItemsChecking:(id)sender {
     ServiceNoticesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"serviceitems"];

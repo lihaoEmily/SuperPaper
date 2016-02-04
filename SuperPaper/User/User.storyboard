@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="x6j-bp-bR8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="x6j-bp-bR8">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -65,10 +65,10 @@
                                 <color key="sectionIndexBackgroundColor" red="0.99784772724626958" green="0.87921342877628816" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserTableViewCell" id="mMI-LU-S8S" customClass="UserTableViewCell">
-                                        <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMI-LU-S8S" id="UYu-xU-GyF">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="usercell1.png" translatesAutoresizingMaskIntoConstraints="NO" id="iVX-eJ-6e8">
@@ -238,13 +238,14 @@
                                     <action selector="showOrHideConfirm:" destination="kh8-ts-MFN" eventType="touchUpInside" id="Yyd-7j-QEJ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSn-H6-k3u">
-                                <rect key="frame" x="27" y="360" width="110" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSn-H6-k3u">
+                                <rect key="frame" x="25" y="360" width="108" height="30"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="108" id="8rv-Ic-00g"/>
                                     <constraint firstAttribute="height" constant="30" id="NK8-Nv-JaU"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="已阅读并同意" image="RadioButton-Selected.png">
+                                <state key="normal" title="已阅读并同意" image="复选框-1">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -252,7 +253,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cy-lx-V72">
-                                <rect key="frame" x="137" y="360" width="100" height="30"/>
+                                <rect key="frame" x="133" y="360" width="100" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Kga-0r-E8V"/>
                                 </constraints>
@@ -264,7 +265,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vbj-32-Vaj">
-                                <rect key="frame" x="27" y="415" width="548" height="44"/>
+                                <rect key="frame" x="25" y="415" width="550" height="44"/>
                                 <color key="backgroundColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="iiF-Vp-Pwd"/>
@@ -316,7 +317,7 @@
                             <constraint firstAttribute="trailing" secondItem="DZU-2I-LSu" secondAttribute="trailing" constant="25" id="O0h-PS-eFH"/>
                             <constraint firstItem="iWE-ap-Zlz" firstAttribute="centerY" secondItem="uS3-Q5-lF6" secondAttribute="centerY" id="RIy-Qy-iUI"/>
                             <constraint firstItem="G1L-2d-oUv" firstAttribute="height" secondItem="1Nv-FN-O6a" secondAttribute="height" id="S78-8Q-zmK"/>
-                            <constraint firstItem="fSn-H6-k3u" firstAttribute="leading" secondItem="xNN-b7-X8a" secondAttribute="leading" constant="2" id="SKd-8c-wYD"/>
+                            <constraint firstItem="fSn-H6-k3u" firstAttribute="leading" secondItem="xNN-b7-X8a" secondAttribute="leading" id="SKd-8c-wYD"/>
                             <constraint firstItem="Zyc-B0-UEU" firstAttribute="top" secondItem="7WD-3p-nSL" secondAttribute="bottom" id="Sgu-8c-aec"/>
                             <constraint firstItem="xNN-b7-X8a" firstAttribute="top" secondItem="uS3-Q5-lF6" secondAttribute="bottom" constant="25" id="Tkf-By-wG0"/>
                             <constraint firstItem="fSn-H6-k3u" firstAttribute="top" secondItem="xNN-b7-X8a" secondAttribute="bottom" constant="20" id="Z2K-Fb-h8u"/>
@@ -2199,14 +2200,14 @@
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="o2B-bN-bRm" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="04M-99-drT"/>
-                            <constraint firstItem="ufu-Zm-Gac" firstAttribute="top" secondItem="6na-do-3NR" secondAttribute="bottom" id="0Y4-l2-xpo"/>
-                            <constraint firstItem="6na-do-3NR" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="JCm-Nk-nR1"/>
+                            <constraint firstAttribute="trailing" secondItem="6na-do-3NR" secondAttribute="trailing" id="5Gu-mB-Wvk"/>
+                            <constraint firstItem="6na-do-3NR" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="8Ku-nd-jSv"/>
                             <constraint firstAttribute="trailing" secondItem="o2B-bN-bRm" secondAttribute="trailing" id="MON-IT-Tdw"/>
                             <constraint firstItem="jHm-HH-JXy" firstAttribute="top" secondItem="1pe-MQ-j6v" secondAttribute="bottom" constant="4" id="UGJ-U5-tpG"/>
                             <constraint firstAttribute="trailing" secondItem="jHm-HH-JXy" secondAttribute="trailing" id="UhU-l2-30g"/>
                             <constraint firstItem="jHm-HH-JXy" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="ZKL-8X-rF3"/>
-                            <constraint firstAttribute="trailing" secondItem="6na-do-3NR" secondAttribute="trailing" id="fLb-ca-D4A"/>
-                            <constraint firstItem="6na-do-3NR" firstAttribute="top" secondItem="o2B-bN-bRm" secondAttribute="bottom" id="lgb-EQ-DXT"/>
+                            <constraint firstItem="ufu-Zm-Gac" firstAttribute="top" secondItem="6na-do-3NR" secondAttribute="bottom" id="bTG-F5-u5V"/>
+                            <constraint firstItem="6na-do-3NR" firstAttribute="top" secondItem="o2B-bN-bRm" secondAttribute="bottom" id="hDK-u3-Uw8"/>
                             <constraint firstItem="o2B-bN-bRm" firstAttribute="top" secondItem="jHm-HH-JXy" secondAttribute="bottom" id="xnf-io-P4r"/>
                         </constraints>
                     </view>
@@ -2215,9 +2216,10 @@
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="friendNumLabel" destination="QqA-EE-I2H" id="6j6-UY-eVK"/>
+                        <outlet property="labelView" destination="o2B-bN-bRm" id="MDB-90-6s1"/>
                         <outlet property="myFriendBtn" destination="s5a-qu-w16" id="Lc6-DC-aif"/>
                         <outlet property="shareBtn" destination="lEB-Dl-hQG" id="yfG-8R-OaR"/>
-                        <outlet property="tableView" destination="6na-do-3NR" id="wNM-Kp-Cnc"/>
+                        <outlet property="tableView" destination="6na-do-3NR" id="v10-Iu-2ss"/>
                         <outlet property="topView" destination="jHm-HH-JXy" id="Tuv-iK-ify"/>
                     </connections>
                 </viewController>
@@ -2237,7 +2239,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_image.png" translatesAutoresizingMaskIntoConstraints="NO" id="t1d-cg-kFm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="关于我们" translatesAutoresizingMaskIntoConstraints="NO" id="t1d-cg-kFm">
                                 <rect key="frame" x="0.0" y="20" width="320" height="386"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nQt-Je-PMw">
@@ -2248,7 +2250,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MJN-Jb-9Qn" id="l6s-CL-JNC">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务条款" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMU-Ju-LaR">
@@ -2282,7 +2284,7 @@
                                         <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qnj-gi-4pC" id="JGr-nC-CL2">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版本 V1.1.7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAe-CP-qfe">
@@ -2336,12 +2338,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="RadioButton-Selected.png" width="20" height="21"/>
         <image name="bg_mine_head_login.png" width="107" height="31"/>
-        <image name="default_image.png" width="800" height="600"/>
         <image name="right_arrow.png" width="33" height="38"/>
         <image name="textExport" width="28" height="28"/>
         <image name="usercell1.png" width="53" height="53"/>
         <image name="usercell9.png" width="44" height="43"/>
+        <image name="关于我们" width="960" height="600"/>
+        <image name="复选框-1" width="15" height="15"/>
     </resources>
 </document>

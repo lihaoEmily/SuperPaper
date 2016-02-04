@@ -192,6 +192,7 @@
 		F264AFEE1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */; };
 		F264AFF11C5F534D00FF9EE5 /* PublicationSortsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */; };
 		F264AFFD1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */; };
+		F40F207A1C61DF6B00706DD4 /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F40F20791C61DF6A00706DD4 /* ShareView.xib */; };
 		F448C30D1C58CB600076576F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448C30C1C58CB600076576F /* ResetPasswordViewController.m */; };
 		F47131811C5771B40081C9D5 /* ReadMyPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47131801C5771B40081C9D5 /* ReadMyPapersViewController.m */; };
 		F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F931D1C508B510029A3B0 /* RadioButton.m */; };
@@ -566,6 +567,7 @@
 		F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSortsViewController.m; path = Study/PublicationSortsViewController.m; sourceTree = "<group>"; };
 		F264AFFB1C60B5C400FF9EE5 /* PublicationIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceViewController.h; path = Study/PublicationIntroduceViewController.h; sourceTree = "<group>"; };
 		F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceViewController.m; path = Study/PublicationIntroduceViewController.m; sourceTree = "<group>"; };
+		F40F20791C61DF6A00706DD4 /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShareView.xib; path = User/ShareView.xib; sourceTree = "<group>"; };
 		F448C30B1C58CB600076576F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResetPasswordViewController.h; path = User/ResetPasswordViewController.h; sourceTree = "<group>"; };
 		F448C30C1C58CB600076576F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResetPasswordViewController.m; path = User/ResetPasswordViewController.m; sourceTree = "<group>"; };
 		F471317F1C5771B40081C9D5 /* ReadMyPapersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadMyPapersViewController.h; path = User/ReadMyPapersViewController.h; sourceTree = "<group>"; };
@@ -1303,13 +1305,13 @@
 				84C1390C1C4628A300284087 /* AFHTTPSessionManager.m */,
 				84C1390D1C4628A300284087 /* AFNetworking.h */,
 				84C1390E1C4628A300284087 /* AFNetworkReachabilityManager.h */,
+				84C139151C4628A300284087 /* AFURLResponseSerialization.m */,
 				84C1390F1C4628A300284087 /* AFNetworkReachabilityManager.m */,
 				84C139101C4628A300284087 /* AFSecurityPolicy.h */,
 				84C139111C4628A300284087 /* AFSecurityPolicy.m */,
 				84C139121C4628A300284087 /* AFURLRequestSerialization.h */,
 				84C139131C4628A300284087 /* AFURLRequestSerialization.m */,
 				84C139141C4628A300284087 /* AFURLResponseSerialization.h */,
-				84C139151C4628A300284087 /* AFURLResponseSerialization.m */,
 				84C139161C4628A300284087 /* AFURLSessionManager.h */,
 				84C139171C4628A300284087 /* AFURLSessionManager.m */,
 			);
@@ -1495,6 +1497,7 @@
 				F4AA226F1C4E29AB00906CF4 /* InvitationsTableViewCell.m */,
 				F4AA22701C4E29AB00906CF4 /* InvitationsViewController.h */,
 				F4AA22711C4E29AB00906CF4 /* InvitationsViewController.m */,
+				F40F20791C61DF6A00706DD4 /* ShareView.xib */,
 			);
 			name = Invitations;
 			sourceTree = "<group>";
@@ -1673,6 +1676,7 @@
 				AAFA086B1C49294400FB0DA4 /* bg_mine_head_notlogin.png in Resources */,
 				92AF175A1C50D56300797B0E /* assessmment.plist in Resources */,
 				040F7FFF1C511306000D8CAA /* ShareSDK.bundle in Resources */,
+				F40F207A1C61DF6B00706DD4 /* ShareView.xib in Resources */,
 				AAFA086D1C49294400FB0DA4 /* user_normalIcon.png in Resources */,
 				04AD20101C5D1010000A8984 /* UMSCommentInputControlleriPad.xib in Resources */,
 				844694361C48B889005619D7 /* usercell4.png in Resources */,
