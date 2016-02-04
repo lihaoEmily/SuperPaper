@@ -1308,12 +1308,12 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_voucher_intro" translatesAutoresizingMaskIntoConstraints="NO" id="0Sa-A2-T0A">
-                                        <rect key="frame" x="201" y="9" width="22" height="22"/>
+                                        <rect key="frame" x="208" y="9" width="22" height="22"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="4GO-Ls-ujy" firstAttribute="leading" secondItem="0Sa-A2-T0A" secondAttribute="trailing" constant="10" id="1Dm-uz-g5B"/>
+                                    <constraint firstItem="4GO-Ls-ujy" firstAttribute="leading" secondItem="0Sa-A2-T0A" secondAttribute="trailing" constant="3" id="1Dm-uz-g5B"/>
                                     <constraint firstItem="0Sa-A2-T0A" firstAttribute="centerY" secondItem="4GO-Ls-ujy" secondAttribute="centerY" id="5f9-f8-5mM"/>
                                     <constraint firstItem="YhY-UA-Bcb" firstAttribute="top" secondItem="1p0-Ev-Xga" secondAttribute="top" id="LFn-h3-GkI"/>
                                     <constraint firstItem="YhY-UA-Bcb" firstAttribute="width" secondItem="1p0-Ev-Xga" secondAttribute="width" multiplier="1/2" id="NAH-te-Fxy"/>
