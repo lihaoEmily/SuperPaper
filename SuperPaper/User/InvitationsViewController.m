@@ -23,6 +23,7 @@
     NSString *_shareUrlString;
     
 }
+@property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UIView *shareTopView;
 @property (weak, nonatomic) IBOutlet UIView *shareBottomView;
 @property (weak, nonatomic) IBOutlet UILabel *shareContentLabel;
@@ -58,7 +59,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     }];
     
     // 以下是自定义分享view
-    
+    self.topLabel.text = [NSString stringWithFormat:@"我的邀请码：%@",[UserSession sharedInstance].currentUserInviteCode];
     [[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil];
     self.shareView.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *shareViewTopCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
@@ -76,7 +77,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     self.shareBottomView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.shareContentLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.shareContentLabel.layer.borderWidth = 0.5;
-//    self.shareView = [[[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil]lastObject];
+
     self.shareContentLabel.text = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
     [self.view addSubview:self.shareView];
     [self.view addConstraints:@[shareViewTopCon,shareViewLeadingCon,shareViewTrailingCon,shareViewBottomCon]];

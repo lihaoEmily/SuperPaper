@@ -16,6 +16,7 @@
                 <outlet property="shareContentLabel" destination="OwF-7J-5oX" id="281-ev-SVP"/>
                 <outlet property="shareTopView" destination="XeI-zV-2dk" id="yVg-7Q-dk9"/>
                 <outlet property="shareView" destination="iN0-l3-epB" id="6tr-uT-usc"/>
+                <outlet property="topLabel" destination="s9c-ne-3zq" id="15U-Zj-dJz"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
