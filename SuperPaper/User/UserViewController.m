@@ -470,7 +470,10 @@ static NSString *cellIdentifier = @"UserTableViewCell";
             case 1:
                 colorString = @"purple"; // 意见反馈
                 break;
-
+            case 2:{
+                
+                break;
+            }
             
             default:
                 break;

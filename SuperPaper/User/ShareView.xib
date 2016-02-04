@@ -47,12 +47,12 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="5WE-8R-Ojl"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="复制您的专属邀请链接" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z4U-sc-FXF">
-                            <rect key="frame" x="12" y="32" width="184" height="18"/>
+                            <rect key="frame" x="12" y="28" width="184" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="18" id="FKa-Qx-Xmr"/>
                             </constraints>
@@ -61,13 +61,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://www.baidu.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwF-7J-5oX">
-                            <rect key="frame" x="12" y="60" width="272" height="54"/>
+                            <rect key="frame" x="12" y="50" width="272" height="64"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mer-qd-Wsi">
-                            <rect key="frame" x="224" y="20" width="60" height="32"/>
+                            <rect key="frame" x="224" y="7" width="60" height="32"/>
                             <color key="backgroundColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="B1l-Pd-tFg"/>
@@ -88,13 +88,13 @@
                         <constraint firstAttribute="trailing" secondItem="OwF-7J-5oX" secondAttribute="trailing" constant="12" id="AOK-SF-rH4"/>
                         <constraint firstItem="OwF-7J-5oX" firstAttribute="leading" secondItem="Z4U-sc-FXF" secondAttribute="leading" id="CGu-dq-non"/>
                         <constraint firstAttribute="bottom" secondItem="OwF-7J-5oX" secondAttribute="bottom" constant="8" id="WaI-H6-8eF"/>
-                        <constraint firstItem="OwF-7J-5oX" firstAttribute="top" secondItem="Z4U-sc-FXF" secondAttribute="bottom" constant="10" id="cAc-TO-3w9"/>
+                        <constraint firstItem="OwF-7J-5oX" firstAttribute="top" secondItem="Z4U-sc-FXF" secondAttribute="bottom" constant="4" id="cAc-TO-3w9"/>
                         <constraint firstAttribute="trailing" secondItem="BvN-Dp-hGA" secondAttribute="trailing" constant="100" id="k2Y-lt-Qc5"/>
                         <constraint firstItem="Z4U-sc-FXF" firstAttribute="leading" secondItem="BvN-Dp-hGA" secondAttribute="leading" id="lFF-ot-ayo"/>
                         <constraint firstItem="mer-qd-Wsi" firstAttribute="trailing" secondItem="OwF-7J-5oX" secondAttribute="trailing" id="mcz-dI-Mjr"/>
-                        <constraint firstItem="OwF-7J-5oX" firstAttribute="top" secondItem="mer-qd-Wsi" secondAttribute="bottom" constant="8" id="p8g-9v-FTN"/>
                         <constraint firstItem="BvN-Dp-hGA" firstAttribute="leading" secondItem="XeI-zV-2dk" secondAttribute="leading" constant="12" id="uV1-aB-s2I"/>
-                        <constraint firstItem="Z4U-sc-FXF" firstAttribute="top" secondItem="BvN-Dp-hGA" secondAttribute="bottom" constant="8" id="zcs-bC-Phm"/>
+                        <constraint firstItem="mer-qd-Wsi" firstAttribute="top" secondItem="BvN-Dp-hGA" secondAttribute="top" constant="3" id="vON-2Z-Dhk"/>
+                        <constraint firstItem="Z4U-sc-FXF" firstAttribute="top" secondItem="BvN-Dp-hGA" secondAttribute="bottom" constant="4" id="zcs-bC-Phm"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QmV-gl-UH6">
