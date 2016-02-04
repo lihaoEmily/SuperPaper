@@ -22,6 +22,7 @@
     UIImageView *centerImageView;
     UILabel *content;
     UIScrollView *scrollVeiw;
+    UILabel *timeLabel;
 }
 @end
 
@@ -44,6 +45,10 @@
     titleLabel.numberOfLines = 2;
     [scrollVeiw addSubview:titleLabel];
     
+    timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(titleLabel.frame)+ 20, kWidth - NUMLABEL_W * 2, NUMLABEL_H)];
+    timeLabel.font = [UIFont systemFontOfSize:14];
+    [scrollVeiw addSubview:timeLabel];
+    
 //    阅读人数
     numOfReader = [[UILabel alloc]initWithFrame:CGRectMake(kWidth - NUMLABEL_W, CGRectGetMaxY(titleLabel.frame)+ 20, NUMLABEL_W, NUMLABEL_H)];
     numOfReader.font = [UIFont systemFontOfSize:14];
@@ -52,8 +57,8 @@
     [scrollVeiw addSubview:numOfReader];
     
 //    小眼睛
-    imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@""]];
-    imageView.frame = CGRectMake(kWidth - NUMLABEL_W - NUMLABEL_W, CGRectGetMaxY(titleLabel.frame) + 20, NUMLABEL_H, NUMLABEL_H);
+    imageView = [[UIImageView alloc]initWithImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+    imageView.frame = CGRectMake(kWidth - NUMLABEL_W - 20, CGRectGetMaxY(titleLabel.frame) + 20, NUMLABEL_H, NUMLABEL_H);
     [scrollVeiw addSubview:imageView];
     
     //关键词
@@ -113,12 +118,13 @@
     NSString *time = [NSString stringWithFormat:@"%@",dic[@"createdate"]];
     keyLabel.text = [NSString stringWithFormat:@"%@",dic[@"keywords"]];
     if ([self isBlankString:time] ||  [time isEqualToString:@"(null)"]){
-        imageView.hidden = NO;
         numOfReader.text = [NSString stringWithFormat:@"%@",dic[@"viewnum"]];
     }
     else {
-        numOfReader.text = time;
-        imageView.hidden = YES;
+        if ([time componentsSeparatedByString:@" "].count > 0) {
+            timeLabel.text = [time componentsSeparatedByString:@" "][0];
+        }
+        numOfReader.text = [NSString stringWithFormat:@"%@",dic[@"viewnum"]];
     }
     NSString *imageUrl = [NSString stringWithFormat:@"%@",dic[@"content_pic_name"]];
     NSString *url = [NSString stringWithFormat:@"%@%@",IMGURL,dic[@"content_pic_name"]];
@@ -127,7 +133,6 @@
         rect.origin.y = CGRectGetMaxY(imageView.frame) + 10;
         rect.size.height = content.frame.size.height;
         content.frame = rect;
-        NSLog(@"%@",content);
         centerImageView.hidden = YES;
     }
     else{
