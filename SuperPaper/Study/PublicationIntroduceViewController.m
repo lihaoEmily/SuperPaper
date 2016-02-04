@@ -86,7 +86,7 @@
     [_scrollView addSubview:_contentLabel];
     
     _telBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _telBtn.frame = CGRectMake(0, kHeight-40-64, self.view.frame.size.width, 40);
+    _telBtn.frame = CGRectMake(0, kHeight-44-64, self.view.frame.size.width, 44);
     _telBtn.backgroundColor = kSelColor;
     [_telBtn addTarget:self action:@selector(clickToCall) forControlEvents:UIControlEventTouchUpInside];
     _telBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
@@ -96,9 +96,9 @@
     [self.view addSubview:_telBtn];
     _telBtn.hidden = YES;
     
-    UIImage *telIconImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"telcon" ofType:@"png" inDirectory:@"Paper"]];
-    [_telBtn setImage:telIconImage forState:UIControlStateNormal];
-    [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(7, 10, 7, 10)];
+//    UIImage *telIconImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"telcon" ofType:@"png" inDirectory:@"Paper"]];
+    [_telBtn setImage:[UIImage imageNamed:@"CellPhoneIcon"] forState:UIControlStateNormal];
+    [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
     
     [self getPublicationDetailData];
 }
