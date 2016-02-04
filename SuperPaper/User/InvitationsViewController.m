@@ -8,12 +8,12 @@
 
 #import "InvitationsViewController.h"
 #import "InvitationsTableViewCell.h"
-#import "MyInvitationShareView.h"
+
 #import "ShareManage.h"
 #import "UserSession.h"
 #import "AppConfig.h"
 
-@interface InvitationsViewController ()<UITableViewDelegate,UITableViewDataSource,shareCustomDelegate>
+@interface InvitationsViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSMutableArray *_list;
     NSInteger _total_num;
@@ -23,13 +23,20 @@
     NSString *_shareUrlString;
     
 }
+@property (weak, nonatomic) IBOutlet UIView *shareTopView;
+@property (weak, nonatomic) IBOutlet UIView *shareBottomView;
+@property (weak, nonatomic) IBOutlet UILabel *shareContentLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet MyInvitationShareView *shareView;
+@property (weak, nonatomic) IBOutlet UIView *shareView;
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UIView *labelView;
 @property (weak, nonatomic) IBOutlet UIButton *myFriendBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (weak, nonatomic) IBOutlet UILabel *friendNumLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstBtnCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *secondBtnCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnTopCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnBottomCon;
 
 @end
 
@@ -51,11 +58,28 @@ static NSString *const InvitationIdentifier = @"Invitation";
     }];
     
     // 以下是自定义分享view
-    _shareUrlString = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
-    self.shareView = [[[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil]lastObject];
-    self.shareView.shareDelegate = self;
-    self.shareView.shareString = _shareUrlString;
     
+    [[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil];
+    self.shareView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *shareViewTopCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    NSLayoutConstraint *shareViewLeadingCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
+    NSLayoutConstraint *shareViewTrailingCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
+    NSLayoutConstraint *shareViewBottomCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    _shareUrlString = [NSString stringWithFormat:@"http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
+    self.shareTopView.layer.borderColor = [AppConfig appNaviColor].CGColor;
+    self.shareTopView.layer.borderWidth = 1;
+    self.firstBtnCon.constant = (self.view.bounds.size.width - 12 * 2 - 4 * 39 - 2 * 12) / 3;
+    self.secondBtnCon.constant = self.firstBtnCon.constant;
+    self.btnTopCon.constant = (self.btnTopCon.constant + self.btnBottomCon.constant) / 2;
+    self.btnBottomCon.constant = self.btnTopCon.constant;
+    self.shareBottomView.layer.borderWidth = 1;
+    self.shareBottomView.layer.borderColor = [AppConfig appNaviColor].CGColor;
+    self.shareContentLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.shareContentLabel.layer.borderWidth = 0.5;
+//    self.shareView = [[[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil]lastObject];
+    self.shareContentLabel.text = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
+    [self.view addSubview:self.shareView];
+    [self.view addConstraints:@[shareViewTopCon,shareViewLeadingCon,shareViewTrailingCon,shareViewBottomCon]];
     self.shareView.hidden = YES;
     
     
@@ -74,6 +98,15 @@ static NSString *const InvitationIdentifier = @"Invitation";
     if (_showFriend) {//当前在我的朋友标签下
         [self getInvitationsListFromWeb];
     }
+}
+- (IBAction)pasteUrl:(id)sender {
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    pasteBoard.string = _shareUrlString;
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"已复制到剪切板" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [av show];
+}
+- (IBAction)shareToSocailPlatform:(UIButton *)sender {
+    [self shareBtnClickWithIndex:sender.tag];
 }
 - (IBAction)showMyFriends:(id)sender {
     if (!_showFriend) {

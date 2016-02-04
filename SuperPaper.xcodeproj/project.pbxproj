@@ -189,8 +189,10 @@
 		F23480351C45FEC500813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F23480371C45FED400813AEC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F24FB53D1C591B0B005703EA /* PublicationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F24FB53C1C591B0B005703EA /* PublicationView.m */; };
+		F264AFEE1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */; };
+		F264AFF11C5F534D00FF9EE5 /* PublicationSortsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */; };
+		F264AFFD1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */; };
 		F40F207A1C61DF6B00706DD4 /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F40F20791C61DF6A00706DD4 /* ShareView.xib */; };
-		F40F207D1C61EC7300706DD4 /* MyInvitationShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = F40F207C1C61EC7300706DD4 /* MyInvitationShareView.m */; };
 		F448C30D1C58CB600076576F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448C30C1C58CB600076576F /* ResetPasswordViewController.m */; };
 		F47131811C5771B40081C9D5 /* ReadMyPapersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47131801C5771B40081C9D5 /* ReadMyPapersViewController.m */; };
 		F47F931E1C508B510029A3B0 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F931D1C508B510029A3B0 /* RadioButton.m */; };
@@ -559,9 +561,13 @@
 		AAFA08691C49294400FB0DA4 /* user_normalIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_normalIcon.png; sourceTree = "<group>"; };
 		F24FB53B1C591B0B005703EA /* PublicationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationView.h; path = Study/PublicationView.h; sourceTree = "<group>"; };
 		F24FB53C1C591B0B005703EA /* PublicationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationView.m; path = Study/PublicationView.m; sourceTree = "<group>"; };
+		F264AFEC1C5F39D400FF9EE5 /* PublicationViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationViewTableViewCell.h; path = Study/PublicationViewTableViewCell.h; sourceTree = "<group>"; };
+		F264AFED1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationViewTableViewCell.m; path = Study/PublicationViewTableViewCell.m; sourceTree = "<group>"; };
+		F264AFEF1C5F534D00FF9EE5 /* PublicationSortsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationSortsViewController.h; path = Study/PublicationSortsViewController.h; sourceTree = "<group>"; };
+		F264AFF01C5F534D00FF9EE5 /* PublicationSortsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationSortsViewController.m; path = Study/PublicationSortsViewController.m; sourceTree = "<group>"; };
+		F264AFFB1C60B5C400FF9EE5 /* PublicationIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicationIntroduceViewController.h; path = Study/PublicationIntroduceViewController.h; sourceTree = "<group>"; };
+		F264AFFC1C60B5C400FF9EE5 /* PublicationIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationIntroduceViewController.m; path = Study/PublicationIntroduceViewController.m; sourceTree = "<group>"; };
 		F40F20791C61DF6A00706DD4 /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShareView.xib; path = User/ShareView.xib; sourceTree = "<group>"; };
-		F40F207B1C61EC7300706DD4 /* MyInvitationShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyInvitationShareView.h; path = User/MyInvitationShareView.h; sourceTree = "<group>"; };
-		F40F207C1C61EC7300706DD4 /* MyInvitationShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyInvitationShareView.m; path = User/MyInvitationShareView.m; sourceTree = "<group>"; };
 		F448C30B1C58CB600076576F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResetPasswordViewController.h; path = User/ResetPasswordViewController.h; sourceTree = "<group>"; };
 		F448C30C1C58CB600076576F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResetPasswordViewController.m; path = User/ResetPasswordViewController.m; sourceTree = "<group>"; };
 		F471317F1C5771B40081C9D5 /* ReadMyPapersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadMyPapersViewController.h; path = User/ReadMyPapersViewController.h; sourceTree = "<group>"; };
@@ -1491,8 +1497,6 @@
 				F4AA226F1C4E29AB00906CF4 /* InvitationsTableViewCell.m */,
 				F4AA22701C4E29AB00906CF4 /* InvitationsViewController.h */,
 				F4AA22711C4E29AB00906CF4 /* InvitationsViewController.m */,
-				F40F207B1C61EC7300706DD4 /* MyInvitationShareView.h */,
-				F40F207C1C61EC7300706DD4 /* MyInvitationShareView.m */,
 				F40F20791C61DF6A00706DD4 /* ShareView.xib */,
 			);
 			name = Invitations;
@@ -1751,7 +1755,6 @@
 				5807C2EE1C473B7A002C5F8E /* MJRefreshConst.m in Sources */,
 				F4AA22721C4E29AB00906CF4 /* InvitationsTableViewCell.m in Sources */,
 				F4CDBD541C5EF174009FEADD /* ProfileSubmitTableViewCell.m in Sources */,
-				F40F207D1C61EC7300706DD4 /* MyInvitationShareView.m in Sources */,
 				F4AA224F1C4E294300906CF4 /* FeedbackViewController.m in Sources */,
 				5807C2F11C473B7A002C5F8E /* UIView+MJExtension.m in Sources */,
 				04E3F3B61C4C8A9A00DEE217 /* ASSaveData.m in Sources */,

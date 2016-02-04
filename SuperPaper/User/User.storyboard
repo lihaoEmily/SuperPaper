@@ -2089,10 +2089,6 @@
                                     <constraint firstItem="s5a-qu-w16" firstAttribute="leading" secondItem="jHm-HH-JXy" secondAttribute="leading" id="yEq-h2-Mgz"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CJO-Ld-ubv">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o2B-bN-bRm" userLabel="labelView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                 <subviews>
@@ -2204,18 +2200,14 @@
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="o2B-bN-bRm" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="04M-99-drT"/>
-                            <constraint firstItem="ufu-Zm-Gac" firstAttribute="top" secondItem="6na-do-3NR" secondAttribute="bottom" id="0Y4-l2-xpo"/>
-                            <constraint firstItem="CJO-Ld-ubv" firstAttribute="top" secondItem="jHm-HH-JXy" secondAttribute="bottom" id="0nV-fC-YgE"/>
-                            <constraint firstItem="CJO-Ld-ubv" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="3aS-tg-c2R"/>
-                            <constraint firstItem="ufu-Zm-Gac" firstAttribute="top" secondItem="CJO-Ld-ubv" secondAttribute="bottom" id="Csj-aR-Rqf"/>
-                            <constraint firstItem="6na-do-3NR" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="JCm-Nk-nR1"/>
+                            <constraint firstAttribute="trailing" secondItem="6na-do-3NR" secondAttribute="trailing" id="5Gu-mB-Wvk"/>
+                            <constraint firstItem="6na-do-3NR" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="8Ku-nd-jSv"/>
                             <constraint firstAttribute="trailing" secondItem="o2B-bN-bRm" secondAttribute="trailing" id="MON-IT-Tdw"/>
-                            <constraint firstAttribute="trailing" secondItem="CJO-Ld-ubv" secondAttribute="trailing" id="T7s-oI-egw"/>
                             <constraint firstItem="jHm-HH-JXy" firstAttribute="top" secondItem="1pe-MQ-j6v" secondAttribute="bottom" constant="4" id="UGJ-U5-tpG"/>
                             <constraint firstAttribute="trailing" secondItem="jHm-HH-JXy" secondAttribute="trailing" id="UhU-l2-30g"/>
                             <constraint firstItem="jHm-HH-JXy" firstAttribute="leading" secondItem="WTI-e0-9Kd" secondAttribute="leading" id="ZKL-8X-rF3"/>
-                            <constraint firstAttribute="trailing" secondItem="6na-do-3NR" secondAttribute="trailing" id="fLb-ca-D4A"/>
-                            <constraint firstItem="6na-do-3NR" firstAttribute="top" secondItem="o2B-bN-bRm" secondAttribute="bottom" id="lgb-EQ-DXT"/>
+                            <constraint firstItem="ufu-Zm-Gac" firstAttribute="top" secondItem="6na-do-3NR" secondAttribute="bottom" id="bTG-F5-u5V"/>
+                            <constraint firstItem="6na-do-3NR" firstAttribute="top" secondItem="o2B-bN-bRm" secondAttribute="bottom" id="hDK-u3-Uw8"/>
                             <constraint firstItem="o2B-bN-bRm" firstAttribute="top" secondItem="jHm-HH-JXy" secondAttribute="bottom" id="xnf-io-P4r"/>
                         </constraints>
                     </view>
@@ -2227,7 +2219,7 @@
                         <outlet property="labelView" destination="o2B-bN-bRm" id="MDB-90-6s1"/>
                         <outlet property="myFriendBtn" destination="s5a-qu-w16" id="Lc6-DC-aif"/>
                         <outlet property="shareBtn" destination="lEB-Dl-hQG" id="yfG-8R-OaR"/>
-                        <outlet property="tableView" destination="6na-do-3NR" id="wNM-Kp-Cnc"/>
+                        <outlet property="tableView" destination="6na-do-3NR" id="v10-Iu-2ss"/>
                         <outlet property="topView" destination="jHm-HH-JXy" id="Tuv-iK-ify"/>
                     </connections>
                 </viewController>
