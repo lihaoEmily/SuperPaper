@@ -450,7 +450,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="usercell9.png" translatesAutoresizingMaskIntoConstraints="NO" id="WST-9g-eJ9">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="电话图标" translatesAutoresizingMaskIntoConstraints="NO" id="WST-9g-eJ9">
                                                     <rect key="frame" x="10" y="10" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="eTX-x5-W5m"/>
@@ -2347,7 +2347,6 @@
         <image name="icon_voucher_intro" width="22" height="22"/>
         <image name="right_arrow.png" width="33" height="38"/>
         <image name="textExport" width="28" height="28"/>
-        <image name="usercell9.png" width="44" height="43"/>
         <image name="关于我们" width="960" height="600"/>
         <image name="复选框-1" width="15" height="15"/>
         <image name="电话图标" width="22" height="21"/>
