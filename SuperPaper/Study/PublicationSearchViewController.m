@@ -9,6 +9,7 @@
 #import "PublicationSearchViewController.h"
 #import "PublicationSearchTableViewCell.h"
 #import "UserSession.h"
+#import "PublicationIntroduceViewController.h"
 
 #define SEARCHPAGESIZE 30
 
@@ -55,7 +56,6 @@
      */
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
-    NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -63,6 +63,28 @@
         [_responseArr addObjectsFromArray:listArray];
         NSLog(@"%@",responseObject);
         [_searchTableView reloadData];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+}
+
+- (void)getSearchData
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
+    NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%@",uploadProgress);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (responseObject) {
+            NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            [_responseArr removeAllObjects];
+            [_responseArr addObjectsFromArray:listArray];
+            NSLog(@"%@",responseObject);
+            [_searchTableView reloadData];
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
@@ -183,7 +205,7 @@
         [alert addAction:cancelAction];
         [self presentViewController:alert animated:YES completion:nil];
     }else{
-        [self getData];
+        [self getSearchData];
     }
 }
 
@@ -213,6 +235,13 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 90;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PublicationIntroduceViewController *publicationIntroduceVC = [[PublicationIntroduceViewController alloc] init];
+    publicationIntroduceVC.publicationID = [[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"id"] integerValue];
+    [AppDelegate.app.nav pushViewController:publicationIntroduceVC animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate

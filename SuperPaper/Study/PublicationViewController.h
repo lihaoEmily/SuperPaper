@@ -7,7 +7,8 @@
 //
 
 #import "UIKit+AFNetworking.h"
+#import "BaseViewController.h"
 
-@interface PublicationViewController : UIViewController
+@interface PublicationViewController : BaseViewController
 
 @end

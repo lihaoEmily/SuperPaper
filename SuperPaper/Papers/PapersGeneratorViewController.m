@@ -163,15 +163,12 @@
 
 - (void)setupScrollView
 {
-    CGFloat labelHeight;
     if (_content.length > 0) {
-        labelHeight = [_content sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0]}].height;
+        _paperTextView.text = _content;
     }else{
-        labelHeight = 0.0;
         UIAlertView *alterView = [[UIAlertView alloc]initWithTitle:@"超级论文" message:@"无内容生成" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
         [alterView show];
     }
-    _paperTextView.text = _content;
 }
 
 #pragma mark - action
@@ -222,11 +219,9 @@
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            [_activity stopAnimating];
-           NSDictionary * dataDic = [NSDictionary dictionary];
-           dataDic = responseObject;
            NSLog(@"%@",responseObject);
-           if ([dataDic valueForKey:@"content"]) {
-               _content = [dataDic valueForKey:@"content"];
+           if ([responseObject valueForKey:@"content"]) {
+               _content = [responseObject valueForKey:@"content"];
            }
            [self setupScrollView];
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

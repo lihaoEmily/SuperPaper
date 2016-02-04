@@ -101,6 +101,7 @@
         NSLog(@"%@",error);
     }];
 }
+
 - (void)getSearchData
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
