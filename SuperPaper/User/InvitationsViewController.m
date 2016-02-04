@@ -59,7 +59,6 @@ static NSString *const InvitationIdentifier = @"Invitation";
     }];
     
     // 以下是自定义分享view
-    self.topLabel.text = [NSString stringWithFormat:@"我的邀请码：%@",[UserSession sharedInstance].currentUserInviteCode];
     [[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil];
     self.shareView.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *shareViewTopCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
@@ -67,6 +66,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     NSLayoutConstraint *shareViewTrailingCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
     NSLayoutConstraint *shareViewBottomCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
     _shareUrlString = [NSString stringWithFormat:@"http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
+    self.topLabel.text = [NSString stringWithFormat:@"我的邀请码：%@",[UserSession sharedInstance].currentUserInviteCode];
     self.shareTopView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.shareTopView.layer.borderWidth = 1;
     self.firstBtnCon.constant = (self.view.bounds.size.width - 12 * 2 - 4 * 39 - 2 * 12) / 3;
