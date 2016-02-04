@@ -471,7 +471,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
                 colorString = @"purple"; // 意见反馈
                 break;
             case 2:{
-                
+                [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_service_telStr]]];
                 break;
             }
             
