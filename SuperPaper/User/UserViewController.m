@@ -78,7 +78,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:kSelColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = nil;
     if ([UserSession sharedInstance].currentUserID != 0) {//用户已经登录
         if ([UserSession sharedInstance].currentUserHeadImageName && ![[UserSession sharedInstance].currentUserHeadImageName isEqualToString:@""]) {

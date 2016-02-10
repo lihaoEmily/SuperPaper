@@ -155,7 +155,7 @@
     
     h = self.navigationController.navigationBarHidden? h : h + 44;
 
-    self.tabbar.frame = CGRectMake(0, kHeight - kSizeH - h, kWidth, kSizeH);
+    self.tabbar.frame = CGRectMake(0, SCREEN_HEIGHT - TABBAR_HEIGHT - h, SCREEN_WIDTH, SCREEN_HEIGHT);
     
     [self.view bringSubviewToFront:self.tabbar];
 }

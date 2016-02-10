@@ -2,7 +2,7 @@
 //  PublicationViewTableCellTableViewCell.h
 //  SuperPaper
 //
-//  Created by mapbarios on 16/2/1.
+//  Created by AppStudio on 16/2/1.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 

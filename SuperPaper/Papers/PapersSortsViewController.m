@@ -26,7 +26,7 @@
 }
 - (void)setUpTableView{
 
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, OWIDTH, OHIGHT - 36) style:UITableViewStyleGrouped ];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, SCREEN_WIDTH, SCREEN_HEIGHT - 36) style:UITableViewStyleGrouped ];
     [self.view addSubview:self.tableView];
 
 }
