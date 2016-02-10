@@ -2,7 +2,7 @@
 //  PublicationIntroduceViewController.h
 //  SuperPaper
 //
-//  Created by mapbarios on 16/2/2.
+//  Created by AppStudio on 16/2/2.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 

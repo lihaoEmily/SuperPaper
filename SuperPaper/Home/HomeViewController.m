@@ -46,7 +46,8 @@
 
 - (void)initData {
     
-    _studyTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, OWIDTH,self.view.bounds.size.height-64-49) style:UITableViewStylePlain];
+    _studyTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT - TABBAR_HEIGHT)
+                                                  style:UITableViewStylePlain];
     _studyTableView.dataSource = self;
     _studyTableView.delegate = self;
     _studyTableView.sectionHeaderHeight = 10;
@@ -105,12 +106,13 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
-     ** parameters 参数
-     * ownertype  整型    2：学生
+     * parameters 参数
+     * ownertype  整型    1:教师主页，2：学生主页
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",@"1",@"ownertype", nil];
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",[NSNumber numberWithInteger:ownerType],@"ownertype", nil];
 
    // NSLog(@"parameters %@",parameters);
 
@@ -138,12 +140,13 @@
     //设置返回类型
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
-     ** parameters 参数
+     * parameters 参数
      * ownertype  整型    1:教师主页，2：学生主页
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
-    NSDictionary *parameters = @{@"ownertype":@"2", @"start_pos":[NSNumber numberWithInt:(int)_responseActivityInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType], @"start_pos":[NSNumber numberWithInt:(int)_responseActivityInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_activityinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -166,10 +169,11 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
-     ** parameters 参数
+     * parameters 参数
      * ownertype  整型
      */
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1]};
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:ownerType]};
     NSString *urlString = [NSString stringWithFormat:@"%@getadinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -232,10 +236,11 @@
 -(void)creatHeaderView
 {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 224)];
+    [headerView setBackgroundColor:kColor(236, 236, 236)];
     //采用网络图片实现
     imagesURLString = [[NSMutableArray alloc]init];
     // 网络加载 --- 创建带标题的图片轮播器
-    cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+    cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 164) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
     
     cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
     cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
@@ -243,7 +248,7 @@
     NSArray *nameArray = [NSArray arrayWithObjects:@"新闻",@"活动", nil];
     for (int i = 0; i < nameArray.count; i ++) {
         UIButton *serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        serviceBtn.frame = CGRectMake(i*OWIDTH/2, CGRectGetMaxY(cycleScrollView.frame), OWIDTH/2, 44);
+        serviceBtn.frame = CGRectMake(i*SCREEN_WIDTH/2, CGRectGetMaxY(cycleScrollView.frame) + 4, SCREEN_WIDTH/2, 52);
         serviceBtn.tag = i+100;
         serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
         serviceBtn.layer.borderWidth = 0;
@@ -354,6 +359,7 @@
     return 0.1;
 }
 
+#pragma mark - UITableView Delgate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NormalWebViewController *vc = [[NormalWebViewController alloc]init];
     HomeDetailController *detailVC = [[HomeDetailController alloc]init];
@@ -411,7 +417,7 @@
  */
 - (void)viewTest {
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
-    btn.backgroundColor = kSelColor;
+    btn.backgroundColor = [AppConfig appNaviColor];
     btn.tag = 100;
     [btn setTitle:@"画面迁移" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -421,7 +427,7 @@
   forControlEvents:UIControlEventTouchUpInside];
     //TODO:for texting
     UIButton *btnWeb = [[UIButton alloc] initWithFrame:CGRectMake(108,64,100, 100)];
-    btnWeb.backgroundColor = kSelColor;
+    btnWeb.backgroundColor = [AppConfig appNaviColor];
     btnWeb.tag = 101;
     [btnWeb setTitle:@"ShareSDK" forState:UIControlStateNormal];
     [btnWeb setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -432,7 +438,7 @@
     
     //TODO:for texting
     UIButton *btnWebExp = [[UIButton alloc] initWithFrame:CGRectMake(216,64,100, 100)];
-    btnWebExp.backgroundColor = kSelColor;
+    btnWebExp.backgroundColor = [AppConfig appNaviColor];
     btnWebExp.tag = 102;
     [btnWebExp setTitle:@"导出网页" forState:UIControlStateNormal];
     [btnWebExp setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

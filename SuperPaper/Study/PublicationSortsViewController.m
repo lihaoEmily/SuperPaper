@@ -28,7 +28,8 @@
 
 - (void)setUpTableView{
 
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, OWIDTH, OHIGHT+8) style:UITableViewStyleGrouped ];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, SCREEN_WIDTH, SCREEN_HEIGHT+8)
+                                                 style:UITableViewStyleGrouped ];
     [self.view addSubview:self.tableView];
 
 }
@@ -79,7 +80,7 @@
     cell.textLabel.text = [[_sortData objectAtIndex:indexPath.row] objectForKey:@"tagname"];
     cell.textLabel.textColor = [UIColor blackColor];
     if (_tagId == [[[_sortData objectAtIndex: indexPath.row] objectForKey:@"id"]integerValue]) {
-        cell.textLabel.textColor = kSelColor;
+        cell.textLabel.textColor = [AppConfig appNaviColor];
     }
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     return cell;

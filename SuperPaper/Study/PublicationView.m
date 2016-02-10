@@ -30,6 +30,7 @@
         _leftTableView.allowsSelection = YES;
         _leftTableView.allowsMultipleSelection = NO;
 //        _leftTableView.backgroundColor = [UIColor lightGrayColor];
+        _leftTableView.scrollEnabled = NO;
         [self addSubview:_leftTableView];
         
         _rightTableView = [[UITableView alloc] init];
@@ -38,6 +39,7 @@
         _rightTableView.tag = 2000;
         _rightTableView.allowsSelection = YES;
         _rightTableView.allowsMultipleSelection = NO;
+        _rightTableView.tableFooterView = [[UIView alloc] init];
         [self addSubview:_rightTableView];
     }
     return self;

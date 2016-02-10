@@ -8,7 +8,9 @@
 
 #import "UIKit+AFNetworking.h"
 #import "BaseViewController.h"
-
+/**
+ *  @brief 刊物
+ */
 @interface PublicationViewController : BaseViewController
 
 @end

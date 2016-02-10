@@ -10,6 +10,7 @@
 @protocol ClassifiedPapersViewControllerDelegate
 -(void)passTypeId:(NSString *)typeId;
 @end
+
 @interface PapersSortsViewController : BaseViewController
 
 @property (nonatomic ,strong)UITableView *tableView;

@@ -40,11 +40,11 @@
 - (void)setupUI
 {
     _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    _indicatorView.frame = CGRectMake(OWIDTH / 2 - 15, OHIGHT / 2 - 15, 30, 30);
+    _indicatorView.frame = CGRectMake(SCREEN_WIDTH / 2 - 15, SCREEN_HEIGHT / 2 - 15, 30, 30);
     [_indicatorView startAnimating];
     [self.view addSubview:_indicatorView];
     
-    _jobTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, OWIDTH, OHIGHT - 64)];
+    _jobTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT)];
     _jobTableView.dataSource = self;
     _jobTableView.delegate = self;
     _jobTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -150,15 +150,5 @@
     normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
     [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
