@@ -1,22 +1,24 @@
 //
-//  ExportableWebViewController.h
+//  TextWebViewController.h
 //  SuperPaper
 //
-//  Created by AppStudio on 16/1/16.
+//  Created by AppStudio on 16/2/10.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 /**
- *  @brief 可导出文档 WebView
+ *  @brief 显示文本和浏览数量 WebView
  *
  */
-@interface ExportableWebViewController : UIViewController
+@interface TextWebViewController : UIViewController
+
 /**
  *  URL地址
  */
-@property(nonatomic, strong) NSString * urlString;
+@property (nonatomic, strong) NSString * urlString;
+
 /**
  *  Web内容
  */

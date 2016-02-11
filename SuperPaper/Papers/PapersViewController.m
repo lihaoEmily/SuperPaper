@@ -41,9 +41,14 @@
     _nextpageData = [NSArray array];
     [self setupUI];
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 #pragma mark - 获取数据
@@ -53,7 +58,8 @@
     NSLog(@"%@",paramDic);
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_type.php",BASE_URL];
     NSLog(@"%@",urlString);
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+//    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager.requestSerializer setTimeoutInterval:15.0f];
     [manager POST:urlString

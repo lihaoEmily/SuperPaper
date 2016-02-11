@@ -2,28 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "viewCount_25.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icon_txt-1.png",
+      "filename" : "viewCount_50.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "idiom" : "iphone",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "iphone",
-      "filename" : "icon_txt.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "iphone",
+      "filename" : "viewCount_75.png",
       "scale" : "3x"
     }
   ],

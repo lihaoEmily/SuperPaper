@@ -1,18 +1,18 @@
 //
-//  ExportableWebViewController.m
+//  TextWebViewController.m
 //  SuperPaper
 //
-//  Created by AppStudio on 16/1/16.
+//  Created by AppStudio on 16/2/10.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
-#import "ExportableWebViewController.h"
+#import "TextWebViewController.h"
 
-#define TOP_WIEW_HEIGHT 120.0
+#define TOP_WIEW_HEIGHT 112.0
 #define TITLE_HEIGHT    56.0
 #define kDefaultColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
 
-@interface ExportableWebViewController ()<UIWebViewDelegate>
+@interface TextWebViewController ()<UIWebViewDelegate>
 /**
  *  顶部View
  */
@@ -26,13 +26,13 @@
  */
 @property(nonatomic, strong) UILabel  * dateLabel;
 /**
- *  导出提示
+ *  浏览量
  */
-@property(nonatomic, strong) UILabel  * exportLabel;
+@property(nonatomic, strong) UILabel  * viewLabel;
 /**
- *  导出按钮
+ *  浏览图标
  */
-@property(nonatomic, strong) UIButton * exportButton;
+@property(nonatomic, strong) UIImageView * viewIcon;
 /**
  *  网页视图
  */
@@ -48,7 +48,7 @@
 
 @end
 
-@implementation ExportableWebViewController
+@implementation TextWebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,12 +57,9 @@
     [_topInfoView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:_topInfoView];
     
-//    _webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-//    [_webView setDelegate:self];
-//    [self.view addSubview:_webView];
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
     [_textView setEditable:NO];
-    [_textView setFont:[UIFont systemFontOfSize:15]];
+    [_textView setFont:[UIFont systemFontOfSize:17]];
     [_textView setTextContainerInset:UIEdgeInsetsMake(8, 16, 8, 16)];
     [self.view addSubview:_textView];
     
@@ -106,21 +103,19 @@
     [_dateLabel setTextAlignment:NSTextAlignmentLeft];
     [_topInfoView addSubview:_dateLabel];
     
-    _exportLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_exportLabel setText:@"导出:"];
-    [_exportLabel setTextColor:[UIColor blackColor]];
-    [_exportLabel setFont:[UIFont systemFontOfSize:17.0]];
-    [_exportLabel setTextAlignment:NSTextAlignmentRight];
-    [_topInfoView addSubview:_exportLabel];
+    _viewIcon = [[UIImageView alloc] initWithFrame:CGRectZero];
+    [_viewIcon setImage:[UIImage imageNamed:@"ViewCount"]];
+    [_viewIcon setContentMode:UIViewContentModeScaleAspectFill];
+    [_topInfoView addSubview:_viewIcon];
     
-    _exportButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    [_exportButton setImage:[UIImage imageNamed:@"TextExport"]
-                   forState:UIControlStateNormal];
-    [[_exportButton imageView] setContentMode:UIViewContentModeScaleAspectFill];
-    [_exportButton addTarget:self
-                      action:@selector(exportWebViewToDoc)
-            forControlEvents:UIControlEventTouchUpInside];
-    [_topInfoView addSubview:_exportButton];
+    _viewLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    [_viewLabel setText:@"0"];
+    [_viewLabel setTextColor:[UIColor grayColor]];
+    [_viewLabel setFont:[UIFont systemFontOfSize:14.0]];
+    [_viewLabel setTextAlignment:NSTextAlignmentCenter];
+    [_topInfoView addSubview:_viewLabel];
+    
+    
     
     [_topInfoView setTranslatesAutoresizingMaskIntoConstraints:NO];
     NSLayoutConstraint *conToTop = [NSLayoutConstraint constraintWithItem:_topInfoView
@@ -224,47 +219,47 @@
     [_topInfoView addConstraints:paperTitleContraints];
     
     // Horizonal separator view
-    UIView *horizontalSepView = [[UIView alloc] initWithFrame:CGRectZero];
-    [horizontalSepView setBackgroundColor:[UIColor lightGrayColor]];
-    [_topInfoView addSubview:horizontalSepView];
-    [horizontalSepView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    NSLayoutConstraint *horSepViewToTop = [NSLayoutConstraint constraintWithItem:horizontalSepView
-                                                                       attribute:NSLayoutAttributeTop
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:_paperTitleLabel
-                                                                       attribute:NSLayoutAttributeBottom
-                                                                      multiplier:1.0
-                                                                        constant:8.0];
-    NSLayoutConstraint *horSepViewToLef = [NSLayoutConstraint constraintWithItem:horizontalSepView
-                                                                       attribute:NSLayoutAttributeLeft
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:_topInfoView
-                                                                       attribute:NSLayoutAttributeLeft
-                                                                      multiplier:1.0
-                                                                        constant:0.0];
-    NSLayoutConstraint *horSepViewToRight = [NSLayoutConstraint constraintWithItem:horizontalSepView
-                                                                         attribute:NSLayoutAttributeRight
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:_topInfoView
-                                                                         attribute:NSLayoutAttributeRight
-                                                                        multiplier:1.0
-                                                                          constant:0.0];
-    NSLayoutConstraint *horSepViewHeight = [NSLayoutConstraint constraintWithItem:horizontalSepView
-                                                                        attribute:NSLayoutAttributeHeight
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:nil
-                                                                        attribute:NSLayoutAttributeHeight
-                                                                       multiplier:1.0
-                                                                         constant:1.0];
-    NSArray *horSepViewContraints = [NSArray arrayWithObjects:horSepViewToTop, horSepViewToLef, horSepViewToRight, horSepViewHeight, nil];
-    [_topInfoView addConstraints:horSepViewContraints];
+//    UIView *horizontalSepView = [[UIView alloc] initWithFrame:CGRectZero];
+//    [horizontalSepView setBackgroundColor:[UIColor lightGrayColor]];
+//    [_topInfoView addSubview:horizontalSepView];
+//    [horizontalSepView setTranslatesAutoresizingMaskIntoConstraints:NO];
+//    NSLayoutConstraint *horSepViewToTop = [NSLayoutConstraint constraintWithItem:horizontalSepView
+//                                                                       attribute:NSLayoutAttributeTop
+//                                                                       relatedBy:NSLayoutRelationEqual
+//                                                                          toItem:_paperTitleLabel
+//                                                                       attribute:NSLayoutAttributeBottom
+//                                                                      multiplier:1.0
+//                                                                        constant:8.0];
+//    NSLayoutConstraint *horSepViewToLef = [NSLayoutConstraint constraintWithItem:horizontalSepView
+//                                                                       attribute:NSLayoutAttributeLeft
+//                                                                       relatedBy:NSLayoutRelationEqual
+//                                                                          toItem:_topInfoView
+//                                                                       attribute:NSLayoutAttributeLeft
+//                                                                      multiplier:1.0
+//                                                                        constant:0.0];
+//    NSLayoutConstraint *horSepViewToRight = [NSLayoutConstraint constraintWithItem:horizontalSepView
+//                                                                         attribute:NSLayoutAttributeRight
+//                                                                         relatedBy:NSLayoutRelationEqual
+//                                                                            toItem:_topInfoView
+//                                                                         attribute:NSLayoutAttributeRight
+//                                                                        multiplier:1.0
+//                                                                          constant:0.0];
+//    NSLayoutConstraint *horSepViewHeight = [NSLayoutConstraint constraintWithItem:horizontalSepView
+//                                                                        attribute:NSLayoutAttributeHeight
+//                                                                        relatedBy:NSLayoutRelationEqual
+//                                                                           toItem:nil
+//                                                                        attribute:NSLayoutAttributeHeight
+//                                                                       multiplier:1.0
+//                                                                         constant:1.0];
+//    NSArray *horSepViewContraints = [NSArray arrayWithObjects:horSepViewToTop, horSepViewToLef, horSepViewToRight, horSepViewHeight, nil];
+//    [_topInfoView addConstraints:horSepViewContraints];
     
     // Date Label
     [_dateLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     NSLayoutConstraint *dateToTop = [NSLayoutConstraint constraintWithItem:_dateLabel
                                                                  attribute:NSLayoutAttributeTop
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:horizontalSepView
+                                                                    toItem:_paperTitleLabel
                                                                  attribute:NSLayoutAttributeBottom
                                                                 multiplier:1.0
                                                                   constant:8.0];
@@ -292,71 +287,71 @@
     NSArray *dateContraints = [NSArray arrayWithObjects:dateToTop, dateToLeft, dateToBottom, dateWidth, nil];
     [_topInfoView addConstraints:dateContraints];
     
-    // Exportable button
-    [_exportButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-    NSLayoutConstraint *expButtonToTop = [NSLayoutConstraint constraintWithItem:_exportButton
+    // View Label
+    [_viewLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    NSLayoutConstraint *viewLabelToTop = [NSLayoutConstraint constraintWithItem:_viewLabel
                                                                       attribute:NSLayoutAttributeTop
                                                                       relatedBy:NSLayoutRelationEqual
-                                                                         toItem:horizontalSepView
+                                                                         toItem:_paperTitleLabel
                                                                       attribute:NSLayoutAttributeBottom
                                                                      multiplier:1.0
                                                                        constant:8.0];
-    NSLayoutConstraint *expButtonRight = [NSLayoutConstraint constraintWithItem:_exportButton
+    NSLayoutConstraint *viewLabelRight = [NSLayoutConstraint constraintWithItem:_viewLabel
                                                                       attribute:NSLayoutAttributeRight
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:_topInfoView
                                                                       attribute:NSLayoutAttributeRight
                                                                      multiplier:1.0
-                                                                       constant:-16.0];
-    NSLayoutConstraint *expButtonBottom = [NSLayoutConstraint constraintWithItem:_exportButton
+                                                                       constant:-8.0];
+    NSLayoutConstraint *viewLabelBottom = [NSLayoutConstraint constraintWithItem:_viewLabel
                                                                        attribute:NSLayoutAttributeBottom
                                                                        relatedBy:NSLayoutRelationEqual
                                                                           toItem:_topInfoView
                                                                        attribute:NSLayoutAttributeBottom
                                                                       multiplier:1.0
                                                                         constant:-8.0];
-    NSLayoutConstraint *expButtonWidth = [NSLayoutConstraint constraintWithItem:_exportButton
+    NSLayoutConstraint *viewLabelWidth = [NSLayoutConstraint constraintWithItem:_viewLabel
                                                                       attribute:NSLayoutAttributeWidth
                                                                       relatedBy:NSLayoutRelationEqual
-                                                                         toItem:_exportButton
+                                                                         toItem:_viewLabel
                                                                       attribute:NSLayoutAttributeWidth
                                                                      multiplier:1.0
                                                                        constant:0.0];
-    NSArray *expButtonContraints = [NSArray arrayWithObjects:expButtonToTop, expButtonRight, expButtonBottom, expButtonWidth, nil];
-    [_topInfoView addConstraints:expButtonContraints];
+    NSArray *viewLabelContraints = [NSArray arrayWithObjects:viewLabelToTop, viewLabelRight, viewLabelBottom, viewLabelWidth, nil];
+    [_topInfoView addConstraints:viewLabelContraints];
     
-    // Exportable title
-    [_exportLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    NSLayoutConstraint *expLabelToTop = [NSLayoutConstraint constraintWithItem:_exportLabel
+    // View Icon
+    [_viewIcon setTranslatesAutoresizingMaskIntoConstraints:NO];
+    NSLayoutConstraint *viewIconToTop = [NSLayoutConstraint constraintWithItem:_viewIcon
                                                                      attribute:NSLayoutAttributeTop
                                                                      relatedBy:NSLayoutRelationEqual
-                                                                        toItem:horizontalSepView
+                                                                        toItem:_paperTitleLabel
                                                                      attribute:NSLayoutAttributeBottom
                                                                     multiplier:1.0
-                                                                      constant:8.0];
-    NSLayoutConstraint *expLabelRight = [NSLayoutConstraint constraintWithItem:_exportLabel
+                                                                      constant:12.0];
+    NSLayoutConstraint *viewIconRight = [NSLayoutConstraint constraintWithItem:_viewIcon
                                                                      attribute:NSLayoutAttributeRight
                                                                      relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_exportButton
+                                                                        toItem:_viewLabel
                                                                      attribute:NSLayoutAttributeLeft
                                                                     multiplier:1.0
                                                                       constant:-8.0];
-    NSLayoutConstraint *expLabelBottom = [NSLayoutConstraint constraintWithItem:_exportLabel
+    NSLayoutConstraint *viewIconBottom = [NSLayoutConstraint constraintWithItem:_viewIcon
                                                                       attribute:NSLayoutAttributeBottom
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:_topInfoView
                                                                       attribute:NSLayoutAttributeBottom
                                                                      multiplier:1.0
-                                                                       constant:-8.0];
-    NSLayoutConstraint *expLabelWidth = [NSLayoutConstraint constraintWithItem:_exportLabel
+                                                                       constant:-12.0];
+    NSLayoutConstraint *viewIconWidth = [NSLayoutConstraint constraintWithItem:_viewIcon
                                                                      attribute:NSLayoutAttributeWidth
                                                                      relatedBy:NSLayoutRelationEqual
                                                                         toItem:nil
                                                                      attribute:NSLayoutAttributeWidth
                                                                     multiplier:1.0
-                                                                      constant:80.0];
-    NSArray *expLabelContraints = [NSArray arrayWithObjects:expLabelToTop, expLabelRight, expLabelBottom, expLabelWidth, nil];
-    [_topInfoView addConstraints:expLabelContraints];
+                                                                      constant:24.0];
+    NSArray *viewIconContraints = [NSArray arrayWithObjects:viewIconToTop, viewIconRight, viewIconBottom, viewIconWidth, nil];
+    [_topInfoView addConstraints:viewIconContraints];
     
     // Bottom separator view
     UIView *bottomBorderView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -471,7 +466,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSDictionary *parameters = @{@"id":paperId};
     NSString *urlString = [NSString stringWithFormat:@"%@%@", BASE_URL, @"get_newscontent.php"];
-    ExportableWebViewController * __weak weakSelf = self;
+    TextWebViewController * __weak weakSelf = self;
     [manager POST:urlString
        parameters:parameters
          progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -504,7 +499,8 @@
 //    NSInteger emptyFlag = [data[@"emptyflg"] integerValue];
 //    NSString *keyWords  = data[@"keywords"];
 //    NSString *telNumber = data[@"tel"];
-//    NSInteger viewCount = [data[@"viewnum"] integerValue];
+    NSInteger viewCount = [data[@"viewnum"] integerValue];
+    [_viewLabel setText:[NSString stringWithFormat:@"%ld",viewCount]];
     
     [_paperTitleLabel setText:title];
     [_textView setText:content];

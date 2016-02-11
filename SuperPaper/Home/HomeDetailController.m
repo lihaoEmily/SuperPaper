@@ -57,7 +57,8 @@
     [scrollVeiw addSubview:numOfReader];
     
 //    小眼睛
-    imageView = [[UIImageView alloc]initWithImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+//    imageView = [[UIImageView alloc]initWithImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+    imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ViewCount"]];
     imageView.frame = CGRectMake(SCREEN_WIDTH - NUMLABEL_W - 20, CGRectGetMaxY(titleLabel.frame) + 20, NUMLABEL_H, NUMLABEL_H);
     [scrollVeiw addSubview:imageView];
     

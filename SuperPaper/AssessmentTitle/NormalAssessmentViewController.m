@@ -9,6 +9,8 @@
 #import "NormalAssessmentViewController.h"
 #import "HomeNewsCell.h"
 #import "NormalWebViewController.h"
+#import "HomeDetailController.h"
+#import "ExportableWebViewController.h"
 
 @interface NormalAssessmentViewController ()<UITableViewDataSource,UITableViewDelegate>
 /**
@@ -145,10 +147,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
-    normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-    normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
-    [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
+//    NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
+//    normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+//    normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+    
+    NSString *title  = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+    NSString *urlStr = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+    UIViewController *viewController = nil;
+    if (urlStr.length > 1) {
+        NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+        vc.title = title;
+        vc.urlString = urlStr;
+        viewController = vc;
+    } else {
+        HomeDetailController *vc = [[HomeDetailController alloc] init];
+        vc.title = title;
+        vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
+        vc.isNews = YES;
+        viewController = vc;
+    }
+    
+    [AppDelegate.app.nav pushViewController:viewController animated:YES];
 }
 
 @end
