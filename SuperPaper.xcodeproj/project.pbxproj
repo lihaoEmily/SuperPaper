@@ -36,6 +36,7 @@
 		04112A9A1C60B0C000290C23 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04112A901C60B0C000290C23 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		04112A9B1C60B0C000290C23 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04112A931C60B0C000290C23 /* libSocialWechat.a */; };
 		04112A9C1C60B0C000290C23 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04112A941C60B0C000290C23 /* libWeChatSDK.a */; };
+		04396D571C6B15F2009182AA /* TextWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04396D561C6B15F2009182AA /* TextWebViewController.m */; };
 		047EC9051C4681E800FA66B3 /* ImagesCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 047EC9041C4681E800FA66B3 /* ImagesCarousel.m */; };
 		04AD200C1C5D1010000A8984 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04AD1FF21C5D1010000A8984 /* UMSocialLocalizable.strings */; };
 		04AD200D1C5D1010000A8984 /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04AD20001C5D1010000A8984 /* libUMSocial_Sdk_4.4.a */; };
@@ -266,6 +267,8 @@
 		04112A951C60B0C000290C23 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		04112A961C60B0C000290C23 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		04112A971C60B0C000290C23 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		04396D551C6B15F2009182AA /* TextWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextWebViewController.h; path = WebView/TextWebViewController.h; sourceTree = "<group>"; };
+		04396D561C6B15F2009182AA /* TextWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextWebViewController.m; path = WebView/TextWebViewController.m; sourceTree = "<group>"; };
 		047EC9031C4681E800FA66B3 /* ImagesCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagesCarousel.h; path = Utils/ImagesCarousel.h; sourceTree = "<group>"; };
 		047EC9041C4681E800FA66B3 /* ImagesCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImagesCarousel.m; path = Utils/ImagesCarousel.m; sourceTree = "<group>"; };
 		04AD1FF31C5D1010000A8984 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
@@ -1083,6 +1086,8 @@
 				04F8906A1C4A939200891ABF /* ExportableWebViewController.m */,
 				04FFFE231C414C6B00ECCA1C /* NormalWebViewController.h */,
 				04FFFE241C414C6B00ECCA1C /* NormalWebViewController.m */,
+				04396D551C6B15F2009182AA /* TextWebViewController.h */,
+				04396D561C6B15F2009182AA /* TextWebViewController.m */,
 			);
 			name = WebView;
 			sourceTree = "<group>";
@@ -1684,6 +1689,7 @@
 				5807C2E11C473B7A002C5F8E /* MJRefreshComponent.m in Sources */,
 				5807C2E71C473B7A002C5F8E /* MJRefreshBackGifFooter.m in Sources */,
 				04FFFE191C4123F100ECCA1C /* TabBarItem.m in Sources */,
+				04396D571C6B15F2009182AA /* TextWebViewController.m in Sources */,
 				F264AFEE1C5F39D400FF9EE5 /* PublicationViewTableViewCell.m in Sources */,
 				F24FB53D1C591B0B005703EA /* PublicationView.m in Sources */,
 				F4819C131C57178000C3E24B /* VoucherIntroViewController.m in Sources */,
