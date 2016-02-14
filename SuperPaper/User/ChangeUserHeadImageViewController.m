@@ -287,7 +287,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *urlString = [NSString stringWithFormat:@"%@changeusername.php",BASE_URL];
-    NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%lu",[UserSession sharedInstance].currentUserID],@"username":_nickNameTextField.text};
+    NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%lu",(long)[UserSession sharedInstance].currentUserID],@"username":_nickNameTextField.text};
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
