@@ -500,7 +500,7 @@
 //    NSString *keyWords  = data[@"keywords"];
 //    NSString *telNumber = data[@"tel"];
     NSInteger viewCount = [data[@"viewnum"] integerValue];
-    [_viewLabel setText:[NSString stringWithFormat:@"%ld",viewCount]];
+    [_viewLabel setText:[NSString stringWithFormat:@"%ld",(long)viewCount]];
     
     [_paperTitleLabel setText:title];
     [_textView setText:content];

@@ -360,7 +360,7 @@ static NSString *const SubmitIdentifier = @"submit";
     UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
     bgView.layer.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7].CGColor;
     
-    UIDatePicker *datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(25, (bgView.bounds.size.height - 200) / 2, bgView.bounds.size.width - 50, 200)];
+    UIDatePicker *datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, (bgView.bounds.size.height - 200) / 2, bgView.bounds.size.width, 200)];
     datePicker.datePickerMode = UIDatePickerModeDate;
     datePicker.backgroundColor = [UIColor whiteColor];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
@@ -568,7 +568,12 @@ static NSString *const SubmitIdentifier = @"submit";
     NSString *nowStr = [formatter stringFromDate:[NSDate date]];
     NSString *nowYear = [nowStr componentsSeparatedByString:@":"][0];
     
-    return nowYear.integerValue - year.integerValue;
+    NSInteger age = nowYear.integerValue - year.integerValue;
+    if (age <= 0) {
+        return 0;
+    } else {
+        return age;
+    }
 }
 - (void) doneWithAge
 {

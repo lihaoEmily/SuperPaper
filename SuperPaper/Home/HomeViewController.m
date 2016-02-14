@@ -38,14 +38,14 @@
     [super viewDidLoad];
 //    [self viewTest];
     isNews = YES;
-    
     [self initData];
-    [self getHomePageNewsInfo];
-    [self getHomePageAdInfo];
+//    [self getHomePageNewsInfo];
+//    [self getHomePageAdInfo];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self pullDownPageData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -91,6 +91,12 @@
         [_responseActivityInfoArr removeAllObjects];
         [self getHomePageActivityInfo];
     }
+    
+    if (imagesURLString) {
+        [imagesURLString removeAllObjects];
+    }
+    [self getHomePageAdInfo];
+    
     [_studyTableView.mj_header endRefreshing];
 }
 
@@ -188,10 +194,12 @@
         
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             _responseAdInfoArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            NSMutableArray *imageUrls = [[NSMutableArray alloc] init];
             for (NSDictionary *dic in _responseAdInfoArr) {
                 NSString *iamgeURL = [NSString stringWithFormat:@"%@%@",IMGURL,[dic valueForKey:@"adpicname"]];
-                [imagesURLString addObject:iamgeURL];
+                [imageUrls addObject:iamgeURL];
             }
+            imagesURLString = imageUrls;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 cycleScrollView.imageURLStringsGroup = imagesURLString;
             });
@@ -246,7 +254,7 @@
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 224)];
     [headerView setBackgroundColor:kColor(236, 236, 236)];
     //采用网络图片实现
-    imagesURLString = [[NSMutableArray alloc]init];
+//    imagesURLString = [[NSMutableArray alloc]init];
     // 网络加载 --- 创建带标题的图片轮播器
     cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 164) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
     

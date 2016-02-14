@@ -343,6 +343,7 @@
 - (IBAction)scanQRCode:(id)sender {
     if ([QRCodesController isCameraAvailable]) {
         QRCodesController *vc = [[QRCodesController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
         vc.ScanResult = ^(NSString *result,BOOL success){
             if (success) {
                 

@@ -177,7 +177,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
             if (0 == result.integerValue) {//获取我的邀请列表成功
                 if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                     _total_num = [responseObject[@"total_num"] integerValue];
-                    self.friendNumLabel.text = [NSString stringWithFormat:@"%lu人",_total_num];
+                    self.friendNumLabel.text = [NSString stringWithFormat:@"%ld人",_total_num];
                 }
                 _list = [responseObject[@"list"]mutableCopy];
                 [self.tableView reloadData];
@@ -214,7 +214,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
             if (0 == result.integerValue) {//获取我的邀请列表成功
                 if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                     _total_num = [responseObject[@"total_num"] integerValue];
-                    self.friendNumLabel.text = [NSString stringWithFormat:@"%lu人",_total_num];
+                    self.friendNumLabel.text = [NSString stringWithFormat:@"%ld人",_total_num];
                 }
                 
                 NSArray *list = responseObject[@"list"];
@@ -256,7 +256,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
             if (0 == result.integerValue) {//获取我的邀请列表成功
                 if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                     _total_num = [responseObject[@"total_num"] integerValue];
-                    self.friendNumLabel.text = [NSString stringWithFormat:@"%lu人",_total_num];
+                    self.friendNumLabel.text = [NSString stringWithFormat:@"%ld人",_total_num];
                 }
                 
                 _list = [responseObject[@"list"]mutableCopy];

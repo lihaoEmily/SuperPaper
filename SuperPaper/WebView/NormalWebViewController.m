@@ -214,6 +214,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [_indicatorView stopAnimating];
     [_indicatorView setHidden:YES];
+    NSLog(@"----> WebViewLoadError: %@",error);
 }
 
 #pragma mark - UMSocialUIDelegate

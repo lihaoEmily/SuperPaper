@@ -109,6 +109,7 @@
 
         [self addChildViewController:introPageView];
         [self.view addSubview:introPageView.view];
+//        [introPageView didMoveToParentViewController:self];
         
         [[NSUserDefaults standardUserDefaults] setObject:currentVersionStr forKey:versionStr];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -246,6 +247,9 @@
         [self.introPageView.view removeFromSuperview];
         [self.introPageView removeFromParentViewController];
         self.introPageView = nil;
+        if (self.currentController) {
+            [self.currentController viewWillAppear:NO];
+        }
     }];
     
 }

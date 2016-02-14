@@ -26,7 +26,11 @@
 #import "UMSocialWechatHandler.h"
 #import "UMSocialQQHandler.h"
 
-@interface AppDelegate ()
+#import "NormalWebViewController.h"
+
+@interface AppDelegate ()<UIAlertViewDelegate>
+
+@property (nonatomic, strong) NSString * pushUrlString;
 
 @end
 
@@ -48,7 +52,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [self registerShareSdkForApplication];
+//    [self registerShareSdkForApplication];
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //可以添加自定义categories
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
@@ -273,6 +277,14 @@
          }
      }];
 }
+
+#pragma mark - UMS Register
+- (void)registerUMSocialForApplication {
+    ;
+}
+
+#pragma mark - APNS
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     // Required
@@ -281,22 +293,75 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    
+    NSLog(@"----> received remote notification:%@",userInfo);
     // Required,For systems with less than or equal to iOS6
+    BOOL ret = [self handlePushNotification:userInfo];
+    if (ret) {
+        return;
+    }
     [JPUSHService handleRemoteNotification:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    
+    NSLog(@"----> received remote notification:%@",userInfo);
     // IOS 7 Support Required
+    BOOL ret = [self handlePushNotification:userInfo];
+    if (ret) {
+        return;
+    }
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
-
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     
     //Optional
     NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
 }
+
+#pragma mark - Handle push notification
+- (BOOL)handlePushNotification:(NSDictionary *)userInfo {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    NSDictionary* apsDic = [userInfo objectForKey:@"aps"];
+    NSString *urlStr = [userInfo objectForKey:@"url"];
+    if (urlStr) {
+        _pushUrlString = [NSString stringWithString:urlStr];
+    }
+    if (apsDic != nil) {
+        NSString* msg = [apsDic objectForKey:@"alert"];
+        if(msg != nil) {
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:msg
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:@"取消"
+                                                      otherButtonTitles:@"确定", nil];
+            [alertView show];
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (void)showWebViewForPushNotification {
+    NormalWebViewController* vc = [[NormalWebViewController alloc] init];
+    vc.urlString = _pushUrlString;
+    vc.title = @"推送";
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+//    nav.navigationBarHidden = NO;
+    UIViewController *rootViewController = AppDelegate.app.nav.topViewController;
+    [rootViewController.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSLog(@"----> push url string : %@", _pushUrlString);
+        [self showWebViewForPushNotification];
+    } else {
+        ;
+    }
+}
+
 @end
