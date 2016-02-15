@@ -38,15 +38,24 @@
     [super viewDidLoad];
 //    [self viewTest];
     isNews = YES;
-    
     [self initData];
-    [self getHomePageNewsInfo];
-    [self getHomePageAdInfo];
+//    [self getHomePageNewsInfo];
+//    [self getHomePageAdInfo];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self pullDownPageData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)initData {
     
-    _studyTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, OWIDTH,self.view.bounds.size.height-64-49) style:UITableViewStylePlain];
+    _studyTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT - TABBAR_HEIGHT)
+                                                  style:UITableViewStylePlain];
     _studyTableView.dataSource = self;
     _studyTableView.delegate = self;
     _studyTableView.sectionHeaderHeight = 10;
@@ -82,6 +91,12 @@
         [_responseActivityInfoArr removeAllObjects];
         [self getHomePageActivityInfo];
     }
+    
+    if (imagesURLString) {
+        [imagesURLString removeAllObjects];
+    }
+    [self getHomePageAdInfo];
+    
     [_studyTableView.mj_header endRefreshing];
 }
 
@@ -105,12 +120,13 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
-     ** parameters 参数
-     * ownertype  整型    2：学生
+     * parameters 参数
+     * ownertype  整型    1:教师主页，2：学生主页
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",@"1",@"ownertype", nil];
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",[NSNumber numberWithInteger:ownerType],@"ownertype", nil];
 
    // NSLog(@"parameters %@",parameters);
 
@@ -138,12 +154,13 @@
     //设置返回类型
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
-     ** parameters 参数
+     * parameters 参数
      * ownertype  整型    1:教师主页，2：学生主页
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
-    NSDictionary *parameters = @{@"ownertype":@"2", @"start_pos":[NSNumber numberWithInt:(int)_responseActivityInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType], @"start_pos":[NSNumber numberWithInt:(int)_responseActivityInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_activityinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -166,20 +183,23 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
-     ** parameters 参数
+     * parameters 参数
      * ownertype  整型
      */
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1]};
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:ownerType]};
     NSString *urlString = [NSString stringWithFormat:@"%@getadinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             _responseAdInfoArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            NSMutableArray *imageUrls = [[NSMutableArray alloc] init];
             for (NSDictionary *dic in _responseAdInfoArr) {
                 NSString *iamgeURL = [NSString stringWithFormat:@"%@%@",IMGURL,[dic valueForKey:@"adpicname"]];
-                [imagesURLString addObject:iamgeURL];
+                [imageUrls addObject:iamgeURL];
             }
+            imagesURLString = imageUrls;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 cycleScrollView.imageURLStringsGroup = imagesURLString;
             });
@@ -200,8 +220,13 @@
             }
             
             isNews = YES;
-            [_responseNewsInfoArr removeAllObjects];
-            [self getHomePageNewsInfo];
+//            [_responseNewsInfoArr removeAllObjects];
+            if (_responseNewsInfoArr.count > 0) {
+                [_studyTableView reloadData];
+            }
+            else{
+               [self getHomePageNewsInfo];
+            }
         }
             break;
         case 101:{
@@ -210,8 +235,13 @@
                 btn.selected = NO;
             }
             isNews = NO;
-            [_responseActivityInfoArr removeAllObjects];
-            [self getHomePageActivityInfo];
+//            [_responseActivityInfoArr removeAllObjects];
+            if (_responseActivityInfoArr.count > 0) {
+                [_studyTableView reloadData];
+            }
+            else{
+                [self getHomePageActivityInfo];
+            }
         }
             break;
         default:
@@ -222,10 +252,11 @@
 -(void)creatHeaderView
 {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 224)];
+    [headerView setBackgroundColor:kColor(236, 236, 236)];
     //采用网络图片实现
-    imagesURLString = [[NSMutableArray alloc]init];
+//    imagesURLString = [[NSMutableArray alloc]init];
     // 网络加载 --- 创建带标题的图片轮播器
-    cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+    cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 164) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
     
     cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
     cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
@@ -233,22 +264,28 @@
     NSArray *nameArray = [NSArray arrayWithObjects:@"新闻",@"活动", nil];
     for (int i = 0; i < nameArray.count; i ++) {
         UIButton *serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        serviceBtn.frame = CGRectMake((i%2)*OWIDTH/2, CGRectGetMaxY(cycleScrollView.frame), OWIDTH/2, 44);
+        serviceBtn.frame = CGRectMake(i*SCREEN_WIDTH/2, CGRectGetMaxY(cycleScrollView.frame) + 4, SCREEN_WIDTH/2, 52);
         serviceBtn.tag = i+100;
         serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
-        serviceBtn.layer.borderWidth = 1;
+        serviceBtn.layer.borderWidth = 0;
         [serviceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        [serviceBtn addTarget:self action:@selector(serviceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [serviceBtn addTarget:self
+                       action:@selector(serviceBtnClick:)
+             forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:serviceBtn];
         if (i==0) {
             serviceBtn.selected = YES;
-            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"activity_select" directory:@"home"] forState:UIControlStateSelected];
-            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"activity" directory:@"home"] forState:UIControlStateNormal];
+            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"news_select"]
+                                  forState:UIControlStateSelected];
+            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"news"]
+                                  forState:UIControlStateNormal];
         }
         else{
-            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"news_select" directory:@"home"] forState:UIControlStateSelected];
-            [serviceBtn setBackgroundImage:[UIImage imageWithASName:@"news" directory:@"home"] forState:UIControlStateNormal];
+            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"activity_select"]
+                                  forState:UIControlStateSelected];
+            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"activity"]
+                                  forState:UIControlStateNormal];
         }
     }
     _studyTableView.tableHeaderView = headerView;
@@ -276,6 +313,7 @@
                               timeString,@"time", nil];
         
         cell.infoDict = dict;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -337,6 +375,7 @@
     return 0.1;
 }
 
+#pragma mark - UITableView Delgate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NormalWebViewController *vc = [[NormalWebViewController alloc]init];
     HomeDetailController *detailVC = [[HomeDetailController alloc]init];
@@ -394,7 +433,7 @@
  */
 - (void)viewTest {
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,64,100, 100)];
-    btn.backgroundColor = kSelColor;
+    btn.backgroundColor = [AppConfig appNaviColor];
     btn.tag = 100;
     [btn setTitle:@"画面迁移" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -404,7 +443,7 @@
   forControlEvents:UIControlEventTouchUpInside];
     //TODO:for texting
     UIButton *btnWeb = [[UIButton alloc] initWithFrame:CGRectMake(108,64,100, 100)];
-    btnWeb.backgroundColor = kSelColor;
+    btnWeb.backgroundColor = [AppConfig appNaviColor];
     btnWeb.tag = 101;
     [btnWeb setTitle:@"ShareSDK" forState:UIControlStateNormal];
     [btnWeb setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -415,7 +454,7 @@
     
     //TODO:for texting
     UIButton *btnWebExp = [[UIButton alloc] initWithFrame:CGRectMake(216,64,100, 100)];
-    btnWebExp.backgroundColor = kSelColor;
+    btnWebExp.backgroundColor = [AppConfig appNaviColor];
     btnWebExp.tag = 102;
     [btnWebExp setTitle:@"导出网页" forState:UIControlStateNormal];
     [btnWebExp setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

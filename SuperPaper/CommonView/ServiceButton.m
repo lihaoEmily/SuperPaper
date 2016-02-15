@@ -23,7 +23,7 @@
     [super layoutSubviews];
     
     // 控件大小,间距大小
-    CGFloat const imageViewEdge   = self.bounds.size.width * 0.6;
+    CGFloat const imageViewEdge   = self.bounds.size.width * 0.5;
     CGFloat const centerOfView    = self.bounds.size.width * 0.5;
     CGFloat const labelLineHeight = self.titleLabel.font.lineHeight;
     CGFloat const verticalMarginT = self.bounds.size.height - labelLineHeight - imageViewEdge - MARGIN;
@@ -42,7 +42,7 @@
     self.titleLabel.bounds = CGRectMake(0, 0, self.bounds.size.width, labelLineHeight);
     self.titleLabel.center = CGPointMake(centerOfView, centerOfTitleLabel);
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.font = [UIFont systemFontOfSize:20.0];
+    self.titleLabel.font = [UIFont systemFontOfSize:18.0];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{

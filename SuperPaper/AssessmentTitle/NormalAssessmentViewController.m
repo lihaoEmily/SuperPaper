@@ -9,6 +9,8 @@
 #import "NormalAssessmentViewController.h"
 #import "HomeNewsCell.h"
 #import "NormalWebViewController.h"
+#import "HomeDetailController.h"
+#import "ExportableWebViewController.h"
 
 @interface NormalAssessmentViewController ()<UITableViewDataSource,UITableViewDelegate>
 /**
@@ -40,11 +42,11 @@
 - (void)setupUI
 {
     _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    _indicatorView.frame = CGRectMake(OWIDTH / 2 - 15, OHIGHT / 2 - 15, 30, 30);
+    _indicatorView.frame = CGRectMake(SCREEN_WIDTH / 2 - 15, SCREEN_HEIGHT / 2 - 15, 30, 30);
     [_indicatorView startAnimating];
     [self.view addSubview:_indicatorView];
     
-    _jobTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, OWIDTH, OHIGHT - 64)];
+    _jobTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAVIGATIONBAR_HEIGHT)];
     _jobTableView.dataSource = self;
     _jobTableView.delegate = self;
     _jobTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -145,20 +147,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
-    normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-    normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
-    [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
+//    NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
+//    normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+//    normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+    
+    NSString *title  = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+    NSString *urlStr = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+    UIViewController *viewController = nil;
+    if (urlStr.length > 1) {
+        NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+        vc.title = title;
+        vc.urlString = urlStr;
+        viewController = vc;
+    } else {
+        HomeDetailController *vc = [[HomeDetailController alloc] init];
+        vc.title = title;
+        vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
+        vc.isNews = YES;
+        viewController = vc;
+    }
+    
+    [AppDelegate.app.nav pushViewController:viewController animated:YES];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

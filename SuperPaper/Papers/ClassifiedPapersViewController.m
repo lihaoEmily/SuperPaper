@@ -79,7 +79,7 @@
 #pragma mark - 网络请求获取数据
 - (void)getData
 {
-    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:15], @"paper_tagid":tagId};
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:[self.type_id intValue]], @"start_pos":[NSNumber numberWithInt:(int)_paperArray.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"paper_tagid":tagId};
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_list.php",BASE_URL];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -89,13 +89,16 @@
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            
-           NSDictionary * dataDic = [NSDictionary dictionary];
-           dataDic = responseObject;
-          // NSLog(@"%@",dataDic);
-           if (dataDic) {
+           NSLog(@"%@",responseObject);
+           if (responseObject) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-               [_paperArray addObjectsFromArray:listData];
-               [_tableView reloadData];
+               NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+               if (_paperArray.count >= total_num) {
+                   return;
+               }else{
+                   [_paperArray addObjectsFromArray:listData];
+                   [_tableView reloadData];
+               }
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
@@ -114,10 +117,7 @@
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            
-           NSDictionary * dataDic = [NSDictionary dictionary];
-           dataDic = responseObject;
-          // NSLog(@"%@",dataDic);
-           if (dataDic) {
+           if (responseObject) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                [_paperArray removeAllObjects];
                [_paperArray addObjectsFromArray:listData];
@@ -172,7 +172,6 @@
 
 - (void)setupTitleView
 {
-//    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
     UIImage *image = [UIImage imageNamed:@"searchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(10, 0, 25, 25);

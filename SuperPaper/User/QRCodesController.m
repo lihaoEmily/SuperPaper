@@ -133,7 +133,6 @@
     [_session stopRunning];
     if (metadataObjects.count > 0 )
     {
-        NSLog(@"%@",[[metadataObjects firstObject] stringValue]);
         NSString *resultStr = [[metadataObjects firstObject] stringValue];
         if (self.ScanResult) {
             self.ScanResult(resultStr,YES);
@@ -174,8 +173,10 @@
 {
     if (!_cameraImageView)
     {
+        CGFloat width = self.view.frame.size.width - 32;
+        CGFloat height = width;
         _cameraImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithASName:@"cameraImage" directory:@"user"]];
-        _cameraImageView.frame = CGRectMake(0, 0, 200, 200);
+        _cameraImageView.frame = CGRectMake(0, 0, width, height);
         _cameraImageView.clipsToBounds = YES;
         _cameraImageView.clipsToBounds = YES;
     }

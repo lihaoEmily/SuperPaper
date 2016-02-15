@@ -50,12 +50,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _agree = YES;
     _pwd = @"";
     _confirmPwd = @"";
     _originalTopCon = self.topCon.constant;
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -82,7 +80,8 @@
     self.confirmPwdTextField.layer.borderWidth = 1;
     self.qRCodeTextField.layer.borderColor = TextFieldBorderColor;
     self.qRCodeTextField.layer.borderWidth = 1;
-    [self.agreeBtn sizeToFit];
+
+    self.agreeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
     self.registerBtn.layer.masksToBounds = YES;
     self.registerBtn.layer.cornerRadius = 4;
     
@@ -91,6 +90,12 @@
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
 
     _webIndicator = indicator;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -338,6 +343,7 @@
 - (IBAction)scanQRCode:(id)sender {
     if ([QRCodesController isCameraAvailable]) {
         QRCodesController *vc = [[QRCodesController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
         vc.ScanResult = ^(NSString *result,BOOL success){
             if (success) {
                 
@@ -355,10 +361,10 @@
 - (IBAction)agreeOrNot:(id)sender {
     _agree = !_agree;
     if (_agree) {
-        [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateNormal];
+        [self.agreeBtn setImage:[UIImage imageNamed:@"复选框-2"] forState:UIControlStateNormal];
         
     }else
-        [self.agreeBtn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
+        [self.agreeBtn setImage:[UIImage imageNamed:@"复选框-1"] forState:UIControlStateNormal];
 }
 - (IBAction)serviceItemsChecking:(id)sender {
     ServiceNoticesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"serviceitems"];

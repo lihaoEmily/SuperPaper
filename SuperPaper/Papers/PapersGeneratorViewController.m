@@ -33,10 +33,11 @@
     UIView *_searchBgView;
     
     /// 显示论文的scrollView
-    UIScrollView *_paperScrollerView;
+    UITextView *_paperTextView;
     
     UIView *_lineView;
     
+    UIActivityIndicatorView *_activity;
 }
 
 - (void)viewDidLoad {
@@ -134,55 +135,57 @@
     exportBtn.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [exportBoxImg addSubview:exportBtn];
     
-    _paperScrollerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBgView.frame), kScreenWidth, kScreenHeight - 64 - 50 - 60)];
-    _paperScrollerView.contentSize = CGSizeMake(kScreenWidth, 50);
-    _paperScrollerView.scrollEnabled = YES;
-    [self.view addSubview:_paperScrollerView];
-    
     /// 正文预览
-    UILabel *textPreviewLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth / 2 - 80, 5, 160, 30)];
+    UILabel *textPreviewLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth / 2 - 80, CGRectGetMaxY(_searchBgView.frame) + 5, 160, 30)];
     textPreviewLabel.font = [UIFont systemFontOfSize:20.0];
     textPreviewLabel.text = @"正文预览";
     textPreviewLabel.textAlignment = NSTextAlignmentCenter;
     textPreviewLabel.textColor = [UIColor blackColor];
-    [_paperScrollerView addSubview:textPreviewLabel];
+    [self.view addSubview:textPreviewLabel];
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(textPreviewLabel.frame) + 5, kScreenWidth - 20, 1)];
     _lineView.backgroundColor = [UIColor lightGrayColor];
-    [_paperScrollerView addSubview:_lineView];
+    [self.view addSubview:_lineView];
+    
+    _paperTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_lineView.frame), kScreenWidth, kScreenHeight - 64 - 50 - 60 - 36)];
+    _paperTextView.textColor = [UIColor blackColor];
+    _paperTextView.font = [UIFont systemFontOfSize:17.0];
+    _paperTextView.returnKeyType = UIReturnKeyDone;
+    [_paperTextView setEditable:NO];
+    [self.view addSubview:_paperTextView];
+    
+    /// 指示器
+    _activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [_activity setCenter:CGPointMake(kScreenWidth / 2, CGRectGetMidY(_paperTextView.frame) - 60)];
+    [_activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+    [_paperTextView addSubview:_activity];
 }
 
 - (void)setupScrollView
 {
-    CGFloat labelHeight;
     if (_content.length > 0) {
-        labelHeight = [_content sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0]}].height;
+        _paperTextView.text = _content;
     }else{
-        labelHeight = 0.0;
         UIAlertView *alterView = [[UIAlertView alloc]initWithTitle:@"超级论文" message:@"无内容生成" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
         [alterView show];
     }
-    _paperScrollerView.contentSize = CGSizeMake(kScreenWidth, labelHeight + 31);
-    
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_lineView.frame) + 10, kScreenWidth - 20, labelHeight)];
-    textView.text = _content;
-    textView.textColor = [UIColor blackColor];
-    textView.font = [UIFont systemFontOfSize:17.0];
-    textView.returnKeyType = UIReturnKeyDone;
-    [textView setEditable:NO];
-    [_paperScrollerView addSubview:textView];
 }
 
 #pragma mark - action
 /// 生成论文
 - (void)clickToGenerator
 {
+    [_activity startAnimating];
     [_searchBar resignFirstResponder];
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入论文题目" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:cancelAction];
-        [self presentViewController:alert animated:YES completion:nil];
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入论文题目" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+//        [alert addAction:cancelAction];
+//        [self presentViewController:alert animated:YES completion:nil];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入论文题目" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
     }
     [self getData];
 }
@@ -193,15 +196,12 @@
         ASSaveData *data = [[ASSaveData alloc] init];
         [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:cancelAction];
-        [self presentViewController:alert animated:YES completion:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }else{
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"没有可导出的论文" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:cancelAction];
-        [self presentViewController:alert animated:YES completion:nil];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有课导出的论文" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }
 }
 
@@ -219,11 +219,10 @@
        parameters:paramDic progress:^(NSProgress * _Nonnull uploadProgress) {
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-           NSDictionary * dataDic = [NSDictionary dictionary];
-           dataDic = responseObject;
+           [_activity stopAnimating];
            NSLog(@"%@",responseObject);
-           if (![dataDic valueForKey:@"content"]) {
-               _content = [dataDic valueForKey:@"content"];
+           if ([responseObject valueForKey:@"content"]) {
+               _content = [responseObject valueForKey:@"content"];
            }
            [self setupScrollView];
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

@@ -9,8 +9,9 @@
 #import "NormalWebViewController.h"
 #import "ShareManage.h"
 #import "UMSocial.h"
+#import "ShareView.h"
 
-@interface NormalWebViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
+@interface NormalWebViewController ()<UIWebViewDelegate, UMSocialUIDelegate, shareCustomDelegate>
 /**
  *  网页视图
  */
@@ -55,6 +56,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+// 分享按钮
 - (void)setupTitleView
 {
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -97,40 +99,28 @@
     [UMSocialData defaultData].extConfig.qzoneData.shareImage = image;
     
     // 以下是自定义分享view，同android线上版
-//    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(50, ([UIScreen mainScreen].bounds.size.height - 64) / 2 - (([UIScreen mainScreen].bounds.size.width - 100) / 4 + 20) / 2, [UIScreen mainScreen].bounds.size.width - 100, ([UIScreen mainScreen].bounds.size.width - 100) / 4 + 40)];
+//    ShareView *shareView = [[ShareView alloc] initWithFrame:CGRectMake(50, ([UIScreen mainScreen].bounds.size.height - 64) / 2 - (([UIScreen mainScreen].bounds.size.width - 100) / 4 + 20) / 2, [UIScreen mainScreen].bounds.size.width - 100, ([UIScreen mainScreen].bounds.size.width - 100) / 4 + 40)];
 //    shareView.backgroundColor = [UIColor whiteColor];
+//    shareView.shareDelegate = self;
 //    [_webView addSubview:shareView];
-//    
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, shareView.frame.size.width - 20, 20)];
-//    label.text = @"分享到社交平台";
-//    [shareView addSubview:label];
-//    
-//    NSArray *imageArr = @[@"icon_study_cet",@"icon_study_cet",@"icon_study_cet",@"icon_study_cet"];
-//    for (int i = 0; i < imageArr.count; i ++) {
-//        UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        menuBtn.frame = CGRectMake(10 + shareView.frame.size.width / 4 * i , 50 , shareView.frame.size.width / 4 - 20, shareView.frame.size.width / 4 - 20);
-//        menuBtn.tag = 1000 + i;
-//        [menuBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
-//        [menuBtn addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//        [shareView addSubview:menuBtn];
-//    }
 }
 
-#pragma mark 选择分享按钮点击
-- (void)shareBtnClick:(UIButton *)sender
+#pragma mark - shareCustomDelegate
+- (void)shareBtnClickWithIndex:(NSInteger)tag
 {
-    switch (sender.tag) {
+    NSString *text = @"更多精彩内容尽在[超级论文]";
+    switch (tag) {
         case 1000:
-            [[ShareManage shareManage] QQFriendsShareWithViewControll:self];
+            [[ShareManage shareManage] QQFriendsShareWithViewControll:self text:text urlString:self.urlString title:self.title];
             break;
         case 1001:
-            [[ShareManage shareManage] QzoneShareWithViewControll:self];
+            [[ShareManage shareManage] QzoneShareWithViewControll:self text:text urlString:self.urlString title:self.title];
             break;
         case 1002:
-            [[ShareManage shareManage] wxShareWithViewControll:self];
+            [[ShareManage shareManage] wxShareWithViewControll:self text:text urlString:self.urlString title:self.title];
             break;
         case 1003:
-            [[ShareManage shareManage] wxpyqShareWithViewControll:self];
+            [[ShareManage shareManage] wxpyqShareWithViewControll:self text:text urlString:self.urlString title:self.title];
             break;
             
         default:
@@ -224,6 +214,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [_indicatorView stopAnimating];
     [_indicatorView setHidden:YES];
+    NSLog(@"----> WebViewLoadError: %@",error);
 }
 
 #pragma mark - UMSocialUIDelegate

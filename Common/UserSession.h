@@ -9,25 +9,27 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, UserRole){
-    kUserRoleTeacher = 0,
-    kUserRoleStudent = 1
+    kUserRoleTeacher = 1,
+    kUserRoleStudent = 2
 };
 typedef NS_ENUM(NSInteger, UserGen) {
-    kUserGen_Man = 0,
+    kUserGen_Man   = 0,
     kUserGen_Woman = 1
 };
+
 #pragma mark - Public Keys
-#define kUserRole @"UserRole"
-#define kUserName @"UserName"
-#define kUserNickname @"UserNickname"
-#define kUserGen @"UserGen"
-#define kUserAge @"UserAge"
-#define kUserID @"UserID"
-#define kUserHeadImage @"UserHeadImage"
-#define kUserTel @"UserTel"
-#define kUserCollege @"UserCollege"
+
+#define kUserRole        @"UserRole"
+#define kUserName        @"UserName"
+#define kUserNickname    @"UserNickname"
+#define kUserGen         @"UserGen"
+#define kUserAge         @"UserAge"
+#define kUserID          @"UserID"
+#define kUserHeadImage   @"UserHeadImage"
+#define kUserTel         @"UserTel"
+#define kUserCollege     @"UserCollege"
 #define kUserLastUserTel @"LastUserTel"
-#define kUserInviteCode @"UserInviteCode"
+#define kUserInviteCode  @"UserInviteCode"
 ////如还有其实的Key请续断追加
 
 /**

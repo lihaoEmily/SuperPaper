@@ -8,7 +8,7 @@
 
 #import "NavigationController.h"
 
-#define kSelColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
+//#define kSelColor  [UIColor colorWithRed:255/255.0 green:6/255.0 blue:108/255.0 alpha:1.0f]
 
 @interface NavigationController ()
 
@@ -30,7 +30,7 @@
     
     UINavigationBar *navBar = [UINavigationBar appearance];
     
-    [navBar setBackgroundImage:[[UIImage imageWithColor:kSelColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
+    [navBar setBackgroundImage:[[UIImage imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
     
     navBar.backgroundColor = [UIColor clearColor];
     [navBar setTintColor:[UIColor whiteColor]];

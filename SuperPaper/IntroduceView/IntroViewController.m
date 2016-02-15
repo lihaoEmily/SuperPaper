@@ -5,8 +5,8 @@
 //  Created by YaoQiang on 16/1/14.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
-#define SCREEN_WIDTH    ([UIScreen mainScreen].bounds.size.width)
-#define SCREEN_HEIGHT   ([UIScreen mainScreen].bounds.size.height)
+//#define SCREEN_WIDTH    ([UIScreen mainScreen].bounds.size.width)
+//#define SCREEN_HEIGHT   ([UIScreen mainScreen].bounds.size.height)
 
 #import "IntroViewController.h"
 #import "UserSession.h"

@@ -10,10 +10,14 @@
 #import "JournalsPressView.h"
 #import "PublicationView.h"
 #import "UserSession.h"
+#import "PublicationViewTableViewCell.h"
+#import "PublicationSearchViewController.h"
+#import "PublicationSortsViewController.h"
+#import "PublicationIntroduceViewController.h"
 
 #define SEARCHPAGESIZE 30
 
-@interface PublicationViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface PublicationViewController ()<UITableViewDataSource,UITableViewDelegate,ClassifiedPublicationViewControllerDelegate>
 
 //@property (nonatomic, strong) JournalsPressView *contentView;
 @property (nonatomic, strong) PublicationView* contentView;
@@ -23,6 +27,7 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, assign) NSInteger subgroupId;
 @property (nonatomic, strong) NSDictionary* selectedSortDic;
+@property (nonatomic ,assign) NSInteger tagId;
 
 @end
 
@@ -38,6 +43,7 @@
         _selectedIndexPath = nil;
         _subgroupId = 0;
         _selectedSortDic = nil;
+        _tagId = 0;
     }
     return self;
 }
@@ -52,6 +58,14 @@
     _contentView.leftTableView.delegate = self;
     _contentView.rightTableView.dataSource = self;
     _contentView.rightTableView.delegate = self;
+    _tagId = 0;
+    
+    _contentView.rightTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self pulldownRefresh:_selectedSortDic];
+    }];
+    _contentView.rightTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self pullupRefresh:_selectedSortDic];
+    }];
     
     [self getPublicationSortData];
     
@@ -75,19 +89,20 @@
 
 - (void)loadNavigationView
 {
-    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+//    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
 //    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
-    UIImage *image = [UIImage imageNamed:@"SearchImage"];
+    UIImage *searhImage = [UIImage imageNamed:@"searchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(10, 0, 25, 25);
-    [searchBtn setImage:image forState:UIControlStateNormal];
+    [searchBtn setImage:searhImage forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchPublication:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
     
-    image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"sortBtn" ofType:@"png" inDirectory:@"Paper"]];
+//    image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"sortBtn" ofType:@"png" inDirectory:@"Paper"]];
+    UIImage *FilterImage = [UIImage imageNamed:@"FilterImage"];
     UIButton *sortBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     sortBtn.frame = CGRectMake(10, 0, 25, 25);
-    [sortBtn setImage:image forState:UIControlStateNormal];
+    [sortBtn setImage:FilterImage forState:UIControlStateNormal];
     [sortBtn addTarget:self action:@selector(sortPublication:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortBtn];
@@ -95,27 +110,16 @@
 }
 
 - (void) searchPublication :(id) sender{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"group_id":[NSNumber numberWithInt:1],@"list_num":[NSNumber numberWithInt:15], @"group_id":[NSNumber numberWithInt:1]};
-    NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
-    NSLog(@"URL＝ %@",urlString);
-    
-    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-            NSLog(@"%@",uploadProgress);
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-            [_publicationSortArray addObjectsFromArray:array];
-            NSLog(@"%@",responseObject);
-            [_contentView.leftTableView reloadData];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
-        }];
+    PublicationSearchViewController *vc = [[PublicationSearchViewController alloc] init];
+    [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
 - (void) sortPublication:(id) sender{
-    
+    PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
+    sortsView.tagId = _tagId;
+    sortsView.groupId = 1;
+    sortsView.delegate = self;
+    [self.navigationController pushViewController:sortsView animated:YES];
 }
 
 - (void)getPublicationSortData
@@ -151,7 +155,8 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInt:0], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -170,20 +175,78 @@
           }];
 }
 
+- (void)pulldownRefresh:(NSDictionary*) sortDic
+{
+//    [_publicationDataArray removeAllObjects];
+    
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
+    
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%@",uploadProgress);
+    }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              
+              NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+              if ([array count] > 0) {
+                  [_publicationDataArray removeAllObjects];
+                  [_publicationDataArray addObjectsFromArray:array];
+                  [_contentView.rightTableView reloadData];
+              }
+              
+              [_contentView.rightTableView.mj_header endRefreshing];
+          }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              NSLog(@"%@",error);
+              [_contentView.rightTableView.mj_header endRefreshing];
+          }];
+}
+
+- (void)pullupRefresh:(NSDictionary*) sortDic
+{
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
+    
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%@",uploadProgress);
+    }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              
+              NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+              [_publicationDataArray addObjectsFromArray:array];
+              [_contentView.rightTableView reloadData];
+              [_contentView.rightTableView.mj_footer endRefreshing];
+          }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              NSLog(@"%@",error);
+              [_contentView.rightTableView.mj_footer endRefreshing];
+          }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - ClassifiedPublicationViewControllerDelegate
+- (void)searchByTagid:(NSInteger)tagid
+{
+    _tagId = tagid;
+    [_publicationDataArray removeAllObjects];
+    [self getPublicationDataWithSort:_selectedSortDic];
 }
-*/
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -201,7 +264,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView.tag == 2000) {
-        return 50;
+        return 70;
     }
     return 44;
 }
@@ -220,22 +283,28 @@
 //        cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.font = [UIFont systemFontOfSize:15];
 //        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        cell.backgroundColor = [UIColor grayColor];
+        cell.backgroundColor = [UIColor lightGrayColor];
         return cell;
     }
     else{
         static NSString *CellIdentifierPublicationRight = @"rightCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierPublicationRight];
+        PublicationViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierPublicationRight];
         
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
+            cell = [[PublicationViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
         }
         
 //        cell.textLabel.text = @"right";
-        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
-        cell.textLabel.text = [dataDic objectForKey:@"title"];
-        cell.detailTextLabel.text = [dataDic objectForKey:@"description"];
-        cell.detailTextLabel.textColor = [UIColor grayColor];
+//        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
+//        cell.textLabel.text = [dataDic objectForKey:@"title"];
+//        cell.detailTextLabel.text = [dataDic objectForKey:@"description"];
+//        cell.detailTextLabel.textColor = [UIColor grayColor];
+        
+        NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
+        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+        cell.titleLabel.font = [UIFont systemFontOfSize:14];
+        cell.titleLabel.text = [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"];
+
         return cell;
     }
 }
@@ -258,14 +327,17 @@
     if (tableView.tag == 1000) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 //        cell.backgroundColor = [UIColor whiteColor];
-        cell.textLabel.textColor = [UIColor redColor];
+        cell.textLabel.textColor = [AppConfig appNaviColor];
         _selectedIndexPath = indexPath;
         _selectedSortDic = [_publicationSortArray objectAtIndex:indexPath.row];
+        
         [_publicationDataArray removeAllObjects];
         [self getPublicationDataWithSort:_publicationSortArray[indexPath.row]];
     }
     else{
-        //        NSLog(@"tap right tableview index:%ld",(long)indexPath.row);
+        PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
+        vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
+        [self.navigationController pushViewController:vc animated:NO];
     }
 }
 

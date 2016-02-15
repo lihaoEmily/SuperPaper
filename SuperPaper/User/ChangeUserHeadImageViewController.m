@@ -60,14 +60,14 @@ static NSString *const ShowTextIdentifier = @"showtext";
 {
     if (0 == indexPath.row) {
         ChangeUserHeadImageHasNextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HasNextIdentifier];
-        cell.titleImageView.image = [UIImage imageNamed:@"usercell1"];
+        cell.titleImageView.image = [UIImage imageNamed:@"更换头像"];
         cell.titleLabel.text = @"头像上传";
-        cell.contentLabel.text = @"";
+        cell.contentLabel.text = nil;
         return cell;
         
     }else if(1 == indexPath.row){
         ChangeUserHeadImageHasNextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HasNextIdentifier];
-        cell.titleImageView.image = [UIImage imageNamed:@"usercell2"];
+        cell.titleImageView.image = [UIImage imageNamed:@"昵称"];
         cell.titleLabel.text = @"昵称";
         cell.contentLabel.text = [UserSession sharedInstance].currentUserNickname;
         return cell;
@@ -287,7 +287,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *urlString = [NSString stringWithFormat:@"%@changeusername.php",BASE_URL];
-    NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%lu",[UserSession sharedInstance].currentUserID],@"username":_nickNameTextField.text};
+    NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%lu",(long)[UserSession sharedInstance].currentUserID],@"username":_nickNameTextField.text};
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

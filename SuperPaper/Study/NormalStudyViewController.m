@@ -9,9 +9,11 @@
 #import "NormalStudyViewController.h"
 #import "HomeNewsCell.h"
 #import "NormalWebViewController.h"
+#import "TextWebViewController.h"
+#import "HomeDetailController.h"
 
-#define KAppWidth [UIScreen mainScreen].bounds.size.width
-#define KAppHeight [UIScreen mainScreen].bounds.size.height
+//#define KAppWidth [UIScreen mainScreen].bounds.size.width
+//#define KAppHeight [UIScreen mainScreen].bounds.size.height
 
 @interface NormalStudyViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -69,7 +71,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    _studyTableView.frame = CGRectMake(0, 0, KAppWidth,self.view.bounds.size.height);
+    _studyTableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, self.view.bounds.size.height);
     
 }
 
@@ -176,16 +178,25 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *title  = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+    NSString *urlStr = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+    UIViewController *viewController = nil;
+    if (urlStr.length > 1) {
+        NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+        vc.title = title;
+        vc.urlString = urlStr;
+        viewController = vc;
+    } else {
+        HomeDetailController *vc = [[HomeDetailController alloc] init];
+        vc.title = title;
+        vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
+        vc.isNews = YES;
+    }
     
-        
-    NormalWebViewController *vc = [[NormalWebViewController alloc]init];
-    vc.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-    vc.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
-        
     /**
     * 跳转页面
     */
-    [AppDelegate.app.nav pushViewController:vc animated:YES];
+    [AppDelegate.app.nav pushViewController:viewController animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

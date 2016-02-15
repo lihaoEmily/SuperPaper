@@ -1,9 +1,9 @@
 //
 //  ShareManage.m
-//  KONKA_MARKET
+//  SuperPaper
 //
-//  Created by wxxu on 14/12/18.
-//  Copyright (c) 2014年 archon. All rights reserved.
+//  Created by Emily on 16/2/1.
+//  Copyright © 2016年 Share technology. All rights reserved.
 //  分享管理
 
 #import "ShareManage.h"
@@ -42,49 +42,48 @@ static ShareManage *shareManage;
 //    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
 }
 
-#pragma mark 微信分享
-- (void)wxShareWithViewControll:(UIViewController *)viewC
+#pragma mark 微信好友分享
+- (void)wxShareWithViewControll:(UIViewController *)viewC text:(NSString *)text urlString:(NSString *)urlString title:(NSString *)title
 {
     _viewC = viewC;
-    [[UMSocialControllerService defaultControllerService] setShareText:share_content shareImage:nil socialUIDelegate:nil];
-    
-    [UMSocialWechatHandler setWXAppId:WX_APP_KEY appSecret:WX_APP_SECRET url:share_url];
+    UIImage *image = [UIImage imageNamed:@"LOGO-181"];
+    [[UMSocialControllerService defaultControllerService] setShareText:text shareImage:image socialUIDelegate:nil];
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = title;
+    [UMSocialWechatHandler setWXAppId:WX_APP_KEY appSecret:WX_APP_SECRET url:urlString];
     [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession].snsClickHandler(viewC,[UMSocialControllerService defaultControllerService],YES);
 }
 
-#pragma mark 新浪微博分享
-- (void)wbShareWithViewControll:(UIViewController *)viewC
-{
-    _viewC = viewC;
-    [[UMSocialControllerService defaultControllerService] setShareText:share_content shareImage:nil socialUIDelegate:nil];
-    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(viewC,[UMSocialControllerService defaultControllerService],YES);
-}
-
 #pragma mark 微信朋友圈分享
-- (void)wxpyqShareWithViewControll:(UIViewController *)viewC
+- (void)wxpyqShareWithViewControll:(UIViewController *)viewC text:(NSString *)text urlString:(NSString *)urlString title:(NSString *)title
 {
     _viewC = viewC;
-    [[UMSocialControllerService defaultControllerService] setShareText:share_content shareImage:nil socialUIDelegate:nil];
-    [UMSocialWechatHandler setWXAppId:WX_APP_KEY appSecret:WX_APP_SECRET url:share_url];
+    UIImage *image = [UIImage imageNamed:@"LOGO-181"];
+    [[UMSocialControllerService defaultControllerService] setShareText:text shareImage:image socialUIDelegate:nil];
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = title;
+    [UMSocialWechatHandler setWXAppId:WX_APP_KEY appSecret:WX_APP_SECRET url:urlString];
     [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatTimeline].snsClickHandler(viewC,[UMSocialControllerService defaultControllerService],YES);
 }
 
-#pragma mark QQ空间分享
-- (void)QzoneShareWithViewControll:(UIViewController *)viewC
+#pragma mark QQ好友分享
+- (void)QQFriendsShareWithViewControll:(UIViewController *)viewC text:(NSString *)text urlString:(NSString *)urlString title:(NSString *)title
 {
     _viewC = viewC;
-    [[UMSocialControllerService defaultControllerService] setShareText:share_content shareImage:nil socialUIDelegate:nil];
-    [UMSocialQQHandler setQQWithAppId:QQ_APP_KEY appKey:QQ_APP_SECRET url:share_url];
-    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQzone].snsClickHandler(viewC,[UMSocialControllerService defaultControllerService],YES);
+    UIImage *image = [UIImage imageNamed:@"LOGO-181"];
+    [[UMSocialControllerService defaultControllerService] setShareText:text shareImage:image socialUIDelegate:nil];
+    [UMSocialData defaultData].extConfig.qqData.title = title;
+    [UMSocialQQHandler setQQWithAppId:QQ_APP_KEY appKey:QQ_APP_SECRET url:urlString];
+    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ].snsClickHandler(viewC,[UMSocialControllerService defaultControllerService],YES);
 }
 
-#pragma mark QQ好友分享
-- (void)QQFriendsShareWithViewControll:(UIViewController *)viewC
+#pragma mark QQ空间分享
+- (void)QzoneShareWithViewControll:(UIViewController *)viewC text:(NSString *)text urlString:(NSString *)urlString title:(NSString *)title
 {
     _viewC = viewC;
-    [[UMSocialControllerService defaultControllerService] setShareText:share_content shareImage:nil socialUIDelegate:nil];
-    [UMSocialQQHandler setQQWithAppId:QQ_APP_KEY appKey:QQ_APP_SECRET url:share_url];
-    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ].snsClickHandler(viewC,[UMSocialControllerService defaultControllerService],YES);
+    UIImage *image = [UIImage imageNamed:@"LOGO-181"];
+    [[UMSocialControllerService defaultControllerService] setShareText:text shareImage:image socialUIDelegate:nil];
+    [UMSocialData defaultData].extConfig.qzoneData.title = title;
+    [UMSocialQQHandler setQQWithAppId:QQ_APP_KEY appKey:QQ_APP_SECRET url:urlString];
+    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQzone].snsClickHandler(viewC,[UMSocialControllerService defaultControllerService],YES);
 }
 
 #pragma mark 短信分享
@@ -103,6 +102,14 @@ static ShareManage *shareManage;
     else {
         //@"iOS版本过低,iOS4.0以上才支持程序内发送短信"
     }
+}
+
+#pragma mark 新浪微博分享
+- (void)wbShareWithViewControll:(UIViewController *)viewC
+{
+    _viewC = viewC;
+    [[UMSocialControllerService defaultControllerService] setShareText:share_content shareImage:nil socialUIDelegate:nil];
+    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(viewC,[UMSocialControllerService defaultControllerService],YES);
 }
 
 #pragma mark 短信的代理方法

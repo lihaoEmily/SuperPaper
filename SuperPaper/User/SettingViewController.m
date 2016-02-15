@@ -14,6 +14,7 @@
 #import "UserSettingRadioTableViewCell.h"
 #import "UserSettingTextShowTableViewCell.h"
 #import "UserSettingLogoutTableViewCell.h"
+#import "JPUSHService.h"
 
 @interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate>{
     BOOL _currentUserHasLogin;//当前已登录
@@ -199,9 +200,27 @@ static NSString *logoutIdentifier = @"logout";
 {
     if (sender == _soundEffectSwitch) {
         if (!sender.on) {
-            
+            if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+                //可以添加自定义categories
+                [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert)
+                                                      categories:nil];
+            } else {
+                //categories 必须为nil
+                [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert)
+                                                      categories:nil];
+            }
         }else{
-            
+            if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+                //可以添加自定义categories
+                [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)
+                                                      categories:nil];
+            } else {
+                //categories 必须为nil
+                [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                  UIRemoteNotificationTypeSound |
+                                                                  UIRemoteNotificationTypeAlert)
+                                                      categories:nil];
+            }
         }
             
     }else{

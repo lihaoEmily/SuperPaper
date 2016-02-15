@@ -87,10 +87,37 @@
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
-        NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-        [_responseArr addObjectsFromArray:listArray];
-        [_searchTableView reloadData];
-        
+        if (responseObject) {
+            NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+            if (_responseArr.count >= total_num) {
+                return;
+            }else{
+                [_responseArr addObjectsFromArray:listArray];
+                [_searchTableView reloadData];
+            }
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+}
+
+- (void)getSearchData
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSDictionary *parameters = @{@"type_id":[NSNumber numberWithInt:1], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE]};
+    NSString *urlString = [NSString stringWithFormat:@"%@searchpaper.php",BASE_URL];
+    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%@",uploadProgress);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        if (responseObject) {
+            NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            [_responseArr removeAllObjects];
+            [_responseArr addObjectsFromArray:listArray];
+            [_searchTableView reloadData];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];
@@ -204,12 +231,11 @@
 {
     [_searchBar resignFirstResponder];
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入搜索关键字" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:cancelAction];
-        [self presentViewController:alert animated:YES completion:nil];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入搜索关键字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }else{
-        [self getData];
+        [self getSearchData];
     }
 }
 
