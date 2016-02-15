@@ -8,6 +8,9 @@
 
 #import "PapersGeneratorViewController.h"
 #import "ASSaveData.h"
+#import "UserSession.h"
+#import "LoginViewController.h"
+
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
@@ -178,16 +181,18 @@
     [_activity startAnimating];
     [_searchBar resignFirstResponder];
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
-//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入论文题目" preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-//        [alert addAction:cancelAction];
-//        [self presentViewController:alert animated:YES completion:nil];
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入论文题目" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
         return;
     }
-    [self getData];
+    if ([UserSession sharedInstance].hasLogin) {
+        [self getData];
+    }else{
+        [_activity stopAnimating];
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+        [AppDelegate.app.nav pushViewController:loginVC animated:YES];
+    }
 }
 
 - (void)exportPapers:(UIButton *)sender
