@@ -181,6 +181,7 @@
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入论文题目" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
+        return;
     }
     [self getData];
 }
