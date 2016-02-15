@@ -33,7 +33,19 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>QQ41DA9FBC</string>
+				<string>QQ41DDBD8A</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string></string>
+			<key>CFBundleURLName</key>
+			<string>com.sharetechnology.SuperPapers</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>superpapers</string>
 			</array>
 		</dict>
 	</array>

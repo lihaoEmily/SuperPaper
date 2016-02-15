@@ -191,6 +191,7 @@
         vc.title = title;
         vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
         vc.isNews = YES;
+        viewController = vc;
     }
     
     /**
