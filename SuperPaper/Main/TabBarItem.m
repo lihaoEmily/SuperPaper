@@ -67,7 +67,7 @@
     if ([keyPath isEqualToString:@"selected"]) {
         if ([change[@"new"] integerValue]) {
             self.backImageView.image = self.aSelImage;
-            self.aTitleLabel.textColor = kSelColor;
+            self.aTitleLabel.textColor = [AppConfig appNaviColor];
         } else {
             self.backImageView.image = self.aImage;
             self.aTitleLabel.textColor = [UIColor grayColor];

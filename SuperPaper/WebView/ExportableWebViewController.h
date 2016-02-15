@@ -17,4 +17,14 @@
  *  URL地址
  */
 @property(nonatomic, strong) NSString * urlString;
+/**
+ *  Web内容
+ */
+@property (nonatomic, strong) NSString * contentText;
+
+/**
+ *  用户数据
+ */
+@property (nonatomic, strong) NSDictionary * userData;
+
 @end

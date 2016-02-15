@@ -2,17 +2,11 @@
 //  PublicationIntroduceViewController.m
 //  SuperPaper
 //
-//  Created by mapbarios on 16/2/2.
+//  Created by AppStudio on 16/2/2.
 //  Copyright © 2016年 Share technology. All rights reserved.
 //
 
 #import "PublicationIntroduceViewController.h"
-
-//#define TOP_WIEW_HEIGHT 136.0
-//#define TITLE_HEIGHT    72.0
-//#define kDefaultColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
-//#define kScreenWidth   [UIScreen mainScreen].bounds.size.width
-//#define kScreenHeight   [UIScreen mainScreen].bounds.size.height
 
 @interface PublicationIntroduceViewController ()
 
@@ -50,23 +44,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+//    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     
-    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kWidth, kHeight)];
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.view addSubview:_scrollView];
     
-    _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(5, 15, 8, 44)];
-    _leftColorView.backgroundColor = kSelColor;
+    _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(5, 8, 5, 44)];
+    _leftColorView.backgroundColor = [AppConfig appNaviColor];
     [_scrollView addSubview:_leftColorView];
     
-    //    标题
-    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_leftColorView.frame)+15, 15, kWidth-CGRectGetMaxX(_leftColorView.frame)-15 - 15, 44)];
+    // 标题
+    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_leftColorView.frame) + 16, 8, SCREEN_WIDTH-CGRectGetMaxX(_leftColorView.frame) - 16 - 16, 44)];
     _titleLabel.font = [UIFont systemFontOfSize:20];
     _titleLabel.numberOfLines = 2;
     [_scrollView addSubview:_titleLabel];
     
     // 投稿
-    _contributeLab = [[UILabel alloc]initWithFrame:CGRectMake(kWidth - 15-60, CGRectGetMaxY(_leftColorView.frame)+7, 60, 25)];
+    CGFloat conLabelrightMargin = 16.0;
+    CGFloat conLabelWidth = 80.0;
+    CGFloat conLabelHeight = 32;
+    _contributeLab = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - conLabelrightMargin - conLabelWidth, CGRectGetMaxY(_leftColorView.frame) + 8, conLabelWidth, conLabelHeight)];
     _contributeLab.backgroundColor = [UIColor whiteColor];
     _contributeLab.layer.cornerRadius = 8.0;
     _contributeLab.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -75,19 +72,21 @@
     _contributeLab.font = [UIFont systemFontOfSize:13];
     [_scrollView addSubview:_contributeLab];
     
-    //    中间的图片
+    // 中间的图片
+    CGFloat cenImgViewWidth = 165;
+    CGFloat cenImgViewHeight = 220;
     _centerImageView = [[UIImageView alloc]init];
-    _centerImageView.frame = CGRectMake((kWidth-120)/2,CGRectGetMaxY(_leftColorView.frame) + 40, 120, 170);
+    _centerImageView.frame = CGRectMake((SCREEN_WIDTH-cenImgViewWidth)/2,CGRectGetMaxY(_contributeLab.frame) + 8, cenImgViewWidth, cenImgViewHeight);
     [_scrollView addSubview:_centerImageView];
     
-    _contentLabel= [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_centerImageView.frame) + 20, kWidth - 20, 10000)];
+    _contentLabel= [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_centerImageView.frame) + 20, SCREEN_WIDTH - 20, 10000)];
     _contentLabel.font = [UIFont systemFontOfSize:14];
     _contentLabel.numberOfLines = 0;
     [_scrollView addSubview:_contentLabel];
     
     _telBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _telBtn.frame = CGRectMake(0, kHeight-40-64, self.view.frame.size.width, 40);
-    _telBtn.backgroundColor = kSelColor;
+    _telBtn.frame = CGRectMake(0, SCREEN_HEIGHT-NAVIGATIONBAR_HEIGHT-44, SCREEN_WIDTH, 44);
+    _telBtn.backgroundColor = [AppConfig appNaviColor];
     [_telBtn addTarget:self action:@selector(clickToCall) forControlEvents:UIControlEventTouchUpInside];
     _telBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
     [_telBtn setTitle:@"拨打联系电话" forState:UIControlStateNormal];
@@ -96,9 +95,9 @@
     [self.view addSubview:_telBtn];
     _telBtn.hidden = YES;
     
-    UIImage *telIconImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"telcon" ofType:@"png" inDirectory:@"Paper"]];
-    [_telBtn setImage:telIconImage forState:UIControlStateNormal];
-    [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(7, 10, 7, 10)];
+//    UIImage *telIconImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"telcon" ofType:@"png" inDirectory:@"Paper"]];
+    [_telBtn setImage:[UIImage imageNamed:@"CellPhoneIcon"] forState:UIControlStateNormal];
+    [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
     
     [self getPublicationDetailData];
 }
@@ -140,8 +139,8 @@
     
     if ([dic[@"emptyflg"]integerValue] == 0) {
         _contributeLab.text = @"可投稿";
-        _contributeLab.textColor = kSelColor;
-        _contributeLab.layer.borderColor = kSelColor.CGColor;
+        _contributeLab.textColor = [AppConfig appNaviColor];
+        _contributeLab.layer.borderColor = [AppConfig appNaviColor].CGColor;
     }
     else {
         _contributeLab.text = @"版面已满";
@@ -165,7 +164,7 @@
         [_centerImageView sd_setImageWithURL:[NSURL URLWithString:url]];
         _centerImageView.hidden = NO;
     }
-    _scrollView.contentSize = CGSizeMake(kWidth, CGRectGetMaxY(_contentLabel.frame) + 64 + 10+40);
+    _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(_contentLabel.frame) + 64 + 10+40);
     
     _telNum = dic[@"tel"];
     if (_telNum && _telNum.length) {

@@ -39,6 +39,14 @@
     [self setupUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
 #pragma mark - UI搭建
 - (void)setupUI
 {
@@ -85,7 +93,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
-     ** parameters 参数
+     * parameters 参数
      * ownertype  整型    2：学生
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数

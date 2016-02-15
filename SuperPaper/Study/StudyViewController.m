@@ -15,8 +15,8 @@
 #import "PublicationViewController.h"
 
 /** 获取屏幕尺寸*/
-#define KAppWidth [UIScreen mainScreen].bounds.size.width
-#define KAppHeight [UIScreen mainScreen].bounds.size.height
+//#define KAppWidth [UIScreen mainScreen].bounds.size.width
+//#define KAppHeight [UIScreen mainScreen].bounds.size.height
 
 @interface StudyViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 
@@ -41,6 +41,14 @@
     [self getStudyPageAdInfo];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -53,7 +61,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    _studyTableView.frame = CGRectMake(0, 0, KAppWidth,self.view.bounds.size.height - 30);
+    _studyTableView.frame = CGRectMake(0, 0, SCREEN_WIDTH,self.view.bounds.size.height - 30);
 
 }
 
@@ -113,6 +121,7 @@
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
+//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:2], @"start_pos":[NSNumber numberWithInt:(int)_responseNewsInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
     NSString *urlString = [NSString stringWithFormat:@"%@studypage_newsinfo.php",BASE_URL];
     NSLog(@"%@",urlString);
@@ -142,9 +151,10 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
-     ** parameters 参数
+     * parameters 参数
      * ownertype  整型    4：学习主页
      */
+//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:4]};
     NSString *urlString = [NSString stringWithFormat:@"%@getadinfo.php",BASE_URL];
     NSLog(@"%@",urlString);
@@ -234,8 +244,6 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
         }
         
-        
-        
         //采用网络图片实现
         NSMutableArray *imagesURLStrings = [[NSMutableArray alloc]init];
         
@@ -275,7 +283,7 @@
         NSArray  *services = [NSArray arrayWithContentsOfFile:service];
         for (int i = 0; i < services.count; i ++) {
             NSDictionary *dic = services[i];
-            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*KAppWidth/3, (i/3)*KAppWidth/3, KAppWidth/3, KAppWidth/3)];
+            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*SCREEN_WIDTH/3, (i/3)*SCREEN_WIDTH/3, SCREEN_WIDTH/3, SCREEN_WIDTH/3)];
             serviceBtn.tag = i;
             serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
             serviceBtn.layer.borderWidth = 1;
@@ -320,7 +328,7 @@
     
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if ((0 == section) || (1 == section)) {
         
@@ -328,28 +336,26 @@
     }
     else
     {
-        
         return _responseNewsInfoArr.count;
     }
     
     
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 3;
     
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (0 == indexPath.section) {
         return 180;
     }
     else if (1 == indexPath.section) {
-        return  KAppWidth;
+        return  SCREEN_WIDTH;
     }
-    
     
     return 70;
     

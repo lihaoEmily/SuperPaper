@@ -78,7 +78,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:kSelColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = nil;
     if ([UserSession sharedInstance].currentUserID != 0) {//用户已经登录
         if ([UserSession sharedInstance].currentUserHeadImageName && ![[UserSession sharedInstance].currentUserHeadImageName isEqualToString:@""]) {
@@ -377,7 +377,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     if (indexPath.section == 0)
     {
         cell.titleLabel.text = _titles[indexPath.row];
-        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%lu",indexPath.row + 1]];
+        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",indexPath.row + 1]];
         if (0 == indexPath.row) {
             cell.contentLabel.text = _unReadMessageCountStr;
             cell.contentLabel.textColor = [UIColor redColor];
@@ -393,7 +393,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     }else if (indexPath.section == 1)
     {
         cell.titleLabel.text = _titles[indexPath.row + 6];
-        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%lu",indexPath.row + 7]];
+        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",indexPath.row + 7]];
         if (2 == indexPath.row) {
             cell.contentLabel.text = _service_telStr;
             cell.contentLabel.textColor = [UIColor blackColor];

@@ -36,6 +36,14 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -47,7 +55,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    _studyTableView.frame = CGRectMake(0, 0, OWIDTH,self.view.bounds.size.height - 30);
+    _studyTableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 30);
     
 }
 
@@ -278,7 +286,7 @@
         NSArray  *services = [NSArray arrayWithContentsOfFile:service];
         for (int i = 0; i < services.count; i ++) {
             NSDictionary *dic = services[i];
-            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*OWIDTH/3, (i/3)*OWIDTH/3, OWIDTH/3, OWIDTH/3)];
+            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*SCREEN_WIDTH/3, (i/3)*SCREEN_WIDTH/3, SCREEN_WIDTH/3, SCREEN_WIDTH/3)];
             serviceBtn.tag = i;
             serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
             serviceBtn.layer.borderWidth = 1;
@@ -350,7 +358,7 @@
         return 180;
     }
     else if (1 == indexPath.section) {
-        return  OWIDTH;
+        return  SCREEN_WIDTH;
     }
     
     

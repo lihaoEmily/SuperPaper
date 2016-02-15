@@ -109,6 +109,7 @@
 
         [self addChildViewController:introPageView];
         [self.view addSubview:introPageView.view];
+//        [introPageView didMoveToParentViewController:self];
         
         [[NSUserDefaults standardUserDefaults] setObject:currentVersionStr forKey:versionStr];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -155,7 +156,7 @@
     
     h = self.navigationController.navigationBarHidden? h : h + 44;
 
-    self.tabbar.frame = CGRectMake(0, kHeight - kSizeH - h, kWidth, kSizeH);
+    self.tabbar.frame = CGRectMake(0, SCREEN_HEIGHT - TABBAR_HEIGHT - h, SCREEN_WIDTH, SCREEN_HEIGHT);
     
     [self.view bringSubviewToFront:self.tabbar];
 }
@@ -226,7 +227,7 @@
 #pragma mark -  event response
 - (void)settingButtonAction:(UIBarButtonItem *)button
 {
-    SettingViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"setting"];
+    SettingViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil] instantiateViewControllerWithIdentifier:@"setting"];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -246,6 +247,9 @@
         [self.introPageView.view removeFromSuperview];
         [self.introPageView removeFromParentViewController];
         self.introPageView = nil;
+        if (self.currentController) {
+            [self.currentController viewWillAppear:NO];
+        }
     }];
     
 }

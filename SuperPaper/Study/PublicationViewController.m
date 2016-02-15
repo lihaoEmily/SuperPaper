@@ -89,19 +89,20 @@
 
 - (void)loadNavigationView
 {
-    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+//    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
 //    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
-    UIImage *image = [UIImage imageNamed:@"searchImage"];
+    UIImage *searhImage = [UIImage imageNamed:@"searchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(10, 0, 25, 25);
-    [searchBtn setImage:image forState:UIControlStateNormal];
+    [searchBtn setImage:searhImage forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchPublication:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
     
-    image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"sortBtn" ofType:@"png" inDirectory:@"Paper"]];
+//    image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"sortBtn" ofType:@"png" inDirectory:@"Paper"]];
+    UIImage *FilterImage = [UIImage imageNamed:@"FilterImage"];
     UIButton *sortBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     sortBtn.frame = CGRectMake(10, 0, 25, 25);
-    [sortBtn setImage:image forState:UIControlStateNormal];
+    [sortBtn setImage:FilterImage forState:UIControlStateNormal];
     [sortBtn addTarget:self action:@selector(sortPublication:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortBtn];
@@ -154,6 +155,7 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
@@ -175,11 +177,12 @@
 
 - (void)pulldownRefresh:(NSDictionary*) sortDic
 {
-    [_publicationDataArray removeAllObjects];
+//    [_publicationDataArray removeAllObjects];
     
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
@@ -190,8 +193,12 @@
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-              [_publicationDataArray addObjectsFromArray:array];
-              [_contentView.rightTableView reloadData];
+              if ([array count] > 0) {
+                  [_publicationDataArray removeAllObjects];
+                  [_publicationDataArray addObjectsFromArray:array];
+                  [_contentView.rightTableView reloadData];
+              }
+              
               [_contentView.rightTableView.mj_header endRefreshing];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -205,6 +212,7 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
@@ -229,16 +237,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 
 #pragma mark - ClassifiedPublicationViewControllerDelegate
@@ -285,7 +283,7 @@
 //        cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.font = [UIFont systemFontOfSize:15];
 //        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        cell.backgroundColor = [UIColor grayColor];
+        cell.backgroundColor = [UIColor lightGrayColor];
         return cell;
     }
     else{
@@ -329,7 +327,7 @@
     if (tableView.tag == 1000) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 //        cell.backgroundColor = [UIColor whiteColor];
-        cell.textLabel.textColor = kSelColor;
+        cell.textLabel.textColor = [AppConfig appNaviColor];
         _selectedIndexPath = indexPath;
         _selectedSortDic = [_publicationSortArray objectAtIndex:indexPath.row];
         
