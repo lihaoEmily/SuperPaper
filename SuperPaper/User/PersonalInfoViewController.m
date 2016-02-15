@@ -359,27 +359,23 @@ static NSString *const SubmitIdentifier = @"submit";
 {
     UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
     bgView.layer.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7].CGColor;
-    
-    UIDatePicker *datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, (bgView.bounds.size.height - 200) / 2, bgView.bounds.size.width, 200)];
+    UIDatePicker *datePicker = [[UIDatePicker alloc]init];
+    datePicker.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *datePickerLeadingCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeLeading multiplier:1 constant:25];
+    NSLayoutConstraint *datePickerBottomCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    NSLayoutConstraint *datePickerTrailingCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeTrailing multiplier:1 constant:-25];
+    NSLayoutConstraint *datePickerHeightCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:200];
     datePicker.datePickerMode = UIDatePickerModeDate;
-    datePicker.backgroundColor = [UIColor whiteColor];
+    datePicker.backgroundColor = [AppConfig appNaviColor];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     dateFormatter.dateFormat = @"yyyy:MM:dd";
     datePicker.date = [dateFormatter dateFromString:@"1995:06:06"];
     _datePicker = datePicker;
     [bgView addSubview:datePicker];
+    [bgView addConstraints:@[datePickerLeadingCon,datePickerBottomCon,datePickerHeightCon,datePickerTrailingCon]];
     
-    UIButton *doneBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, CGRectGetMaxY(datePicker.frame), bgView.bounds.size.width - 50, 40)];
-    [doneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [doneBtn setBackgroundColor:[UIColor whiteColor]];
-    [doneBtn setTitle:@"完成" forState:UIControlStateNormal];
-    [doneBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    doneBtn.layer.borderWidth = 1;
-    doneBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    [doneBtn addTarget:self action:@selector(doneWithAge) forControlEvents:UIControlEventTouchUpInside];
-    [bgView addSubview:doneBtn];
     _popupView = bgView;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissPopupView)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doneWithAge)];
     [bgView addGestureRecognizer:tap];
     [[[UIApplication sharedApplication]keyWindow]addSubview:_popupView];
     

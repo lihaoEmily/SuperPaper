@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="x6j-bp-bR8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="x6j-bp-bR8">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -65,10 +65,10 @@
                                 <color key="sectionIndexBackgroundColor" red="0.99784772724626958" green="0.87921342877628816" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserTableViewCell" id="mMI-LU-S8S" customClass="UserTableViewCell">
-                                        <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMI-LU-S8S" id="UYu-xU-GyF">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="电话图标" translatesAutoresizingMaskIntoConstraints="NO" id="iVX-eJ-6e8">
@@ -170,7 +170,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_mine_head_login" translatesAutoresizingMaskIntoConstraints="NO" id="7WD-3p-nSL">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7WD-3p-nSL">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="请输入你的手机号码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DZU-2I-LSu">
@@ -297,7 +297,7 @@
                                 </connections>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="iWE-ap-Zlz" firstAttribute="height" secondItem="1Nv-FN-O6a" secondAttribute="height" id="3eu-4t-0Xm"/>
                             <constraint firstItem="vbj-32-Vaj" firstAttribute="leading" secondItem="fSn-H6-k3u" secondAttribute="leading" id="4wd-Po-6zb"/>
@@ -911,7 +911,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_mine_head_login.png" translatesAutoresizingMaskIntoConstraints="NO" id="DrF-bF-Z4R">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DrF-bF-Z4R">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="用户名/手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dcc-fn-auu">
@@ -980,7 +980,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="JYf-iC-ObL" firstAttribute="trailing" secondItem="dcc-fn-auu" secondAttribute="trailing" id="1g6-zZ-xDn"/>
                             <constraint firstItem="sc7-Wd-2ly" firstAttribute="top" secondItem="q1A-tX-TiZ" secondAttribute="bottom" constant="20" id="6U3-Z4-ukc"/>
@@ -1031,7 +1031,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_mine_head_login.png" translatesAutoresizingMaskIntoConstraints="NO" id="O58-Qr-sel">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O58-Qr-sel">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="请输入你的手机号码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ayx-dh-IV3">
@@ -1119,7 +1119,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="MMV-C5-hlS" firstAttribute="top" secondItem="1EX-GD-fjg" secondAttribute="top" constant="4" id="0tC-fr-3cH"/>
                             <constraint firstItem="1EX-GD-fjg" firstAttribute="leading" secondItem="LHl-KJ-JAc" secondAttribute="leading" id="1Q4-Qt-vzZ"/>
@@ -1346,19 +1346,29 @@
                                                         <constraint firstAttribute="height" constant="1" id="PHu-WU-WCf"/>
                                                     </constraints>
                                                 </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_voucher_userd" translatesAutoresizingMaskIntoConstraints="NO" id="WJU-ue-XR4">
+                                                    <rect key="frame" x="20" y="15" width="50" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="5vh-h6-Wob"/>
+                                                        <constraint firstAttribute="height" constant="40" id="zi3-VG-pps"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="mEE-6f-McY" secondAttribute="bottom" id="2HB-uG-GG9"/>
                                                 <constraint firstAttribute="trailing" secondItem="mEE-6f-McY" secondAttribute="trailing" id="8t2-Ub-b3h"/>
+                                                <constraint firstItem="WJU-ue-XR4" firstAttribute="leading" secondItem="vEK-kh-R2q" secondAttribute="leading" constant="10" id="TK8-az-3Xc"/>
                                                 <constraint firstAttribute="bottom" secondItem="vEK-kh-R2q" secondAttribute="bottom" constant="10" id="m1D-L6-hmy"/>
                                                 <constraint firstAttribute="trailing" secondItem="vEK-kh-R2q" secondAttribute="trailing" constant="10" id="m1b-Po-gAJ"/>
                                                 <constraint firstItem="mEE-6f-McY" firstAttribute="leading" secondItem="L65-J7-sDU" secondAttribute="leading" constant="12" id="mLQ-1d-mii"/>
                                                 <constraint firstItem="vEK-kh-R2q" firstAttribute="leading" secondItem="L65-J7-sDU" secondAttribute="leading" constant="10" id="ug4-GA-aTT"/>
+                                                <constraint firstItem="WJU-ue-XR4" firstAttribute="top" secondItem="vEK-kh-R2q" secondAttribute="top" constant="5" id="vKn-8a-D4q"/>
                                                 <constraint firstItem="vEK-kh-R2q" firstAttribute="top" secondItem="L65-J7-sDU" secondAttribute="top" constant="10" id="zyJ-fM-p6s"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="seperatorLine" destination="mEE-6f-McY" id="APb-iY-RdR"/>
+                                            <outlet property="statusImageView" destination="WJU-ue-XR4" id="L18-cj-j6E"/>
                                             <outlet property="voucherImageView" destination="vEK-kh-R2q" id="w7o-Gl-FLk"/>
                                         </connections>
                                     </tableViewCell>
@@ -2254,7 +2264,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MJN-Jb-9Qn" id="l6s-CL-JNC">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务条款" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMU-Ju-LaR">
@@ -2288,7 +2298,7 @@
                                         <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qnj-gi-4pC" id="JGr-nC-CL2">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版本 V1.1.7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAe-CP-qfe">
@@ -2344,9 +2354,8 @@
     <resources>
         <image name="QRCode" width="22" height="22"/>
         <image name="TextExport" width="28" height="28"/>
-        <image name="bg_mine_head_login" width="53" height="15"/>
-        <image name="bg_mine_head_login.png" width="107" height="31"/>
         <image name="icon_voucher_intro" width="22" height="22"/>
+        <image name="icon_voucher_userd" width="50" height="39"/>
         <image name="right_arrow.png" width="33" height="38"/>
         <image name="关于我们" width="960" height="600"/>
         <image name="复选框-1" width="15" height="15"/>
