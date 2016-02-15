@@ -177,6 +177,7 @@
         case 0:{
             PublicationViewController *vc = [[PublicationViewController alloc] init];
             vc.title = @"刊物";
+            vc.groupId = 1;
             [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;

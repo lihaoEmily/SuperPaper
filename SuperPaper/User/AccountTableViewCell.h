@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *voucherImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *seperatorLine;
+@property (weak, nonatomic) IBOutlet UIImageView *statusImageView;
 
 @end
