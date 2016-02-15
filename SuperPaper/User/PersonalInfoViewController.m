@@ -13,16 +13,12 @@
 #import "AppConfig.h"
 #import "UserSession.h"
 
-@interface PersonalInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface PersonalInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 {
     UIView *_popupView;
     UserGen _currentGen;
-    UIButton *_manBtn;
-    UIButton *_womanBtn;
     UITextField *_currentTextField;
     UIDatePicker *_datePicker;
-    UIButton *_teacherBtn;
-    UIButton *_studentBtn;
     UserRole _currentRole;
     UIView *_inputView;
     UIActivityIndicatorView *_webIndicator;
@@ -169,38 +165,32 @@ static NSString *const SubmitIdentifier = @"submit";
 }
 - (void) chooseMan
 {
-    if (_currentGen != kUserGen_Man) {
-        _currentGen = kUserGen_Man;
-        [_manBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
-        [_womanBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
-    }
+    _currentGen = kUserGen_Man;
+    self.gender = @"男";
+    [self.tableView reloadData];
 }
 
 - (void) chooseWoman
 {
-    if (_currentGen != kUserGen_Woman) {
-        _currentGen = kUserGen_Woman;
-        [_manBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
-        [_womanBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
-    }
+    _currentGen = kUserGen_Woman;
+    self.gender = @"女";
+    [self.tableView reloadData];
 }
 
 - (void) chooseTeacher
 {
-    if (_currentRole != kUserRoleTeacher) {
-        _currentRole = kUserRoleTeacher;
-        [_teacherBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
-        [_studentBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
-    }
+    _currentRole = kUserRoleTeacher;
+    self.career = @"老师";
+    [self.tableView reloadData];
+    
 }
 
 - (void) chooseStudent
 {
-    if (_currentRole != kUserRoleStudent) {
-        _currentRole = kUserRoleStudent;
-        [_teacherBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
-        [_studentBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
-    }
+    
+    _currentRole = kUserRoleStudent;
+    self.career = @"学生";
+    [self.tableView reloadData];
 }
 
 - (void) popupChangeNameView
@@ -282,77 +272,25 @@ static NSString *const SubmitIdentifier = @"submit";
 
 - (void) popupChangeGenderView
 {
-    UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
-    bgView.layer.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7].CGColor;
-    
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(25, (bgView.bounds.size.height - 200) / 2, bgView.bounds.size.width - 50, 200)];
-    view.backgroundColor = [AppConfig viewBackgroundColor];
-    
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 0, view.bounds.size.width, 70)];
-    titleLabel.text = @"请选择性别：";
-    [titleLabel setFont:[UIFont systemFontOfSize:18]];
-    [titleLabel setTextColor:[UIColor colorWithRed:14.0f/255 green:168.0f/255 blue:221.0f/255 alpha:1]];
-    [view addSubview:titleLabel];
-    
-    UIView *topLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(titleLabel.frame), view.bounds.size.width, 1.5)];
-    topLine.backgroundColor = titleLabel.textColor;
-    [view addSubview:topLine];
-    
-    UIView *middleView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(topLine.frame), view.bounds.size.width, 90)];
-    middleView.backgroundColor = [UIColor whiteColor];
-    UIButton *manBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, 10, 100, 35)];
-    manBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [manBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [manBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [manBtn setTitle:@"男" forState:UIControlStateNormal];
-    [manBtn addTarget:self action:@selector(chooseMan) forControlEvents:UIControlEventTouchUpInside];
-    _manBtn = manBtn;
-    [middleView addSubview:manBtn];
-    
-    UIButton *womanBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, CGRectGetMaxY(manBtn.frame), 100, 35)];
-    womanBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [womanBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [womanBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [womanBtn setTitle:@"女" forState:UIControlStateNormal];
-    [womanBtn addTarget:self action:@selector(chooseWoman) forControlEvents:UIControlEventTouchUpInside];
-    _womanBtn = womanBtn;
-    [middleView addSubview:womanBtn];
-    if (kUserGen_Man == _currentGen) {
-        [manBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
-        [womanBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
+    if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
+        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择性别" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"男",@"女", nil];
+        av.tag = 0;
+        [av showInView:self.view];
     }else{
-        [manBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
-        [womanBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *chooseMan = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"");
+            [self chooseMan];
+        }];
+        UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self chooseWoman];
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:chooseMan];
+        [alertController addAction:chooseWoman];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
-    [view addSubview:middleView];
-    
-    UIView *bottomHLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(middleView.frame), view.bounds.size.width, 1)];
-    bottomHLine.backgroundColor = [UIColor lightGrayColor];
-    [view addSubview:bottomHLine];
-    
-    UIView *bottomVLine = [[UIView alloc]initWithFrame:CGRectMake(view.bounds.size.width / 2 - 0.5, CGRectGetMaxY(bottomHLine.frame), 1, view.bounds.size.height - CGRectGetMaxY(bottomHLine.frame))];
-    bottomVLine.backgroundColor = [UIColor lightGrayColor];
-    [view addSubview:bottomVLine];
-    
-    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(bottomHLine.frame), CGRectGetMinX(bottomVLine.frame), CGRectGetHeight(bottomVLine.frame))];
-    [cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [cancelBtn addTarget:self action:@selector(dismissPopupView) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:cancelBtn];
-    
-    UIButton *doneBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bottomVLine.frame), CGRectGetMaxY(bottomHLine.frame), CGRectGetMinX(bottomVLine.frame), CGRectGetHeight(bottomVLine.frame))];
-    [doneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [doneBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [doneBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [doneBtn addTarget:self action:@selector(doneWithGender) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:doneBtn];
-    [bgView addSubview:view];
-    _popupView = bgView;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissPopupView)];
-    [bgView addGestureRecognizer:tap];
-    [[[UIApplication sharedApplication]keyWindow]addSubview:_popupView];
 }
 
 - (void) popupChangeAgeView
@@ -383,77 +321,26 @@ static NSString *const SubmitIdentifier = @"submit";
 
 -(void) popupChangeCareerView
 {
-    UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
-    bgView.layer.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7].CGColor;
-    
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(25, (bgView.bounds.size.height - 200) / 2, bgView.bounds.size.width - 50, 200)];
-    view.backgroundColor = [AppConfig viewBackgroundColor];
-    
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 0, view.bounds.size.width, 70)];
-    titleLabel.text = @"请选择职业：";
-    [titleLabel setFont:[UIFont systemFontOfSize:18]];
-    [titleLabel setTextColor:[UIColor colorWithRed:14.0f/255 green:168.0f/255 blue:221.0f/255 alpha:1]];
-    [view addSubview:titleLabel];
-    
-    UIView *topLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(titleLabel.frame), view.bounds.size.width, 1.5)];
-    topLine.backgroundColor = titleLabel.textColor;
-    [view addSubview:topLine];
-    
-    UIView *middleView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(topLine.frame), view.bounds.size.width, 90)];
-    middleView.backgroundColor = [UIColor whiteColor];
-    UIButton *teacherBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, 10, 100, 35)];
-    [teacherBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    teacherBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [teacherBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [teacherBtn setTitle:@"老师" forState:UIControlStateNormal];
-    [teacherBtn addTarget:self action:@selector(chooseTeacher) forControlEvents:UIControlEventTouchUpInside];
-    _teacherBtn = teacherBtn;
-    [middleView addSubview:teacherBtn];
-    
-    UIButton *studentBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, CGRectGetMaxY(teacherBtn.frame), 100, 35)];
-    studentBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;;
-    [studentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [studentBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [studentBtn setTitle:@"学生" forState:UIControlStateNormal];
-    [studentBtn addTarget:self action:@selector(chooseStudent) forControlEvents:UIControlEventTouchUpInside];
-    _studentBtn = studentBtn;
-    [middleView addSubview:studentBtn];
-    if (kUserRoleTeacher == _currentRole) {
-        [teacherBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
-        [studentBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
+    if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
+        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"老师",@"学生", nil];
+        av.tag = 1;
+        [av showInView:self.view];
     }else{
-        [teacherBtn setImage:[UIImage imageNamed:@"没选中"] forState:UIControlStateNormal];
-        [studentBtn setImage:[UIImage imageNamed:@"选中"] forState:UIControlStateNormal];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择职业" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *chooseTeacher = [UIAlertAction actionWithTitle:@"老师" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self chooseTeacher];
+        }];
+        UIAlertAction *chooseStudent = [UIAlertAction actionWithTitle:@"学生" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self chooseStudent];
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:chooseTeacher];
+        [alertController addAction:chooseStudent];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
-    [view addSubview:middleView];
-    
-    UIView *bottomHLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(middleView.frame), view.bounds.size.width, 1)];
-    bottomHLine.backgroundColor = [UIColor lightGrayColor];
-    [view addSubview:bottomHLine];
-    
-    UIView *bottomVLine = [[UIView alloc]initWithFrame:CGRectMake(view.bounds.size.width / 2 - 0.5, CGRectGetMaxY(bottomHLine.frame), 1, view.bounds.size.height - CGRectGetMaxY(bottomHLine.frame))];
-    bottomVLine.backgroundColor = [UIColor lightGrayColor];
-    [view addSubview:bottomVLine];
-    
-    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(bottomHLine.frame), CGRectGetMinX(bottomVLine.frame), CGRectGetHeight(bottomVLine.frame))];
-    [cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [cancelBtn addTarget:self action:@selector(dismissPopupView) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:cancelBtn];
-    
-    UIButton *doneBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bottomVLine.frame), CGRectGetMaxY(bottomHLine.frame), CGRectGetMinX(bottomVLine.frame), CGRectGetHeight(bottomVLine.frame))];
-    [doneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [doneBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [doneBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [doneBtn addTarget:self action:@selector(doneWithCareer) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:doneBtn];
-    [bgView addSubview:view];
-    _popupView = bgView;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissPopupView)];
-    [bgView addGestureRecognizer:tap];
-    [[[UIApplication sharedApplication]keyWindow]addSubview:_popupView];
+
 }
 
 - (void) popupChangeCollegeView
@@ -534,10 +421,6 @@ static NSString *const SubmitIdentifier = @"submit";
 {
     [_popupView removeFromSuperview];
     _popupView = nil;
-    _womanBtn = nil;
-    _manBtn = nil;
-    _studentBtn = nil;
-    _teacherBtn = nil;
     _datePicker = nil;
     _inputView = nil;
 }
@@ -548,12 +431,6 @@ static NSString *const SubmitIdentifier = @"submit";
     [self dismissPopupView];
 }
 
-- (void) doneWithGender
-{
-    self.gender = _currentGen == kUserGen_Man?@"男":@"女";
-    [self.tableView reloadData];
-    [self dismissPopupView];
-}
 
 - (NSInteger) calculateAgeWithBornDate:(NSDate *)date
 {
@@ -578,13 +455,6 @@ static NSString *const SubmitIdentifier = @"submit";
     [self dismissPopupView];
 }
 
-- (void) doneWithCareer
-{
-    self.career = _currentRole == kUserRoleTeacher?@"老师":@"学生";
-    [self.tableView reloadData];
-    [self dismissPopupView];
-}
-
 - (void) doneWithCollege
 {
     self.college = _currentTextField.text;
@@ -592,6 +462,22 @@ static NSString *const SubmitIdentifier = @"submit";
     [self dismissPopupView];
 }
 
+//MARK: AlertView Delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%lu",buttonIndex);
+    if (0 == actionSheet.tag) {
+        if (0 == buttonIndex) {
+            [self chooseMan];
+        }else if(1 == buttonIndex)
+            [self chooseWoman];
+    }else{
+        if (0 == buttonIndex) {
+            [self chooseTeacher];
+        }else if(1 == buttonIndex)
+            [self chooseStudent];
+    }
+}
 //MARK: 功能
 - (void) submit
 {

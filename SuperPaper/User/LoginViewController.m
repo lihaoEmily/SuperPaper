@@ -196,8 +196,14 @@
                 [UserSession sharedInstance].currentUserTelNum = mobile;
                 [UserSession sharedInstance].currentUserHeadImageName = headImageName;
                 [UserSession sharedInstance].currentUserInviteCode = inviteCode;
-                [self.navigationController popToRootViewControllerAnimated:YES];
-                
+                for (UIViewController *controller in self.navigationController.viewControllers) {
+                    NSLog(@"navigationcontroller stack : %@",NSStringFromClass([controller class]));
+                    if ([controller isMemberOfClass:[UserViewController class]]) {
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        return;
+                    }
+                }
+                [self.navigationController popViewControllerAnimated:YES];
                 
                 
             }else if(1 == result.integerValue)//登录失败
