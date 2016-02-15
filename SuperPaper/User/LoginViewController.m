@@ -36,7 +36,6 @@
     // Do any additional setup after loading the view.
     _pwd = @"";
     
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
