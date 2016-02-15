@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "RadioButton-Unselected.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "RadioButton-Unselected@2x.png",
+      "filename" : "txtIcon@2x.png",
       "scale" : "2x"
     },
     {
