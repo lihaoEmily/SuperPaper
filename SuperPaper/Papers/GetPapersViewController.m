@@ -89,7 +89,7 @@
     
     // Left view
     UIView *leftMarginVew = [[UIView alloc] initWithFrame:CGRectMake(4, 0, 7, TITLE_HEIGHT)];
-    [leftMarginVew setBackgroundColor:kDefaultColor];
+    [leftMarginVew setBackgroundColor:[AppConfig appNaviColor]];
     [_topInfoView addSubview:leftMarginVew];
     
     _paperTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(leftMarginVew.frame) + 15, leftMarginVew.frame.origin.y, kScreenWidth - 30 - leftMarginVew.frame.size.width - 4, TITLE_HEIGHT)];
