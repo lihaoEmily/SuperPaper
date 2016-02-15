@@ -86,7 +86,7 @@
     [UMSocialWechatHandler setWXAppId:@"wx1bb4e3dee024af61" appSecret:@"513ad74a27c611b9afac24f3226b897d" url:@""];
     
     //设置手机QQ 的AppId，Appkey，和分享URL
-    [UMSocialQQHandler setQQWithAppId:@"1104770869" appKey:@"GBjkYtbypyf8uQHW" url:@""];
+    [UMSocialQQHandler setQQWithAppId:@"1105051018" appKey:@"qqWTYTx2Yhh8q82R" url:@""];
     
     return YES;
 }

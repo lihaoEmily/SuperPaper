@@ -296,10 +296,10 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 
 - (void)getRoundedRectImageFromImage :(UIImage *)image onReferenceView :(UIImageView*)imageView withCornerRadius :(float)cornerRadius
 {
-    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, 1.0);
-    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds
+    UIGraphicsBeginImageContextWithOptions(_userHeaderImageBtn.bounds.size, NO, 1.0);
+    [[UIBezierPath bezierPathWithRoundedRect:_userHeaderImageBtn.bounds
                                 cornerRadius:cornerRadius] addClip];
-    [image drawInRect:imageView.bounds];
+    [image drawInRect:_userHeaderImageBtn.bounds];
     UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     

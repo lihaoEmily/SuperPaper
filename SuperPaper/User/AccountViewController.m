@@ -205,7 +205,14 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
         cell.voucherImageView.image = [UIImage imageWithASName:@"default_image" directory:@"common"];
     }
         
-    
+    if (0 == [dic[@"status"]integerValue]) {
+        cell.statusImageView.hidden = NO;
+        cell.statusImageView.image = [UIImage imageNamed:@"icon_voucher_used"];
+    }else if(2 == [dic[@"status"] integerValue]){
+        cell.statusImageView.hidden = NO;
+        cell.statusImageView.image = [UIImage imageNamed:@"icon_voucher_overdue"];
+    }else
+        cell.statusImageView.hidden = YES;
     if (_list.count - 1 == indexPath.row) {
         cell.seperatorLine.hidden = YES;
     }else
