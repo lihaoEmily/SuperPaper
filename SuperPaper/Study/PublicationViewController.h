@@ -12,5 +12,6 @@
  *  @brief 刊物
  */
 @interface PublicationViewController : BaseViewController
+@property(nonatomic,assign)int groupId;
 
 @end
