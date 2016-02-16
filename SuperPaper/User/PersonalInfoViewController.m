@@ -279,7 +279,6 @@ static NSString *const SubmitIdentifier = @"submit";
     }else{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *chooseMan = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"");
             [self chooseMan];
         }];
         UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -465,7 +464,6 @@ static NSString *const SubmitIdentifier = @"submit";
 //MARK: AlertView Delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"%lu",buttonIndex);
     if (0 == actionSheet.tag) {
         if (0 == buttonIndex) {
             [self chooseMan];

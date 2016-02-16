@@ -334,39 +334,80 @@ static NSString *const ShowTextIdentifier = @"showtext";
 
 - (void) uploadImageToServerWithImage:(UIImage *)image
 {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSString *urlString = [NSString stringWithFormat:@"%@up_file.php",BASE_URL];
-    [manager POST:urlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFileData:UIImagePNGRepresentation(image) name:@"myheadimage" fileName:[NSString stringWithFormat:@"%@_picname",[UserSession sharedInstance].currentUserTelNum] mimeType:@"image/png"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
-            NSNumber *result = responseObject[@"result"];
-            if (0 == result.integerValue) {
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"更改头像成功！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
-            }else{
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"更改头像失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [av show];
-            }
-        }
-        [self dismissViewControllerAnimated:YES completion:nil];
-        [_webIndicator stopAnimating];
-        [_webIndicator removeFromSuperview];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:error.localizedDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [av show];
-        [self dismissViewControllerAnimated:YES completion:nil];
-        [_webIndicator stopAnimating];
-        [_webIndicator removeFromSuperview];
-    }];
+    //设置头像文件名
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    __block NSString *fileName = [NSString stringWithFormat:@"%@.png", str];
+    //网络请求
+    __block AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"text/plain", nil];
+    __block NSString *urlString = [NSString stringWithFormat:@"%@up_file.php",BASE_URL];
+    [manager POST:urlString
+       parameters:nil
+constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    NSData *imageData = UIImagePNGRepresentation(image);
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    NSString *fileName = [NSString stringWithFormat:@"%@.png", str];
+    [formData appendPartWithFileData:imageData
+                                name:@"uploadedfile"
+                            fileName:fileName
+                            mimeType:@"image/png"];
+}
+         progress:^(NSProgress * _Nonnull uploadProgress) {
+             
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+                  NSNumber *result = responseObject[@"result"];
+                  if (0 == result.integerValue) {
+                    // 上传成功后，再判断更改头是否成功 "changeuserimg.php"?id=userId&headpic=headPicName;
+                    // 参数设置
+                    NSString *userId = [NSString stringWithFormat:@"%ld", [UserSession sharedInstance].currentUserID];
+                    
+                    NSDictionary *params = @{@"id":userId, @"headpic":fileName};
+                      manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+                      urlString = [NSString stringWithFormat:@"%@changeuserimg.php",BASE_URL];
+                      [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+                          
+                      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                          NSNumber *result = responseObject[@"result"];
+                          if (0 == result.integerValue) {
+                              UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"更改头像成功！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                              [av show];
+                              [UserSession sharedInstance].currentUserHeadImageName = fileName;
+                          }else{
+                              UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"更改头像失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                              [av show];
+                          }
+                      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"更改头像失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                          [av show];
+                      }];
+
+                      
+                  }else{
+                      UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"更改头像失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                      [av show];
+                  }
+              }
+              [self dismissViewControllerAnimated:YES completion:nil];
+              [_webIndicator stopAnimating];
+              [_webIndicator removeFromSuperview];
+          } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:error.localizedDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+              [av show];
+              [self dismissViewControllerAnimated:YES completion:nil];
+              [_webIndicator stopAnimating];
+              [_webIndicator removeFromSuperview];
+          }];
     if (!_webIndicator.isAnimating) {
         [_webIndicator startAnimating];
     }
-}
-//MARK: UIImagePickerControllerDelegate
+}//MARK: UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     
