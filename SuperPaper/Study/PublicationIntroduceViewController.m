@@ -7,6 +7,8 @@
 //
 
 #import "PublicationIntroduceViewController.h"
+#import "UserSession.h"
+#import "LoginViewController.h"
 
 @interface PublicationIntroduceViewController ()
 
@@ -155,7 +157,7 @@
     NSString *url = [NSString stringWithFormat:@"%@%@",IMGURL,dic[@"content_pic_name"]];
     if ([self isBlankString:imageUrl]||[imageUrl isEqualToString:@"<null>"]) {
         CGRect rect = _contentLabel.frame;
-        rect.origin.y = CGRectGetMaxY(_leftColorView.frame) + 10;
+        rect.origin.y = CGRectGetMaxY(_contributeLab.frame) + 10;
         rect.size.height = _contentLabel.frame.size.height;
         _contentLabel.frame = rect;
         _centerImageView.hidden = YES;
@@ -185,10 +187,17 @@
 
 - (void)clickToCall
 {
-    UIWebView *callWebView = [[UIWebView alloc] init];
-    NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",_telNum]];
-    [callWebView loadRequest:[NSURLRequest requestWithURL:telURL]];
-    [self.view addSubview:callWebView];
+    if ([[UserSession sharedInstance] currentUserID] == 0) {
+        //没登录
+        LoginViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else{
+        UIWebView *callWebView = [[UIWebView alloc] init];
+        NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",_telNum]];
+        [callWebView loadRequest:[NSURLRequest requestWithURL:telURL]];
+        [self.view addSubview:callWebView];
+    }
 }
 
 //- (void)onCallButtonClicked:(UIButton*) button
