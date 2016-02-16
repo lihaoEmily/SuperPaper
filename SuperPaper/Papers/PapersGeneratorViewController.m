@@ -181,7 +181,6 @@
     [_activity startAnimating];
     [_searchBar resignFirstResponder];
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入论文题目" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
         return;
@@ -197,16 +196,20 @@
 
 - (void)exportPapers:(UIButton *)sender
 {
-    if (_content) {
-        ASSaveData *data = [[ASSaveData alloc] init];
-        [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+    if ([UserSession sharedInstance].currentUserID == 0) {
+        [_activity stopAnimating];
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+        [AppDelegate.app.nav pushViewController:loginVC animated:YES];
     }else{
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有课导出的论文" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+        if (_content && _content.length > 0) {
+            ASSaveData *data = [[ASSaveData alloc] init];
+            [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有课导出的论文" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }
 }
 
