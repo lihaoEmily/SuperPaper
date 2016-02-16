@@ -166,7 +166,7 @@
 
 - (void)setupScrollView
 {
-    if (_content.length > 0) {
+    if (_content && _content.length > 0) {
         _paperTextView.text = _content;
     }else{
         UIAlertView *alterView = [[UIAlertView alloc]initWithTitle:@"超级论文" message:@"无内容生成" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
@@ -186,12 +186,12 @@
         [alert show];
         return;
     }
-    if ([UserSession sharedInstance].hasLogin) {
-        [self getData];
-    }else{
+    if ([UserSession sharedInstance].currentUserID == 0) {
         [_activity stopAnimating];
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
         [AppDelegate.app.nav pushViewController:loginVC animated:YES];
+    }else{
+        [self getData];
     }
 }
 
@@ -227,7 +227,10 @@
            [_activity stopAnimating];
            NSLog(@"%@",responseObject);
            if ([responseObject valueForKey:@"content"]) {
-               _content = [responseObject valueForKey:@"content"];
+               NSString *content = [responseObject valueForKey:@"content"];
+               if (![content isEqual:[NSNull null]]) {
+                   _content = content;
+               }
            }
            [self setupScrollView];
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
