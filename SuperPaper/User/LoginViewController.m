@@ -196,9 +196,10 @@
                 [UserSession sharedInstance].currentUserTelNum = mobile;
                 [UserSession sharedInstance].currentUserHeadImageName = headImageName;
                 [UserSession sharedInstance].currentUserInviteCode = inviteCode;
-                for (UIViewController *controller in self.navigationController.viewControllers) {
-                    NSLog(@"navigationcontroller stack : %@",NSStringFromClass([controller class]));
-                    if ([controller isMemberOfClass:[UserViewController class]]) {
+
+                UIViewController *vc = self.navigationController.viewControllers.firstObject;
+                for (UIViewController *child in vc.childViewControllers) {
+                    if ([child isMemberOfClass:[UserViewController class]]) {
                         [self.navigationController popToRootViewControllerAnimated:YES];
                         return;
                     }
