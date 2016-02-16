@@ -36,7 +36,6 @@
     // Do any additional setup after loading the view.
     _pwd = @"";
     
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
@@ -65,14 +64,14 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.shadowImage = [UIImage new];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = nil;
+//    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.shadowImage = nil;
 }
 
 //MARK:Helper
@@ -197,8 +196,15 @@
                 [UserSession sharedInstance].currentUserTelNum = mobile;
                 [UserSession sharedInstance].currentUserHeadImageName = headImageName;
                 [UserSession sharedInstance].currentUserInviteCode = inviteCode;
-                [self.navigationController popToRootViewControllerAnimated:YES];
-                
+
+                UIViewController *vc = self.navigationController.viewControllers.firstObject;
+                for (UIViewController *child in vc.childViewControllers) {
+                    if ([child isMemberOfClass:[UserViewController class]]) {
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        return;
+                    }
+                }
+                [self.navigationController popViewControllerAnimated:YES];
                 
                 
             }else if(1 == result.integerValue)//登录失败

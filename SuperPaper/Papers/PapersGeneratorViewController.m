@@ -8,6 +8,9 @@
 
 #import "PapersGeneratorViewController.h"
 #import "ASSaveData.h"
+#import "UserSession.h"
+#import "LoginViewController.h"
+
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
@@ -163,7 +166,7 @@
 
 - (void)setupScrollView
 {
-    if (_content.length > 0) {
+    if (_content && _content.length > 0) {
         _paperTextView.text = _content;
     }else{
         UIAlertView *alterView = [[UIAlertView alloc]initWithTitle:@"超级论文" message:@"无内容生成" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
@@ -178,30 +181,35 @@
     [_activity startAnimating];
     [_searchBar resignFirstResponder];
     if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
-//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入论文题目" preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-//        [alert addAction:cancelAction];
-//        [self presentViewController:alert animated:YES completion:nil];
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入论文题目" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
         return;
     }
-    [self getData];
+    if ([UserSession sharedInstance].currentUserID == 0) {
+        [_activity stopAnimating];
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+        [AppDelegate.app.nav pushViewController:loginVC animated:YES];
+    }else{
+        [self getData];
+    }
 }
 
 - (void)exportPapers:(UIButton *)sender
 {
-    if (_content) {
-        ASSaveData *data = [[ASSaveData alloc] init];
-        [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+    if ([UserSession sharedInstance].currentUserID == 0) {
+        [_activity stopAnimating];
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+        [AppDelegate.app.nav pushViewController:loginVC animated:YES];
     }else{
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有课导出的论文" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+        if (_content && _content.length > 0) {
+            ASSaveData *data = [[ASSaveData alloc] init];
+            [data saveToLocationwithStrings:_content withTitle:_searchBar.text];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有课导出的论文" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }
 }
 
@@ -222,7 +230,10 @@
            [_activity stopAnimating];
            NSLog(@"%@",responseObject);
            if ([responseObject valueForKey:@"content"]) {
-               _content = [responseObject valueForKey:@"content"];
+               NSString *content = [responseObject valueForKey:@"content"];
+               if (![content isEqual:[NSNull null]]) {
+                   _content = content;
+               }
            }
            [self setupScrollView];
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

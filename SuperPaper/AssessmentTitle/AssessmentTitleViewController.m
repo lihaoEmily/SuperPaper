@@ -169,14 +169,14 @@
         case 0:{
             PublicationViewController *vc = [[PublicationViewController alloc] init];
             vc.title = @"刊物";
-        
+            vc.groupId = 1;
             [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
         case 1:{
-            NormalAssessmentViewController *vc = [[NormalAssessmentViewController alloc] init];
-            vc.title = @"出版社";
-            vc.group_id = button.tag+1;
+            PublicationViewController *vc = [[PublicationViewController alloc] init];
+            vc.title = @"刊物";
+            vc.groupId = 2;
             [AppDelegate.app.nav pushViewController:vc animated:YES];
         }
             break;
