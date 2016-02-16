@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, UserRole){
-    kUserRoleTeacher = 1,
-    kUserRoleStudent = 2
+    kUserRoleTeacher = 0,
+    kUserRoleStudent = 1
 };
 typedef NS_ENUM(NSInteger, UserGen) {
     kUserGen_Man   = 0,

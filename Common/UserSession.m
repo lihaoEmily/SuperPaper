@@ -7,6 +7,8 @@
 //
 
 #import "UserSession.h"
+#import "NavigationController.h"
+#import "MainViewController.h"
 
 #define ROLE_TEACHER @""
 #define ROLE_STUDENT @""
@@ -46,7 +48,6 @@
 - (UserRole)currentRole {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSNumber *role = [userDefaults valueForKey:kUserRole];
-    
     return role.integerValue;
 }
 
@@ -110,6 +111,9 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:@(currentRole) forKey:kUserRole];
     [userDefaults synchronize];
+    NavigationController *navController = AppDelegate.app.nav;
+    MainViewController *parentController = navController.viewControllers[0];
+    parentController.tabbar.tabBarDisplayType = currentRole == kUserRoleStudent?MainTabBarDisplayTypeStudent:MainTabBarDisplayTypeTeacher;
 }
 -(void)setCurrentUserAge:(NSInteger)currentUserAge
 {
