@@ -297,6 +297,7 @@ static NSString *const SubmitIdentifier = @"submit";
     UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
     
     UIDatePicker *datePicker = [[UIDatePicker alloc]init];
+    [datePicker setBackgroundColor:kColor(240, 240, 240)];
     datePicker.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *datePickerLeadingCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
     NSLayoutConstraint *datePickerBottomCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
