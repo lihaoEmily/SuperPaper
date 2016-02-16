@@ -15,6 +15,7 @@
 #import "SDCycleScrollView.h"
 #import "ServiceButton.h"
 #import "HomeDetailController.h"
+#import "TAPageControl.h"
 
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 @property (nonatomic, strong) UITableView *studyTableView;
@@ -30,6 +31,7 @@
     
     NSMutableArray *imagesURLString;
     SDCycleScrollView *cycleScrollView;
+    UIView *headerView;
     BOOL isNews;
 }
 
@@ -41,6 +43,20 @@
     [self initData];
 //    [self getHomePageNewsInfo];
 //    [self getHomePageAdInfo];
+    
+//    // 情景二：采用网络图片实现
+//    NSArray *imagesURLStrings = @[
+//                                  @"https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a4b3d7085dee3d6d2293d48b252b5910/0e2442a7d933c89524cd5cd4d51373f0830200ea.jpg",
+//                                  @"https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a41eb338dd33c895a62bcb3bb72e47c2/5fdf8db1cb134954a2192ccb524e9258d1094a1e.jpg",
+//                                  @"http://c.hiphotos.baidu.com/image/w%3D400/sign=c2318ff84334970a4773112fa5c8d1c0/b7fd5266d0160924c1fae5ccd60735fae7cd340d.jpg"
+//                                  ];
+//
+//    SDCycleScrollView *cycleScrollView3 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, 329, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
+//    cycleScrollView3.currentPageDotImage = [UIImage imageNamed:@"pageControlCurrentDot"];
+//    cycleScrollView3.pageDotImage = [UIImage imageNamed:@"circle"];
+//    cycleScrollView3.imageURLStringsGroup = imagesURLStrings;
+//
+//    [self.view addSubview:cycleScrollView3];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -200,9 +216,17 @@
                 [imageUrls addObject:iamgeURL];
             }
             imagesURLString = imageUrls;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 cycleScrollView.imageURLStringsGroup = imagesURLString;
-            });
+//            });
+            
+            SDCycleScrollView *cycleScrollView3 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 164) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+            cycleScrollView3.currentPageDotImage = [UIImage imageNamed:@"circle_select"];
+            cycleScrollView3.pageDotImage = [UIImage imageNamed:@"circle"];
+            cycleScrollView3.imageURLStringsGroup = imagesURLString;
+
+            [headerView addSubview:cycleScrollView3];
+
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -259,26 +283,16 @@
 
 -(void)creatHeaderView
 {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 224)];
+    headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 218)];
     [headerView setBackgroundColor:kColor(236, 236, 236)];
-    //采用网络图片实现
-//    imagesURLString = [[NSMutableArray alloc]init];
-    // 网络加载 --- 创建带标题的图片轮播器
     cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 164) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
-    
-    cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
-    cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
-    [headerView addSubview:cycleScrollView];
-    UIView *grayView = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(cycleScrollView.frame) + 4, SCREEN_WIDTH-20, 0.5)];
+    UIView *grayView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(cycleScrollView.frame) + 4, SCREEN_WIDTH, 0.5)];
     grayView.backgroundColor = [UIColor lightGrayColor];
     [headerView addSubview:grayView];
-    
-    
-    
     NSArray *nameArray = [NSArray arrayWithObjects:@"新闻",@"活动", nil];
     for (int i = 0; i < nameArray.count; i ++) {
         UIButton *serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        serviceBtn.frame = CGRectMake(i*SCREEN_WIDTH/2, CGRectGetMaxY(cycleScrollView.frame) + 4, SCREEN_WIDTH/2, 52);
+        serviceBtn.frame = CGRectMake(i*SCREEN_WIDTH/2, CGRectGetMaxY(cycleScrollView.frame), SCREEN_WIDTH/2, 52);
         serviceBtn.tag = i+100;
         serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
         serviceBtn.layer.borderWidth = 0;
@@ -299,8 +313,8 @@
                                   forState:UIControlStateSelected];
             [serviceBtn setImage:[UIImage imageNamed:@"news"]
                                   forState:UIControlStateNormal];
-            pinkView.frame = CGRectMake(10, CGRectGetMaxY(serviceBtn.frame), (SCREEN_WIDTH-20)/2, 0.8);
-            UIView *grayView_vertical = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(serviceBtn.frame), CGRectGetMaxY(cycleScrollView.frame) + 16, 0.5, 28)];
+            pinkView.frame = CGRectMake(10, CGRectGetMaxY(serviceBtn.frame)-5, (SCREEN_WIDTH-20)/2, 0.8);
+            UIView *grayView_vertical = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(serviceBtn.frame), CGRectGetMaxY(cycleScrollView.frame) + 20, 0.5, 16)];
             grayView_vertical.backgroundColor = [UIColor lightGrayColor];
             [headerView addSubview:grayView_vertical];
         }
@@ -309,7 +323,7 @@
                                   forState:UIControlStateSelected];
             [serviceBtn setImage:[UIImage imageNamed:@"activity"]
                                   forState:UIControlStateNormal];
-            pinkView.frame = CGRectMake(10+(SCREEN_WIDTH-20)/2, CGRectGetMaxY(serviceBtn.frame), (SCREEN_WIDTH-20)/2, 0.8);
+            pinkView.frame = CGRectMake(10+(SCREEN_WIDTH-20)/2, CGRectGetMaxY(serviceBtn.frame)-5, (SCREEN_WIDTH-20)/2, 0.8);
             pinkView.hidden = YES;
         }
     }
