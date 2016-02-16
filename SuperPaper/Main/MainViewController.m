@@ -365,7 +365,7 @@
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
         btn.clipsToBounds = YES;
 //        [btn setBackgroundImage:[UIImage imageWithASName:@"userImage" directory:@"navi"] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[UIImage imageNamed:@"UserImage"]
+        [btn setImage:[UIImage imageNamed:@"userImage"]
                        forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(userAction:) forControlEvents:UIControlEventTouchUpInside];
         _normalBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];

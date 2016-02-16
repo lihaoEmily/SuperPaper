@@ -40,7 +40,7 @@
     [self.contentView addSubview:_headImageView];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame) + LEFT_MARGIN,LEFT_MARGIN, SCREEN_WIDTH - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN * 2, 40)];
-    _titleLabel.font = [UIFont systemFontOfSize:15.0];
+    _titleLabel.font = [UIFont systemFontOfSize:17.0];
     _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.numberOfLines = 2;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
