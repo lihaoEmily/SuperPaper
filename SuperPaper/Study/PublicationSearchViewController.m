@@ -10,6 +10,7 @@
 #import "PublicationSearchTableViewCell.h"
 #import "UserSession.h"
 #import "PublicationIntroduceViewController.h"
+#import "LoginViewController.h"
 
 #define SEARCHPAGESIZE 30
 
@@ -199,12 +200,16 @@
 - (void)clickToSearch
 {
     [_searchBar resignFirstResponder];
-    if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入搜索关键字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+    if ([UserSession sharedInstance].currentUserID == 0) {
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+        [AppDelegate.app.nav pushViewController:loginVC animated:YES];
     }else{
-        [self getSearchData];
+        if ([_searchBar.text isEqualToString:@""] || _searchBar.text.length == 0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入搜索关键字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            [self getSearchData];
+        }
     }
 }
 

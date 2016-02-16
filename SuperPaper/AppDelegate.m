@@ -27,8 +27,12 @@
 #import "UMSocialQQHandler.h"
 
 #import "NormalWebViewController.h"
+#import "Reachability.h"
 
 @interface AppDelegate ()<UIAlertViewDelegate>
+{
+    Reachability *hostReach;
+}
 
 @property (nonatomic, strong) NSString * pushUrlString;
 
@@ -82,13 +86,40 @@
     // 设置友盟APPKey
     [UMSocialData setAppKey:@"56af0b3be0f55ab9b1001511"];
     
-    //设置微信AppId、appSecret，分享url
+    // 设置微信AppId、appSecret，分享url
     [UMSocialWechatHandler setWXAppId:@"wx1bb4e3dee024af61" appSecret:@"513ad74a27c611b9afac24f3226b897d" url:@""];
     
-    //设置手机QQ 的AppId，Appkey，和分享URL
+    // 设置手机QQ 的AppId，Appkey，和分享URL
     [UMSocialQQHandler setQQWithAppId:@"1105051018" appKey:@"qqWTYTx2Yhh8q82R" url:@""];
     
+    // 开启网络状况的监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+    // 可以以多种形式初始化
+    hostReach = [Reachability reachabilityWithHostName:@"www.google.com"];
+    // 开始监听,会启动一个run loop
+    [hostReach startNotifier];
+    [self updateInterfaceWithReachability:hostReach];
+    
     return YES;
+}
+
+// 连接改变
+- (void)reachabilityChanged:(NSNotification *)note
+{
+    Reachability *curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    [self updateInterfaceWithReachability:curReach];
+}
+
+//处理连接改变后的情况
+- (void)updateInterfaceWithReachability:(Reachability *)curReach
+{
+    // 对连接改变做出响应的处理动作。
+    NetworkStatus status = [curReach currentReachabilityStatus];
+    if (status == NotReachable) {  //没有连接到网络就弹出提实况
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"超级论文" message:@"无网络连接，请检查当前网络状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
