@@ -95,7 +95,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-            NSLog(@"获取个人信息呢");
+            
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 NSNumber *result = responseObject[@"result"];
@@ -134,7 +134,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         
         NSString *urlString = [NSString stringWithFormat:@"%@getservice_tel.php",BASE_URL];
         [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
-            NSLog(@"获取客服电话呢");
+            
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 NSNumber *result = responseObject[@"result"];
@@ -323,8 +323,30 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 }
 - (void)popupDisplayTypeChoosingActionSheet
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"学生" otherButtonTitles:@"教师", nil];
-    [sheet showInView:self.view];
+    if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
+        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"学生",@"教师", nil];
+        [av showInView:self.view];
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择职业" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *chooseMan = [UIAlertAction actionWithTitle:@"学生" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
+                [UserSession sharedInstance].currentRole = kUserRoleStudent;
+                [self.backTableView reloadData];
+            }
+        }];
+        UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"教师" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
+                [UserSession sharedInstance].currentRole = kUserRoleTeacher;
+                [self.backTableView reloadData];
+            }
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:chooseMan];
+        [alertController addAction:chooseWoman];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+
 }
 
 //MARK: UIActionSheet Delegate
