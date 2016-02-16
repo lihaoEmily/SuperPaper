@@ -15,6 +15,7 @@
 #import "SDCycleScrollView.h"
 #import "ServiceButton.h"
 #import "HomeDetailController.h"
+#import "TAPageControl.h"
 
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 @property (nonatomic, strong) UITableView *studyTableView;
@@ -30,17 +31,15 @@
     
     NSMutableArray *imagesURLString;
     SDCycleScrollView *cycleScrollView;
+    UIView *headerView;
     BOOL isNews;
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self viewTest];
     isNews = YES;
     [self initData];
-//    [self getHomePageNewsInfo];
-//    [self getHomePageAdInfo];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -200,9 +199,13 @@
                 [imageUrls addObject:iamgeURL];
             }
             imagesURLString = imageUrls;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                cycleScrollView.imageURLStringsGroup = imagesURLString;
-            });
+            SDCycleScrollView *cycleScrollView3 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 164) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+            cycleScrollView3.currentPageDotImage = [UIImage imageNamed:@"circle_select"];
+            cycleScrollView3.pageDotImage = [UIImage imageNamed:@"circle"];
+            cycleScrollView3.imageURLStringsGroup = imagesURLString;
+
+            [headerView addSubview:cycleScrollView3];
+
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -215,12 +218,16 @@
     switch (button.tag) {
         case 100:{
             if (button.selected) {
+                button.selected = YES;
                 UIButton *btn = (UIButton *)[self.view viewWithTag:101];
                 btn.selected = NO;
+                UIView *view = (UIView *)[self.view viewWithTag:200];
+                view.hidden = NO;
+                UIView *view1 = (UIView *)[self.view viewWithTag:201];
+                view1.hidden = YES;
             }
             
             isNews = YES;
-//            [_responseNewsInfoArr removeAllObjects];
             if (_responseNewsInfoArr.count > 0) {
                 [_studyTableView reloadData];
             }
@@ -231,11 +238,15 @@
             break;
         case 101:{
             if (button.selected) {
+                button.selected = YES;
                 UIButton *btn = (UIButton *)[self.view viewWithTag:100];
                 btn.selected = NO;
+                UIView *view = (UIView *)[self.view viewWithTag:201];
+                view.hidden = NO;
+                UIView *view1 = (UIView *)[self.view viewWithTag:200];
+                view1.hidden = YES;
             }
             isNews = NO;
-//            [_responseActivityInfoArr removeAllObjects];
             if (_responseActivityInfoArr.count > 0) {
                 [_studyTableView reloadData];
             }
@@ -251,20 +262,16 @@
 
 -(void)creatHeaderView
 {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 224)];
+    headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 218)];
     [headerView setBackgroundColor:kColor(236, 236, 236)];
-    //采用网络图片实现
-//    imagesURLString = [[NSMutableArray alloc]init];
-    // 网络加载 --- 创建带标题的图片轮播器
     cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 164) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
-    
-    cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
-    cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
-    [headerView addSubview:cycleScrollView];
+    UIView *grayView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(cycleScrollView.frame) + 4, SCREEN_WIDTH, 0.5)];
+    grayView.backgroundColor = [UIColor lightGrayColor];
+    [headerView addSubview:grayView];
     NSArray *nameArray = [NSArray arrayWithObjects:@"新闻",@"活动", nil];
     for (int i = 0; i < nameArray.count; i ++) {
         UIButton *serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        serviceBtn.frame = CGRectMake(i*SCREEN_WIDTH/2, CGRectGetMaxY(cycleScrollView.frame) + 4, SCREEN_WIDTH/2, 52);
+        serviceBtn.frame = CGRectMake(i*SCREEN_WIDTH/2, CGRectGetMaxY(cycleScrollView.frame), SCREEN_WIDTH/2, 52);
         serviceBtn.tag = i+100;
         serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
         serviceBtn.layer.borderWidth = 0;
@@ -274,18 +281,29 @@
                        action:@selector(serviceBtnClick:)
              forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:serviceBtn];
+        
+        UIView *pinkView = [[UIView alloc]init];
+        pinkView.backgroundColor = kColor(250, 0, 89);
+        [headerView addSubview:pinkView];
+        pinkView.tag = i+200;
         if (i==0) {
             serviceBtn.selected = YES;
-            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"news_select"]
+            [serviceBtn setImage:[UIImage imageNamed:@"news_select"]
                                   forState:UIControlStateSelected];
-            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"news"]
+            [serviceBtn setImage:[UIImage imageNamed:@"news"]
                                   forState:UIControlStateNormal];
+            pinkView.frame = CGRectMake(10, CGRectGetMaxY(serviceBtn.frame)-5, (SCREEN_WIDTH-20)/2, 0.8);
+            UIView *grayView_vertical = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(serviceBtn.frame), CGRectGetMaxY(cycleScrollView.frame) + 20, 0.5, 16)];
+            grayView_vertical.backgroundColor = [UIColor lightGrayColor];
+            [headerView addSubview:grayView_vertical];
         }
         else{
-            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"activity_select"]
+            [serviceBtn setImage:[UIImage imageNamed:@"activity_select"]
                                   forState:UIControlStateSelected];
-            [serviceBtn setBackgroundImage:[UIImage imageNamed:@"activity"]
+            [serviceBtn setImage:[UIImage imageNamed:@"activity"]
                                   forState:UIControlStateNormal];
+            pinkView.frame = CGRectMake(10+(SCREEN_WIDTH-20)/2, CGRectGetMaxY(serviceBtn.frame)-5, (SCREEN_WIDTH-20)/2, 0.8);
+            pinkView.hidden = YES;
         }
     }
     _studyTableView.tableHeaderView = headerView;

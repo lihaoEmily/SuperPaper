@@ -94,7 +94,7 @@ static NSString *const SubmitIdentifier = @"submit";
                 self.career = 0 == [responseObject[@"jobtitle"]integerValue]?@"老师":@"学生";
             }else
                 self.career = @"老师";
-            [UserSession sharedInstance].currentRole = [responseObject[@"jobtitle"]integerValue];
+            [UserSession sharedInstance].currentRole = [responseObject[@"jobtitle"]integerValue] == 0?kUserRoleTeacher:kUserRoleStudent;
             if ([responseObject[@"school"]isKindOfClass:[NSString class]]) {
                 self.college = responseObject[@"school"];
             }else
@@ -279,7 +279,6 @@ static NSString *const SubmitIdentifier = @"submit";
     }else{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *chooseMan = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"");
             [self chooseMan];
         }];
         UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -296,15 +295,14 @@ static NSString *const SubmitIdentifier = @"submit";
 - (void) popupChangeAgeView
 {
     UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
-    bgView.layer.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7].CGColor;
+    
     UIDatePicker *datePicker = [[UIDatePicker alloc]init];
     datePicker.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *datePickerLeadingCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeLeading multiplier:1 constant:25];
+    NSLayoutConstraint *datePickerLeadingCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
     NSLayoutConstraint *datePickerBottomCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    NSLayoutConstraint *datePickerTrailingCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeTrailing multiplier:1 constant:-25];
+    NSLayoutConstraint *datePickerTrailingCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:bgView attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
     NSLayoutConstraint *datePickerHeightCon = [NSLayoutConstraint constraintWithItem:datePicker attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:200];
     datePicker.datePickerMode = UIDatePickerModeDate;
-    datePicker.backgroundColor = [AppConfig appNaviColor];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     dateFormatter.dateFormat = @"yyyy:MM:dd";
     datePicker.date = [dateFormatter dateFromString:@"1995:06:06"];
@@ -465,7 +463,6 @@ static NSString *const SubmitIdentifier = @"submit";
 //MARK: AlertView Delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"%lu",buttonIndex);
     if (0 == actionSheet.tag) {
         if (0 == buttonIndex) {
             [self chooseMan];

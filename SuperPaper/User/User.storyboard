@@ -62,6 +62,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="OIC-ew-CB2">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="separatorInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <color key="sectionIndexBackgroundColor" red="0.99784772724626958" green="0.87921342877628816" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserTableViewCell" id="mMI-LU-S8S" customClass="UserTableViewCell">
@@ -1325,8 +1326,8 @@
                                                         <constraint firstAttribute="height" constant="1" id="PHu-WU-WCf"/>
                                                     </constraints>
                                                 </view>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_voucher_userd" translatesAutoresizingMaskIntoConstraints="NO" id="WJU-ue-XR4">
-                                                    <rect key="frame" x="20" y="15" width="50" height="40"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_voucher_used" translatesAutoresizingMaskIntoConstraints="NO" id="WJU-ue-XR4">
+                                                    <rect key="frame" x="15" y="15" width="50" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="5vh-h6-Wob"/>
                                                         <constraint firstAttribute="height" constant="40" id="zi3-VG-pps"/>
@@ -1336,7 +1337,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="mEE-6f-McY" secondAttribute="bottom" id="2HB-uG-GG9"/>
                                                 <constraint firstAttribute="trailing" secondItem="mEE-6f-McY" secondAttribute="trailing" id="8t2-Ub-b3h"/>
-                                                <constraint firstItem="WJU-ue-XR4" firstAttribute="leading" secondItem="vEK-kh-R2q" secondAttribute="leading" constant="10" id="TK8-az-3Xc"/>
+                                                <constraint firstItem="WJU-ue-XR4" firstAttribute="leading" secondItem="vEK-kh-R2q" secondAttribute="leading" constant="5" id="TK8-az-3Xc"/>
                                                 <constraint firstAttribute="bottom" secondItem="vEK-kh-R2q" secondAttribute="bottom" constant="10" id="m1D-L6-hmy"/>
                                                 <constraint firstAttribute="trailing" secondItem="vEK-kh-R2q" secondAttribute="trailing" constant="10" id="m1b-Po-gAJ"/>
                                                 <constraint firstItem="mEE-6f-McY" firstAttribute="leading" secondItem="L65-J7-sDU" secondAttribute="leading" constant="12" id="mLQ-1d-mii"/>
@@ -1412,7 +1413,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18640869663" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHH-1s-sQj">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18640869663" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHH-1s-sQj">
                                                     <rect key="frame" x="198" y="0.0" width="112" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="112" id="iOH-jp-OPZ"/>
@@ -2334,7 +2335,7 @@
         <image name="QRCode" width="22" height="22"/>
         <image name="TextExport" width="28" height="28"/>
         <image name="icon_voucher_intro" width="22" height="22"/>
-        <image name="icon_voucher_userd" width="50" height="39"/>
+        <image name="icon_voucher_used" width="50" height="39"/>
         <image name="right_arrow.png" width="33" height="38"/>
         <image name="关于我们" width="960" height="600"/>
         <image name="复选框-1" width="15" height="15"/>
