@@ -326,7 +326,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyyMMddHHmmss";
     NSString *str = [formatter stringFromDate:[NSDate date]];
-    __block NSString *fileName = [NSString stringWithFormat:@"%@.png", str];
+    __block NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
     //网络请求
     __block AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -335,15 +335,19 @@ static NSString *const ShowTextIdentifier = @"showtext";
     [manager POST:urlString
        parameters:nil
 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-    NSData *imageData = UIImagePNGRepresentation(image);
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyyMMddHHmmss";
-    NSString *str = [formatter stringFromDate:[NSDate date]];
-    NSString *fileName = [NSString stringWithFormat:@"%@.png", str];
+    NSData *imageData = UIImageJPEGRepresentation(image, 1);
+    CGFloat dataLength = [imageData length] / 1000.0;
+    float scale;
+    if (dataLength > 8.0) {
+        scale = 8.0 / dataLength;
+    }else
+        scale = 1;
+    imageData = UIImageJPEGRepresentation(image, scale);
+    NSLog(@"%f KB",[imageData length] / 1000.0);
     [formData appendPartWithFileData:imageData
                                 name:@"uploadedfile"
                             fileName:fileName
-                            mimeType:@"image/png"];
+                            mimeType:@"image/jpeg"];
 }
          progress:^(NSProgress * _Nonnull uploadProgress) {
              
@@ -352,8 +356,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
               if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                   NSNumber *result = responseObject[@"result"];
                   if (0 == result.integerValue) {
-                    // 上传成功后，再判断更改头是否成功 "changeuserimg.php"?id=userId&headpic=headPicName;
-                    // 参数设置
+
                     NSString *userId = [NSString stringWithFormat:@"%ld", [UserSession sharedInstance].currentUserID];
                     
                     NSDictionary *params = @{@"id":userId, @"headpic":fileName};

@@ -135,13 +135,6 @@
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="e5m-4b-nC8"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGM-rI-bTB">
-                                    <rect key="frame" x="245" y="38" width="39" height="39"/>
-                                    <state key="normal" image="UMS_wechat_timeline_icon"/>
-                                    <connections>
-                                        <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="R9T-5H-pGk"/>
-                                    </connections>
-                                </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QQ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6l-kw-2eq">
                                     <rect key="frame" x="20" y="77" width="23" height="18"/>
                                     <constraints>
@@ -178,6 +171,13 @@
                                     <state key="normal" image="UMS_qq_icon"/>
                                     <connections>
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="cOi-9S-1wZ"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGM-rI-bTB">
+                                    <rect key="frame" x="245" y="38" width="39" height="39"/>
+                                    <state key="normal" image="UMS_wechat_timeline_icon"/>
+                                    <connections>
+                                        <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="R9T-5H-pGk"/>
                                     </connections>
                                 </button>
                             </subviews>
