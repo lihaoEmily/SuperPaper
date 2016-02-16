@@ -13,7 +13,7 @@
 #import "AppConfig.h"
 
 
-@interface ChangeUserHeadImageViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
+@interface ChangeUserHeadImageViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>{
     UITextField *_nickNameTextField;
     UIView *_popupView;
     UIActivityIndicatorView *_webIndicator;
@@ -123,35 +123,23 @@ static NSString *const ShowTextIdentifier = @"showtext";
 
 - (void) popupChangeHeadImageView
 {
-    UIView *bgView = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
-    bgView.layer.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7].CGColor;
-    CGSize size = [UIScreen mainScreen].bounds.size;//屏幕尺寸
-    UIButton *cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 200, size.width - 50, 45)];
-    [cameraBtn setTitle:@"拍 照" forState:UIControlStateNormal];
-    [cameraBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [cameraBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [cameraBtn setBackgroundColor:[UIColor whiteColor]];
-    [cameraBtn addTarget:self action:@selector(chooseHeadImageFromCamera) forControlEvents:UIControlEventTouchUpInside];
-    [bgView addSubview:cameraBtn];
-    
-    UIButton *photoLibraryBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 140, size.width - 50, 45)];
-    [photoLibraryBtn setTitle:@"从相册选择" forState:UIControlStateNormal];
-    [photoLibraryBtn setTitleColor:[UIColor colorWithRed:14.0f/255 green:168.0f/255 blue:221.0f/255 alpha:1] forState:UIControlStateNormal];
-    [photoLibraryBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [photoLibraryBtn setBackgroundColor:[UIColor whiteColor]];
-    [photoLibraryBtn addTarget:self action:@selector(chooseHeadImageFromPhotoLibrary) forControlEvents:UIControlEventTouchUpInside];
-    [bgView addSubview:photoLibraryBtn];
-    
-    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(25, size.height - 80, size.width - 50, 45)];
-    [cancelBtn setTitle:@"取 消" forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:[UIColor colorWithRed:14.0f/255 green:168.0f/255 blue:221.0f/255 alpha:1] forState:UIControlStateNormal];
-    [cancelBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [cancelBtn setBackgroundColor:[UIColor whiteColor]];
-    [cancelBtn addTarget:self action:@selector(dismissPopupView) forControlEvents:UIControlEventTouchUpInside];
-    [bgView addSubview:cancelBtn];
-    
-    _popupView = bgView;
-    [[[UIApplication sharedApplication]keyWindow]addSubview:_popupView];
+    if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
+        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册选择", nil];
+        [av showInView:self.view];
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *chooseMan = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self chooseHeadImageFromCamera];
+        }];
+        UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self chooseHeadImageFromPhotoLibrary];
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:chooseMan];
+        [alertController addAction:chooseWoman];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void) chooseHeadImageFromCamera
@@ -407,7 +395,17 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     if (!_webIndicator.isAnimating) {
         [_webIndicator startAnimating];
     }
-}//MARK: UIImagePickerControllerDelegate
+}
+//MARK: UIActionsheetDelegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (0 == buttonIndex) {
+        [self chooseHeadImageFromCamera];
+    }else if(1 == buttonIndex){
+        [self chooseHeadImageFromPhotoLibrary];
+    }
+}
+//MARK: UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     

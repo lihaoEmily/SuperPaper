@@ -95,7 +95,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-            NSLog(@"获取个人信息呢");
+            
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 NSNumber *result = responseObject[@"result"];
@@ -134,7 +134,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         
         NSString *urlString = [NSString stringWithFormat:@"%@getservice_tel.php",BASE_URL];
         [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
-            NSLog(@"获取客服电话");
+            
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 NSNumber *result = responseObject[@"result"];
@@ -257,12 +257,12 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 
     [headImageBtn addTarget:self action:@selector(changeUserHeadImage) forControlEvents:UIControlEventTouchUpInside];
     headImageBtn.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *headImageBtnWidthCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
-    NSLayoutConstraint *headImageBtnHeightCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:80];
+    NSLayoutConstraint *headImageBtnWidthCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:90];
+    NSLayoutConstraint *headImageBtnHeightCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:90];
     NSLayoutConstraint *headImageBtnCenterXCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    NSLayoutConstraint *headImageBtnCenterYCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-17];
+    NSLayoutConstraint *headImageBtnTopCon = [NSLayoutConstraint constraintWithItem:headImageBtn attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeTop multiplier:1 constant:8];
     [imageView addSubview:headImageBtn];
-    [imageView addConstraints:@[headImageBtnWidthCon,headImageBtnHeightCon,headImageBtnCenterYCon,headImageBtnCenterXCon]];
+    [imageView addConstraints:@[headImageBtnWidthCon,headImageBtnHeightCon,headImageBtnTopCon,headImageBtnCenterXCon]];
     
     
     
@@ -285,7 +285,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     telLabel.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *telLabelWidthCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:194];
     NSLayoutConstraint *telLabelHeightCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:21];
-    NSLayoutConstraint *telLabelTopCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:headImageBtn attribute:NSLayoutAttributeBottom multiplier:1 constant:8];
+    NSLayoutConstraint *telLabelTopCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:headImageBtn attribute:NSLayoutAttributeBottom multiplier:1 constant:4];
     NSLayoutConstraint *telLabelCenterXCon = [NSLayoutConstraint constraintWithItem:telLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
     [imageView addSubview:telLabel];
     [imageView addConstraints:@[telLabelCenterXCon,telLabelHeightCon,telLabelTopCon,telLabelWidthCon]];
@@ -323,8 +323,30 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 }
 - (void)popupDisplayTypeChoosingActionSheet
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"学生" otherButtonTitles:@"教师", nil];
-    [sheet showInView:self.view];
+    if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
+        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"学生",@"教师", nil];
+        [av showInView:self.view];
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择职业" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *chooseMan = [UIAlertAction actionWithTitle:@"学生" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
+                [UserSession sharedInstance].currentRole = kUserRoleStudent;
+                [self.backTableView reloadData];
+            }
+        }];
+        UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"教师" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
+                [UserSession sharedInstance].currentRole = kUserRoleTeacher;
+                [self.backTableView reloadData];
+            }
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:chooseMan];
+        [alertController addAction:chooseWoman];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+
 }
 
 //MARK: UIActionSheet Delegate
