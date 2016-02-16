@@ -8,6 +8,7 @@
 
 #import "GetPapersViewController.h"
 #import "ASSaveData.h"
+#import "LoginViewController.h"
 
 #define TOP_WIEW_HEIGHT 136.0
 #define TITLE_HEIGHT    72.0
@@ -147,12 +148,19 @@
 
 - (void)exportWebViewToDoc
 {
-    if (_content) {
-        ASSaveData *data = [[ASSaveData alloc] init];
-        [data saveToLocationwithStrings:_content withTitle:_title];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+    if ([UserSession sharedInstance].currentUserID == 0) {
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+        [AppDelegate.app.nav pushViewController:loginVC animated:YES];
+    }else{
+        if (_content && _content.length > 0) {
+            ASSaveData *data = [[ASSaveData alloc] init];
+            [data saveToLocationwithStrings:_content withTitle:_title];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"论文已导出到Documents文件夹中，请注意查看" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无论文可导出" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }
 }
 
