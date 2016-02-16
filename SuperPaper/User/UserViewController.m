@@ -95,7 +95,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-            
+            NSLog(@"获取个人信息呢");
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 NSNumber *result = responseObject[@"result"];
@@ -134,7 +134,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         
         NSString *urlString = [NSString stringWithFormat:@"%@getservice_tel.php",BASE_URL];
         [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
-            
+            NSLog(@"获取客服电话");
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                 NSNumber *result = responseObject[@"result"];
