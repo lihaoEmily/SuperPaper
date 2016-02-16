@@ -209,7 +209,7 @@
     [self setSelectedButtonType:_tabBarDisplayType];
     
     NSArray *tempArr = self.tabBarDisplayType == TabBarDisplayTypeTeacher? _teacherArr : _studentArr;
-
+    
     for (TabBarItem *item in tempArr) {
         if ((item.tag - TABBARITEMTAG) == _selectIndex)
         {

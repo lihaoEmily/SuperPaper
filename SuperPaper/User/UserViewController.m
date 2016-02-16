@@ -7,7 +7,6 @@
 //
 
 #import "UserViewController.h"
-#import "MainViewController.h"
 #import "UserSession.h"
 #import "UIButton+WebCache.h"
 #import "UserTableViewCell.h"
@@ -334,22 +333,16 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     if (0 == buttonIndex) {
         if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
             [UserSession sharedInstance].currentRole = kUserRoleStudent;
-            MainViewController *parentController = (MainViewController *)self.parentViewController;
-            parentController.tabbar.tabBarDisplayType = MainTabBarDisplayTypeStudent;
             [self.backTableView reloadData];
         }
         
     }else if(1 == buttonIndex){
         if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
             [UserSession sharedInstance].currentRole = kUserRoleTeacher;
-            MainViewController *parentController = (MainViewController *)self.parentViewController;
-            parentController.tabbar.tabBarDisplayType = MainTabBarDisplayTypeTeacher;
             [self.backTableView reloadData];
         }
     }
-    UserRole currentRole = [[UserSession sharedInstance] currentRole];
-    NSDictionary *info = @{kUserRole:@(currentRole)};
-    [[UserSession sharedInstance] saveUserProfileWithInfo:info];
+
 }
 //MARK: TabelViewDataSource,Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
