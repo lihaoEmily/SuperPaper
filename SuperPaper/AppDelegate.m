@@ -40,7 +40,7 @@
 
 @implementation AppDelegate
 
-- (NavigationController *)nav {
+- (NavigationController *)nav{
     if (!_nav)
     {
         _nav = [[NavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
@@ -50,27 +50,81 @@
     return _nav;
 }
 
-+ (AppDelegate *)app {
-    return (AppDelegate *)[UIApplication sharedApplication].delegate;
++ (AppDelegate *)app{
+    return [UIApplication sharedApplication].delegate;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [self registerReachabilityNotification];
-    [self registerJushSDKWith:launchOptions];
-    [self registerUMSocialForApplication];
-    
+//    [self registerShareSdkForApplication];
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    } else {
+        //categories 必须为nil
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                          UIRemoteNotificationTypeSound |
+                                                          UIRemoteNotificationTypeAlert)
+                                              categories:nil];
+    }
+
+    [JPUSHService setupWithOption:launchOptions appKey:appKey channel:channel apsForProduction:FALSE];
+   // [self registerJushSDKWith:launchOptions];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; 
     [self.window makeKeyAndVisible];
+    NSLog(@"----> upload url %@", UPLOAD_SERVER);
+    
+    // 友盟社会化分享
+    // 隐藏未安装的应用
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+    
+    // 设置友盟APPKey
+    [UMSocialData setAppKey:@"56af0b3be0f55ab9b1001511"];
+    
+    // 设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:@"wx1bb4e3dee024af61" appSecret:@"513ad74a27c611b9afac24f3226b897d" url:@""];
+    
+    // 设置手机QQ 的AppId，Appkey，和分享URL
+    [UMSocialQQHandler setQQWithAppId:@"1105051018" appKey:@"qqWTYTx2Yhh8q82R" url:@""];
+    
+    // 开启网络状况的监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+    // 可以以多种形式初始化
+    hostReach = [Reachability reachabilityWithHostName:@"www.google.com"];
+    // 开始监听,会启动一个run loop
+    [hostReach startNotifier];
+    [self updateInterfaceWithReachability:hostReach];
     
     return YES;
 }
 
+// 连接改变
+- (void)reachabilityChanged:(NSNotification *)note
+{
+    Reachability *curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    [self updateInterfaceWithReachability:curReach];
+}
+
+//处理连接改变后的情况
+- (void)updateInterfaceWithReachability:(Reachability *)curReach
+{
+    // 对连接改变做出响应的处理动作。
+    NetworkStatus status = [curReach currentReachabilityStatus];
+    if (status == NotReachable) {  //没有连接到网络就弹出提实况
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"超级论文" message:@"无网络连接，请检查当前网络状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game
+    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -172,44 +226,7 @@
     }
 }
 
-
-#pragma mark - ReachabilityNotifier
-- (void)registerReachabilityNotification {
-    // 开启网络状况的监听
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(reachabilityChanged:)
-                                                 name: kReachabilityChangedNotification
-                                               object: nil];
-    // 可以以多种形式初始化
-    hostReach = [Reachability reachabilityWithHostName:HostName];
-    // 开始监听,会启动一个run loop
-    [hostReach startNotifier];
-    [self updateInterfaceWithReachability:hostReach];
-}
-
-// 连接改变
-- (void)reachabilityChanged:(NSNotification *)note {
-    Reachability *curReach = [note object];
-    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
-    [self updateInterfaceWithReachability:curReach];
-}
-
-//处理连接改变后的情况
-- (void)updateInterfaceWithReachability:(Reachability *)curReach {
-    // 对连接改变做出响应的处理动作。
-    NetworkStatus status = [curReach currentReachabilityStatus];
-    if (status == NotReachable) {  //没有连接到网络就弹出提实况
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"超级论文"
-                                                        message:@"无网络连接，请检查当前网络状态"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"确定"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-}
-
 #pragma mark - ShareSDK Register
-
 - (void)registerShareSdkForApplication {
     /**
      *  设置ShareSDK的appKey，如果尚未在ShareSDK官网注册过App，请移步到http://mob.com/login 登录后台进行应用注册，
@@ -292,48 +309,9 @@
      }];
 }
 
-#pragma mark - UMSocail Register
-
+#pragma mark - UMS Register
 - (void)registerUMSocialForApplication {
-    // 友盟社会化分享
-    // 隐藏未安装的应用
-    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
-    
-    // 设置友盟APPKey
-    [UMSocialData setAppKey:UMShareAppKey];
-    
-    // 设置微信AppId、appSecret，分享url
-    [UMSocialWechatHandler setWXAppId:WXShareAppId
-                            appSecret:WXShareAppSecret
-                                  url:@""];
-    
-    // 设置手机QQ 的AppId，Appkey，和分享URL
-    [UMSocialQQHandler setQQWithAppId:QQShareAppId
-                               appKey:QQShareAppKey
-                                  url:@""];
-}
-
-#pragma mark - JPUSH Register
-
-- (void)registerJushSDKWith:(NSDictionary *)launchOptions {
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        //可以添加自定义categories
-        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                          UIUserNotificationTypeSound |
-                                                          UIUserNotificationTypeAlert)
-                                              categories:nil];
-    } else {
-        //categories 必须为nil
-        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                          UIRemoteNotificationTypeSound |
-                                                          UIRemoteNotificationTypeAlert)
-                                              categories:nil];
-    }
-    
-    [JPUSHService setupWithOption:launchOptions
-                           appKey:JPushAppKey
-                          channel:JPushChannel
-                 apsForProduction:FALSE];
+    ;
 }
 
 #pragma mark - APNS
