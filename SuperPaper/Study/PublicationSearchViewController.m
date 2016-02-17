@@ -59,7 +59,7 @@
     
     /**
      ** parameters 参数
-     * ownertype  整型    1：教师  2:学生
+     * ownertype  整型    1：老师  其他不明确
      * keywords   字符串  搜索的关键字
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数

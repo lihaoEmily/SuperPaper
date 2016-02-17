@@ -246,6 +246,7 @@ static NSString *logoutIdentifier = @"logout";
     
     [session setCurrentUserInviteCode:nil];
     
+    [session setCurrentUserJPushAlias:nil];
     
     [self.navigationController popViewControllerAnimated:YES];
     

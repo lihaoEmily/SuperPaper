@@ -120,7 +120,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
      * parameters 参数
-     * ownertype  整型    1:教师主页，2：学生主页
+     * ownertype  整型    1:老师主页，2：学生主页
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
@@ -154,7 +154,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
      * parameters 参数
-     * ownertype  整型    1:教师主页，2：学生主页
+     * ownertype  整型    1:老师主页，2：学生主页
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */

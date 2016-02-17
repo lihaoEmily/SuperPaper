@@ -210,7 +210,7 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
         cell.statusImageView.image = [UIImage imageNamed:@"icon_voucher_used"];
     }else if(2 == [dic[@"status"] integerValue]){
         cell.statusImageView.hidden = NO;
-        cell.statusImageView.image = [UIImage imageNamed:@"icon_voucher_overdue"];
+        cell.statusImageView.image = [UIImage imageNamed:@"icon_voucher_invalid"];
     }else
         cell.statusImageView.hidden = YES;
     if (_list.count - 1 == indexPath.row) {

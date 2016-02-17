@@ -9,6 +9,7 @@
 #import "MyPapersViewController.h"
 #import "MyPapersTableViewCell.h"
 #import "ReadMyPapersViewController.h"
+#import "ExportableWebViewController.h"
 #import "UserSession.h"
 
 @interface MyPapersViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -191,11 +192,13 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dic = _list[indexPath.row];
-    ReadMyPapersViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"readmypapers"];
-    vc.paperTitle = dic[@"title"];
-    vc.dateString = dic[@"createdate"];
-    vc.content = dic[@"description"];
-    vc.paperID = dic[@"id"];
+//    ReadMyPapersViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"readmypapers"];
+    ExportableWebViewController *vc = [[ExportableWebViewController alloc]init];
+//    vc.paperTitle = dic[@"title"];
+//    vc.dateString = dic[@"createdate"];
+//    vc.content = dic[@"description"];
+//    vc.paperID = dic[@"id"];
+    vc.userData = dic;
     [self.navigationController pushViewController:vc animated:YES];
 }
 /*
