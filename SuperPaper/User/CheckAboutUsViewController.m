@@ -61,6 +61,7 @@
         [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
     }else{
         self.textView.text = self.content;
+        self.textView.font = [UIFont systemFontOfSize:16];
     }
     
     
