@@ -292,6 +292,9 @@
             cell = [[PublicationViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
         }
         
+        if (!_publicationDataArray || !_publicationDataArray.count) {//防止刷新左侧table的时候，点击右侧table,崩溃
+            return cell;
+        }
 //        cell.textLabel.text = @"right";
 //        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
 //        cell.textLabel.text = [dataDic objectForKey:@"title"];
