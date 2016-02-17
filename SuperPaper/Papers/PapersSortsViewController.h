@@ -16,4 +16,5 @@
 @property (nonatomic ,strong)UITableView *tableView;
 @property (nonatomic ,copy)NSString * typeId;
 @property (nonatomic ,weak)id<ClassifiedPapersViewControllerDelegate> delegate;
+@property (nonatomic ,assign)NSString * tagId;
 @end
