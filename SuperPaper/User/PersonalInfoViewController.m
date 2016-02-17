@@ -556,7 +556,7 @@ static NSString *const SubmitIdentifier = @"submit";
             break;
         case 3:{
             cell.titleLabel.text = @"年   龄";
-            cell.detailsLabel.text = 0 == self.age?@"":[NSString stringWithFormat:@"%lu",self.age];
+            cell.detailsLabel.text = 0 == self.age?@"":[NSString stringWithFormat:@"%lu",(long)self.age];
         }
             break;
         case 4:{

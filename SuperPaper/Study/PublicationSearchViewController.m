@@ -311,6 +311,11 @@
 {
     PublicationIntroduceViewController *publicationIntroduceVC = [[PublicationIntroduceViewController alloc] init];
     publicationIntroduceVC.publicationID = [[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"id"] integerValue];
+    if (self.groupId == 1) {
+        publicationIntroduceVC.showPaper = YES;
+    }else{
+        publicationIntroduceVC.showPaper = NO;
+    }
     [AppDelegate.app.nav pushViewController:publicationIntroduceVC animated:YES];
 }
 

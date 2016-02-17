@@ -57,7 +57,7 @@
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         NSString *urlString = [NSString stringWithFormat:@"%@submitfeedback.php",BASE_URL];
-        NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%ld",[UserSession sharedInstance].currentUserID],@"content":self.textView.text,@"mobile":self.textField.text};
+        NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%ld",(long)[UserSession sharedInstance].currentUserID],@"content":self.textView.text,@"mobile":self.textField.text};
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

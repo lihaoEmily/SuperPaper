@@ -133,7 +133,7 @@ static NSString *logoutIdentifier = @"logout";
             UserSettingTextShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:textShowIdentifier];
             cell.titleLabel.text = @"清除缓存";
             [cell.titleLabel sizeToFit];
-            cell.contentLabel.text = [NSString stringWithFormat:@"%luKB",_totalCacheSize / 1024];
+            cell.contentLabel.text = [NSString stringWithFormat:@"%ld KB",(long)(_totalCacheSize / 1024)];
             [cell.contentLabel sizeToFit];
             return cell;
         }
@@ -163,7 +163,7 @@ static NSString *logoutIdentifier = @"logout";
                 UserSettingTextShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:textShowIdentifier];
                 cell.titleLabel.text = @"清除缓存";
                 [cell.titleLabel sizeToFit];
-                cell.contentLabel.text = [NSString stringWithFormat:@"%luKB",_totalCacheSize / 1024];
+                cell.contentLabel.text = [NSString stringWithFormat:@"%ldKB",(long)(_totalCacheSize / 1024)];
                 [cell.contentLabel sizeToFit];
                 return cell;
             }else{
