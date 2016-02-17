@@ -7,6 +7,7 @@
 //
 
 #import "PapersSortsViewController.h"
+#import "PapersSearchViewController.h"
 
 @interface PapersSortsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -19,6 +20,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     _sortData = [NSMutableArray array];
+    [self setupTitleView];
     [self setUpTableView];
     [self getData];
     
@@ -29,6 +31,22 @@
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, SCREEN_WIDTH, SCREEN_HEIGHT - 36) style:UITableViewStyleGrouped ];
     [self.view addSubview:self.tableView];
 
+}
+- (void)setupTitleView
+{
+    UIImage *image = [UIImage imageNamed:@"searchImage"];
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.frame = CGRectMake(10, 0, 25, 25);
+    [searchBtn setImage:image forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchpPapers) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+    self.navigationItem.rightBarButtonItems = @[searchItem];
+}
+- (void)searchpPapers
+{
+    PapersSearchViewController *papersSearchVC = [[PapersSearchViewController alloc] init];
+    papersSearchVC.title = [NSString stringWithFormat:@"%@搜索",self.title];
+    [AppDelegate.app.nav pushViewController:papersSearchVC animated:YES];
 }
 
 -(void)getData
@@ -68,7 +86,11 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    if ([self.tagId isEqualToString:[[_sortData objectAtIndex:indexPath.row] objectForKey:@"id"]]) {
+        cell.textLabel.textColor = [AppConfig appNaviColor];
+    }
     cell.textLabel.text = [[_sortData objectAtIndex:indexPath.row] objectForKey:@"tagname"];
+    
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     return cell;
 

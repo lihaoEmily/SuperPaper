@@ -199,7 +199,9 @@
 - (void)sortPapers
 {
     PapersSortsViewController *sortsView = [[PapersSortsViewController alloc]init];
+    sortsView.title = self.title;
     sortsView.typeId = self.type_id;
+    sortsView.tagId =tagId;
     sortsView.delegate =self;
     [self.navigationController pushViewController:sortsView animated:YES];
 }
