@@ -333,36 +333,38 @@
     [self.showConfirmPwdBtn sizeToFit];
 }
 - (IBAction)resetPwd:(id)sender {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSString *urlString = [NSString stringWithFormat:@"%@findpassword.php",BASE_URL];
-    NSDictionary *params = @{@"userinfo":self.telNumTextField.text,@"password":_pwd};
-    [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSNumber *result = responseObject[@"result"];
-        if (0 == result.integerValue) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"登录密码修改成功！" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            av.tag = 1;
-            [av show];
+    if ([self checkInput]) {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        NSString *urlString = [NSString stringWithFormat:@"%@findpassword.php",BASE_URL];
+        NSDictionary *params = @{@"userinfo":self.telNumTextField.text,@"password":_pwd};
+        [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
             
-            
-        }else{
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"登录密码修改失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSNumber *result = responseObject[@"result"];
+            if (0 == result.integerValue) {
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"登录密码修改成功！" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                av.tag = 1;
+                [av show];
+                
+                
+            }else{
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"登录密码修改失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [av show];
+            }
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
+        }];
+        if (!_webIndicator.isAnimating) {
+            [_webIndicator startAnimating];
         }
-        [_webIndicator stopAnimating];
-        [_webIndicator removeFromSuperview];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [av show];
-        [_webIndicator stopAnimating];
-        [_webIndicator removeFromSuperview];
-    }];
-    if (!_webIndicator.isAnimating) {
-        [_webIndicator startAnimating];
+        [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
     }
-    [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
 
 /*

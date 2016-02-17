@@ -27,7 +27,7 @@
     
     _webIndicator = indicator;
     self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
-    
+    self.textView.font = [UIFont systemFontOfSize:16];
     if (!self.content) {
         NSString *urlString = [NSString stringWithFormat:@"%@getmeinfo.php",BASE_URL];
         NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID]};

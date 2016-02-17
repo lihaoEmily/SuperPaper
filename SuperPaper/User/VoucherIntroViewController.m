@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view.
     self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
     self.textView.text = self.content;
-    
+    self.textView.font = [UIFont systemFontOfSize:16];
 }
 
 - (void)didReceiveMemoryWarning {
