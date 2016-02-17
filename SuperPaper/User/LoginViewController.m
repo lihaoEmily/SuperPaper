@@ -40,7 +40,7 @@
     [self.view addGestureRecognizer:tap];
     
     if ([UserSession sharedInstance].currentUserID == 0) {
-        if ([[UserSession sharedInstance].lastUserTelNum isEqualToString:@""]||![UserSession sharedInstance].lastUserTelNum) {
+        if (![UserSession sharedInstance].lastUserTelNum) {
             
         }else
             self.userNameTextField.text = [UserSession sharedInstance].lastUserTelNum;
@@ -170,12 +170,14 @@
                 }else
                     headImageName = @"";
                 NSString *inviteCode = responseObject[@"myinvite_code"];
+                NSString *jpushAlias = responseObject[@"jpushalias"];
                 
                 [UserSession sharedInstance].currentUserID = userId;
                 [UserSession sharedInstance].currentUserName = userName;
                 [UserSession sharedInstance].currentUserTelNum = mobile;
                 [UserSession sharedInstance].currentUserHeadImageName = headImageName;
                 [UserSession sharedInstance].currentUserInviteCode = inviteCode;
+                [UserSession sharedInstance].currentUserJPushAlias = jpushAlias;
 
                 UIViewController *vc = self.navigationController.viewControllers.firstObject;
                 for (UIViewController *child in vc.childViewControllers) {

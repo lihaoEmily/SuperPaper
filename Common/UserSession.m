@@ -109,6 +109,12 @@
     NSString *inviteCode = [userDefaults valueForKey:kUserInviteCode];
     return inviteCode;
 }
+-(NSString *)currentUserJPushAlias
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *jpushAlias = [userDefaults valueForKey:kUserjpushalias];
+    return jpushAlias;
+}
 #pragma mark - Setter
 - (void)setCurrentRole:(UserRole)currentRole {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -176,6 +182,12 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:currentUserInviteCode forKey:kUserInviteCode];
+    [userDefaults synchronize];
+}
+-(void)setCurrentUserJPushAlias:(NSString *)currentUserJPushAlias
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:currentUserJPushAlias forKey:kUserjpushalias];
     [userDefaults synchronize];
 }
 #pragma mark - Store the information for the current user
