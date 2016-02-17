@@ -27,6 +27,7 @@
 @interface PublicationIntroduceViewController : BaseViewController
 
 @property (nonatomic,assign) NSInteger publicationID;
+@property (nonatomic,assign) BOOL showPaper;
 
 @end
 
