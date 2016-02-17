@@ -117,6 +117,7 @@
 
 - (void) sortPublication:(id) sender{
     PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
+    sortsView.title = @"刊物分类";
     sortsView.tagId = _tagId;
     sortsView.groupId = 1;
     sortsView.delegate = self;
