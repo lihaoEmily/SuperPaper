@@ -9,6 +9,7 @@
 #import "UserSession.h"
 #import "NavigationController.h"
 #import "MainViewController.h"
+#import "JPUSHService.h"
 
 #define ROLE_TEACHER @""
 #define ROLE_STUDENT @""
@@ -186,9 +187,13 @@
 }
 -(void)setCurrentUserJPushAlias:(NSString *)currentUserJPushAlias
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setValue:currentUserJPushAlias forKey:kUserjpushalias];
-    [userDefaults synchronize];
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults setValue:currentUserJPushAlias forKey:kUserjpushalias];
+//    [userDefaults synchronize];
+    [JPUSHService setTags:nil alias:currentUserJPushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+        NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
+    }];
+    
 }
 #pragma mark - Store the information for the current user
 - (void)saveUserProfileWithInfo:(NSDictionary *)infoDic {
