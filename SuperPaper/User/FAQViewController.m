@@ -30,7 +30,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *urlString = [NSString stringWithFormat:@"%@getcommonqa.php",BASE_URL];
-    NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%ld",[UserSession sharedInstance].currentUserID]};
+    NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%ld",(long)[UserSession sharedInstance].currentUserID]};
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
