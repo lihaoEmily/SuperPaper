@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface PublicationSearchViewController : BaseViewController
+@property(nonatomic,assign)NSInteger groupId;
 
 @end

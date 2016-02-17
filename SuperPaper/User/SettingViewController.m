@@ -22,6 +22,7 @@
     UIView *_appHeaderView;//应用设置header
     UISwitch *_soundEffectSwitch;//音效开关
     UISwitch *_acceptPushNotificationSwitch;//接受通知开关
+    NSInteger _totalCacheSize;//sdimagecache的缓存大小
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -40,6 +41,10 @@ static NSString *logoutIdentifier = @"logout";
         _currentUserHasLogin = NO;
     }else
         _currentUserHasLogin = YES;
+    [[SDImageCache sharedImageCache]calculateSizeWithCompletionBlock:^(NSUInteger fileCount, NSUInteger totalSize) {
+        _totalCacheSize = totalSize;
+        [self.tableView reloadData];
+    }];
     [self setupAppHeaderView];
     [self setupSecurityHeaderView];
 }
@@ -114,7 +119,7 @@ static NSString *logoutIdentifier = @"logout";
             cell.titleLabel.text = @"音效";
             [cell.titleLabel sizeToFit];
             _soundEffectSwitch = cell.switchView;
-            [_soundEffectSwitch addTarget:self action:@selector(soundEffect:) forControlEvents:UIControlEventValueChanged];
+            
             
             return cell;
         }else if(1 == indexPath.row){
@@ -122,13 +127,13 @@ static NSString *logoutIdentifier = @"logout";
             cell.titleLabel.text = @"接受通知";
             [cell.titleLabel sizeToFit];
             _acceptPushNotificationSwitch = cell.switchView;
-            [_acceptPushNotificationSwitch addTarget:self action:@selector(soundEffect:) forControlEvents:UIControlEventValueChanged];
+            
             return cell;
         }else{
             UserSettingTextShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:textShowIdentifier];
             cell.titleLabel.text = @"清除缓存";
             [cell.titleLabel sizeToFit];
-            cell.contentLabel.text = @"10.8888MB";
+            cell.contentLabel.text = [NSString stringWithFormat:@"%ld KB",(long)(_totalCacheSize / 1024)];
             [cell.contentLabel sizeToFit];
             return cell;
         }
@@ -145,20 +150,20 @@ static NSString *logoutIdentifier = @"logout";
                 cell.titleLabel.text = @"音效";
                 [cell.titleLabel sizeToFit];
                 _soundEffectSwitch = cell.switchView;
-                [_soundEffectSwitch addTarget:self action:@selector(soundEffect:) forControlEvents:UIControlEventValueChanged];
+                
                 return cell;
             }else if(1 == indexPath.row){
                 UserSettingRadioTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:radioIdentifier];
                 cell.titleLabel.text = @"接受通知";
                 [cell.titleLabel sizeToFit];
                 _acceptPushNotificationSwitch = cell.switchView;
-                [_acceptPushNotificationSwitch addTarget:self action:@selector(soundEffect:) forControlEvents:UIControlEventValueChanged];
+                
                 return cell;
             }else if(2 == indexPath.row){
                 UserSettingTextShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:textShowIdentifier];
                 cell.titleLabel.text = @"清除缓存";
                 [cell.titleLabel sizeToFit];
-                cell.contentLabel.text = @"10.8MB";
+                cell.contentLabel.text = [NSString stringWithFormat:@"%ldKB",(long)(_totalCacheSize / 1024)];
                 [cell.contentLabel sizeToFit];
                 return cell;
             }else{
@@ -193,45 +198,19 @@ static NSString *logoutIdentifier = @"logout";
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
-}
-
-//MARK: 选择开关
--(void)soundEffect:(UISwitch *)sender
-{
-    if (sender == _soundEffectSwitch) {
-        if (!sender.on) {
-            if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-                //可以添加自定义categories
-                [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert)
-                                                      categories:nil];
-            } else {
-                //categories 必须为nil
-                [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert)
-                                                      categories:nil];
-            }
-        }else{
-            if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-                //可以添加自定义categories
-                [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)
-                                                      categories:nil];
-            } else {
-                //categories 必须为nil
-                [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                                  UIRemoteNotificationTypeSound |
-                                                                  UIRemoteNotificationTypeAlert)
-                                                      categories:nil];
-            }
-        }
-            
-    }else{
-        if (!sender.on) {
-            
-        }else{
-            
-        }
+    if (2 == indexPath.row) {
+        //清除缓存
+        [[SDImageCache sharedImageCache]clearDiskOnCompletion:^{
+            [[SDImageCache sharedImageCache]calculateSizeWithCompletionBlock:^(NSUInteger fileCount, NSUInteger totalSize) {
+                _totalCacheSize = totalSize;
+                [self.tableView reloadData];
+            }];
+        }];
         
     }
 }
+
+
 //MARK: 功能
 - (void)logout
 {
