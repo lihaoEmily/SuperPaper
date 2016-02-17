@@ -34,11 +34,8 @@
     if (self = [super init]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         NSInteger userID = [userDefaults integerForKey:kUserID];
-        if (0 == userID) {
-//            self.currentRole = kUserRoleStudent;
-        }else{
+        if (0 != userID) {
             self.currentUserID = userID;
-            
         }
         
     }

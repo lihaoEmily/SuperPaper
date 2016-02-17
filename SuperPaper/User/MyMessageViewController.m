@@ -158,7 +158,25 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
 {
     NSDictionary *dic = _list[indexPath.row];
     NSString *content = dic[@"content"];
-    CGFloat contentHeight = [content boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.height;
+    NSRegularExpression *regularExpretion=[NSRegularExpression regularExpressionWithPattern:@"<[^>]*>|\n"
+                                                                                    options:0
+                                                                                      error:nil];
+    
+    content=[regularExpretion stringByReplacingMatchesInString:content options:NSMatchingReportProgress range:NSMakeRange(0, content.length) withTemplate:@"-"];//替换所有html和换行匹配元素为"-"
+    
+    regularExpretion=[NSRegularExpression regularExpressionWithPattern:@"-{1,}" options:0 error:nil] ;
+    content=[regularExpretion stringByReplacingMatchesInString:content options:NSMatchingReportProgress range:NSMakeRange(0, content.length) withTemplate:@"-"];//把多个"-"匹配为一个"-"
+    
+    //根据"-"分割到数组
+    NSArray *arr=[NSArray array];
+    NSString *totalString = @"";
+    arr =  [content componentsSeparatedByString:@"-"];
+    NSMutableArray *marr=[NSMutableArray arrayWithArray:arr];
+    [marr removeObject:@""];
+    for (NSString *str in marr) {
+        totalString = [totalString stringByAppendingString:str];
+    }
+    CGFloat contentHeight = [totalString boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.height;
     return contentHeight + 21 + 21 + 8;
 
 }
@@ -171,7 +189,26 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     cell.timeLabel.text = dic[@"createdate"];
     
     cell.titleLabel.text = title;
-    cell.detailsLabel.text = content;
+    NSRegularExpression *regularExpretion=[NSRegularExpression regularExpressionWithPattern:@"<[^>]*>|\n"
+                                                                                    options:0
+                                                                                      error:nil];
+    
+    content=[regularExpretion stringByReplacingMatchesInString:content options:NSMatchingReportProgress range:NSMakeRange(0, content.length) withTemplate:@"-"];//替换所有html和换行匹配元素为"-"
+    
+    regularExpretion=[NSRegularExpression regularExpressionWithPattern:@"-{1,}" options:0 error:nil] ;
+    content=[regularExpretion stringByReplacingMatchesInString:content options:NSMatchingReportProgress range:NSMakeRange(0, content.length) withTemplate:@"-"];//把多个"-"匹配为一个"-"
+    
+    //根据"-"分割到数组
+    NSArray *arr=[NSArray array];
+    NSString *totalString = @"";
+    arr =  [content componentsSeparatedByString:@"-"];
+    NSMutableArray *marr=[NSMutableArray arrayWithArray:arr];
+    [marr removeObject:@""];
+    for (NSString *str in marr) {
+        totalString = [totalString stringByAppendingString:str];
+    }
+
+    cell.detailsLabel.text = totalString;
     
     return cell;
 }
