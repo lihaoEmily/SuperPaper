@@ -404,10 +404,8 @@ static NSString *cellIdentifier = @"UserTableViewCell";
             
         }else if (4 == indexPath.row) {
             cell.contentLabel.text = (kUserRoleStudent == [UserSession sharedInstance].currentRole)?@"学生":@"老师";
-            cell.contentLabel.textColor = [UIColor blackColor];
         }else if(5 == indexPath.row){
             cell.contentLabel.text = _papersCountStr;
-            cell.contentLabel.textColor = [UIColor redColor];
         }else
             cell.contentLabel.text = @"";
 
@@ -417,7 +415,6 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",(long)(indexPath.row + 7)]];
         if (2 == indexPath.row) {
             cell.contentLabel.text = _service_telStr;
-            cell.contentLabel.textColor = [UIColor blackColor];
         }else cell.contentLabel.text = @"";
     }
     
