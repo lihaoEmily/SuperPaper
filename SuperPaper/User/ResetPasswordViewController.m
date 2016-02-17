@@ -196,7 +196,7 @@
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         NSString *urlString = [NSString stringWithFormat:@"%@changepassword.php",BASE_URL];
 
-        NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%lu",[UserSession sharedInstance].currentUserID],@"old_pw":_oldPwd,@"new_pw":_newPwd};
+        NSDictionary *params = @{@"uid":[NSString stringWithFormat:@"%lu",(long)[UserSession sharedInstance].currentUserID],@"old_pw":_oldPwd,@"new_pw":_newPwd};
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

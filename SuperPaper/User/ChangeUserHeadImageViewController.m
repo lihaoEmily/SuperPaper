@@ -357,7 +357,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                   NSNumber *result = responseObject[@"result"];
                   if (0 == result.integerValue) {
 
-                    NSString *userId = [NSString stringWithFormat:@"%ld", [UserSession sharedInstance].currentUserID];
+                    NSString *userId = [NSString stringWithFormat:@"%ld", (long)[UserSession sharedInstance].currentUserID];
                     
                     NSDictionary *params = @{@"id":userId, @"headpic":fileName};
                       manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];

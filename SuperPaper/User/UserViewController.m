@@ -392,7 +392,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     if (indexPath.section == 0)
     {
         cell.titleLabel.text = _titles[indexPath.row];
-        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",indexPath.row + 1]];
+        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",(long)(indexPath.row + 1)]];
         if (0 == indexPath.row) {
             cell.contentLabel.text = _unReadMessageCountStr;
             cell.contentLabel.textColor = [UIColor redColor];
@@ -408,7 +408,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     }else if (indexPath.section == 1)
     {
         cell.titleLabel.text = _titles[indexPath.row + 6];
-        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",indexPath.row + 7]];
+        cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",(long)(indexPath.row + 7)]];
         if (2 == indexPath.row) {
             cell.contentLabel.text = _service_telStr;
             cell.contentLabel.textColor = [UIColor blackColor];

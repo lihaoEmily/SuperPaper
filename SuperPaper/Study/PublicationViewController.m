@@ -156,7 +156,7 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
@@ -183,7 +183,7 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:0], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
@@ -212,7 +212,7 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
