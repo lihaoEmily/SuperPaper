@@ -388,14 +388,20 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UserTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
+    cell.dotLabel.layer.cornerRadius = 3;
+    cell.dotLabel.backgroundColor = [UIColor redColor];
+    cell.dotLabel.layer.masksToBounds = YES;
+    cell.dotLabel.hidden = YES;
     if (indexPath.section == 0)
     {
         cell.titleLabel.text = _titles[indexPath.row];
         cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",(long)(indexPath.row + 1)]];
         if (0 == indexPath.row) {
-            cell.contentLabel.text = _unReadMessageCountStr;
-            cell.contentLabel.textColor = [UIColor redColor];
+            cell.contentLabel.text = @"";
+            if (![_unReadMessageCountStr isEqualToString:@""]) {
+                cell.dotLabel.hidden = NO;
+            }
+            
         }else if (4 == indexPath.row) {
             cell.contentLabel.text = (kUserRoleStudent == [UserSession sharedInstance].currentRole)?@"学生":@"教师";
             cell.contentLabel.textColor = [UIColor blackColor];

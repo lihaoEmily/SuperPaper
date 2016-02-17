@@ -19,4 +19,8 @@
 {
     return [UIColor colorWithRed:238.0f/255 green:238.0/255 blue:238.0/255 alpha:1];
 }
++ (UIColor *)textFieldBgColor
+{
+    return [UIColor lightGrayColor];
+}
 @end

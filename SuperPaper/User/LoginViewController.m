@@ -11,7 +11,7 @@
 #import "UserViewController.h"
 #import "UserSession.h"
 #import "ForgetPwdViewController.h"
-#define TextFieldBorderColor [UIColor colorWithRed:233.0f/255 green:233.0f/255 blue:216.0/255 alpha:1].CGColor;
+
 //#define kSelColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
 @interface LoginViewController ()<UITextFieldDelegate>
 {
@@ -40,10 +40,10 @@
     [self.view addGestureRecognizer:tap];
     
     self.userNameTextField.text = self.userTelNum;
-    self.userNameTextField.layer.borderColor = TextFieldBorderColor;
+    self.userNameTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.userNameTextField.layer.borderWidth = 1;
     self.pwdTextField.layer.borderWidth = 1;
-    self.pwdTextField.layer.borderColor = TextFieldBorderColor;
+    self.pwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.showPwdBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 18, 0, 18);
     [self.showPwdBtn sizeToFit];
     self.userLoginBtn.layer.masksToBounds = YES;
@@ -61,18 +61,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = [UIImage new];
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = nil;
-}
 
 //MARK:Helper
 - (BOOL) checkInput
@@ -88,22 +76,6 @@
         return NO;
     }
     return YES;
-}
-
-
-- (UIImage *)imageWithColor:(UIColor *)color
-{
-    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
 }
 
 - (void)dismissKeyboard

@@ -12,8 +12,6 @@
 #import "QRCodesController.h"
 #import "AppConfig.h"
 
-#define TextFieldBorderColor [UIColor colorWithRed:233.0f/255 green:233.0f/255 blue:216.0/255 alpha:1].CGColor;
-
 #define smsVerifyBaseURL @"http://sh2.ipyy.com/smsJson.aspx"
 
 @interface RegisterViewController ()<UITextFieldDelegate>{
@@ -60,9 +58,9 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-    self.telNumTextField.layer.borderColor = TextFieldBorderColor;
+    self.telNumTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.telNumTextField.layer.borderWidth = 1;
-    self.SMSVerifyCodeTextField.layer.borderColor = TextFieldBorderColor;
+    self.SMSVerifyCodeTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.SMSVerifyCodeTextField.layer.borderWidth = 1;
     self.getSMSVerifyCodeBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
     [self.getSMSVerifyCodeBtn sizeToFit];
@@ -74,11 +72,11 @@
     [self.showConfirmPwdBtn sizeToFit];
     self.getQRCodeBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
     [self.getQRCodeBtn sizeToFit];
-    self.pwdTextField.layer.borderColor = TextFieldBorderColor;
+    self.pwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.pwdTextField.layer.borderWidth = 1;
-    self.confirmPwdTextField.layer.borderColor = TextFieldBorderColor;
+    self.confirmPwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.confirmPwdTextField.layer.borderWidth = 1;
-    self.qRCodeTextField.layer.borderColor = TextFieldBorderColor;
+    self.qRCodeTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.qRCodeTextField.layer.borderWidth = 1;
 
     self.agreeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
@@ -91,18 +89,11 @@
 
     _webIndicator = indicator;
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = [UIImage new];
-}
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [_timer invalidate];
-//    [self.navigationController.navigationBar setBackgroundImage:[[self imageWithColor:[AppConfig appNaviColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = nil;
+
 }
 
 
@@ -202,21 +193,6 @@
 - (void)dismissKeyboard
 {
     [_editingTextField resignFirstResponder];
-}
-
-- (UIImage *)imageWithColor:(UIColor *)color
-{
-    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
 }
 
 //MARK: UITextFieldDelegate

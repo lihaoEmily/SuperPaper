@@ -10,7 +10,6 @@
 #import "AppConfig.h"
 #import "UserSession.h"
 
-#define TextFieldBorderColor [UIColor colorWithRed:233.0f/255 green:233.0f/255 blue:216.0/255 alpha:1].CGColor;
 #define smsVerifyBaseURL @"http://sh2.ipyy.com/smsJson.aspx"
 @interface ForgetPwdViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 {
@@ -44,8 +43,6 @@
     _pwd = @"";
     _confirmPwd = @"";
     _originalTopCon = self.topCon.constant;
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = [UIImage new];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -53,9 +50,9 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
-    self.telNumTextField.layer.borderColor = TextFieldBorderColor;
+    self.telNumTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.telNumTextField.layer.borderWidth = 1;
-    self.smsVerifyCodeTextField.layer.borderColor = TextFieldBorderColor;
+    self.smsVerifyCodeTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.smsVerifyCodeTextField.layer.borderWidth = 1;
     self.getVerifyCodeBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
     [self.getVerifyCodeBtn sizeToFit];
@@ -63,9 +60,9 @@
     [self.showPwdBtn sizeToFit];
     self.showConfirmPwdBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 18, 0, 18);
     [self.showConfirmPwdBtn sizeToFit];
-    self.pwdTextField.layer.borderColor = TextFieldBorderColor;
+    self.pwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.pwdTextField.layer.borderWidth = 1;
-    self.confirmPwdTextField.layer.borderColor = TextFieldBorderColor;
+    self.confirmPwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.confirmPwdTextField.layer.borderWidth = 1;
 
     
