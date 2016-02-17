@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 /**
  *  @brief 通用颜色,字体,Size等
  *
@@ -35,4 +36,10 @@
  *  @return 颜色值
  */
 + (UIColor *)viewBackgroundColor;
+/**
+ *  输入框背景颜色
+ *
+ *  @return 颜色值(CGColor)
+ */
++ (UIColor *)textFieldBgColor;
 @end

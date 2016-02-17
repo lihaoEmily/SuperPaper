@@ -7,12 +7,15 @@
 //
 
 #import "ExportableWebViewController.h"
+#import "ASSaveData.h"
 
 #define TOP_WIEW_HEIGHT 120.0
 #define TITLE_HEIGHT    56.0
 #define kDefaultColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
 
-@interface ExportableWebViewController ()<UIWebViewDelegate>
+@interface ExportableWebViewController ()<UIWebViewDelegate>{
+    NSString *_content;
+}
 /**
  *  顶部View
  */
@@ -470,7 +473,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSDictionary *parameters = @{@"id":paperId};
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", BASE_URL, @"get_newscontent.php"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", BASE_URL, @"get_papercontent.php"];
     ExportableWebViewController * __weak weakSelf = self;
     [manager POST:urlString
        parameters:parameters
@@ -490,9 +493,9 @@
 
 - (void)parseResponseData:(NSDictionary *)data {
     NSString *title   = data[@"title"];
-    NSString *content = data[@"content"];
+    _content = data[@"content"];
 //    NSString *contentPicName = data[@"content_pic_name"];
-    NSString *dateStr = data[@"createdate"];
+    NSString *dateStr = _userData[@"createdate"];
 //    NSDateFormatter *formater = [[NSDateFormatter alloc] init];
 //    [formater setDateFormat:@"yyyy-MM-dd"];
 //    NSDate *date = [formater dateFromString:dateStr];
@@ -505,9 +508,9 @@
 //    NSString *keyWords  = data[@"keywords"];
 //    NSString *telNumber = data[@"tel"];
 //    NSInteger viewCount = [data[@"viewnum"] integerValue];
-    
+    self.title = title;
     [_paperTitleLabel setText:title];
-    [_textView setText:content];
+    [_textView setText:_content];
     
 }
 
@@ -547,6 +550,10 @@
 #pragma mark - Export web to text
 - (void)exportWebViewToDoc {
     NSLog(@"%s",__func__);
+    ASSaveData *data = [[ASSaveData alloc] init];
+    [data saveToLocationwithStrings:_content withTitle:self.userData[@"title"]];
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"论文已导出到Documents文件夹中，请注意查看" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [av show];
     // 1.checking login
     // 2.checking web content
     // 3.checking network
