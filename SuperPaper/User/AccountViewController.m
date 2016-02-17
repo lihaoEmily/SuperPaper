@@ -75,7 +75,7 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
             if ([responseObject[@"coupon_info"]isKindOfClass:[NSString class]]) {
                 _intro = responseObject[@"coupon_info"];
             }
-            self.countLabel.text = [NSString stringWithFormat:@"有%lu张现金券可用",_valid_num];
+            self.countLabel.text = [NSString stringWithFormat:@"有%lu张现金券可用",(long)_valid_num];
             [self.tableView reloadData];
         }else{//失败
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的账户信息出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -113,7 +113,7 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
             if ([responseObject[@"coupon_info"]isKindOfClass:[NSString class]]) {
                 _intro = responseObject[@"coupon_info"];
             }
-            self.countLabel.text = [NSString stringWithFormat:@"有%lu张现金券可用",_valid_num];
+            self.countLabel.text = [NSString stringWithFormat:@"有%lu张现金券可用",(long)_valid_num];
             [self.tableView reloadData];
         }else{//失败
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的账户信息出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -160,7 +160,7 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
             if ([responseObject[@"coupon_info"]isKindOfClass:[NSString class]]) {
                 _intro = responseObject[@"coupon_info"];
             }
-            self.countLabel.text = [NSString stringWithFormat:@"有%lu张现金券可用",_valid_num];
+            self.countLabel.text = [NSString stringWithFormat:@"有%lu张现金券可用",(long)_valid_num];
             [self.tableView reloadData];
         }else{//失败
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的账户信息出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
