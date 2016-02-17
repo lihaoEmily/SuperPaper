@@ -28,9 +28,10 @@
     self.navigationItem.rightBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:btn];
 
     self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
-    self.textView.text = self.messageContent;
     self.title = self.messageTitle;
-    
+    NSString * htmlString = self.messageContent;
+    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    self.textView.attributedText = attrStr;
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     _webIndicator = indicator;
@@ -56,8 +57,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-- (IBAction)shareMessage:(id)sender {
 }
 
 //MARK: 功能

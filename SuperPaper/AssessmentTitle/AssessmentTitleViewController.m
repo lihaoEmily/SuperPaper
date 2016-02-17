@@ -263,13 +263,17 @@
         SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180) delegate:self placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
         
         cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
-        cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
+//        cycleScrollView.currentPageDotColor = [UIColor whiteColor]; // 自定义分页控件小圆标颜色
+        cycleScrollView.currentPageDotImage = [UIImage imageNamed:@"circle_select"];
+        cycleScrollView.pageDotImage = [UIImage imageNamed:@"circle"];
+        cycleScrollView.imageURLStringsGroup = imagesURLStrings;
+        
         [cell.contentView addSubview:cycleScrollView];
         
         //         --- 模拟加载延迟
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            cycleScrollView.imageURLStringsGroup = imagesURLStrings;
-        });
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            cycleScrollView.imageURLStringsGroup = imagesURLStrings;
+//        });
         
         
         return cell;

@@ -169,6 +169,8 @@
         [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [_webIndicator stopAnimating];
+            [_webIndicator removeFromSuperview];
             
             NSNumber *result = [responseObject valueForKey:@"result"];
             
@@ -215,13 +217,15 @@
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"用户名或密码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];
             }
+//            [_webIndicator stopAnimating];
+//            [_webIndicator removeFromSuperview];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [_webIndicator stopAnimating];
             [_webIndicator removeFromSuperview];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
-            [_webIndicator stopAnimating];
-            [_webIndicator removeFromSuperview];
+//            [_webIndicator stopAnimating];
+//            [_webIndicator removeFromSuperview];
             
         }];
         
