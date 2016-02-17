@@ -113,10 +113,15 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
         if (responseObject) {
-            NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-            [_responseArr removeAllObjects];
-            [_responseArr addObjectsFromArray:listArray];
-            [_searchTableView reloadData];
+            if ([[responseObject valueForKey:@"total_num"] integerValue] == 0) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }else{
+                NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+                [_responseArr removeAllObjects];
+                [_responseArr addObjectsFromArray:listArray];
+                [_searchTableView reloadData];
+            }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);

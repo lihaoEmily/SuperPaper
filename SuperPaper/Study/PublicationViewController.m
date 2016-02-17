@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, assign) NSInteger subgroupId;
 @property (nonatomic, strong) NSDictionary* selectedSortDic;
-@property (nonatomic ,assign) NSInteger tagId;
+@property (nonatomic, assign) NSInteger tagId;
 
 @end
 
@@ -111,11 +111,13 @@
 
 - (void) searchPublication :(id) sender{
     PublicationSearchViewController *vc = [[PublicationSearchViewController alloc] init];
+    vc.groupId = self.groupId;
     [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
 - (void) sortPublication:(id) sender{
     PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
+    sortsView.title = @"刊物分类";
     sortsView.tagId = _tagId;
     sortsView.groupId = 1;
     sortsView.delegate = self;
@@ -292,6 +294,9 @@
             cell = [[PublicationViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
         }
         
+        if (!_publicationDataArray || !_publicationDataArray.count) {//防止刷新左侧table的时候，点击右侧table,崩溃
+            return cell;
+        }
 //        cell.textLabel.text = @"right";
 //        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
 //        cell.textLabel.text = [dataDic objectForKey:@"title"];
@@ -335,6 +340,11 @@
     else{
         PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
         vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
+        if (self.groupId == 1) {
+            vc.showPaper = YES;
+        }else{
+            vc.showPaper = NO;
+        }
         [self.navigationController pushViewController:vc animated:NO];
     }
 }
