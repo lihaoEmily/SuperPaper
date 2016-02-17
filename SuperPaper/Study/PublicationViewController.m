@@ -111,6 +111,7 @@
 
 - (void) searchPublication :(id) sender{
     PublicationSearchViewController *vc = [[PublicationSearchViewController alloc] init];
+    vc.groupId = self.groupId;
     [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
