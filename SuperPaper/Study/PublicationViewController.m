@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, assign) NSInteger subgroupId;
 @property (nonatomic, strong) NSDictionary* selectedSortDic;
-@property (nonatomic ,assign) NSInteger tagId;
+@property (nonatomic, assign) NSInteger tagId;
 
 @end
 
