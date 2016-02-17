@@ -167,7 +167,7 @@
     }
     
     if (!_agree) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请同意《服务条款》" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:@"", nil];
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请同意《服务条款》" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
         return NO;
     }
