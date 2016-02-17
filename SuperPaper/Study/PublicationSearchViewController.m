@@ -16,6 +16,8 @@
 
 @interface PublicationSearchViewController ()<UITableViewDataSource, UITableViewDelegate>
 
+@property(strong, nonatomic) UIActivityIndicatorView *indicatorView;
+
 @end
 
 @implementation PublicationSearchViewController
@@ -60,27 +62,51 @@
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [self.indicatorView setHidden:YES];
+        [self.indicatorView stopAnimating];
         NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseArr addObjectsFromArray:listArray];
         NSLog(@"%@",responseObject);
         [_searchTableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.indicatorView setHidden:YES];
+        [self.indicatorView stopAnimating];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"搜索失败"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
         NSLog(@"%@",error);
     }];
+    
+    [self.indicatorView setHidden:NO];
+    [self.indicatorView startAnimating];
 }
 
 - (void)getSearchData
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [self.indicatorView setHidden:YES];
+        [self.indicatorView stopAnimating];
         if (responseObject) {
             NSArray *listArray = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            if ([listArray count] == 0) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"没有数据"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles:nil, nil];
+                [alert show];
+                return ;
+            }
             [_responseArr removeAllObjects];
             [_responseArr addObjectsFromArray:listArray];
             NSLog(@"%@",responseObject);
@@ -88,8 +114,18 @@
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.indicatorView setHidden:YES];
+        [self.indicatorView stopAnimating];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"搜索失败"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
         NSLog(@"%@",error);
     }];
+    [self.indicatorView setHidden:NO];
+    [self.indicatorView startAnimating];
 }
 
 // 加载前一页数据
@@ -114,6 +150,15 @@
     self.title = @"刊物搜索";
     [self setupSearchBar];
     [self setupTableView];
+    // add indicator view
+    self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    [self.indicatorView setFrame:CGRectMake((self.view.frame.size.width - 40)/2,
+//                                            (self.view.frame.size.height - 40)/2,
+//                                            40,
+//                                            40)];
+    [self.indicatorView setCenter:self.view.center];
+    [self.view addSubview:self.indicatorView];
+    [self.indicatorView setHidden:YES];
 }
 
 // 配置搜索框
@@ -132,6 +177,8 @@
     
     // 白色背景图片
     UIImageView *searchBarImg = [[UIImageView alloc] initWithFrame:CGRectMake(15, 5, self.view.frame.size.width - 30, 40)];
+    searchBarImg.layer.cornerRadius = 6;
+    searchBarImg.layer.masksToBounds = YES;
     UIImage *searchBarImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBar" ofType:@"png" inDirectory:@"temp"]];
     searchBarImg.image = searchBarImage;
     [searchBgImg addSubview:searchBarImg];
@@ -147,9 +194,12 @@
     
     // 搜索textfield
     _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(50, 0, searchBarImg.frame.size.width - 50, 40)];
-    _searchBar.layer.cornerRadius = 5;
+    _searchBar.layer.cornerRadius = 6;
+    _searchBar.layer.masksToBounds = YES;
     _searchBar.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _searchBar.placeholder = @"输入您要搜索的关键词";
+//    [_searchBar setValue:[UIColor redColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [_searchBar setValue:[UIFont systemFontOfSize:12] forKeyPath:@"_placeholderLabel.font"];
     _searchBar.font = [UIFont systemFontOfSize:16.0];
     _searchBar.textColor = [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f];
     _searchBar.clearButtonMode = UITextFieldViewModeAlways;

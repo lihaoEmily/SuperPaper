@@ -93,7 +93,7 @@
 //    UIImage *image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBtn" ofType:@"png" inDirectory:@"Paper"]];
     UIImage *searhImage = [UIImage imageNamed:@"searchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame = CGRectMake(10, 0, 25, 25);
+    searchBtn.frame = CGRectMake(0, 0, 40, 25);
     [searchBtn setImage:searhImage forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchPublication:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
@@ -101,7 +101,7 @@
 //    image = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"sortBtn" ofType:@"png" inDirectory:@"Paper"]];
     UIImage *FilterImage = [UIImage imageNamed:@"FilterImage"];
     UIButton *sortBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    sortBtn.frame = CGRectMake(10, 0, 25, 25);
+    sortBtn.frame = CGRectMake(0, 0, 40, 25);
     [sortBtn setImage:FilterImage forState:UIControlStateNormal];
     [sortBtn addTarget:self action:@selector(sortPublication:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -127,7 +127,7 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    NSDictionary *parameters = @{@"groupid":[NSNumber numberWithInt:self.groupId]};
+    NSDictionary *parameters = @{@"groupid":[NSNumber numberWithInteger:_groupId]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_subgroup.php",BASE_URL];
     
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -156,7 +156,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:self.groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -183,7 +183,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:0], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -193,12 +193,11 @@
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-              if ([array count] > 0) {
+              if (array && [array count] > 0) {
                   [_publicationDataArray removeAllObjects];
                   [_publicationDataArray addObjectsFromArray:array];
                   [_contentView.rightTableView reloadData];
               }
-              
               [_contentView.rightTableView.mj_header endRefreshing];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -213,7 +212,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInt:1], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -237,7 +236,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 #pragma mark - ClassifiedPublicationViewControllerDelegate
 - (void)searchByTagid:(NSInteger)tagid
@@ -332,7 +330,7 @@
         _selectedSortDic = [_publicationSortArray objectAtIndex:indexPath.row];
         
         [_publicationDataArray removeAllObjects];
-        [self getPublicationDataWithSort:_publicationSortArray[indexPath.row]];
+        [self getPublicationDataWithSort:_selectedSortDic];
     }
     else{
         PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
