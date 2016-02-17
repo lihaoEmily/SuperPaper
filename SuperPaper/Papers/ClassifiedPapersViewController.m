@@ -174,7 +174,7 @@
 {
     UIImage *image = [UIImage imageNamed:@"searchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame = CGRectMake(10, 0, 40, 25);
+    searchBtn.frame = CGRectMake(0, 0, 40, 25);
     [searchBtn setImage:image forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchpPapers) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];

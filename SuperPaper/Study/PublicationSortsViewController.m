@@ -30,11 +30,43 @@
 
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,-36, SCREEN_WIDTH, SCREEN_HEIGHT+8)
                                                  style:UITableViewStyleGrouped ];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self pulldownRefresh];
+    }];
     [self.view addSubview:self.tableView];
 
 }
 
 -(void)getData
+{
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.groupId],@"groupid",nil];
+    NSString *urlString =  [NSString stringWithFormat:@"%@confer_tag.php",BASE_URL];
+    
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager.requestSerializer setTimeoutInterval:15.0f];
+    
+    [manager POST:urlString
+       parameters:paramDic progress:^(NSProgress* _Nonnull uploadProgress) {
+           
+       } success:^(NSURLSessionDataTask* _Nonnull task, id  _Nullable responseObject) {
+           NSDictionary* dataDic = [NSDictionary dictionary];
+           dataDic = responseObject;
+           if (dataDic) {
+               NSArray* listData = [dataDic objectForKey:@"list"];
+                _sortData = [NSMutableArray arrayWithArray:listData];
+               NSDictionary* firstDic = [NSDictionary dictionaryWithObjectsAndKeys:@"全部",@"tagname",@"",@"id",nil];
+               [_sortData insertObject:firstDic atIndex:0];
+               self.tableView.delegate = self;
+               self.tableView.dataSource = self;
+               [self.tableView reloadData];
+        }
+       } failure:^(NSURLSessionDataTask* _Nullable task, NSError* _Nonnull error) {
+           NSLog(@"%@",error);
+       }];
+}
+
+- (void)pulldownRefresh
 {
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.groupId],@"groupid",nil];
     NSString *urlString =  [NSString stringWithFormat:@"%@confer_tag.php",BASE_URL];
@@ -50,18 +82,22 @@
            NSDictionary * dataDic = [NSDictionary dictionary];
            dataDic = responseObject;
            if (dataDic) {
-               NSArray * listData = [dataDic objectForKey:@"list"];
-                _sortData = [NSMutableArray arrayWithArray:listData];
-               NSDictionary * firstDic = [NSDictionary dictionaryWithObjectsAndKeys:@"全部",@"tagname",@"",@"id",nil];
-               [_sortData insertObject:firstDic atIndex:0];
-               self.tableView.delegate = self;
-               self.tableView.dataSource = self;
-               [self.tableView reloadData];
-        }
-       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+               NSArray* listData = [dataDic objectForKey:@"list"];
+               if (listData && listData.count > 0) {
+                   [_sortData removeAllObjects];
+                   [_sortData addObjectsFromArray:listData];
+                   NSDictionary* firstDic = [NSDictionary dictionaryWithObjectsAndKeys:@"全部",@"tagname",@"",@"id",nil];
+                   [_sortData insertObject:firstDic atIndex:0];
+                   self.tableView.delegate = self;
+                   self.tableView.dataSource = self;
+                   [self.tableView reloadData];
+                   [self.tableView.mj_header endRefreshing];
+               }
+           }
+       } failure:^(NSURLSessionDataTask* _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
+           [self.tableView.mj_header endRefreshing];
        }];
-
 }
 
 #pragma -mark tableViewDataSource
