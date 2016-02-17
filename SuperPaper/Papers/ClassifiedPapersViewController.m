@@ -174,13 +174,13 @@
 {
     UIImage *image = [UIImage imageNamed:@"searchImage"];
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame = CGRectMake(10, 0, 25, 25);
+    searchBtn.frame = CGRectMake(10, 0, 40, 25);
     [searchBtn setImage:image forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchpPapers) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
     
     UIButton *sortBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    sortBtn.frame = CGRectMake(10, 0, 25, 25);
+    sortBtn.frame = CGRectMake(0, 0, 40, 25);
     [sortBtn setImage:[UIImage imageNamed:@"FilterImage"] forState:UIControlStateNormal];
     [sortBtn addTarget:self action:@selector(sortPapers) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortBtn];
