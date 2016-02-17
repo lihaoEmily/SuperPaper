@@ -22,8 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.textView.font = [UIFont systemFontOfSize:16];
+
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     _webIndicator = indicator;
@@ -39,6 +38,7 @@
             NSNumber *result = responseObject[@"result"];
             if (0 == result.integerValue) {
                 self.textView.text = responseObject[@"service_commonqa"];
+                self.textView.font = [UIFont systemFontOfSize:16];
             }else{
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取常见问题失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];

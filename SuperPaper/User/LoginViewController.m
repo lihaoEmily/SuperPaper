@@ -39,7 +39,13 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
-    self.userNameTextField.text = self.userTelNum;
+    if ([UserSession sharedInstance].currentUserID == 0) {
+        if ([[UserSession sharedInstance].lastUserTelNum isEqualToString:@""]||![UserSession sharedInstance].lastUserTelNum) {
+            
+        }else
+            self.userNameTextField.text = [UserSession sharedInstance].lastUserTelNum;
+    }else
+        self.userNameTextField.text = self.userTelNum;
     self.userNameTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.userNameTextField.layer.borderWidth = 1;
     self.pwdTextField.layer.borderWidth = 1;
