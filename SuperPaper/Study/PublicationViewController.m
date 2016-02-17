@@ -337,6 +337,11 @@
     else{
         PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
         vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
+        if (self.groupId == 1) {
+            vc.showPaper = YES;
+        }else{
+            vc.showPaper = NO;
+        }
         [self.navigationController pushViewController:vc animated:NO];
     }
 }

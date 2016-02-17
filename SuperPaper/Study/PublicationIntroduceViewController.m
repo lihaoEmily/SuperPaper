@@ -45,6 +45,9 @@
     [super viewDidLoad];
     
 //    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+ 
+   
+    
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.view addSubview:_scrollView];
@@ -136,7 +139,7 @@
     self.title = dic[@"title"];
     _titleLabel.text = dic[@"title"];
     [_titleLabel sizeToFit];
-    
+    _contributeLab.hidden = !self.showPaper;
     if ([dic[@"emptyflg"]integerValue] == 0) {
         _contributeLab.text = @"可投稿";
         _contributeLab.textColor = [AppConfig appNaviColor];
