@@ -398,7 +398,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",(long)(indexPath.row + 1)]];
         if (0 == indexPath.row) {
             cell.contentLabel.text = @"";
-            if (![_unReadMessageCountStr isEqualToString:@""]) {
+            if (![_unReadMessageCountStr isEqualToString:@""]&&_unReadMessageCountStr) {
                 cell.dotLabel.hidden = NO;
             }
             
