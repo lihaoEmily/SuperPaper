@@ -22,6 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
+    
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     _webIndicator = indicator;
@@ -35,6 +36,7 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (0 == [responseObject[@"result"]integerValue]) {
             self.textView.text = responseObject[@"service_protocol"];
+            self.textView.font = [UIFont systemFontOfSize:16];
         }
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];

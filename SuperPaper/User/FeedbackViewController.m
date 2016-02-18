@@ -19,7 +19,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
-@property (weak, nonatomic) IBOutlet UIImageView *FAQImageView;
 
 @property (weak, nonatomic) IBOutlet UIButton *submitBtn;
 @end
@@ -48,12 +47,7 @@
 }
 //MARK: 功能
 - (IBAction)submit:(id)sender {
-    NSPredicate *telNumPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",@"^1[3-8][0-9]{9}$"];
-    if (![telNumPredicate evaluateWithObject:self.textField.text]) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请输入正确的手机号码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [av show];
-        
-    }else{
+    if ([self checkInput]) {
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         NSString *urlString = [NSString stringWithFormat:@"%@submitfeedback.php",BASE_URL];
@@ -83,7 +77,6 @@
         }];
         [_webIndicator startAnimating];
         [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
-        
     }
     
 }
@@ -99,6 +92,26 @@
 }
 
 //MARK: Helper
+- (BOOL)checkInput
+{
+    if ([self.textView.text isEqualToString:@""]||!self.textView.text) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请输入反馈内容！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        return NO;
+    }else if([self.textField.text isEqualToString:@""]||!self.textField.text){
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请输入您的联系方式！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [av show];
+        return NO;
+    }else{
+        NSPredicate *telNumPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",@"^1[3-8][0-9]{9}$"];
+        if (![telNumPredicate evaluateWithObject:self.textField.text]) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请输入正确的手机号码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+            return NO;
+        }
+    }
+    return YES;
+}
 //键盘弹出
 - (void)keyboardShow:(NSNotification *)noti
 {

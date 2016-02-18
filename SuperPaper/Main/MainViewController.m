@@ -18,6 +18,7 @@
 #import "IntroViewController.h"
 #import "SettingViewController.h"
 #import "UserSession.h"
+#import "LoginViewController.h"
 
 
 @interface MainViewController ()<TabBarDelegate>
@@ -126,7 +127,13 @@
 
 - (void)userAction:(UIButton *)button
 {
-    self.tabbar.selectIndex = self.tabbar.tabBarDisplayType == TabBarDisplayTypeTeacher ? 3 : 4;
+    //判断当前是否是登录状态
+    if ([UserSession sharedInstance].currentUserID == 0) {
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+        [AppDelegate.app.nav pushViewController:loginVC animated:YES];
+    } else {
+        self.tabbar.selectIndex = self.tabbar.tabBarDisplayType == TabBarDisplayTypeTeacher ? 3 : 4;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

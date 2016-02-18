@@ -12,7 +12,7 @@
 #import "PublicationIntroduceViewController.h"
 #import "LoginViewController.h"
 
-#define SEARCHPAGESIZE 30
+#define SEARCHPAGESIZE 15
 
 @interface PublicationSearchViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -46,18 +46,26 @@
 #pragma mark - 网络请求
 - (void)getData
 {
+    UserRole role = [UserSession sharedInstance].currentRole;
+    NSNumber *ownertype = [NSNumber numberWithInt:role];
+    NSNumber *group_id;
+    if ([ownertype intValue] == 1) {
+        group_id = [NSNumber numberWithInt:1];
+    }else if ([ownertype intValue] == 2){
+        group_id = [NSNumber numberWithInt:10];
+    }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
      ** parameters 参数
-     * ownertype  整型    1：教师  其他不明确
+     * ownertype  整型    1：老师  其他不明确
      * keywords   字符串  搜索的关键字
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
-     * group_id   整型    ownertype为1时  1：刊物  其他不明确
+     * group_id   整型    ownertype为1时,group_id为1表示刊物;ownertype为2时,group_id为10表示刊物  
      */
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
+    NSDictionary *parameters = @{@"ownertype":ownertype, @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":group_id};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
@@ -87,9 +95,17 @@
 
 - (void)getSearchData
 {
+    UserRole role = [UserSession sharedInstance].currentRole;
+    NSNumber *ownertype = [NSNumber numberWithInt:role];
+    NSNumber *group_id;
+    if ([ownertype intValue] == 1) {
+        group_id = [NSNumber numberWithInt:1];
+    }else if ([ownertype intValue] == 2){
+        group_id = [NSNumber numberWithInt:10];
+    }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:[UserSession sharedInstance].currentRole], @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInt:1]};
+    NSDictionary *parameters = @{@"ownertype":ownertype, @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":group_id};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
@@ -109,7 +125,7 @@
             }
             [_responseArr removeAllObjects];
             [_responseArr addObjectsFromArray:listArray];
-            NSLog(@"%@",responseObject);
+            NSLog(@"-----%@-----",responseObject);
             [_searchTableView reloadData];
         }
         

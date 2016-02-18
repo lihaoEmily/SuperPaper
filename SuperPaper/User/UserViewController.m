@@ -324,7 +324,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 - (void)popupDisplayTypeChoosingActionSheet
 {
     if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
-        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"学生",@"教师", nil];
+        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"学生",@"老师", nil];
         [av showInView:self.view];
     }else{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择职业" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -334,7 +334,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
                 [self.backTableView reloadData];
             }
         }];
-        UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"教师" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"老师" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
                 [UserSession sharedInstance].currentRole = kUserRoleTeacher;
                 [self.backTableView reloadData];
@@ -388,20 +388,24 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UserTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
+    cell.dotLabel.layer.cornerRadius = 3;
+    cell.dotLabel.backgroundColor = [UIColor redColor];
+    cell.dotLabel.layer.masksToBounds = YES;
+    cell.dotLabel.hidden = YES;
     if (indexPath.section == 0)
     {
         cell.titleLabel.text = _titles[indexPath.row];
         cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",(long)(indexPath.row + 1)]];
         if (0 == indexPath.row) {
-            cell.contentLabel.text = _unReadMessageCountStr;
-            cell.contentLabel.textColor = [UIColor redColor];
+            cell.contentLabel.text = @"";
+            if (![_unReadMessageCountStr isEqualToString:@""]&&_unReadMessageCountStr) {
+                cell.dotLabel.hidden = NO;
+            }
+            
         }else if (4 == indexPath.row) {
-            cell.contentLabel.text = (kUserRoleStudent == [UserSession sharedInstance].currentRole)?@"学生":@"教师";
-            cell.contentLabel.textColor = [UIColor blackColor];
+            cell.contentLabel.text = (kUserRoleStudent == [UserSession sharedInstance].currentRole)?@"学生":@"老师";
         }else if(5 == indexPath.row){
             cell.contentLabel.text = _papersCountStr;
-            cell.contentLabel.textColor = [UIColor redColor];
         }else
             cell.contentLabel.text = @"";
 
@@ -411,7 +415,6 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         cell.headImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"usercell%ld",(long)(indexPath.row + 7)]];
         if (2 == indexPath.row) {
             cell.contentLabel.text = _service_telStr;
-            cell.contentLabel.textColor = [UIColor blackColor];
         }else cell.contentLabel.text = @"";
     }
     

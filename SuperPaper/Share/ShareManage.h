@@ -10,11 +10,11 @@
 #define UMeng_APIKey        @"56af0b3be0f55ab9b1001511"
 #define WX_APP_KEY          @"wx1bb4e3dee024af61"
 #define WX_APP_SECRET       @"513ad74a27c611b9afac24f3226b897d"
-#define QQ_APP_KEY          @"1104770869"
-#define QQ_APP_SECRET       @"GBjkYtbypyf8uQHW"
+#define QQ_APP_KEY          @"1105051018"
+#define QQ_APP_SECRET       @"qqWTYTx2Yhh8q82R"
 #define share_title         @"渠道系统APP下载地址共享"
 #define share_content       @"更多精彩内容尽在[超级论文]"
-#define share_url           @"http://qdgl.konka.com/files/konka/appdownloadofwap/index_wap.html"
+#define share_url           @""
 
 #import <Foundation/Foundation.h>
 #import <MessageUI/MessageUI.h>
