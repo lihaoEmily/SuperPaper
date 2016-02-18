@@ -61,7 +61,17 @@
     _studyTableView.sectionFooterHeight = 10;
     [self.view addSubview:_studyTableView];
     [self creatHeaderView];
+    if ([_studyTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        
+        [_studyTableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
     
+    if ([_studyTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        
+        [_studyTableView setLayoutMargins:UIEdgeInsetsZero];
+        
+    }
     //变量初始化
     
     _responseNewsInfoArr = [[NSMutableArray alloc]init];

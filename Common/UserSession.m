@@ -192,6 +192,13 @@
 //    [userDefaults synchronize];
     [JPUSHService setTags:nil alias:currentUserJPushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
         NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
+        if (iResCode == 0) {// register successfully
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setValue:currentUserJPushAlias forKey:kUserjpushalias];
+            [userDefaults synchronize];
+        } else {
+            NSLog(@"----> JPUSH Register alias failed.");
+        }
     }];
     
 }
@@ -246,5 +253,18 @@
     [userDefaults setValue:nil forKey:kUserName];
 
     [userDefaults setValue:nil forKey:kUserTel];
+    
+    // Cancel regisgter alias for JPush
+    [JPUSHService setTags:nil alias:@"" fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+        NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
+        if (iResCode == 0) {// register successfully
+
+            [userDefaults setValue:nil forKey:kUserjpushalias];
+            [userDefaults synchronize];
+        } else {
+            NSLog(@"----> JPUSH Register alias failed.");
+        }
+    }];
+    [userDefaults synchronize];
 }
 @end
