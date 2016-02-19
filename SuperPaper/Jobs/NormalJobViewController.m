@@ -48,6 +48,17 @@
     _jobTableView.dataSource = self;
     _jobTableView.delegate = self;
     _jobTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    if ([_jobTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        
+        [_jobTableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    
+    if ([_jobTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        
+        [_jobTableView setLayoutMargins:UIEdgeInsetsZero];
+        
+    }
     [self.view addSubview:_jobTableView];
     
     // 下拉刷新
