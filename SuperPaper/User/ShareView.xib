@@ -8,9 +8,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InvitationsViewController">
             <connections>
+                <outlet property="bottomCaptionLabel" destination="P5d-HH-4we" id="AmQ-PG-Apo"/>
                 <outlet property="btnBottomCon" destination="ANa-o2-NUz" id="fAQ-tD-4k3"/>
                 <outlet property="btnTopCon" destination="515-cq-BKh" id="NNJ-mT-eGT"/>
+                <outlet property="captionLabel" destination="BvN-Dp-hGA" id="Vgz-6Y-drL"/>
                 <outlet property="firstBtnCon" destination="se9-cZ-x4M" id="gOW-zH-pyw"/>
+                <outlet property="pasteBtn" destination="mer-qd-Wsi" id="M0g-He-TeC"/>
                 <outlet property="secondBtnCon" destination="dPI-Ni-0aj" id="GYS-ZX-fIo"/>
                 <outlet property="shareBottomView" destination="QmV-gl-UH6" id="Rhd-ZF-xMN"/>
                 <outlet property="shareContentLabel" destination="OwF-7J-5oX" id="281-ev-SVP"/>
@@ -105,7 +108,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="iul-18-4hs"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
