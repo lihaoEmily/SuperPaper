@@ -20,6 +20,7 @@
     UIActivityIndicatorView *_webIndicator;
     
 }
+@property (weak, nonatomic) IBOutlet UIButton *voucherIntroBtn;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
@@ -33,6 +34,7 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
     // Do any additional setup after loading the view.
     _list = [NSMutableArray array];
     _intro = @"";
+    [self.voucherIntroBtn setTitleColor:[AppConfig appNaviColor] forState:UIControlStateNormal];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self pulldownRefresh];
     }];
