@@ -108,7 +108,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="iul-18-4hs"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
