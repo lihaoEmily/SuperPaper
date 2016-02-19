@@ -60,6 +60,7 @@
     [self registerJushSDKWith:launchOptions];
     [self registerUMSocialForApplication];
     
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; 
@@ -294,10 +295,10 @@
 
 #pragma mark - UMSocail Register
 
+// 友盟社会化分享
 - (void)registerUMSocialForApplication {
-    // 友盟社会化分享
-    // 隐藏未安装的应用
-    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+    
+    [UMSocialData openLog:YES];
     
     // 设置友盟APPKey
     [UMSocialData setAppKey:UMShareAppKey];
@@ -311,6 +312,18 @@
     [UMSocialQQHandler setQQWithAppId:QQShareAppId
                                appKey:QQShareAppKey
                                   url:@""];
+    
+    // 隐藏未安装的应用
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    BOOL result = [UMSocialSnsService handleOpenURL:url];
+    if (result == FALSE) {
+        //调用其他SDK，例如支付宝SDK等
+    }
+    return result;
 }
 
 #pragma mark - JPUSH Register
