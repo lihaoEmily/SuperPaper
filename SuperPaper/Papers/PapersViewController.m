@@ -103,6 +103,7 @@
     
     UIButton *telBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     telBtn.frame = CGRectMake(0, 0, self.view.frame.size.width / 2 - 10, 44);
+    [telBtn setBackgroundColor:[AppConfig appNaviColor]];
     [telBtn addTarget:self action:@selector(clickToCall) forControlEvents:UIControlEventTouchUpInside];
     [topImg addSubview:telBtn];
     
@@ -116,6 +117,7 @@
     [telBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, -10, 5, 0)];
     
     UIButton *generatorBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [generatorBtn setBackgroundColor:[AppConfig appNaviColor]];
     generatorBtn.frame = CGRectMake(CGRectGetMaxX(telBtn.frame) + 20, 0, self.view.frame.size.width / 2 - 10, 44);
     [generatorBtn addTarget:self action:@selector(clickToGenerate) forControlEvents:UIControlEventTouchUpInside];
     [topImg addSubview:generatorBtn];

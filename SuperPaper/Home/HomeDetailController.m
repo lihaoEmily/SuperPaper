@@ -74,7 +74,7 @@
     [scrollVeiw addSubview:centerImageView];
     
     content = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame)+10, CGRectGetMaxY(centerImageView.frame) + 20, CGRectGetWidth(centerImageView.frame), 10000)];
-    content.font = [UIFont systemFontOfSize:14];
+    content.font = [UIFont systemFontOfSize:18];
     content.numberOfLines = 0;
     [scrollVeiw addSubview:content];
     if (self.isNews) {
