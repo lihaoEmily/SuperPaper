@@ -72,6 +72,13 @@
     _studyTableView.delegate = self;
     _studyTableView.sectionHeaderHeight = 10;
     _studyTableView.sectionFooterHeight = 10;
+    if ([_studyTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_studyTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_studyTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_studyTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
     [self.view addSubview:_studyTableView];
     
     //变量初始化

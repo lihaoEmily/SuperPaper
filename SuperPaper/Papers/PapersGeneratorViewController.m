@@ -73,6 +73,8 @@
     
     // 白色背景图片
     UIImageView *searchBarImg = [[UIImageView alloc] initWithFrame:CGRectMake(65, 5, kScreenWidth - 140, 40)];
+    searchBarImg.layer.cornerRadius = 6;
+    searchBarImg.layer.masksToBounds = YES;
     UIImage *searchBarImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchBar" ofType:@"png" inDirectory:@"Paper"]];
     searchBarImg.image = searchBarImage;
     [searchBgImg addSubview:searchBarImg];
@@ -80,7 +82,8 @@
     
     // 搜索textfield
     _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, searchBarImg.frame.size.width - 5, 40)];
-    _searchBar.layer.cornerRadius = 5;
+    _searchBar.layer.cornerRadius = 6;
+    _searchBar.layer.masksToBounds = YES;
     _searchBar.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _searchBar.placeholder = @"请输入论文题目";
     _searchBar.delegate = self;
@@ -94,8 +97,9 @@
     [generatorBtn setTitle:@"生成" forState:UIControlStateNormal];
     [generatorBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [generatorBtn addTarget:self action:@selector(clickToGenerator) forControlEvents:UIControlEventTouchUpInside];;
-    UIImage *generatorBtnImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"generator" ofType:@"png" inDirectory:@"Paper"]];
-    [generatorBtn setBackgroundImage:generatorBtnImage forState:UIControlStateNormal];
+//    UIImage *generatorBtnImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"generator" ofType:@"png" inDirectory:@"Paper"]];
+//    [generatorBtn setBackgroundImage:generatorBtnImage forState:UIControlStateNormal];
+    [generatorBtn setBackgroundColor:[AppConfig appNaviColor]];
     [searchBgImg addSubview:generatorBtn];
     
     /// 底部导出论文的背景图片

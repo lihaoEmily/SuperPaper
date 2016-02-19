@@ -65,7 +65,7 @@
 //    [self.view addSubview:_webView];
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
     [_textView setEditable:NO];
-    [_textView setFont:[UIFont systemFontOfSize:15]];
+    [_textView setFont:[UIFont systemFontOfSize:17]];
     [_textView setTextContainerInset:UIEdgeInsetsMake(8, 16, 8, 16)];
     [self.view addSubview:_textView];
     
@@ -479,15 +479,30 @@
        parameters:parameters
          progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        [_indicatorView stopAnimating];
+        [_indicatorView setHidden:YES];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             [weakSelf parseResponseData:responseObject];
         }
         NSLog(@"----> %@",responseObject);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [_indicatorView stopAnimating];
+        [_indicatorView setHidden:YES];
         NSLog(@"----> %@",error);
+        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"论文生成"
+                                                           message:@"生成失败"
+                                                          delegate:nil
+                                                 cancelButtonTitle:@"确认"
+                                                 otherButtonTitles:nil, nil];
+        [alerView show];
+        
     }];
+    
+    if ([_indicatorView isHidden]) {
+        [_indicatorView setHidden:NO];
+    }
+    [_indicatorView startAnimating];
 
 }
 

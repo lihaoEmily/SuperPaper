@@ -13,6 +13,7 @@
 #import "NormalWebViewController.h"
 #import "NormalAssessmentViewController.h"
 #import "PublicationViewController.h"
+#import "HomeDetailController.h"
 
 @interface AssessmentTitleViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 @property (nonatomic, strong) UITableView *studyTableView;
@@ -66,6 +67,13 @@
     _studyTableView.delegate = self;
     _studyTableView.sectionHeaderHeight = 10;
     _studyTableView.sectionFooterHeight = 10;
+    if ([_studyTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_studyTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_studyTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_studyTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
     [self.view addSubview:_studyTableView];
     
     //变量初始化
@@ -380,16 +388,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (2 == indexPath.section) {
+        NSDictionary *info = _responseNewsInfoArr[indexPath.row];
         
-        NormalWebViewController *vc = [[NormalWebViewController alloc]init];
-        vc.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-        vc.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+        NSString *title = [info valueForKey:@"title"];
+        NSString *urlStr = [info valueForKey:@"url"];
         
         /**
          * 跳转页面
          */
-        [AppDelegate.app.nav pushViewController:vc animated:YES];
-        
+        UIViewController *viewController = nil;
+        if (urlStr.length > 1) {
+            NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+            vc.title = title;
+            vc.urlString = urlStr;
+            viewController = vc;
+        } else {
+            HomeDetailController *vc = [[HomeDetailController alloc] init];
+            vc.title = title;
+            vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
+            vc.isNews = YES;
+            viewController = vc;
+        }
+        [AppDelegate.app.nav pushViewController:viewController animated:YES];
     }
 }
 

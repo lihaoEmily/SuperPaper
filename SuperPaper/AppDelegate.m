@@ -34,7 +34,8 @@
     Reachability *hostReach;
 }
 
-@property (nonatomic, strong) NSString * pushUrlString;
+@property(strong, nonatomic) NSString * pushUrlString;
+@property(assign, nonatomic) BOOL isAppLaunched;
 
 @end
 
@@ -56,6 +57,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.isAppLaunched = YES;
     [self registerReachabilityNotification];
     [self registerJushSDKWith:launchOptions];
     [self registerUMSocialForApplication];
@@ -69,13 +71,13 @@
     return YES;
 }
 
-//- (BOOL)application:(UIApplication *)application handleOpenURL:(nonnull NSURL *)url {
-//    return  [UMSocialSnsService handleOpenURL:url];
-//}
-//
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-//    return  [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
-//}
+- (BOOL)application:(UIApplication *)application handleOpenURL:(nonnull NSURL *)url {
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return  [UMSocialSnsService handleOpenURL:url];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -360,6 +362,18 @@
     [defaultCenter addObserver:self
                       selector:@selector(networkDidReceiveMessage:)
                           name:kJPFNetworkDidReceiveMessageNotification object:nil];
+    //注册Alias
+    if ([[UserSession sharedInstance] currentUserID] != 0) {
+        NSString * jpushAlias = [[UserSession sharedInstance] currentUserJPushAlias];
+        [JPUSHService setTags:nil alias:jpushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+            NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
+            if (iResCode == 0) {// register successfully
+                NSLog(@"----> JPUSH Register alias successfully.");
+            } else {
+                NSLog(@"----> JPUSH Register alias failed.");
+            }
+        }];
+    }
 }
 
 #pragma mark - APNS
@@ -409,26 +423,23 @@
     // Play Sound
     NSString *sound = [apsDic valueForKey:@"sound"];
     // Extras
-    NSString *extras = [apsDic valueForKey:@"customizeExtras"];
+    NSDictionary *extras = [apsDic valueForKey:@"extras"];
     NSLog(@"----> content=[%@], badge=[%ld], sound=[%@], cutomize=[%@]", content, (long)badge, sound, extras);
     
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    
-    NSString *urlStr = [userInfo objectForKey:@"url"];
-    if (urlStr) {
-        _pushUrlString = [NSString stringWithString:urlStr];
-    }
-    if (apsDic != nil) {
-        NSString* msg = [apsDic objectForKey:@"alert"];
-        if(msg != nil) {
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:msg
-                                                                message:nil
-                                                               delegate:self
-                                                      cancelButtonTitle:@"取消"
-                                                      otherButtonTitles:@"确定", nil];
-            [alertView show];
-            return YES;
+    if (extras) {
+        NSString *urlStr = [extras objectForKey:@"url"];
+        if (urlStr) {
+            _pushUrlString = [NSString stringWithString:urlStr];
         }
+    }
+    
+    if (self.isAppLaunched) { //程序启动时，显示AlertView；否则直接跳转到WebView
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        [self showAlertViewWith:apsDic];
+        return YES;
+    } else {
+        [self showWebViewForPushNotification];
+        return YES;
     }
     
     return NO;
@@ -440,6 +451,13 @@
     NSDictionary *extras = [userInfo valueForKey:@"extras"];
     NSArray *keys = [extras allKeys];
     NSLog(@"----> receive customized msg:\ncontent=%@, \nkeys=%@", content, keys);
+    if (extras) {
+        NSString *urlStr = [extras objectForKey:@"url"];
+        if (urlStr) {
+            _pushUrlString = [NSString stringWithString:urlStr];
+            [self showWebViewForPushNotification];
+        }
+    }
 }
 
 - (void)showWebViewForPushNotification {
@@ -450,6 +468,19 @@
 //    nav.navigationBarHidden = NO;
     UIViewController *rootViewController = AppDelegate.app.nav.topViewController;
     [rootViewController.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)showAlertViewWith:(NSDictionary *)message {
+    NSString* msg = [message objectForKey:@"alert"];
+    if(msg == nil) {
+        return;
+    }
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:msg
+                                                        message:@"请确认查看"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+    [alertView show];
 }
 
 #pragma mark - UIAlertViewDelegate
