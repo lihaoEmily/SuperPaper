@@ -94,7 +94,7 @@ static NSString *const SubmitIdentifier = @"submit";
                 self.career = 0 == [responseObject[@"jobtitle"]integerValue]?@"老师":@"学生";
             }else
                 self.career = @"老师";
-            [UserSession sharedInstance].currentRole = [responseObject[@"jobtitle"]integerValue] == 0?kUserRoleTeacher:kUserRoleStudent;
+            
             if ([responseObject[@"school"]isKindOfClass:[NSString class]]) {
                 self.college = responseObject[@"school"];
             }else
