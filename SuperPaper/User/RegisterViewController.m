@@ -27,6 +27,7 @@
     UIActivityIndicatorView *_webIndicator;
     CGFloat _originalTopCon;
 }
+@property (weak, nonatomic) IBOutlet UIButton *serviceBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topCon;
 
 @property (weak, nonatomic) IBOutlet UITextField *telNumTextField;
@@ -51,7 +52,6 @@
     _pwd = @"";
     _confirmPwd = @"";
     _originalTopCon = self.topCon.constant;
-    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -81,7 +81,7 @@
     self.qRCodeTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.qRCodeTextField.layer.borderWidth = 1;
     
-//    self.agreeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
+    [self.serviceBtn setTitleColor:[AppConfig appNaviColor] forState:UIControlStateNormal];
     self.registerBtn.backgroundColor = [AppConfig appNaviColor];
     self.registerBtn.layer.masksToBounds = YES;
     self.registerBtn.layer.cornerRadius = 4;

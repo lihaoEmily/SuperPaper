@@ -14,6 +14,7 @@
     // Initialization code
     self.submitBtn.layer.masksToBounds = YES;
     self.submitBtn.layer.cornerRadius = 4;
+    self.submitBtn.backgroundColor = [AppConfig appNaviColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
