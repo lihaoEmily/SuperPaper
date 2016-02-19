@@ -347,6 +347,18 @@
     [defaultCenter addObserver:self
                       selector:@selector(networkDidReceiveMessage:)
                           name:kJPFNetworkDidReceiveMessageNotification object:nil];
+    //注册Alias
+    if ([[UserSession sharedInstance] currentUserID] != 0) {
+        NSString * jpushAlias = [[UserSession sharedInstance] currentUserJPushAlias];
+        [JPUSHService setTags:nil alias:jpushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+            NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
+            if (iResCode == 0) {// register successfully
+                NSLog(@"----> JPUSH Register alias successfully.");
+            } else {
+                NSLog(@"----> JPUSH Register alias failed.");
+            }
+        }];
+    }
 }
 
 #pragma mark - APNS
@@ -396,15 +408,17 @@
     // Play Sound
     NSString *sound = [apsDic valueForKey:@"sound"];
     // Extras
-    NSString *extras = [apsDic valueForKey:@"customizeExtras"];
+    NSDictionary *extras = [apsDic valueForKey:@"extras"];
     NSLog(@"----> content=[%@], badge=[%ld], sound=[%@], cutomize=[%@]", content, (long)badge, sound, extras);
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    
-    NSString *urlStr = [userInfo objectForKey:@"url"];
-    if (urlStr) {
-        _pushUrlString = [NSString stringWithString:urlStr];
+    if (extras) {
+        NSString *urlStr = [extras objectForKey:@"url"];
+        if (urlStr) {
+            _pushUrlString = [NSString stringWithString:urlStr];
+        }
     }
+    
     if (apsDic != nil) {
         NSString* msg = [apsDic objectForKey:@"alert"];
         if(msg != nil) {
@@ -427,6 +441,13 @@
     NSDictionary *extras = [userInfo valueForKey:@"extras"];
     NSArray *keys = [extras allKeys];
     NSLog(@"----> receive customized msg:\ncontent=%@, \nkeys=%@", content, keys);
+    if (extras) {
+        NSString *urlStr = [extras objectForKey:@"url"];
+        if (urlStr) {
+            _pushUrlString = [NSString stringWithString:urlStr];
+            [self showWebViewForPushNotification];
+        }
+    }
 }
 
 - (void)showWebViewForPushNotification {

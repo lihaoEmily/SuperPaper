@@ -72,6 +72,8 @@
     [self.showConfirmPwdBtn sizeToFit];
     self.getQRCodeBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
     [self.getQRCodeBtn sizeToFit];
+    //Hide QRCodeButton
+    [self.getQRCodeBtn setHidden:YES];
     self.pwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.pwdTextField.layer.borderWidth = 1;
     self.confirmPwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
