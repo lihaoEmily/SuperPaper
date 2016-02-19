@@ -49,6 +49,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     // Do any additional setup after loading the view.
     _list = [NSMutableArray array];
     _showFriend = YES;
+    self.myFriendBtn.backgroundColor = [AppConfig appNaviColor];
     self.topView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.topView.layer.borderWidth = 1.5;
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{

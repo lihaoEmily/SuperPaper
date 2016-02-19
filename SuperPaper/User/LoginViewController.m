@@ -54,6 +54,7 @@
     [self.showPwdBtn sizeToFit];
     self.userLoginBtn.layer.masksToBounds = YES;
     self.userLoginBtn.layer.cornerRadius = 4;
+    self.userLoginBtn.backgroundColor = [AppConfig appNaviColor];
     [self.quickRegisterBtn sizeToFit];
     
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
