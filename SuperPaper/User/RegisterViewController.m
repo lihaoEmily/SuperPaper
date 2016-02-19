@@ -80,8 +80,9 @@
     self.confirmPwdTextField.layer.borderWidth = 1;
     self.qRCodeTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.qRCodeTextField.layer.borderWidth = 1;
-
-    self.agreeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
+    
+//    self.agreeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
+    self.registerBtn.backgroundColor = [AppConfig appNaviColor];
     self.registerBtn.layer.masksToBounds = YES;
     self.registerBtn.layer.cornerRadius = 4;
     

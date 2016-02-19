@@ -65,7 +65,7 @@
     self.confirmPwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.confirmPwdTextField.layer.borderWidth = 1;
 
-    
+    self.resetPwdBtn.backgroundColor = [AppConfig appNaviColor];
     self.resetPwdBtn.layer.masksToBounds = YES;
     self.resetPwdBtn.layer.cornerRadius = 4;
     
