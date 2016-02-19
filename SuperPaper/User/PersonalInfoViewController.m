@@ -492,7 +492,6 @@ static NSString *const SubmitIdentifier = @"submit";
             [UserSession sharedInstance].currentUserName = self.name;
             [UserSession sharedInstance].currentUserGen = [self.gender isEqualToString:@"男"]?kUserGen_Man:kUserGen_Woman;
             [UserSession sharedInstance].currentUserAge = self.age;
-            [UserSession sharedInstance].currentRole = [self.career isEqualToString:@"老师"]?kUserRoleTeacher:kUserRoleStudent;
             [UserSession sharedInstance].currentUserCollege = self.college;
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"个人信息修改成功！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
