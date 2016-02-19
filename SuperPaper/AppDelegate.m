@@ -34,7 +34,8 @@
     Reachability *hostReach;
 }
 
-@property (nonatomic, strong) NSString * pushUrlString;
+@property(strong, nonatomic) NSString * pushUrlString;
+@property(assign, nonatomic) BOOL isAppLaunched;
 
 @end
 
@@ -56,6 +57,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.isAppLaunched = YES;
     [self registerReachabilityNotification];
     [self registerJushSDKWith:launchOptions];
     [self registerUMSocialForApplication];
@@ -68,13 +70,13 @@
     return YES;
 }
 
-//- (BOOL)application:(UIApplication *)application handleOpenURL:(nonnull NSURL *)url {
-//    return  [UMSocialSnsService handleOpenURL:url];
-//}
-//
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-//    return  [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
-//}
+- (BOOL)application:(UIApplication *)application handleOpenURL:(nonnull NSURL *)url {
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return  [UMSocialSnsService handleOpenURL:url];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -304,8 +306,6 @@
 
 - (void)registerUMSocialForApplication {
     // 友盟社会化分享
-    // 隐藏未安装的应用
-    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
     
     // 设置友盟APPKey
     [UMSocialData setAppKey:UMShareAppKey];
@@ -319,6 +319,8 @@
     [UMSocialQQHandler setQQWithAppId:QQShareAppId
                                appKey:QQShareAppKey
                                   url:@""];
+    // 隐藏未安装的应用
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
 }
 
 #pragma mark - JPUSH Register
@@ -411,7 +413,6 @@
     NSDictionary *extras = [apsDic valueForKey:@"extras"];
     NSLog(@"----> content=[%@], badge=[%ld], sound=[%@], cutomize=[%@]", content, (long)badge, sound, extras);
     
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     if (extras) {
         NSString *urlStr = [extras objectForKey:@"url"];
         if (urlStr) {
@@ -419,17 +420,13 @@
         }
     }
     
-    if (apsDic != nil) {
-        NSString* msg = [apsDic objectForKey:@"alert"];
-        if(msg != nil) {
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:msg
-                                                                message:nil
-                                                               delegate:self
-                                                      cancelButtonTitle:@"取消"
-                                                      otherButtonTitles:@"确定", nil];
-            [alertView show];
-            return YES;
-        }
+    if (self.isAppLaunched) { //程序启动时，显示AlertView；否则直接跳转到WebView
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        [self showAlertViewWith:apsDic];
+        return YES;
+    } else {
+        [self showWebViewForPushNotification];
+        return YES;
     }
     
     return NO;
@@ -458,6 +455,19 @@
 //    nav.navigationBarHidden = NO;
     UIViewController *rootViewController = AppDelegate.app.nav.topViewController;
     [rootViewController.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)showAlertViewWith:(NSDictionary *)message {
+    NSString* msg = [message objectForKey:@"alert"];
+    if(msg == nil) {
+        return;
+    }
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:msg
+                                                        message:@"请确认查看"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+    [alertView show];
 }
 
 #pragma mark - UIAlertViewDelegate
