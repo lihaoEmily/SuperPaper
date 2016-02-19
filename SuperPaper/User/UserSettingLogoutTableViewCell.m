@@ -16,6 +16,8 @@
     [super awakeFromNib];
     self.logoutBtn.layer.masksToBounds = YES;
     self.logoutBtn.layer.cornerRadius = 4;
+    self.logoutBtn.backgroundColor = [AppConfig appNaviColor];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
