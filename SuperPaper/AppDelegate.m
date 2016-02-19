@@ -327,15 +327,6 @@
     [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    BOOL result = [UMSocialSnsService handleOpenURL:url];
-    if (result == FALSE) {
-        //调用其他SDK，例如支付宝SDK等
-    }
-    return result;
-}
-
 #pragma mark - JPUSH Register
 
 - (void)registerJushSDKWith:(NSDictionary *)launchOptions {
