@@ -65,7 +65,7 @@
 //    [self.view addSubview:_webView];
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
     [_textView setEditable:NO];
-    [_textView setFont:[UIFont systemFontOfSize:15]];
+    [_textView setFont:[UIFont systemFontOfSize:17]];
     [_textView setTextContainerInset:UIEdgeInsetsMake(8, 16, 8, 16)];
     [self.view addSubview:_textView];
     

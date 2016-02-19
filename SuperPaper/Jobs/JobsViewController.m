@@ -12,6 +12,7 @@
 #import "HomeNewsCell.h"
 #import "ServiceButton.h"
 #import "NormalJobViewController.h"
+#import "HomeDetailController.h"
 
 #define kScreenWidth   [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight   [UIScreen mainScreen].bounds.size.height
@@ -53,6 +54,12 @@
     _jobTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth,kScreenHeight - 64 - 49) style:UITableViewStyleGrouped];
     _jobTableView.dataSource = self;
     _jobTableView.delegate = self;
+    if ([_jobTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_jobTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_jobTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_jobTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
     [self.view addSubview:_jobTableView];
     
     // 下拉刷新
@@ -271,10 +278,31 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 2) {
-        NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
-        normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-        normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
-        [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
+//        NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
+//        normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+//        normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+//        [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
+        NSDictionary *info = _responseNewsInfoArr[indexPath.row];
+        NSString *title = [info valueForKey:@"title"];
+        NSString *urlStr = [info valueForKey:@"url"];
+        /**
+         * 跳转页面
+         */
+        UIViewController *viewController = nil;
+        if (urlStr.length > 1) {
+            NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+            vc.title = title;
+            vc.urlString = urlStr;
+            viewController = vc;
+        } else {
+            HomeDetailController *vc = [[HomeDetailController alloc] init];
+            vc.title = title;
+            vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
+            vc.isNews = YES;
+            viewController = vc;
+        }
+        [AppDelegate.app.nav pushViewController:viewController animated:YES];
+        
     }
 }
 

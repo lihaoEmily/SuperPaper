@@ -195,7 +195,7 @@
     [searchBtn setTitle:@"搜一下" forState:UIControlStateNormal];
     [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(clickToSearch) forControlEvents:UIControlEventTouchUpInside];
-    searchBtn.backgroundColor = [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f];
+    searchBtn.backgroundColor = [AppConfig appNaviColor];
     _searchBar.rightView = searchBtn;
     _searchBar.rightViewMode = UITextFieldViewModeAlways;
     [searchBarImg addSubview:_searchBar];
