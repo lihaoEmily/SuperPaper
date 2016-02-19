@@ -393,7 +393,6 @@
 		84896FB71C4DFB59009D7103 /* PublicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicationViewController.m; path = Study/PublicationViewController.m; sourceTree = "<group>"; };
 		84B7BD191C4796C300E202A6 /* UIImage+BundleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+BundleImage.h"; path = "Utils/UIImage+BundleImage.h"; sourceTree = "<group>"; };
 		84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+BundleImage.m"; path = "Utils/UIImage+BundleImage.m"; sourceTree = "<group>"; };
-		84B7BD1C1C4796CD00E202A6 /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = Utils/AppConfig.h; sourceTree = "<group>"; };
 		84B7BD1D1C4796CD00E202A6 /* AppConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppConfig.m; path = Utils/AppConfig.m; sourceTree = "<group>"; };
 		84C138871C46200A00284087 /* SuperPaper.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperPaper.pch; sourceTree = "<group>"; };
 		84C1390B1C4628A300284087 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -515,6 +514,7 @@
 		F47131801C5771B40081C9D5 /* ReadMyPapersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadMyPapersViewController.m; path = User/ReadMyPapersViewController.m; sourceTree = "<group>"; };
 		F4819C111C57178000C3E24B /* VoucherIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoucherIntroViewController.h; path = User/VoucherIntroViewController.h; sourceTree = "<group>"; };
 		F4819C121C57178000C3E24B /* VoucherIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoucherIntroViewController.m; path = User/VoucherIntroViewController.m; sourceTree = "<group>"; };
+		F48D022C1C74653A0033206E /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = Utils/AppConfig.h; sourceTree = "<group>"; };
 		F49564301C4F529000CADBDE /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = User/RegisterViewController.h; sourceTree = "<group>"; };
 		F49564311C4F529000CADBDE /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = User/RegisterViewController.m; sourceTree = "<group>"; };
 		F49564331C4F6B8200CADBDE /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = User/LoginViewController.h; sourceTree = "<group>"; };
@@ -939,7 +939,7 @@
 				84B7BD1A1C4796C300E202A6 /* UIImage+BundleImage.m */,
 				040AD98E1C4675F8000AB02A /* Reachability.h */,
 				040AD98F1C4675F8000AB02A /* Reachability.m */,
-				84B7BD1C1C4796CD00E202A6 /* AppConfig.h */,
+				F48D022C1C74653A0033206E /* AppConfig.h */,
 				84B7BD1D1C4796CD00E202A6 /* AppConfig.m */,
 				0401D4DA1C41E1E3002E2F12 /* AppInfo.h */,
 				0401D4DB1C41E1E3002E2F12 /* AppInfo.m */,

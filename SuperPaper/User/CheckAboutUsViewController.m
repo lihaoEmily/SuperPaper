@@ -42,6 +42,7 @@
 
                     self.content = responseObject[@"service_aboutme"];
                     self.textView.text = self.content;
+                    self.textView.font = [UIFont systemFontOfSize:16];
                     
                 }else{
                     UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取客服电话失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -60,6 +61,7 @@
         [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
     }else{
         self.textView.text = self.content;
+        self.textView.font = [UIFont systemFontOfSize:16];
     }
     
     

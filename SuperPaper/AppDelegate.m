@@ -69,6 +69,14 @@
     return YES;
 }
 
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(nonnull NSURL *)url {
+//    return  [UMSocialSnsService handleOpenURL:url];
+//}
+//
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+//    return  [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+//}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -346,7 +354,12 @@
     [JPUSHService setupWithOption:launchOptions
                            appKey:JPushAppKey
                           channel:JPushChannel
-                 apsForProduction:FALSE];
+                 apsForProduction:YES];
+    //注册接收自定义消息
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(networkDidReceiveMessage:)
+                          name:kJPFNetworkDidReceiveMessageNotification object:nil];
 }
 
 #pragma mark - APNS
@@ -387,8 +400,20 @@
 
 #pragma mark - Handle push notification
 - (BOOL)handlePushNotification:(NSDictionary *)userInfo {
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
     NSDictionary* apsDic = [userInfo objectForKey:@"aps"];
+    // Push Content
+    NSString *content = [apsDic valueForKey:@"alert"];
+    // Push Badge
+    NSInteger badge = [[apsDic valueForKey:@"badge"] integerValue];
+    // Play Sound
+    NSString *sound = [apsDic valueForKey:@"sound"];
+    // Extras
+    NSString *extras = [apsDic valueForKey:@"customizeExtras"];
+    NSLog(@"----> content=[%@], badge=[%ld], sound=[%@], cutomize=[%@]", content, (long)badge, sound, extras);
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
     NSString *urlStr = [userInfo objectForKey:@"url"];
     if (urlStr) {
         _pushUrlString = [NSString stringWithString:urlStr];
@@ -407,6 +432,14 @@
     }
     
     return NO;
+}
+
+- (void)networkDidReceiveMessage:(NSNotification *)notification {
+    NSDictionary *userInfo = [notification userInfo];
+    NSString *content = [userInfo valueForKey:@"content"];
+    NSDictionary *extras = [userInfo valueForKey:@"extras"];
+    NSArray *keys = [extras allKeys];
+    NSLog(@"----> receive customized msg:\ncontent=%@, \nkeys=%@", content, keys);
 }
 
 - (void)showWebViewForPushNotification {

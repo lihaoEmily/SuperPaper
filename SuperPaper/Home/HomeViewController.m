@@ -120,22 +120,22 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
      * parameters 参数
-     * ownertype  整型    1:教师主页，2：学生主页
+     * ownertype  整型    1:老师主页，2：学生主页
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
     UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",[NSNumber numberWithInteger:ownerType],@"ownertype", nil];
-
-   // NSLog(@"parameters %@",parameters);
-
+    
+    // NSLog(@"parameters %@",parameters);
+    
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_newsinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseNewsInfoArr addObjectsFromArray:myArr];
-      //  NSLog(@"%@",responseObject);
+        //  NSLog(@"%@",responseObject);
         [_studyTableView reloadData];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
@@ -154,7 +154,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
      * parameters 参数
-     * ownertype  整型    1:教师主页，2：学生主页
+     * ownertype  整型    1:老师主页，2：学生主页
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
@@ -203,9 +203,9 @@
             cycleScrollView3.currentPageDotImage = [UIImage imageNamed:@"circle_select"];
             cycleScrollView3.pageDotImage = [UIImage imageNamed:@"circle"];
             cycleScrollView3.imageURLStringsGroup = imagesURLString;
-
+            
             [headerView addSubview:cycleScrollView3];
-
+            
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -216,42 +216,41 @@
 - (void)serviceBtnClick:(UIButton *)button{
     button.selected = !button.selected;
     switch (button.tag) {
-        case 100:{
-            if (button.selected) {
-                button.selected = YES;
-                UIButton *btn = (UIButton *)[self.view viewWithTag:101];
-                btn.selected = NO;
-                UIView *view = (UIView *)[self.view viewWithTag:200];
-                view.hidden = NO;
-                UIView *view1 = (UIView *)[self.view viewWithTag:201];
-                view1.hidden = YES;
-            }
-            
-            isNews = YES;
-            if (_responseNewsInfoArr.count > 0) {
-                [_studyTableView reloadData];
-            }
-            else{
-               [self getHomePageNewsInfo];
-            }
-        }
-            break;
         case 101:{
-            if (button.selected) {
-                button.selected = YES;
-                UIButton *btn = (UIButton *)[self.view viewWithTag:100];
-                btn.selected = NO;
-                UIView *view = (UIView *)[self.view viewWithTag:201];
-                view.hidden = NO;
-                UIView *view1 = (UIView *)[self.view viewWithTag:200];
-                view1.hidden = YES;
-            }
+            [button setImage:[UIImage imageNamed:@"activity_select"]
+                    forState:UIControlStateNormal];
+            UIButton *btn = (UIButton *)[self.view viewWithTag:100];
+            [btn setImage:[UIImage imageNamed:@"news"]
+                 forState:UIControlStateNormal];
+            UIView *view = (UIView *)[self.view viewWithTag:201];
+            view.hidden = NO;
+            UIView *view1 = (UIView *)[self.view viewWithTag:200];
+            view1.hidden = YES;
             isNews = NO;
             if (_responseActivityInfoArr.count > 0) {
                 [_studyTableView reloadData];
             }
             else{
                 [self getHomePageActivityInfo];
+            }
+        }
+            break;
+        case 100:{
+            [button setImage:[UIImage imageNamed:@"news_select"]
+                    forState:UIControlStateNormal];
+            UIButton *btn = (UIButton *)[self.view viewWithTag:101];
+            [btn setImage:[UIImage imageNamed:@"activity"]
+                 forState:UIControlStateNormal];
+            UIView *view = (UIView *)[self.view viewWithTag:200];
+            view.hidden = NO;
+            UIView *view1 = (UIView *)[self.view viewWithTag:201];
+            view1.hidden = YES;
+            isNews = YES;
+            if (_responseNewsInfoArr.count > 0) {
+                [_studyTableView reloadData];
+            }
+            else{
+                [self getHomePageNewsInfo];
             }
         }
             break;
@@ -288,20 +287,20 @@
         pinkView.tag = i+200;
         if (i==0) {
             serviceBtn.selected = YES;
+            //            [serviceBtn setImage:[UIImage imageNamed:@"news_select"]
+            //                                  forState:UIControlStateSelected];
             [serviceBtn setImage:[UIImage imageNamed:@"news_select"]
-                                  forState:UIControlStateSelected];
-            [serviceBtn setImage:[UIImage imageNamed:@"news"]
-                                  forState:UIControlStateNormal];
+                        forState:UIControlStateNormal];
             pinkView.frame = CGRectMake(10, CGRectGetMaxY(serviceBtn.frame)-5, (SCREEN_WIDTH-20)/2, 0.8);
             UIView *grayView_vertical = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(serviceBtn.frame), CGRectGetMaxY(cycleScrollView.frame) + 20, 0.5, 16)];
             grayView_vertical.backgroundColor = [UIColor lightGrayColor];
             [headerView addSubview:grayView_vertical];
         }
         else{
-            [serviceBtn setImage:[UIImage imageNamed:@"activity_select"]
-                                  forState:UIControlStateSelected];
+            //            [serviceBtn setImage:[UIImage imageNamed:@"activity_select"]
+            //                                  forState:UIControlStateSelected];
             [serviceBtn setImage:[UIImage imageNamed:@"activity"]
-                                  forState:UIControlStateNormal];
+                        forState:UIControlStateNormal];
             pinkView.frame = CGRectMake(10+(SCREEN_WIDTH-20)/2, CGRectGetMaxY(serviceBtn.frame)-5, (SCREEN_WIDTH-20)/2, 0.8);
             pinkView.hidden = YES;
         }
@@ -335,7 +334,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
-
+        
     }
     else{
         static NSString *ID = @"Cell3";
@@ -365,18 +364,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-
+    
     if (isNews) {
         return _responseNewsInfoArr.count;
     }
     else{
         return _responseActivityInfoArr.count;
     }
-   
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     if (isNews) {
         return 70;
     }else{
@@ -499,13 +498,13 @@
         }
         case 101:
         {
-//            NormalWebViewController *vc = [[NormalWebViewController alloc] init];
-//            vc.title = @"网页展示";
-//            vc.urlString = @"http://www.baidu.com";
-//            /**
-//             * 跳转页面
-//             */
-//            [AppDelegate.app.nav pushViewController:vc animated:YES];
+            //            NormalWebViewController *vc = [[NormalWebViewController alloc] init];
+            //            vc.title = @"网页展示";
+            //            vc.urlString = @"http://www.baidu.com";
+            //            /**
+            //             * 跳转页面
+            //             */
+            //            [AppDelegate.app.nav pushViewController:vc animated:YES];
             [ASShare commonShareWithData:nil];
             break;
         }
@@ -538,13 +537,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

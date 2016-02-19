@@ -465,7 +465,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSDictionary *parameters = @{@"id":paperId};
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", BASE_URL, @"get_newscontent.php"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", BASE_URL, @"get_papercontent.php"];
     TextWebViewController * __weak weakSelf = self;
     [manager POST:urlString
        parameters:parameters

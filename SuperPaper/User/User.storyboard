@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="x6j-bp-bR8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="x6j-bp-bR8">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -66,10 +66,10 @@
                                 <color key="sectionIndexBackgroundColor" red="0.99784772724626958" green="0.87921342877628816" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserTableViewCell" id="mMI-LU-S8S" customClass="UserTableViewCell">
-                                        <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMI-LU-S8S" id="UYu-xU-GyF">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="电话图标" translatesAutoresizingMaskIntoConstraints="NO" id="iVX-eJ-6e8">
@@ -106,14 +106,26 @@
                                                         <constraint firstAttribute="height" constant="15" id="o9V-bk-fyY"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nbc-ER-mv0">
+                                                    <rect key="frame" x="568" y="19" width="6" height="6"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="6" id="1cm-D0-IkF"/>
+                                                        <constraint firstAttribute="height" constant="6" id="Mky-KQ-aCb"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="6wY-3x-TGT" firstAttribute="leading" secondItem="Nbc-ER-mv0" secondAttribute="trailing" constant="8" id="1mC-d2-D9T"/>
                                                 <constraint firstItem="MGv-u8-qAb" firstAttribute="centerY" secondItem="UYu-xU-GyF" secondAttribute="centerY" id="LSg-RO-TvC"/>
                                                 <constraint firstItem="iVX-eJ-6e8" firstAttribute="centerY" secondItem="UYu-xU-GyF" secondAttribute="centerY" id="Nhy-dQ-UcD"/>
                                                 <constraint firstItem="WYX-zm-V9Z" firstAttribute="centerY" secondItem="UYu-xU-GyF" secondAttribute="centerY" id="Qi6-xJ-5Zp"/>
                                                 <constraint firstItem="iVX-eJ-6e8" firstAttribute="leading" secondItem="UYu-xU-GyF" secondAttribute="leading" constant="10" id="WEg-J4-5ym"/>
                                                 <constraint firstAttribute="trailing" secondItem="6wY-3x-TGT" secondAttribute="trailing" constant="8" id="b8h-hl-b0z"/>
                                                 <constraint firstItem="6wY-3x-TGT" firstAttribute="centerY" secondItem="UYu-xU-GyF" secondAttribute="centerY" id="hXO-ZA-bGU"/>
+                                                <constraint firstItem="Nbc-ER-mv0" firstAttribute="centerY" secondItem="UYu-xU-GyF" secondAttribute="centerY" id="lOr-bW-nF4"/>
                                                 <constraint firstItem="6wY-3x-TGT" firstAttribute="leading" secondItem="MGv-u8-qAb" secondAttribute="trailing" constant="8" id="yDR-xO-U6J"/>
                                                 <constraint firstItem="WYX-zm-V9Z" firstAttribute="leading" secondItem="iVX-eJ-6e8" secondAttribute="trailing" constant="15" id="ySj-ec-iJ6"/>
                                             </constraints>
@@ -121,6 +133,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="contentLabel" destination="MGv-u8-qAb" id="m9F-aY-8mS"/>
+                                            <outlet property="dotLabel" destination="Nbc-ER-mv0" id="liG-tS-C4Y"/>
                                             <outlet property="headImageView" destination="iVX-eJ-6e8" id="IKU-vq-Za2"/>
                                             <outlet property="titleLabel" destination="WYX-zm-V9Z" id="Y7t-0g-mjM"/>
                                         </connections>
@@ -915,6 +928,7 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="用户名/手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dcc-fn-auu">
                                 <rect key="frame" x="25" y="50" width="550" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="bz4-z3-hlb"/>
                                 </constraints>
@@ -926,6 +940,7 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="6-16位字母和数字密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q1A-tX-TiZ">
                                 <rect key="frame" x="25" y="115" width="550" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="alphabet"/>
                                 <connections>
@@ -1630,7 +1645,7 @@
                                     <action selector="submit:" destination="ihz-MT-t4O" eventType="touchUpInside" id="n2I-xx-9s9"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right_arrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="QAw-YY-dbN">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="QAw-YY-dbN">
                                 <rect key="frame" x="583" y="399" width="7" height="11"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="7" id="EpS-bo-DnD"/>
@@ -1690,7 +1705,6 @@
                     <navigationItem key="navigationItem" title="意见反馈" id="cSd-8j-eLA"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="FAQImageView" destination="QAw-YY-dbN" id="eMq-zb-IuU"/>
                         <outlet property="submitBtn" destination="q8O-cU-UrM" id="Jwk-oM-52U"/>
                         <outlet property="textField" destination="IrT-Xo-zyr" id="GFz-ie-fag"/>
                         <outlet property="textView" destination="noa-aF-2oN" id="iaj-hD-S6A"/>
@@ -1704,7 +1718,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="443" y="-193"/>
+            <point key="canvasLocation" x="505" y="-187"/>
         </scene>
         <!--Read My Papers View Controller-->
         <scene sceneID="M7W-Nw-YOE">
@@ -2056,7 +2070,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s5a-qu-w16">
                                         <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
-                                        <color key="backgroundColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="1" green="0.023529411764705882" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="我的朋友">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -2260,7 +2274,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MJN-Jb-9Qn" id="l6s-CL-JNC">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务条款" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMU-Ju-LaR">
@@ -2294,7 +2308,7 @@
                                         <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qnj-gi-4pC" id="JGr-nC-CL2">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版本 V1.1.7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAe-CP-qfe">
@@ -2351,7 +2365,8 @@
         <image name="QRCode" width="22" height="22"/>
         <image name="TextExport" width="28" height="28"/>
         <image name="icon_voucher_intro" width="22" height="22"/>
-        <image name="icon_voucher_used" width="50" height="39"/>
+        <image name="icon_voucher_used" width="276" height="219"/>
+        <image name="right_arrow" width="16" height="19"/>
         <image name="right_arrow.png" width="33" height="38"/>
         <image name="关于我们" width="960" height="600"/>
         <image name="复选框-1" width="15" height="15"/>

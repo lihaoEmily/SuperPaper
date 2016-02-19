@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, assign) NSInteger subgroupId;
 @property (nonatomic, strong) NSDictionary* selectedSortDic;
-@property (nonatomic ,assign) NSInteger tagId;
+@property (nonatomic, assign) NSInteger tagId;
 
 @end
 
@@ -117,6 +117,7 @@
 
 - (void) sortPublication:(id) sender{
     PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
+    sortsView.title = @"刊物分类";
     sortsView.tagId = _tagId;
     sortsView.groupId = 1;
     sortsView.delegate = self;
@@ -293,6 +294,9 @@
             cell = [[PublicationViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
         }
         
+        if (!_publicationDataArray || !_publicationDataArray.count) {//防止刷新左侧table的时候，点击右侧table,崩溃
+            return cell;
+        }
 //        cell.textLabel.text = @"right";
 //        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
 //        cell.textLabel.text = [dataDic objectForKey:@"title"];
