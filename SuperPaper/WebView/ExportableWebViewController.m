@@ -158,32 +158,32 @@
     [self.view addConstraints:topViewConstraints];
     
     // Left view
-    UIView *leftMarginVew = [[UIView alloc] initWithFrame:CGRectZero];
-    [leftMarginVew setBackgroundColor:kDefaultColor];
-    [_topInfoView addSubview:leftMarginVew];
-    [leftMarginVew setTranslatesAutoresizingMaskIntoConstraints:NO];
-    NSLayoutConstraint *leftMarginViewToTop = [NSLayoutConstraint constraintWithItem:leftMarginVew
+    UIView *leftMarginView = [[UIView alloc] initWithFrame:CGRectZero];
+    [leftMarginView setBackgroundColor:[AppConfig appNaviColor]];
+    [_topInfoView addSubview:leftMarginView];
+    [leftMarginView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    NSLayoutConstraint *leftMarginViewToTop = [NSLayoutConstraint constraintWithItem:leftMarginView
                                                                            attribute:NSLayoutAttributeTop
                                                                            relatedBy:NSLayoutRelationEqual
                                                                               toItem:_topInfoView
                                                                            attribute:NSLayoutAttributeTop
                                                                           multiplier:1.0
                                                                             constant:8.0];
-    NSLayoutConstraint *leftMarginViewToLeft = [NSLayoutConstraint constraintWithItem:leftMarginVew
+    NSLayoutConstraint *leftMarginViewToLeft = [NSLayoutConstraint constraintWithItem:leftMarginView
                                                                             attribute:NSLayoutAttributeLeft
                                                                             relatedBy:NSLayoutRelationEqual
                                                                                toItem:_topInfoView
                                                                             attribute:NSLayoutAttributeLeft
                                                                            multiplier:1.0
                                                                              constant:8.0];
-    NSLayoutConstraint *leftMarginViewHeight = [NSLayoutConstraint constraintWithItem:leftMarginVew
+    NSLayoutConstraint *leftMarginViewHeight = [NSLayoutConstraint constraintWithItem:leftMarginView
                                                                             attribute:NSLayoutAttributeHeight
                                                                             relatedBy:NSLayoutRelationEqual
                                                                                toItem:nil
                                                                             attribute:NSLayoutAttributeHeight
                                                                            multiplier:1.0
                                                                              constant:TITLE_HEIGHT];
-    NSLayoutConstraint *leftMarginViewWidth  = [NSLayoutConstraint constraintWithItem:leftMarginVew
+    NSLayoutConstraint *leftMarginViewWidth  = [NSLayoutConstraint constraintWithItem:leftMarginView
                                                                             attribute:NSLayoutAttributeWidth
                                                                             relatedBy:NSLayoutRelationEqual
                                                                                toItem:nil
@@ -205,7 +205,7 @@
     NSLayoutConstraint *paperTitleToLef = [NSLayoutConstraint constraintWithItem:_paperTitleLabel
                                                                        attribute:NSLayoutAttributeLeft
                                                                        relatedBy:NSLayoutRelationEqual
-                                                                          toItem:leftMarginVew
+                                                                          toItem:leftMarginView
                                                                        attribute:NSLayoutAttributeRight
                                                                       multiplier:1.0
                                                                         constant:8.0];
@@ -219,7 +219,7 @@
     NSLayoutConstraint *paperTitleHeight = [NSLayoutConstraint constraintWithItem:_paperTitleLabel
                                                                         attribute:NSLayoutAttributeHeight
                                                                         relatedBy:NSLayoutRelationEqual
-                                                                           toItem:leftMarginVew
+                                                                           toItem:leftMarginView
                                                                         attribute:NSLayoutAttributeHeight
                                                                        multiplier:1.0
                                                                          constant:0.0];

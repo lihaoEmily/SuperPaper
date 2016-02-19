@@ -74,8 +74,8 @@
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     _paperArray = [[NSMutableArray alloc] init];
     tagId = @"";
-    [self getData];
     [self setupUI];
+    [self getData];
 }
 
 #pragma mark - 网络请求获取数据
@@ -124,7 +124,8 @@
        parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-           
+           [_activity stopAnimating];
+           [_activity setHidden:YES];
            if (responseObject) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                [_paperArray removeAllObjects];
@@ -132,13 +133,22 @@
                [_tableView reloadData];
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           [_activity stopAnimating];
+           [_activity setHidden:YES];
            NSLog(@"%@",error);
        }];
+    
+    [_activity setHidden:NO];
+    [_activity startAnimating];
 }
 
 // 加载前一页数据
 - (void)loadPrePageData
 {
+    if (_activity.superview) {
+        [_activity removeFromSuperview];
+    }
+    
     [_paperArray removeAllObjects];
     [self getData];
     [_tableView.mj_header endRefreshing];
@@ -147,6 +157,9 @@
 // 加载后一页数据
 - (void)loadNextPageData
 {
+    if (_activity.superview) {
+        [_activity removeFromSuperview];
+    }
     [self getData];
     [_tableView.mj_footer endRefreshing];
 }
@@ -178,11 +191,11 @@
     _tableView.mj_footer.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
     
     /// 指示器
-    _activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    [_activity setCenter:CGPointMake(kScreenWidth / 2, CGRectGetMidY(_tableView.frame) - 60)];
-    [_activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
-    [_activity setHidden:YES];
-    [_tableView addSubview:_activity];
+    _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [_activity setCenter:self.view.center];
+//    [_activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+//    [_activity setHidden:YES];
+    [self.view addSubview:_activity];
 //    [_activity startAnimating];
 }
 
