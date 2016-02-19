@@ -50,6 +50,11 @@
     
     /// 获取到论文的标题
     NSString *_title;
+    
+    /// 指示器
+    UIActivityIndicatorView * _indicatorView;
+    
+    UITextView *_textView;
 }
 
 - (void)viewDidLoad {
@@ -72,14 +77,23 @@
        parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           [_indicatorView stopAnimating];
+           [_indicatorView setHidden:YES];
            if (responseObject) {
                _content = [responseObject valueForKey:@"content"];
                _title = [responseObject valueForKey:@"title"];
            }
-           [self setupTextView];
+           _textView.text = _content;
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           [_indicatorView stopAnimating];
+           [_indicatorView setHidden:YES];
            NSLog(@"%@",error);
        }];
+    
+    if ([_indicatorView isHidden]) {
+        [_indicatorView setHidden:NO];
+    }
+    [_indicatorView startAnimating];
 }
 
 - (void)setupUI
@@ -135,15 +149,17 @@
     UIView *bottomBorderView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topInfoView.frame) - 1, kScreenWidth, 1)];
     [bottomBorderView setBackgroundColor:[UIColor lightGrayColor]];
     [_topInfoView addSubview:bottomBorderView];
-}
-
-- (void)setupTextView
-{
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_topInfoView.frame) + 20, kScreenWidth - 20, kScreenHeight - 64 - TOP_WIEW_HEIGHT - 20)];
-    textView.text = _content;
-    textView.font = [UIFont systemFontOfSize:16.0];
-    [textView setEditable:NO];
-    [self.view addSubview:textView];
+    
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_topInfoView.frame) + 20, kScreenWidth - 20, kScreenHeight - 64 - TOP_WIEW_HEIGHT - 20)];
+    _textView.font = [UIFont systemFontOfSize:16.0];
+    [_textView setEditable:NO];
+    [self.view addSubview:_textView];
+    
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [_indicatorView setCenter:CGPointMake(kScreenWidth / 2, CGRectGetMidY(self.view.frame) - 100)];
+    [_indicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+    [_indicatorView setHidden:YES];
+    [_textView addSubview:_indicatorView];
 }
 
 - (void)exportWebViewToDoc
