@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0401D4DC1C41E1E3002E2F12 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0401D4DB1C41E1E3002E2F12 /* AppInfo.m */; };
+		0408BE7E1C76DDE600C5A51C /* Default-iPhone5s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0408BE791C76DDE600C5A51C /* Default-iPhone5s@2x.png */; };
+		0408BE7F1C76DDE600C5A51C /* Default-iPhone6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0408BE7A1C76DDE600C5A51C /* Default-iPhone6@2x.png */; };
+		0408BE801C76DDE600C5A51C /* Default-iPhone6p@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0408BE7B1C76DDE600C5A51C /* Default-iPhone6p@3x.png */; };
+		0408BE811C76DDE600C5A51C /* launchimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0408BE7C1C76DDE600C5A51C /* launchimage@2x.png */; };
+		0408BE821C76DDE600C5A51C /* launchimage@3x.psd in Resources */ = {isa = PBXBuildFile; fileRef = 0408BE7D1C76DDE600C5A51C /* launchimage@3x.psd */; };
 		040AD9901C4675F8000AB02A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 040AD98F1C4675F8000AB02A /* Reachability.m */; };
 		040F7FF81C511306000D8CAA /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040F7FD61C511306000D8CAA /* TencentOpenAPI.framework */; };
 		040F7FF91C511306000D8CAA /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 040F7FD71C511306000D8CAA /* TencentOpenApi_IOS_Bundle.bundle */; };
@@ -218,6 +223,11 @@
 		0401D4DA1C41E1E3002E2F12 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppInfo.h; path = Utils/AppInfo.h; sourceTree = "<group>"; };
 		0401D4DB1C41E1E3002E2F12 /* AppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppInfo.m; path = Utils/AppInfo.m; sourceTree = "<group>"; };
 		0401D4E41C42912D002E2F12 /* SPGlobal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPGlobal.h; path = Common/SPGlobal.h; sourceTree = "<group>"; };
+		0408BE791C76DDE600C5A51C /* Default-iPhone5s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iPhone5s@2x.png"; sourceTree = "<group>"; };
+		0408BE7A1C76DDE600C5A51C /* Default-iPhone6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iPhone6@2x.png"; sourceTree = "<group>"; };
+		0408BE7B1C76DDE600C5A51C /* Default-iPhone6p@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iPhone6p@3x.png"; sourceTree = "<group>"; };
+		0408BE7C1C76DDE600C5A51C /* launchimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchimage@2x.png"; sourceTree = "<group>"; };
+		0408BE7D1C76DDE600C5A51C /* launchimage@3x.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "launchimage@3x.psd"; sourceTree = "<group>"; };
 		040AD98E1C4675F8000AB02A /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Utils/Reachability.h; sourceTree = "<group>"; };
 		040AD98F1C4675F8000AB02A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Utils/Reachability.m; sourceTree = "<group>"; };
 		040F7FC91C511214000D8CAA /* OwToolHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OwToolHeader.h; path = Utils/OwToolHeader.h; sourceTree = "<group>"; };
@@ -645,6 +655,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0408BE781C76DDE600C5A51C /* launchimages */ = {
+			isa = PBXGroup;
+			children = (
+				0408BE791C76DDE600C5A51C /* Default-iPhone5s@2x.png */,
+				0408BE7A1C76DDE600C5A51C /* Default-iPhone6@2x.png */,
+				0408BE7B1C76DDE600C5A51C /* Default-iPhone6p@3x.png */,
+				0408BE7C1C76DDE600C5A51C /* launchimage@2x.png */,
+				0408BE7D1C76DDE600C5A51C /* launchimage@3x.psd */,
+			);
+			name = launchimages;
+			path = Resources/Resources.bundle/launchimages;
+			sourceTree = "<group>";
+		};
 		040F7FCD1C511306000D8CAA /* ShareSDK3.1.5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1074,6 +1097,7 @@
 		04FFFE1A1C412F7900ECCA1C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0408BE781C76DDE600C5A51C /* launchimages */,
 				04FFFE1B1C412F8C00ECCA1C /* Resources.bundle */,
 			);
 			name = Resources;
@@ -1564,6 +1588,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04AD20111C5D1010000A8984 /* UMShareEditViewController.xib in Resources */,
+				0408BE821C76DDE600C5A51C /* launchimage@3x.psd in Resources */,
 				5807C2FD1C4741DE002C5F8E /* PushConfig.plist in Resources */,
 				04FFFDDF1C40F63D00ECCA1C /* LaunchScreen.storyboard in Resources */,
 				04AD20141C5D1010000A8984 /* UMSnsAccountViewController.xib in Resources */,
@@ -1578,7 +1603,9 @@
 				040F80041C511306000D8CAA /* ShareSDKUI.bundle in Resources */,
 				04AD20121C5D1010000A8984 /* UMShareEditViewControlleriPad.xib in Resources */,
 				04AD200E1C5D1010000A8984 /* UMSCommentDetailController.xib in Resources */,
+				0408BE801C76DDE600C5A51C /* Default-iPhone6p@3x.png in Resources */,
 				A2455F641C58C00C008CF9B1 /* HomeDetailController.xib in Resources */,
+				0408BE811C76DDE600C5A51C /* launchimage@2x.png in Resources */,
 				040F7FF91C511306000D8CAA /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				F23480351C45FEC500813AEC /* (null) in Resources */,
 				04AD20131C5D1010000A8984 /* UMSLoginViewController.xib in Resources */,
@@ -1587,11 +1614,13 @@
 				04FFFE1C1C412F8C00ECCA1C /* Resources.bundle in Resources */,
 				04D92B5D1C5F02AF00C936DC /* Service.plist in Resources */,
 				04112A9A1C60B0C000290C23 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				0408BE7E1C76DDE600C5A51C /* Default-iPhone5s@2x.png in Resources */,
 				04D92B581C5F01FA00C936DC /* JobService.plist in Resources */,
 				04AD200C1C5D1010000A8984 /* UMSocialLocalizable.strings in Resources */,
 				92AF175A1C50D56300797B0E /* assessmment.plist in Resources */,
 				040F7FFF1C511306000D8CAA /* ShareSDK.bundle in Resources */,
 				F40F207A1C61DF6B00706DD4 /* ShareView.xib in Resources */,
+				0408BE7F1C76DDE600C5A51C /* Default-iPhone6@2x.png in Resources */,
 				04AD20101C5D1010000A8984 /* UMSCommentInputControlleriPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
