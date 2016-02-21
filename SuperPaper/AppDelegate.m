@@ -57,7 +57,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    self.isAppLaunched = YES;
+    self.isAppLaunched = NO;
     [self registerReachabilityNotification];
     [self registerJushSDKWith:launchOptions];
     [self registerUMSocialForApplication];
@@ -66,6 +66,12 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = AppDelegate.app.nav; 
     [self.window makeKeyAndVisible];
+    
+    // apn 内容获取：
+    NSDictionary *remoteNotification = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (remoteNotification) {
+        [self handlePushNotification:remoteNotification];
+    }
     
     return YES;
 }
@@ -343,24 +349,24 @@
     [JPUSHService setupWithOption:launchOptions
                            appKey:JPushAppKey
                           channel:JPushChannel
-                 apsForProduction:YES];
+                 apsForProduction:NO];
     //注册接收自定义消息
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self
                       selector:@selector(networkDidReceiveMessage:)
                           name:kJPFNetworkDidReceiveMessageNotification object:nil];
     //注册Alias
-    if ([[UserSession sharedInstance] currentUserID] != 0) {
-        NSString * jpushAlias = [[UserSession sharedInstance] currentUserJPushAlias];
-        [JPUSHService setTags:nil alias:jpushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
-            NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
-            if (iResCode == 0) {// register successfully
-                NSLog(@"----> JPUSH Register alias successfully.");
-            } else {
-                NSLog(@"----> JPUSH Register alias failed.");
-            }
-        }];
-    }
+//    if ([[UserSession sharedInstance] currentUserID] != 0) {
+//        NSString * jpushAlias = [[UserSession sharedInstance] currentUserJPushAlias];
+//        [JPUSHService setTags:nil alias:jpushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+//            NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
+//            if (iResCode == 0) {// register successfully
+//                NSLog(@"----> JPUSH Register alias successfully.");
+//            } else {
+//                NSLog(@"----> JPUSH Register alias failed.");
+//            }
+//        }];
+//    }
 }
 
 #pragma mark - APNS
@@ -373,8 +379,9 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"----> received remote notification:%@",userInfo);
+    NSLog(@"---->%s: received remote notification:%@", __func__, userInfo);
     // Required,For systems with less than or equal to iOS6
+    self.isAppLaunched = YES;
     BOOL ret = [self handlePushNotification:userInfo];
     if (ret) {
         return;
@@ -382,16 +389,17 @@
     [JPUSHService handleRemoteNotification:userInfo];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    NSLog(@"----> received remote notification:%@",userInfo);
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+//    NSLog(@"---->%s: received remote notification:%@",__func__, userInfo);
     // IOS 7 Support Required
-    BOOL ret = [self handlePushNotification:userInfo];
-    if (ret) {
-        return;
-    }
-    [JPUSHService handleRemoteNotification:userInfo];
-    completionHandler(UIBackgroundFetchResultNewData);
-}
+//    self.isAppLaunched = YES;
+//    BOOL ret = [self handlePushNotification:userInfo];
+//    if (ret) {
+//        return;
+//    }
+//    [JPUSHService handleRemoteNotification:userInfo];
+//    completionHandler(UIBackgroundFetchResultNewData);
+//}
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     

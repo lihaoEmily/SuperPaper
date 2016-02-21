@@ -71,7 +71,12 @@
 #pragma mark - Actions
 - (void)share
 {
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:@"56af0b3be0f55ab9b1001511" shareText:@"更多精彩内容尽在[超级论文]" shareImage:nil shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,nil] delegate:self];
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"56af0b3be0f55ab9b1001511"
+                                      shareText:@"更多精彩内容尽在[超级论文]"
+                                     shareImage:nil
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,nil]
+                                       delegate:self];
     
     // 分享的图片
     UIImage *image = [UIImage imageNamed:@"LOGO-181"];
@@ -221,6 +226,10 @@
 -(BOOL)isDirectShareInIconActionSheet
 {
     return YES;
+}
+
+-(void)didSelectSocialPlatform:(NSString *)platformName withSocialData:(UMSocialData *)socialData {
+    NSLog(@"%s", __func__);
 }
 
 -(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
