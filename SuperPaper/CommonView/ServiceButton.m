@@ -23,7 +23,7 @@
     [super layoutSubviews];
     
     // 控件大小,间距大小
-    CGFloat const imageViewEdge   = self.bounds.size.width * 0.5;
+    CGFloat const imageViewEdge   = self.bounds.size.width * 0.4;
     CGFloat const centerOfView    = self.bounds.size.width * 0.5;
     CGFloat const labelLineHeight = self.titleLabel.font.lineHeight;
     CGFloat const verticalMarginT = self.bounds.size.height - labelLineHeight - imageViewEdge - MARGIN;

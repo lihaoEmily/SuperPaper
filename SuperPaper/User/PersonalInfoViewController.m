@@ -531,6 +531,7 @@ static NSString *const SubmitIdentifier = @"submit";
 {
     if (0 == indexPath.row) {
         PersonalInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TelIdentifier];
+//        cell.titleLabel.font = [UIFont systemFontOfSize:18];
         cell.titleLabel.text = @"手机号码";
         cell.telNoLabel.text = self.telNo;
         return cell;
@@ -540,6 +541,7 @@ static NSString *const SubmitIdentifier = @"submit";
         return cell;
     }
     PersonalInfoHasSelectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HasNextIdentifier];
+    cell.titleLabel.font = [UIFont systemFontOfSize:18];
     switch (indexPath.row) {
         case 1:
         {

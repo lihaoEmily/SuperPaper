@@ -387,9 +387,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (isNews) {
-        return 70;
+        return TABLE_CELL_HEIGHT;
     }else{
-        return 140;
+        return 150;
     }
     
 }

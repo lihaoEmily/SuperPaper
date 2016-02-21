@@ -175,7 +175,8 @@
     // 左侧图片搜索button
     UIButton *searchIconBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchIconBtn.frame = CGRectMake(10, 5, 30, 30);
-    UIImage *searchIconBtnImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchIcon" ofType:@"png" inDirectory:@"temp"]];
+//    UIImage *searchIconBtnImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchIcon" ofType:@"png" inDirectory:@"temp"]];
+    UIImage *searchIconBtnImage = [UIImage imageNamed:@"searchIcon"];
     [searchIconBtn setBackgroundImage:searchIconBtnImage forState:UIControlStateNormal];
     [searchIconBtn addTarget:self action:@selector(clickToShowKeyboard) forControlEvents:UIControlEventTouchUpInside];
     [searchBarImg addSubview:searchIconBtn];

@@ -20,11 +20,14 @@
 /**
  *  Web内容
  */
-@property (nonatomic, strong) NSString * contentText;
-
+@property(nonatomic, strong) NSString * contentText;
 /**
  *  用户数据
  */
-@property (nonatomic, strong) NSDictionary * userData;
+@property(nonatomic, strong) NSDictionary * userData;
+/**
+ *  是否显示删除Button
+ */
+@property(assign, nonatomic) BOOL deleteButtonIsHidden;
 
 @end

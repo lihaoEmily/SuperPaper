@@ -194,6 +194,9 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
 {
     return _list.count;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 180;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AccountCellIdentifier];
