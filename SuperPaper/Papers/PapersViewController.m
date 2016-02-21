@@ -181,7 +181,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //return [self tableView:tableView cellForRowAtIndexPath:indexPath].frame.size.height;
-    return 140;
+    return 150;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

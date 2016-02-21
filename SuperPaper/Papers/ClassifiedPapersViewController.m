@@ -30,19 +30,19 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.titltLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, kScreenWidth - 30, 20)];
-        self.titltLabel.font = [UIFont systemFontOfSize:17.0];
+        self.titltLabel.font = [UIFont systemFontOfSize:18.0];
         self.titltLabel.textColor = [UIColor blackColor];
         [self.contentView addSubview:self.titltLabel];
         
         self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titltLabel.frame.origin.x, CGRectGetMaxY(self.titltLabel.frame) + 5, self.titltLabel.frame.size.width, 40)];
-        self.detailLabel.font = [UIFont systemFontOfSize:15.0];
+        self.detailLabel.font = [UIFont systemFontOfSize:16.0];
         self.detailLabel.textColor = [UIColor grayColor];
         self.detailLabel.numberOfLines = 3;
         [self.contentView addSubview:self.detailLabel];
         
         self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 110, CGRectGetMaxY(self.detailLabel.frame) + 5, 100, 20)];
         self.dateLabel.textAlignment = NSTextAlignmentRight;
-        self.dateLabel.font = [UIFont systemFontOfSize:14.0];
+        self.dateLabel.font = [UIFont systemFontOfSize:15.0];
         self.dateLabel.textColor = [UIColor grayColor];
         self.dateLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.dateLabel];

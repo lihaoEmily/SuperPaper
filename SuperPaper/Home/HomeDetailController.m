@@ -8,7 +8,7 @@
 
 #import "HomeDetailController.h"
 
-#define TITLELABEL_H 44
+#define TITLELABEL_H 56
 #define NUMLABEL_W   60
 #define NUMLABEL_H   20
 
@@ -23,6 +23,7 @@
     UILabel *content;
     UIScrollView *scrollVeiw;
     UILabel *timeLabel;
+    NSDictionary *textAttributeDictionary;
 }
 @end
 
@@ -35,17 +36,17 @@
 //    scrollVeiw.backgroundColor = [UIColor redColor];
     [self.view addSubview:scrollVeiw];
     
-    leftView = [[UIView alloc]initWithFrame:CGRectMake(4, 8, 5, TITLELABEL_H)];
+    leftView = [[UIView alloc]initWithFrame:CGRectMake(8, 16, 6, TITLELABEL_H)];
     leftView.backgroundColor = [AppConfig appNaviColor];
     [scrollVeiw addSubview:leftView];
     
 //    标题
-    titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame)+10, 5, SCREEN_WIDTH-CGRectGetMaxX(leftView.frame)-10 - 20, TITLELABEL_H)];
+    titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame)+16, 16, SCREEN_WIDTH-CGRectGetMaxX(leftView.frame)-16 - 20, TITLELABEL_H)];
     titleLabel.font = [UIFont systemFontOfSize:21];
     titleLabel.numberOfLines = 2;
     [scrollVeiw addSubview:titleLabel];
     
-    timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(titleLabel.frame)+ 20, SCREEN_WIDTH - NUMLABEL_W * 2, NUMLABEL_H)];
+    timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(titleLabel.frame)+ 20, SCREEN_WIDTH - NUMLABEL_W * 2, NUMLABEL_H)];
     timeLabel.font = [UIFont systemFontOfSize:14];
     [scrollVeiw addSubview:timeLabel];
     
@@ -74,7 +75,13 @@
     [scrollVeiw addSubview:centerImageView];
     
     content = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame)+10, CGRectGetMaxY(centerImageView.frame) + 20, CGRectGetWidth(centerImageView.frame), 10000)];
-    content.font = [UIFont systemFontOfSize:18];
+//    content.font = [UIFont systemFontOfSize:19];
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     content.numberOfLines = 0;
     [scrollVeiw addSubview:content];
     if (self.isNews) {
@@ -111,7 +118,8 @@
 - (void)reloadViewDateWithdict:(NSDictionary *)dic {
     titleLabel.text = dic[@"title"];
     [titleLabel sizeToFit];
-    content.text = dic[@"content"];
+//    content.text = dic[@"content"];
+    content.attributedText = [[NSAttributedString alloc] initWithString:dic[@"content"] attributes:textAttributeDictionary];
     [content sizeToFit];
     NSString *time = [NSString stringWithFormat:@"%@",dic[@"createdate"]];
     keyLabel.text = [NSString stringWithFormat:@"%@",dic[@"keywords"]];

@@ -210,7 +210,9 @@
         NSArray  *services = [NSArray arrayWithContentsOfFile:service];
         for (int i = 0; i < services.count; i ++) {
             NSDictionary *dic = services[i];
-            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i % 3) * kScreenWidth / 3, (i / 3) * kScreenWidth / 3, kScreenWidth / 3, kScreenWidth / 3)];
+            CGFloat tileWidth = SCREEN_WIDTH/3;
+            CGFloat tileHeight = SCREEN_WIDTH/3-HEIGHT_OFFSET;
+            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i % 3) * tileWidth, (i / 3) * tileHeight, tileWidth, tileHeight)];
             serviceBtn.tag = i + 1019;
             serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
             serviceBtn.layer.borderWidth = 1;
@@ -255,9 +257,9 @@
     if (indexPath.section == 0) {
         return 180;
     }else if (indexPath.section == 1) {
-        return kScreenWidth / 3 * 2;
+        return kScreenWidth / 3 * 2 - HEIGHT_OFFSET*2;
     }else{
-        return 70;
+        return TABLE_CELL_HEIGHT;
     }
 }
 

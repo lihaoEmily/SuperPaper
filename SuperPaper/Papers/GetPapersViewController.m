@@ -10,11 +10,11 @@
 #import "ASSaveData.h"
 #import "LoginViewController.h"
 
-#define TOP_WIEW_HEIGHT 136.0
-#define TITLE_HEIGHT    72.0
-#define kDefaultColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
-#define kScreenWidth   [UIScreen mainScreen].bounds.size.width
-#define kScreenHeight   [UIScreen mainScreen].bounds.size.height
+#define TOP_WIEW_HEIGHT 136
+#define TITLE_HEIGHT    56.0
+//#define kDefaultColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
+//#define kScreenWidth   [UIScreen mainScreen].bounds.size.width
+//#define kScreenHeight   [UIScreen mainScreen].bounds.size.height
 
 @interface GetPapersViewController ()
 /**
@@ -37,6 +37,10 @@
  *  导出按钮
  */
 @property(nonatomic, strong) UIButton * exportButton;
+/**
+ *  TextView字间矩，行间矩，字体等属性
+ */
+@property(strong, nonatomic) NSDictionary *textAttributeDictionary;
 
 @end
 
@@ -83,7 +87,9 @@
                _content = [responseObject valueForKey:@"content"];
                _title = [responseObject valueForKey:@"title"];
            }
-           _textView.text = _content;
+//           _textView.text = _content;
+           [_textView setAttributedText:[[NSAttributedString alloc]initWithString:_content
+                                                                       attributes:self.textAttributeDictionary]];
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            [_indicatorView stopAnimating];
            [_indicatorView setHidden:YES];
@@ -98,16 +104,16 @@
 
 - (void)setupUI
 {
-    _topInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 8, kScreenWidth, TOP_WIEW_HEIGHT)];
+    _topInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, TOP_WIEW_HEIGHT)];
     [_topInfoView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:_topInfoView];
     
     // Left view
-    UIView *leftMarginVew = [[UIView alloc] initWithFrame:CGRectMake(4, 0, 7, TITLE_HEIGHT)];
-    [leftMarginVew setBackgroundColor:[AppConfig appNaviColor]];
-    [_topInfoView addSubview:leftMarginVew];
+    UIView *leftMarginView = [[UIView alloc] initWithFrame:CGRectMake(8, 16, 6, TITLE_HEIGHT)];
+    [leftMarginView setBackgroundColor:[AppConfig appNaviColor]];
+    [_topInfoView addSubview:leftMarginView];
     
-    _paperTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(leftMarginVew.frame) + 15, leftMarginVew.frame.origin.y, kScreenWidth - 30 - leftMarginVew.frame.size.width - 4, TITLE_HEIGHT)];
+    _paperTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(leftMarginView.frame) + 16, leftMarginView.frame.origin.y, SCREEN_WIDTH - 30 - leftMarginView.frame.size.width - 6, TITLE_HEIGHT)];
     [_paperTitleLabel setText:self.paperTitleStr];
     [_paperTitleLabel setTextColor:[UIColor blackColor]];
     [_paperTitleLabel setFont:[UIFont boldSystemFontOfSize:20.0]];
@@ -117,19 +123,19 @@
     [_topInfoView addSubview:_paperTitleLabel];
     
     // Horizonal separator view
-    UIView *horizontalSepView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_paperTitleLabel.frame) + 8, kScreenWidth, 1)];
+    UIView *horizontalSepView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_paperTitleLabel.frame) + 16, SCREEN_WIDTH, 1)];
     [horizontalSepView setBackgroundColor:[UIColor lightGrayColor]];
     [_topInfoView addSubview:horizontalSepView];
     
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(horizontalSepView.frame) + 21, 100, 20)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(horizontalSepView.frame) + 8, 100, 32)];
     [_dateLabel setText:self.dateStr];
     [_dateLabel setTextColor:[UIColor grayColor]];
-    [_dateLabel setFont:[UIFont systemFontOfSize:17.0]];
+    [_dateLabel setFont:[UIFont systemFontOfSize:14.0]];
     [_dateLabel setTextAlignment:NSTextAlignmentLeft];
     [_topInfoView addSubview:_dateLabel];
     
     UIImage *exportImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"txtIcon" ofType:@"png" inDirectory:@"Paper"]];
-    _exportButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth - 30 - 26, CGRectGetMaxY(horizontalSepView.frame) + 18, 26, 26)];
+    _exportButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 26, CGRectGetMaxY(horizontalSepView.frame) + 8, 32, 32)];
     [_exportButton setImage:exportImage
                    forState:UIControlStateNormal];
     [[_exportButton imageView] setContentMode:UIViewContentModeScaleAspectFill];
@@ -146,17 +152,27 @@
     [_topInfoView addSubview:_exportLabel];
     
     // Bottom separator view
-    UIView *bottomBorderView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topInfoView.frame) - 1, kScreenWidth, 1)];
+    UIView *bottomBorderView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topInfoView.frame) - 1, SCREEN_WIDTH, 1)];
     [bottomBorderView setBackgroundColor:[UIColor lightGrayColor]];
     [_topInfoView addSubview:bottomBorderView];
     
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_topInfoView.frame) + 20, kScreenWidth - 20, kScreenHeight - 64 - TOP_WIEW_HEIGHT - 20)];
-    _textView.font = [UIFont systemFontOfSize:16.0];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(0,
+                                                             CGRectGetMaxY(_topInfoView.frame),
+                                                             SCREEN_WIDTH,
+                                                             SCREEN_HEIGHT - TOP_WIEW_HEIGHT-64)];
+    [_textView setTextContainerInset:UIEdgeInsetsMake(8, 16, 8, 16)];
+//    _textView.font = [UIFont systemFontOfSize:18.0];
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     [_textView setEditable:NO];
     [self.view addSubview:_textView];
     
     _indicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    [_indicatorView setCenter:CGPointMake(kScreenWidth / 2, CGRectGetMidY(self.view.frame) - 100)];
+    [_indicatorView setCenter:CGPointMake(SCREEN_WIDTH / 2, CGRectGetMidY(self.view.frame) - 100)];
     [_indicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
     [_indicatorView setHidden:YES];
     [_textView addSubview:_indicatorView];
