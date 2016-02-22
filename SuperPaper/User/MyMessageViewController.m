@@ -45,6 +45,14 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     [self pullData];
     
 }
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -176,8 +184,8 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     for (NSString *str in marr) {
         totalString = [totalString stringByAppendingString:str];
     }
-    CGFloat contentHeight = [totalString boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.height;
-    return contentHeight + 21 + 21 + 8;
+    CGFloat contentHeight = [totalString boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size.height;
+    return contentHeight + 21 + 21 + 16;
 
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
