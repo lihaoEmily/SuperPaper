@@ -96,6 +96,11 @@
 {
     [super viewWillDisappear:animated];
     [_timer invalidate];
+    
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+    
 
 }
 

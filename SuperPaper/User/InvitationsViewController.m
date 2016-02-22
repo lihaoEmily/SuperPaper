@@ -108,6 +108,14 @@ static NSString *const InvitationIdentifier = @"Invitation";
         [self getInvitationsListFromWeb];
     }
 }
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+}
 - (IBAction)pasteUrl:(id)sender {
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     pasteBoard.string = _shareUrlString;
