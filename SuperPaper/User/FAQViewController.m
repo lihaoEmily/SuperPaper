@@ -14,6 +14,10 @@
     UIActivityIndicatorView *_webIndicator;
 }
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+/**
+ *  Text的行间矩，字间矩
+ */
+@property(strong, nonatomic) NSDictionary *textAttributeDictionary;
 
 @end
 
@@ -22,7 +26,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
+    
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     _webIndicator = indicator;
@@ -37,8 +47,11 @@
         if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
             NSNumber *result = responseObject[@"result"];
             if (0 == result.integerValue) {
-                self.textView.text = responseObject[@"service_commonqa"];
-                self.textView.font = [UIFont systemFontOfSize:16];
+//                self.textView.text = responseObject[@"service_commonqa"];
+//                self.textView.font = [UIFont systemFontOfSize:16];
+                NSString *content = responseObject[@"service_commonqa"];
+                [self.textView setAttributedText:[[NSAttributedString alloc] initWithString:content
+                                                                                 attributes:self.textAttributeDictionary]];
             }else{
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取常见问题失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];
