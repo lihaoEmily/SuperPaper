@@ -57,6 +57,13 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
     [self pullData];
     
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+}
 //MARK: Helper
 - (void) pullData
 {
