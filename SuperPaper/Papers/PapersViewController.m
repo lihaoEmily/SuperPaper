@@ -75,10 +75,11 @@
                    NSString *imageUrlString = [NSString stringWithFormat:@"%@%@",IMGURL,[dic objectForKey:@"picname"]];
                    NSLog(@"---->%@",imageUrlString);
                    NSString *titleName = [dic objectForKey:@"typename"];
+                   NSString *typeId = [dic objectForKey:@"id"];
                    NSString *imageUrl = [dic objectForKey:@"picname"];
                    imageUrl = [NSString stringWithFormat:@"%@%@",IMGURL,imageUrl];
                    NSLog(@"%@",imageUrl);
-                   NSDictionary *infoDic = [NSDictionary dictionaryWithObjectsAndKeys:titleName,@"title",imageUrl,@"image",nil];
+                   NSDictionary *infoDic = [NSDictionary dictionaryWithObjectsAndKeys:titleName,@"title",imageUrl,@"image",typeId,@"typeId",nil];
                    [_paperArray addObject:infoDic];
                }
                self.tableView.delegate = self;
