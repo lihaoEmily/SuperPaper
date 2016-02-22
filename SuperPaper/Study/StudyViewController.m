@@ -72,6 +72,13 @@
     _studyTableView.delegate = self;
     _studyTableView.sectionHeaderHeight = 10;
     _studyTableView.sectionFooterHeight = 10;
+    if ([_studyTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_studyTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_studyTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_studyTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
     [self.view addSubview:_studyTableView];
     
     //变量初始化
@@ -289,7 +296,9 @@
         NSArray  *services = [NSArray arrayWithContentsOfFile:service];
         for (int i = 0; i < services.count; i ++) {
             NSDictionary *dic = services[i];
-            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*SCREEN_WIDTH/3, (i/3)*SCREEN_WIDTH/3, SCREEN_WIDTH/3, SCREEN_WIDTH/3)];
+            CGFloat tileWidth = SCREEN_WIDTH/3;
+            CGFloat tileHeight = SCREEN_WIDTH/3-HEIGHT_OFFSET;
+            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*tileWidth, (i/3)*tileHeight, tileWidth, tileHeight)];
             serviceBtn.tag = i;
             serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
             serviceBtn.layer.borderWidth = 1;
@@ -360,10 +369,10 @@
         return 180;
     }
     else if (1 == indexPath.section) {
-        return  SCREEN_WIDTH;
+        return  SCREEN_WIDTH - HEIGHT_OFFSET*3;
     }
     
-    return 70;
+    return TABLE_CELL_HEIGHT;
     
 }
 

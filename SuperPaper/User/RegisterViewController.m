@@ -27,6 +27,7 @@
     UIActivityIndicatorView *_webIndicator;
     CGFloat _originalTopCon;
 }
+@property (weak, nonatomic) IBOutlet UIButton *serviceBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topCon;
 
 @property (weak, nonatomic) IBOutlet UITextField *telNumTextField;
@@ -52,7 +53,6 @@
     _confirmPwd = @"";
     _originalTopCon = self.topCon.constant;
     
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
     
@@ -72,14 +72,17 @@
     [self.showConfirmPwdBtn sizeToFit];
     self.getQRCodeBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
     [self.getQRCodeBtn sizeToFit];
+    //Hide QRCodeButton
+    [self.getQRCodeBtn setHidden:YES];
     self.pwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.pwdTextField.layer.borderWidth = 1;
     self.confirmPwdTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.confirmPwdTextField.layer.borderWidth = 1;
     self.qRCodeTextField.layer.borderColor = [AppConfig textFieldBgColor].CGColor;
     self.qRCodeTextField.layer.borderWidth = 1;
-
-    self.agreeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
+    
+    [self.serviceBtn setTitleColor:[AppConfig appNaviColor] forState:UIControlStateNormal];
+    self.registerBtn.backgroundColor = [AppConfig appNaviColor];
     self.registerBtn.layer.masksToBounds = YES;
     self.registerBtn.layer.cornerRadius = 4;
     

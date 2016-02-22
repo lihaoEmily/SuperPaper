@@ -32,10 +32,9 @@
 
 
 - (void)creatUI{
-    
-    _headImageView = [[UIImageView alloc]initWithFrame:CGRectMake(LEFT_MARGIN, LEFT_MARGIN, SCREEN_WIDTH - LEFT_MARGIN * 2, 130)];
-    _headImageView.layer.masksToBounds = YES;
-    _headImageView.layer.cornerRadius  = 10;
+    _headImageView = [[UIImageView alloc]initWithFrame:CGRectMake(LEFT_MARGIN, LEFT_MARGIN, SCREEN_WIDTH - LEFT_MARGIN * 2, 140)];
+//    _headImageView.layer.masksToBounds = YES;
+//    _headImageView.layer.cornerRadius  = 10;
     _headImageView.image = [UIImage imageWithASName:@"default_image" directory:@"common"];
     [self.contentView addSubview:_headImageView];
     

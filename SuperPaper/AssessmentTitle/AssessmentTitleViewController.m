@@ -13,6 +13,7 @@
 #import "NormalWebViewController.h"
 #import "NormalAssessmentViewController.h"
 #import "PublicationViewController.h"
+#import "HomeDetailController.h"
 
 @interface AssessmentTitleViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 @property (nonatomic, strong) UITableView *studyTableView;
@@ -66,6 +67,13 @@
     _studyTableView.delegate = self;
     _studyTableView.sectionHeaderHeight = 10;
     _studyTableView.sectionFooterHeight = 10;
+    if ([_studyTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_studyTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_studyTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_studyTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
     [self.view addSubview:_studyTableView];
     
     //变量初始化
@@ -290,7 +298,9 @@
         NSArray  *services = [NSArray arrayWithContentsOfFile:service];
         for (int i = 0; i < services.count; i ++) {
             NSDictionary *dic = services[i];
-            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*SCREEN_WIDTH/3, (i/3)*SCREEN_WIDTH/3, SCREEN_WIDTH/3, SCREEN_WIDTH/3)];
+            CGFloat tileWidth = SCREEN_WIDTH/3;
+            CGFloat tileHeight = SCREEN_WIDTH/3-HEIGHT_OFFSET;
+            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i%3)*tileWidth, (i/3)*tileHeight, tileWidth, tileHeight)];
             serviceBtn.tag = i;
             serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
             serviceBtn.layer.borderWidth = 1;
@@ -362,11 +372,11 @@
         return 180;
     }
     else if (1 == indexPath.section) {
-        return  SCREEN_WIDTH;
+        return  SCREEN_WIDTH - HEIGHT_OFFSET*3;
     }
     
     
-    return 70;
+    return TABLE_CELL_HEIGHT;
     
 }
 
@@ -380,16 +390,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (2 == indexPath.section) {
+        NSDictionary *info = _responseNewsInfoArr[indexPath.row];
         
-        NormalWebViewController *vc = [[NormalWebViewController alloc]init];
-        vc.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-        vc.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+        NSString *title = [info valueForKey:@"title"];
+        NSString *urlStr = [info valueForKey:@"url"];
         
         /**
          * 跳转页面
          */
-        [AppDelegate.app.nav pushViewController:vc animated:YES];
-        
+        UIViewController *viewController = nil;
+        if (urlStr.length > 1) {
+            NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+            vc.title = title;
+            vc.urlString = urlStr;
+            viewController = vc;
+        } else {
+            HomeDetailController *vc = [[HomeDetailController alloc] init];
+            vc.title = title;
+            vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
+            vc.isNews = YES;
+            viewController = vc;
+        }
+        [AppDelegate.app.nav pushViewController:viewController animated:YES];
     }
 }
 

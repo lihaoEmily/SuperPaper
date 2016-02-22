@@ -13,6 +13,7 @@
     UIActivityIndicatorView *_webIndicator;
 }
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property(strong, nonatomic) NSDictionary *textAttributeDictionary;
 
 @end
 
@@ -21,6 +22,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
     
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -35,8 +42,11 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (0 == [responseObject[@"result"]integerValue]) {
-            self.textView.text = responseObject[@"service_protocol"];
-            self.textView.font = [UIFont systemFontOfSize:16];
+//            self.textView.text = responseObject[@"service_protocol"];
+//            self.textView.font = [UIFont systemFontOfSize:16];
+            NSString *content = responseObject[@"service_protocol"];
+            [self.textView setAttributedText:[[NSAttributedString alloc] initWithString:content
+                                                                             attributes:self.textAttributeDictionary]];
         }
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];

@@ -175,7 +175,8 @@
     // 左侧图片搜索button
     UIButton *searchIconBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchIconBtn.frame = CGRectMake(10, 5, 30, 30);
-    UIImage *searchIconBtnImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchIcon" ofType:@"png" inDirectory:@"temp"]];
+//    UIImage *searchIconBtnImage = [UIImage imageNamed:[[NSBundle bundleWithPath:_bundleStr] pathForResource:@"searchIcon" ofType:@"png" inDirectory:@"temp"]];
+    UIImage *searchIconBtnImage = [UIImage imageNamed:@"searchIcon"];
     [searchIconBtn setBackgroundImage:searchIconBtnImage forState:UIControlStateNormal];
     [searchIconBtn addTarget:self action:@selector(clickToShowKeyboard) forControlEvents:UIControlEventTouchUpInside];
     [searchBarImg addSubview:searchIconBtn];
@@ -195,7 +196,7 @@
     [searchBtn setTitle:@"搜一下" forState:UIControlStateNormal];
     [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(clickToSearch) forControlEvents:UIControlEventTouchUpInside];
-    searchBtn.backgroundColor = [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f];
+    searchBtn.backgroundColor = [AppConfig appNaviColor];
     _searchBar.rightView = searchBtn;
     _searchBar.rightViewMode = UITextFieldViewModeAlways;
     [searchBarImg addSubview:_searchBar];
