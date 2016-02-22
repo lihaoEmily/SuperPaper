@@ -332,12 +332,14 @@ static NSString *cellIdentifier = @"UserTableViewCell";
             if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
                 [UserSession sharedInstance].currentRole = kUserRoleStudent;
                 [self.backTableView reloadData];
+                [self addNotification];
             }
         }];
         UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"老师" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
                 [UserSession sharedInstance].currentRole = kUserRoleTeacher;
                 [self.backTableView reloadData];
+                [self addNotification];
             }
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -349,6 +351,10 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 
 }
 
+- (void)addNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"homeviewControllerChangeDate" object:self];
+}
 //MARK: UIActionSheet Delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -356,12 +362,14 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
             [UserSession sharedInstance].currentRole = kUserRoleStudent;
             [self.backTableView reloadData];
+            [self addNotification];
         }
         
     }else if(1 == buttonIndex){
         if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
             [UserSession sharedInstance].currentRole = kUserRoleTeacher;
             [self.backTableView reloadData];
+            [self addNotification];
         }
     }
 
