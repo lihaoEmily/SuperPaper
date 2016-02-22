@@ -324,27 +324,27 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 - (void)popupDisplayTypeChoosingActionSheet
 {
     if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
-        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"学生",@"老师", nil];
+        UIActionSheet *av = [[UIActionSheet alloc]initWithTitle:@"请选择职业" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"老师",@"学生", nil];
         [av showInView:self.view];
     }else{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择职业" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        UIAlertAction *chooseMan = [UIAlertAction actionWithTitle:@"学生" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
-                [UserSession sharedInstance].currentRole = kUserRoleStudent;
-                [self.backTableView reloadData];
-                [self addNotification];
-            }
-        }];
-        UIAlertAction *chooseWoman = [UIAlertAction actionWithTitle:@"老师" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *chooseTeacher = [UIAlertAction actionWithTitle:@"老师" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
                 [UserSession sharedInstance].currentRole = kUserRoleTeacher;
                 [self.backTableView reloadData];
                 [self addNotification];
             }
         }];
+        UIAlertAction *chooseStudent = [UIAlertAction actionWithTitle:@"学生" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
+                [UserSession sharedInstance].currentRole = kUserRoleStudent;
+                [self.backTableView reloadData];
+                [self addNotification];
+            }
+        }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        [alertController addAction:chooseMan];
-        [alertController addAction:chooseWoman];
+        [alertController addAction:chooseTeacher];
+        [alertController addAction:chooseStudent];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
     }
@@ -359,15 +359,15 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (0 == buttonIndex) {
-        if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
-            [UserSession sharedInstance].currentRole = kUserRoleStudent;
+        if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
+            [UserSession sharedInstance].currentRole = kUserRoleTeacher;
             [self.backTableView reloadData];
             [self addNotification];
         }
         
     }else if(1 == buttonIndex){
-        if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
-            [UserSession sharedInstance].currentRole = kUserRoleTeacher;
+        if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
+            [UserSession sharedInstance].currentRole = kUserRoleStudent;
             [self.backTableView reloadData];
             [self addNotification];
         }
@@ -400,6 +400,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     cell.dotLabel.backgroundColor = [UIColor redColor];
     cell.dotLabel.layer.masksToBounds = YES;
     cell.dotLabel.hidden = YES;
+//    [cell.titleLabel setFont:[UIFont systemFontOfSize:18]];
     if (indexPath.section == 0)
     {
         cell.titleLabel.text = _titles[indexPath.row];

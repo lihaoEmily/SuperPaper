@@ -38,6 +38,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *secondBtnCon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnTopCon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnBottomCon;
+@property (weak, nonatomic) IBOutlet UILabel *captionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *bottomCaptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *pasteBtn;
 
 @end
 
@@ -49,6 +52,8 @@ static NSString *const InvitationIdentifier = @"Invitation";
     // Do any additional setup after loading the view.
     _list = [NSMutableArray array];
     _showFriend = YES;
+    self.myFriendBtn.backgroundColor = [AppConfig appNaviColor];
+    
     self.topView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.topView.layer.borderWidth = 1.5;
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -69,6 +74,9 @@ static NSString *const InvitationIdentifier = @"Invitation";
     self.topLabel.text = [NSString stringWithFormat:@"我的邀请码：%@",[UserSession sharedInstance].currentUserInviteCode];
     self.shareTopView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.shareTopView.layer.borderWidth = 1;
+    self.pasteBtn.backgroundColor = [AppConfig appNaviColor];
+    [self.captionLabel setTextColor:[AppConfig appNaviColor]];
+    [self.bottomCaptionLabel setTextColor:[AppConfig appNaviColor]];
     self.firstBtnCon.constant = (self.view.bounds.size.width - 12 * 2 - 4 * 39 - 2 * 12) / 3;
     self.secondBtnCon.constant = self.firstBtnCon.constant;
     self.btnTopCon.constant = (self.btnTopCon.constant + self.btnBottomCon.constant) / 2;

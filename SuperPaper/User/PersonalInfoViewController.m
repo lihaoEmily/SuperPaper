@@ -94,7 +94,7 @@ static NSString *const SubmitIdentifier = @"submit";
                 self.career = 0 == [responseObject[@"jobtitle"]integerValue]?@"老师":@"学生";
             }else
                 self.career = @"老师";
-            [UserSession sharedInstance].currentRole = [responseObject[@"jobtitle"]integerValue] == 0?kUserRoleTeacher:kUserRoleStudent;
+            
             if ([responseObject[@"school"]isKindOfClass:[NSString class]]) {
                 self.college = responseObject[@"school"];
             }else
@@ -492,7 +492,6 @@ static NSString *const SubmitIdentifier = @"submit";
             [UserSession sharedInstance].currentUserName = self.name;
             [UserSession sharedInstance].currentUserGen = [self.gender isEqualToString:@"男"]?kUserGen_Man:kUserGen_Woman;
             [UserSession sharedInstance].currentUserAge = self.age;
-            [UserSession sharedInstance].currentRole = [self.career isEqualToString:@"老师"]?kUserRoleTeacher:kUserRoleStudent;
             [UserSession sharedInstance].currentUserCollege = self.college;
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"个人信息修改成功！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [av show];
@@ -532,6 +531,7 @@ static NSString *const SubmitIdentifier = @"submit";
 {
     if (0 == indexPath.row) {
         PersonalInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TelIdentifier];
+//        cell.titleLabel.font = [UIFont systemFontOfSize:18];
         cell.titleLabel.text = @"手机号码";
         cell.telNoLabel.text = self.telNo;
         return cell;
@@ -541,6 +541,7 @@ static NSString *const SubmitIdentifier = @"submit";
         return cell;
     }
     PersonalInfoHasSelectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HasNextIdentifier];
+    cell.titleLabel.font = [UIFont systemFontOfSize:18];
     switch (indexPath.row) {
         case 1:
         {

@@ -153,6 +153,7 @@
     self.textView.myPlaceholderColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.7];
     self.submitBtn.layer.masksToBounds = YES;
     self.submitBtn.layer.cornerRadius = 5;
+    self.submitBtn.backgroundColor = [AppConfig appNaviColor];
     self.textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.textView.layer.borderWidth = 0.5;
     self.textField.layer.borderColor = [UIColor lightGrayColor].CGColor;

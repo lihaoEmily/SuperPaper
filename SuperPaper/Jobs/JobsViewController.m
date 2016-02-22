@@ -12,6 +12,7 @@
 #import "HomeNewsCell.h"
 #import "ServiceButton.h"
 #import "NormalJobViewController.h"
+#import "HomeDetailController.h"
 
 #define kScreenWidth   [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight   [UIScreen mainScreen].bounds.size.height
@@ -53,6 +54,12 @@
     _jobTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth,kScreenHeight - 64 - 49) style:UITableViewStyleGrouped];
     _jobTableView.dataSource = self;
     _jobTableView.delegate = self;
+    if ([_jobTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_jobTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_jobTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_jobTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
     [self.view addSubview:_jobTableView];
     
     // 下拉刷新
@@ -203,7 +210,9 @@
         NSArray  *services = [NSArray arrayWithContentsOfFile:service];
         for (int i = 0; i < services.count; i ++) {
             NSDictionary *dic = services[i];
-            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i % 3) * kScreenWidth / 3, (i / 3) * kScreenWidth / 3, kScreenWidth / 3, kScreenWidth / 3)];
+            CGFloat tileWidth = SCREEN_WIDTH/3;
+            CGFloat tileHeight = SCREEN_WIDTH/3-HEIGHT_OFFSET;
+            ServiceButton *serviceBtn = [[ServiceButton alloc] initWithFrame:CGRectMake((i % 3) * tileWidth, (i / 3) * tileHeight, tileWidth, tileHeight)];
             serviceBtn.tag = i + 1019;
             serviceBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:241.0/255.0f alpha:1].CGColor;
             serviceBtn.layer.borderWidth = 1;
@@ -248,9 +257,9 @@
     if (indexPath.section == 0) {
         return 180;
     }else if (indexPath.section == 1) {
-        return kScreenWidth / 3 * 2;
+        return kScreenWidth / 3 * 2 - HEIGHT_OFFSET*2;
     }else{
-        return 70;
+        return TABLE_CELL_HEIGHT;
     }
 }
 
@@ -271,10 +280,31 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 2) {
-        NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
-        normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-        normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
-        [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
+//        NormalWebViewController *normalWebVC = [[NormalWebViewController alloc]init];
+//        normalWebVC.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+//        normalWebVC.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+//        [AppDelegate.app.nav pushViewController:normalWebVC animated:YES];
+        NSDictionary *info = _responseNewsInfoArr[indexPath.row];
+        NSString *title = [info valueForKey:@"title"];
+        NSString *urlStr = [info valueForKey:@"url"];
+        /**
+         * 跳转页面
+         */
+        UIViewController *viewController = nil;
+        if (urlStr.length > 1) {
+            NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+            vc.title = title;
+            vc.urlString = urlStr;
+            viewController = vc;
+        } else {
+            HomeDetailController *vc = [[HomeDetailController alloc] init];
+            vc.title = title;
+            vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
+            vc.isNews = YES;
+            viewController = vc;
+        }
+        [AppDelegate.app.nav pushViewController:viewController animated:YES];
+        
     }
 }
 

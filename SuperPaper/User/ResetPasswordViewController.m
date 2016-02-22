@@ -48,6 +48,7 @@
     [self.showNewPwdBtn sizeToFit];
     self.showConfirmBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 18, 0, 18);
     [self.showConfirmBtn sizeToFit];
+    [self.submitBtn setBackgroundColor:[AppConfig appNaviColor]];
     self.submitBtn.layer.masksToBounds = YES;
     self.submitBtn.layer.cornerRadius = 4;
     self.oldPwdTextField.leftViewMode = UITextFieldViewModeAlways;

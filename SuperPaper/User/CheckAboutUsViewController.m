@@ -14,6 +14,7 @@
     UIActivityIndicatorView *_webIndicator;
 }
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property(strong, nonatomic) NSDictionary *textAttributeDictionary;
 
 @end
 
@@ -26,9 +27,15 @@
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     
     _webIndicator = indicator;
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
     
-    if (!self.content) {
+//    if (!self.content) {
         NSString *urlString = [NSString stringWithFormat:@"%@getmeinfo.php",BASE_URL];
         NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID]};
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -42,7 +49,9 @@
 
                     self.content = responseObject[@"service_aboutme"];
                     self.textView.text = self.content;
-                    self.textView.font = [UIFont systemFontOfSize:16];
+//                    self.textView.font = [UIFont systemFontOfSize:16];
+                    [self.textView setAttributedText:[[NSAttributedString alloc] initWithString:self.content
+                                                                                     attributes:self.textAttributeDictionary]];
                     
                 }else{
                     UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取客服电话失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -59,10 +68,13 @@
         }];
         [_webIndicator startAnimating];
         [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
-    }else{
-        self.textView.text = self.content;
-        self.textView.font = [UIFont systemFontOfSize:16];
-    }
+//    }else{
+//        self.textView.text = self.content;
+////        self.textView.font = [UIFont systemFontOfSize:16];
+//        [self.textView setAttributedText:[[NSAttributedString alloc] initWithString:self.content
+//                                                                         attributes:self.textAttributeDictionary]];
+//        self.textView.scrollsToTop = YES;
+//    }
     
     
 }

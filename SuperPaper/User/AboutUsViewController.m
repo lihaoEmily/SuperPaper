@@ -56,6 +56,7 @@ static NSString *const VersionIdentifier = @"Version";
         return cell;
     }
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (0 == indexPath.row) {
