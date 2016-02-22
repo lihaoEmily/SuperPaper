@@ -19,7 +19,7 @@
 #import "SettingViewController.h"
 #import "UserSession.h"
 #import "LoginViewController.h"
-
+#import "JPUSHService.h"
 
 @interface MainViewController ()<TabBarDelegate>
 
@@ -123,6 +123,8 @@
                               forControlEvents:UIControlEventTouchUpInside];
 //        [self performSelector:@selector(removeIntroPageView:) withObject:introPageView afterDelay:5];
     }
+    
+    [self registerJPushAlias];
 }
 
 - (void)userAction:(UIButton *)button
@@ -397,7 +399,20 @@
 }
 
 #pragma mark - HttpRequest
-
+- (void)registerJPushAlias {
+    //注册Alias
+    if ([[UserSession sharedInstance] currentUserID] != 0) {
+        NSString * jpushAlias = [[UserSession sharedInstance] currentUserJPushAlias];
+        [JPUSHService setTags:nil alias:jpushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+            NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
+            if (iResCode == 0) {// register successfully
+                NSLog(@"----> JPUSH Register alias successfully.");
+            } else {
+                NSLog(@"----> JPUSH Register alias failed.");
+            }
+        }];
+    }
+}
 
 /*
 #pragma mark - Navigation

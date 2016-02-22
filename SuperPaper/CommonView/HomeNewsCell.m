@@ -9,7 +9,7 @@
 #import "HomeNewsCell.h"
 #import "UIImageView+WebCache.h"
 
-#define LEFT_MARGIN (5.0)
+#define LEFT_MARGIN (8.0)
 
 @implementation HomeNewsCell
 {
@@ -39,20 +39,25 @@
 
 
 - (void)creatUI{
-    
-    _headImageView = [[UIImageView alloc]initWithFrame:CGRectMake(LEFT_MARGIN*2, LEFT_MARGIN, 75, 60)];
+    _headImageView = [[UIImageView alloc]initWithFrame:CGRectMake(LEFT_MARGIN*2, LEFT_MARGIN*2, 100, 68)];
 //    _headImageView.layer.masksToBounds = YES;
 //    _headImageView.layer.cornerRadius  = 10;
     [self.contentView addSubview:_headImageView];
     
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame) + LEFT_MARGIN,LEFT_MARGIN*3, SCREEN_WIDTH - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN * 6, 40)];
-    _titleLabel.font = [UIFont systemFontOfSize:17.0];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame) + LEFT_MARGIN*3,
+                                                            LEFT_MARGIN*2,
+                                                            SCREEN_WIDTH - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN * 6,
+                                                            48)];
+    _titleLabel.font = [UIFont systemFontOfSize:18.0];
     _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.numberOfLines = 2;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.contentView addSubview:_titleLabel];
     
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame),70- LEFT_MARGIN-20, SCREEN_WIDTH - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN * 2 , 20)];
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame),
+                                                           CGRectGetMaxY(_titleLabel.frame),
+                                                           SCREEN_WIDTH - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN * 2 ,
+                                                           20)];
     _timeLabel.font = [UIFont systemFontOfSize:14.0];
     _timeLabel.textColor = [UIColor grayColor];
     _timeLabel.backgroundColor = [UIColor clearColor];
@@ -62,15 +67,14 @@
 
 -(void)setInfoDict:(NSDictionary *)infoDict
 {
-    [_headImageView sd_setImageWithURL:infoDict[@"image"] placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
+    [_headImageView sd_setImageWithURL:infoDict[@"image"]
+                      placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
     _titleLabel.text = infoDict[@"title"];
     [_titleLabel sizeToFit];
     CGSize detailmaxSize = CGSizeMake(SCREEN_WIDTH - CGRectGetMaxX(_headImageView.frame) - LEFT_MARGIN * 5, 40);
     CGSize detailSize = [_titleLabel sizeThatFits:detailmaxSize];
-    _titleLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) + LEFT_MARGIN * 3,LEFT_MARGIN , detailSize.width, detailSize.height);
+    _titleLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) + LEFT_MARGIN * 3,LEFT_MARGIN*2 , detailSize.width, detailSize.height);
     _timeLabel.text = infoDict[@"time"];
-    
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

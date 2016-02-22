@@ -17,6 +17,8 @@
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 #define NAVIGATIONBAR_HEIGHT 64
 #define TABBAR_HEIGHT        49
+#define HEIGHT_OFFSET        20
+#define TABLE_CELL_HEIGHT    100
 #pragma mark 随机色
 #define kArcColor kColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 #pragma mark 自定义颜色

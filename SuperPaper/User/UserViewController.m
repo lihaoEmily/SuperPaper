@@ -392,6 +392,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     cell.dotLabel.backgroundColor = [UIColor redColor];
     cell.dotLabel.layer.masksToBounds = YES;
     cell.dotLabel.hidden = YES;
+//    [cell.titleLabel setFont:[UIFont systemFontOfSize:18]];
     if (indexPath.section == 0)
     {
         cell.titleLabel.text = _titles[indexPath.row];

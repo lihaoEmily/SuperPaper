@@ -30,19 +30,19 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.titltLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, kScreenWidth - 30, 20)];
-        self.titltLabel.font = [UIFont systemFontOfSize:17.0];
+        self.titltLabel.font = [UIFont systemFontOfSize:18.0];
         self.titltLabel.textColor = [UIColor blackColor];
         [self.contentView addSubview:self.titltLabel];
         
         self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titltLabel.frame.origin.x, CGRectGetMaxY(self.titltLabel.frame) + 5, self.titltLabel.frame.size.width, 40)];
-        self.detailLabel.font = [UIFont systemFontOfSize:15.0];
+        self.detailLabel.font = [UIFont systemFontOfSize:16.0];
         self.detailLabel.textColor = [UIColor grayColor];
         self.detailLabel.numberOfLines = 3;
         [self.contentView addSubview:self.detailLabel];
         
         self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth - 110, CGRectGetMaxY(self.detailLabel.frame) + 5, 100, 20)];
         self.dateLabel.textAlignment = NSTextAlignmentRight;
-        self.dateLabel.font = [UIFont systemFontOfSize:14.0];
+        self.dateLabel.font = [UIFont systemFontOfSize:15.0];
         self.dateLabel.textColor = [UIColor grayColor];
         self.dateLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.dateLabel];
@@ -74,8 +74,8 @@
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     _paperArray = [[NSMutableArray alloc] init];
     tagId = @"";
-    [self getData];
     [self setupUI];
+    [self getData];
 }
 
 #pragma mark - 网络请求获取数据
@@ -103,8 +103,13 @@
                }
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           [_activity stopAnimating];
+           [_activity setHidden:YES];
            NSLog(@"%@",error);
        }];
+    
+    [_activity setHidden:NO];
+    [_activity startAnimating];
 }
 
 - (void)getDifferentTagData
@@ -118,7 +123,8 @@
        parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
            
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-           
+           [_activity stopAnimating];
+           [_activity setHidden:YES];
            if (responseObject) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                [_paperArray removeAllObjects];
@@ -126,13 +132,22 @@
                [_tableView reloadData];
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           [_activity stopAnimating];
+           [_activity setHidden:YES];
            NSLog(@"%@",error);
        }];
+    
+    [_activity setHidden:NO];
+    [_activity startAnimating];
 }
 
 // 加载前一页数据
 - (void)loadPrePageData
 {
+    if (_activity.superview) {
+        [_activity removeFromSuperview];
+    }
+    
     [_paperArray removeAllObjects];
     [self getData];
     [_tableView.mj_header endRefreshing];
@@ -141,6 +156,9 @@
 // 加载后一页数据
 - (void)loadNextPageData
 {
+    if (_activity.superview) {
+        [_activity removeFromSuperview];
+    }
     [self getData];
     [_tableView.mj_footer endRefreshing];
 }

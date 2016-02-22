@@ -9,11 +9,11 @@
 #import "ExportableWebViewController.h"
 #import "ASSaveData.h"
 
-#define TOP_WIEW_HEIGHT 120.0
+#define TOP_WIEW_HEIGHT 136.0
 #define TITLE_HEIGHT    56.0
 #define kDefaultColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
 
-@interface ExportableWebViewController ()<UIWebViewDelegate>{
+@interface ExportableWebViewController ()<UIWebViewDelegate,UIAlertViewDelegate>{
     NSString *_content;
 }
 /**
@@ -48,6 +48,10 @@
  *  加载进度
  */
 @property(nonatomic, strong) UIActivityIndicatorView * indicatorView;
+/**
+ *  Text的行间矩，字间矩
+ */
+@property(strong, nonatomic) NSDictionary *textAttributeDictionary;
 
 @end
 
@@ -65,7 +69,13 @@
 //    [self.view addSubview:_webView];
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
     [_textView setEditable:NO];
-    [_textView setFont:[UIFont systemFontOfSize:17]];
+//    [_textView setFont:[UIFont systemFontOfSize:18]];
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     [_textView setTextContainerInset:UIEdgeInsetsMake(8, 16, 8, 16)];
     [self.view addSubview:_textView];
     
@@ -75,6 +85,7 @@
     
     [self layoutTopInfoView];
     [self layoutWebView];
+    [self layoutDeleteButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,6 +103,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Layout customized view
 - (void)layoutTopInfoView {
     _paperTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [_paperTitleLabel setText:@"标题"];
@@ -158,38 +170,38 @@
     [self.view addConstraints:topViewConstraints];
     
     // Left view
-    UIView *leftMarginVew = [[UIView alloc] initWithFrame:CGRectZero];
-    [leftMarginVew setBackgroundColor:kDefaultColor];
-    [_topInfoView addSubview:leftMarginVew];
-    [leftMarginVew setTranslatesAutoresizingMaskIntoConstraints:NO];
-    NSLayoutConstraint *leftMarginViewToTop = [NSLayoutConstraint constraintWithItem:leftMarginVew
+    UIView *leftMarginView = [[UIView alloc] initWithFrame:CGRectZero];
+    [leftMarginView setBackgroundColor:[AppConfig appNaviColor]];
+    [_topInfoView addSubview:leftMarginView];
+    [leftMarginView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    NSLayoutConstraint *leftMarginViewToTop = [NSLayoutConstraint constraintWithItem:leftMarginView
                                                                            attribute:NSLayoutAttributeTop
                                                                            relatedBy:NSLayoutRelationEqual
                                                                               toItem:_topInfoView
                                                                            attribute:NSLayoutAttributeTop
                                                                           multiplier:1.0
-                                                                            constant:8.0];
-    NSLayoutConstraint *leftMarginViewToLeft = [NSLayoutConstraint constraintWithItem:leftMarginVew
+                                                                            constant:16.0];
+    NSLayoutConstraint *leftMarginViewToLeft = [NSLayoutConstraint constraintWithItem:leftMarginView
                                                                             attribute:NSLayoutAttributeLeft
                                                                             relatedBy:NSLayoutRelationEqual
                                                                                toItem:_topInfoView
                                                                             attribute:NSLayoutAttributeLeft
                                                                            multiplier:1.0
                                                                              constant:8.0];
-    NSLayoutConstraint *leftMarginViewHeight = [NSLayoutConstraint constraintWithItem:leftMarginVew
+    NSLayoutConstraint *leftMarginViewHeight = [NSLayoutConstraint constraintWithItem:leftMarginView
                                                                             attribute:NSLayoutAttributeHeight
                                                                             relatedBy:NSLayoutRelationEqual
                                                                                toItem:nil
                                                                             attribute:NSLayoutAttributeHeight
                                                                            multiplier:1.0
                                                                              constant:TITLE_HEIGHT];
-    NSLayoutConstraint *leftMarginViewWidth  = [NSLayoutConstraint constraintWithItem:leftMarginVew
+    NSLayoutConstraint *leftMarginViewWidth  = [NSLayoutConstraint constraintWithItem:leftMarginView
                                                                             attribute:NSLayoutAttributeWidth
                                                                             relatedBy:NSLayoutRelationEqual
                                                                                toItem:nil
                                                                             attribute:NSLayoutAttributeWidth
                                                                            multiplier:1.0
-                                                                             constant:7.0];
+                                                                             constant:6.0];
     NSArray *leftMarginViewContraints = [NSArray arrayWithObjects:leftMarginViewToTop, leftMarginViewToLeft, leftMarginViewHeight, leftMarginViewWidth, nil];
     [_topInfoView addConstraints:leftMarginViewContraints];
     
@@ -201,14 +213,14 @@
                                                                           toItem:_topInfoView
                                                                        attribute:NSLayoutAttributeTop
                                                                       multiplier:1.0
-                                                                        constant:8.0];
+                                                                        constant:16.0];
     NSLayoutConstraint *paperTitleToLef = [NSLayoutConstraint constraintWithItem:_paperTitleLabel
                                                                        attribute:NSLayoutAttributeLeft
                                                                        relatedBy:NSLayoutRelationEqual
-                                                                          toItem:leftMarginVew
+                                                                          toItem:leftMarginView
                                                                        attribute:NSLayoutAttributeRight
                                                                       multiplier:1.0
-                                                                        constant:8.0];
+                                                                        constant:18.0];
     NSLayoutConstraint *paperTitleToRight = [NSLayoutConstraint constraintWithItem:_paperTitleLabel
                                                                          attribute:NSLayoutAttributeRight
                                                                          relatedBy:NSLayoutRelationEqual
@@ -219,7 +231,7 @@
     NSLayoutConstraint *paperTitleHeight = [NSLayoutConstraint constraintWithItem:_paperTitleLabel
                                                                         attribute:NSLayoutAttributeHeight
                                                                         relatedBy:NSLayoutRelationEqual
-                                                                           toItem:leftMarginVew
+                                                                           toItem:leftMarginView
                                                                         attribute:NSLayoutAttributeHeight
                                                                        multiplier:1.0
                                                                          constant:0.0];
@@ -237,7 +249,7 @@
                                                                           toItem:_paperTitleLabel
                                                                        attribute:NSLayoutAttributeBottom
                                                                       multiplier:1.0
-                                                                        constant:8.0];
+                                                                        constant:16.0];
     NSLayoutConstraint *horSepViewToLef = [NSLayoutConstraint constraintWithItem:horizontalSepView
                                                                        attribute:NSLayoutAttributeLeft
                                                                        relatedBy:NSLayoutRelationEqual
@@ -277,7 +289,7 @@
                                                                      toItem:_topInfoView
                                                                   attribute:NSLayoutAttributeLeft
                                                                  multiplier:1.0
-                                                                   constant:8.0];
+                                                                   constant:16.0];
     NSLayoutConstraint *dateToBottom = [NSLayoutConstraint constraintWithItem:_dateLabel
                                                                     attribute:NSLayoutAttributeBottom
                                                                     relatedBy:NSLayoutRelationEqual
@@ -454,6 +466,77 @@
     
 }
 
+- (void)layoutDeleteButton {
+    if (self.deleteButtonIsHidden) {
+        return;
+    }
+    UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [deleteButton setFrame: CGRectMake(0, 0, 40, 32)];
+    [deleteButton setTitle:@"删除"
+                  forState:UIControlStateNormal];
+    [deleteButton setTitleColor:[UIColor whiteColor]
+                       forState:UIControlStateNormal];
+    [deleteButton addTarget:self
+                     action:@selector(deleteThisPaper:)
+           forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithCustomView:deleteButton];
+    self.navigationItem.rightBarButtonItem = shareItem;
+
+}
+
+#pragma mark - Delete this paper
+- (void) deleteThisPaper:(UIButton *)button
+{
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"提示"
+                                                message:@"确定要删除吗？"
+                                               delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      otherButtonTitles:@"确定", nil];
+    [av show];
+    
+}
+
+#pragma mark - UIAlertView Deletate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (1 == buttonIndex) {
+        NSString *paperId = _userData[@"id"];
+        NSString *urlString = [NSString stringWithFormat:@"%@mypaper_delete.php",BASE_URL];
+        NSDictionary *params = @{@"paper_id":paperId};
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
+                NSNumber *result = responseObject[@"result"];
+                if (0 == result.integerValue) {
+                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"论文已删除" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [av show];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"论文删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [av show];
+                }
+            }
+            [_indicatorView stopAnimating];
+            [_indicatorView setHidden:YES];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [av show];
+            [_indicatorView stopAnimating];
+            [_indicatorView setHidden:YES];
+        }];
+        if (!_indicatorView.isAnimating) {
+            [_indicatorView setHidden:NO];
+            [_indicatorView startAnimating];
+//            [[UIApplication sharedApplication].keyWindow addSubview:_indicatorView];
+        }
+        
+    }
+}
+
+#pragma mark - Network Request
 /**
  *  请求数据
  */
@@ -525,7 +608,9 @@
 //    NSInteger viewCount = [data[@"viewnum"] integerValue];
     self.title = title;
     [_paperTitleLabel setText:title];
-    [_textView setText:_content];
+//    [_textView setText:_content];
+    [self.textView setAttributedText:[[NSAttributedString alloc] initWithString:_content
+                                                                     attributes:self.textAttributeDictionary]];
     
 }
 
@@ -567,7 +652,11 @@
     NSLog(@"%s",__func__);
     ASSaveData *data = [[ASSaveData alloc] init];
     [data saveToLocationwithStrings:_content withTitle:self.userData[@"title"]];
-    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"论文已导出到Documents文件夹中，请注意查看" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"提示"
+                                                message:@"论文已导出到Documents文件夹中，请注意查看"
+                                               delegate:nil
+                                      cancelButtonTitle:@"确定"
+                                      otherButtonTitles:nil, nil];
     [av show];
     // 1.checking login
     // 2.checking web content
