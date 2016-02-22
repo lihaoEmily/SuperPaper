@@ -10,4 +10,5 @@
 
 @interface PapersSearchViewController : BaseViewController
 
+@property (nonatomic,copy)NSString *typeId;
 @end
