@@ -176,7 +176,7 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     for (NSString *str in marr) {
         totalString = [totalString stringByAppendingString:str];
     }
-    CGFloat contentHeight = [totalString boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.height;
+    CGFloat contentHeight = [totalString boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size.height;
     return contentHeight + 21 + 21 + 8;
 
 }
