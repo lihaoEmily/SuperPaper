@@ -13,6 +13,7 @@
 #import "NormalWebViewController.h"
 #import "NormalStudyViewController.h"
 #import "PublicationViewController.h"
+#import "HomeDetailController.h"
 
 /** 获取屏幕尺寸*/
 //#define KAppWidth [UIScreen mainScreen].bounds.size.width
@@ -386,15 +387,38 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (2 == indexPath.section) {
+//        
+//        NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+//        vc.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
+//        vc.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+//        
+//        /**
+//         * 跳转页面
+//         */
+//        [AppDelegate.app.nav pushViewController:vc animated:YES];
         
-        NormalWebViewController *vc = [[NormalWebViewController alloc]init];
-        vc.title = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"title"];
-        vc.urlString = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"url"];
+        NSDictionary *info = _responseNewsInfoArr[indexPath.row];
+        
+        NSString *title = [info valueForKey:@"title"];
+        NSString *urlStr = [info valueForKey:@"url"];
         
         /**
          * 跳转页面
          */
-        [AppDelegate.app.nav pushViewController:vc animated:YES];
+        UIViewController *viewController = nil;
+        if (urlStr.length > 1) {
+            NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+            vc.title = title;
+            vc.urlString = urlStr;
+            viewController = vc;
+        } else {
+            HomeDetailController *vc = [[HomeDetailController alloc] init];
+            vc.title = title;
+            vc.passId = [[_responseNewsInfoArr objectAtIndex:indexPath.row]valueForKey:@"id"];
+            vc.isNews = YES;
+            viewController = vc;
+        }
+        [AppDelegate.app.nav pushViewController:viewController animated:YES];
         
     }
 }

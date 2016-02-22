@@ -14,6 +14,11 @@
 
 //@property (nonatomic, strong) PublicationDetailData* detailData;
 
+/**
+ *  Text的行间矩，字间矩
+ */
+@property(strong, nonatomic) NSDictionary *textAttributeDictionary;
+
 @end
 
 
@@ -47,19 +52,22 @@
     [super viewDidLoad];
     
 //    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
- 
-   
-    
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.view addSubview:_scrollView];
     
-    _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(5, 8, 5, 44)];
+    _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(8, 16, 6, 56)];
     _leftColorView.backgroundColor = [AppConfig appNaviColor];
     [_scrollView addSubview:_leftColorView];
     
     // 标题
-    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_leftColorView.frame) + 16, 8, SCREEN_WIDTH-CGRectGetMaxX(_leftColorView.frame) - 16 - 16, 44)];
+    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_leftColorView.frame) + 16, 16, SCREEN_WIDTH-CGRectGetMaxX(_leftColorView.frame) - 16 - 16, 56)];
     _titleLabel.font = [UIFont systemFontOfSize:20];
     _titleLabel.numberOfLines = 2;
     [_scrollView addSubview:_titleLabel];
@@ -153,7 +161,12 @@
         _contributeLab.layer.borderColor = [UIColor lightGrayColor].CGColor;
     }
     
-    _contentLabel.text = dic[@"content"];
+//    _contentLabel.text = dic[@"content"];
+    NSString *content = dic[@"content"];
+    [_contentLabel setAttributedText:[[NSAttributedString alloc] initWithString:content
+                                                                     attributes:self.textAttributeDictionary]];
+    
+
     [_contentLabel sizeToFit];
 
     NSString *imageUrl = [NSString stringWithFormat:@"%@",dic[@"content_pic_name"]];
