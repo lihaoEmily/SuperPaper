@@ -9,10 +9,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InvitationsViewController">
             <connections>
                 <outlet property="bottomCaptionLabel" destination="P5d-HH-4we" id="AmQ-PG-Apo"/>
-                <outlet property="btnBottomCon" destination="ANa-o2-NUz" id="fAQ-tD-4k3"/>
-                <outlet property="btnTopCon" destination="515-cq-BKh" id="NNJ-mT-eGT"/>
                 <outlet property="captionLabel" destination="BvN-Dp-hGA" id="Vgz-6Y-drL"/>
-                <outlet property="firstBtnCon" destination="se9-cZ-x4M" id="gOW-zH-pyw"/>
+                <outlet property="firstBtnCon" destination="se9-cZ-x4M" id="kDH-n8-db6"/>
+                <outlet property="firstBtnLeadingCon" destination="iq0-jn-n8p" id="lHc-df-A94"/>
+                <outlet property="iconBtnWidthCon" destination="o48-Nr-Cui" id="3zU-eb-HiG"/>
+                <outlet property="lastBtnLeadingCon" destination="y2A-Fp-cDd" id="wzi-eO-uoX"/>
+                <outlet property="leadingCon" destination="fgG-qF-HOV" id="zRg-z8-u0O"/>
                 <outlet property="pasteBtn" destination="mer-qd-Wsi" id="M0g-He-TeC"/>
                 <outlet property="secondBtnCon" destination="dPI-Ni-0aj" id="GYS-ZX-fIo"/>
                 <outlet property="shareBottomView" destination="QmV-gl-UH6" id="Rhd-ZF-xMN"/>
@@ -20,6 +22,7 @@
                 <outlet property="shareTopView" destination="XeI-zV-2dk" id="yVg-7Q-dk9"/>
                 <outlet property="shareView" destination="iN0-l3-epB" id="6tr-uT-usc"/>
                 <outlet property="topLabel" destination="s9c-ne-3zq" id="15U-Zj-dJz"/>
+                <outlet property="trailingCon" destination="11e-kH-ezf" id="t5P-eC-DRC"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -42,7 +45,7 @@
                         <constraint firstAttribute="height" secondItem="AGg-mG-K0d" secondAttribute="width" multiplier="682:979" id="57U-dv-jMU"/>
                     </constraints>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XeI-zV-2dk">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XeI-zV-2dk" userLabel="upBG">
                     <rect key="frame" x="12" y="185" width="296" height="122"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您可以选择" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BvN-Dp-hGA">
@@ -70,7 +73,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mer-qd-Wsi">
-                            <rect key="frame" x="224" y="7" width="60" height="32"/>
+                            <rect key="frame" x="224" y="14" width="60" height="32"/>
                             <color key="backgroundColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="B1l-Pd-tFg"/>
@@ -87,6 +90,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="BvN-Dp-hGA" firstAttribute="top" secondItem="XeI-zV-2dk" secondAttribute="top" constant="4" id="4nW-21-a8p"/>
+                        <constraint firstItem="mer-qd-Wsi" firstAttribute="bottom" secondItem="Z4U-sc-FXF" secondAttribute="bottom" id="6oY-R3-B8r"/>
                         <constraint firstItem="Z4U-sc-FXF" firstAttribute="trailing" secondItem="BvN-Dp-hGA" secondAttribute="trailing" id="9Cc-11-Xly"/>
                         <constraint firstAttribute="trailing" secondItem="OwF-7J-5oX" secondAttribute="trailing" constant="12" id="AOK-SF-rH4"/>
                         <constraint firstItem="OwF-7J-5oX" firstAttribute="leading" secondItem="Z4U-sc-FXF" secondAttribute="leading" id="CGu-dq-non"/>
@@ -96,14 +100,13 @@
                         <constraint firstItem="Z4U-sc-FXF" firstAttribute="leading" secondItem="BvN-Dp-hGA" secondAttribute="leading" id="lFF-ot-ayo"/>
                         <constraint firstItem="mer-qd-Wsi" firstAttribute="trailing" secondItem="OwF-7J-5oX" secondAttribute="trailing" id="mcz-dI-Mjr"/>
                         <constraint firstItem="BvN-Dp-hGA" firstAttribute="leading" secondItem="XeI-zV-2dk" secondAttribute="leading" constant="12" id="uV1-aB-s2I"/>
-                        <constraint firstItem="mer-qd-Wsi" firstAttribute="top" secondItem="BvN-Dp-hGA" secondAttribute="top" constant="3" id="vON-2Z-Dhk"/>
                         <constraint firstItem="Z4U-sc-FXF" firstAttribute="top" secondItem="BvN-Dp-hGA" secondAttribute="bottom" constant="4" id="zcs-bC-Phm"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QmV-gl-UH6">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QmV-gl-UH6" userLabel="bottomBG">
                     <rect key="frame" x="12" y="322" width="296" height="122"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="也可以选择" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5d-HH-4we">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="也可以选择" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5d-HH-4we" userLabel="bottomTitleLabel">
                             <rect key="frame" x="12" y="4" width="274" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="iul-18-4hs"/>
@@ -112,10 +115,10 @@
                             <color key="textColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Bi-Nk-Gyi">
-                            <rect key="frame" x="0.0" y="33" width="296" height="89"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Bi-Nk-Gyi" userLabel="bottomSubBG">
+                            <rect key="frame" x="0.0" y="29" width="296" height="93"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分享到社交平台" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kki-u5-4RY">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分享到社交平台" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kki-u5-4RY" userLabel="fenxiangdaoshejiaopingtai">
                                     <rect key="frame" x="12" y="0.0" width="272" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="Hnn-ay-jmi"/>
@@ -124,22 +127,22 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHR-ug-ucp">
-                                    <rect key="frame" x="76" y="38" width="39" height="39"/>
-                                    <state key="normal" image="UMS_qzone_icon"/>
+                                <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHR-ug-ucp" userLabel="kongjian">
+                                    <rect key="frame" x="76" y="26" width="39" height="39"/>
+                                    <state key="normal" backgroundImage="share_qzone"/>
                                     <connections>
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="d3W-UQ-JA7"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76n-gq-TZ1">
-                                    <rect key="frame" x="145" y="38" width="39" height="39"/>
-                                    <state key="normal" image="UMS_wechat_icon"/>
+                                <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76n-gq-TZ1" userLabel="weixin">
+                                    <rect key="frame" x="145" y="26" width="39" height="39"/>
+                                    <state key="normal" backgroundImage="share_weixin"/>
                                     <connections>
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="e5m-4b-nC8"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QQ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6l-kw-2eq">
-                                    <rect key="frame" x="20" y="77" width="23" height="18"/>
+                                    <rect key="frame" x="20" y="65" width="23" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="M9i-iI-CwY"/>
                                     </constraints>
@@ -147,38 +150,38 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="空间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvj-Nq-N2p">
-                                    <rect key="frame" x="81" y="77" width="30" height="18"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="空间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvj-Nq-N2p" userLabel="kongjian">
+                                    <rect key="frame" x="81" y="65" width="30" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RF9-OZ-DHB">
-                                    <rect key="frame" x="150" y="77" width="30" height="18"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RF9-OZ-DHB" userLabel="weixin">
+                                    <rect key="frame" x="150" y="65" width="30" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="朋友圈" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ojn-Ug-pAd">
-                                    <rect key="frame" x="242" y="77" width="45" height="18"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="朋友圈" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ojn-Ug-pAd" userLabel="pengyouquan">
+                                    <rect key="frame" x="242" y="65" width="45" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29O-ON-YKf">
-                                    <rect key="frame" x="12" y="38" width="39" height="39"/>
+                                <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29O-ON-YKf" userLabel="QQ">
+                                    <rect key="frame" x="12" y="26" width="39" height="39"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="39" id="eyT-EQ-wAm"/>
                                         <constraint firstAttribute="width" constant="39" id="o48-Nr-Cui"/>
                                     </constraints>
-                                    <state key="normal" image="UMS_qq_icon"/>
+                                    <state key="normal" backgroundImage="share_qq"/>
                                     <connections>
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="cOi-9S-1wZ"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGM-rI-bTB">
-                                    <rect key="frame" x="245" y="38" width="39" height="39"/>
-                                    <state key="normal" image="UMS_wechat_timeline_icon"/>
+                                <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGM-rI-bTB" userLabel="pengyouquan">
+                                    <rect key="frame" x="245" y="26" width="39" height="39"/>
+                                    <state key="normal" backgroundImage="share_wx_frends"/>
                                     <connections>
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="R9T-5H-pGk"/>
                                     </connections>
@@ -186,17 +189,16 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="I6l-kw-2eq" firstAttribute="top" secondItem="29O-ON-YKf" secondAttribute="bottom" id="0Tm-zz-RCb"/>
                                 <constraint firstItem="qHR-ug-ucp" firstAttribute="bottom" secondItem="29O-ON-YKf" secondAttribute="bottom" id="4eh-WU-DL3"/>
-                                <constraint firstItem="29O-ON-YKf" firstAttribute="top" secondItem="kki-u5-4RY" secondAttribute="bottom" constant="20" id="515-cq-BKh"/>
                                 <constraint firstItem="76n-gq-TZ1" firstAttribute="bottom" secondItem="qHR-ug-ucp" secondAttribute="bottom" id="A3o-aX-QGQ"/>
-                                <constraint firstAttribute="bottom" secondItem="I6l-kw-2eq" secondAttribute="bottom" constant="-6" id="ANa-o2-NUz"/>
                                 <constraint firstItem="RF9-OZ-DHB" firstAttribute="centerX" secondItem="76n-gq-TZ1" secondAttribute="centerX" id="ARR-Ix-WJC"/>
                                 <constraint firstItem="I6l-kw-2eq" firstAttribute="centerX" secondItem="29O-ON-YKf" secondAttribute="centerX" id="EWc-FM-jUV"/>
                                 <constraint firstAttribute="trailing" secondItem="kki-u5-4RY" secondAttribute="trailing" constant="12" id="GSV-qm-zUB"/>
                                 <constraint firstItem="Ojn-Ug-pAd" firstAttribute="centerX" secondItem="vGM-rI-bTB" secondAttribute="centerX" id="Gca-Mm-RtS"/>
+                                <constraint firstAttribute="bottom" secondItem="I6l-kw-2eq" secondAttribute="bottom" constant="10" id="HUI-RC-Urr"/>
                                 <constraint firstItem="Ojn-Ug-pAd" firstAttribute="top" secondItem="RF9-OZ-DHB" secondAttribute="top" id="JFk-22-yr5"/>
                                 <constraint firstItem="vGM-rI-bTB" firstAttribute="width" secondItem="76n-gq-TZ1" secondAttribute="width" id="MLW-eB-cQP"/>
-                                <constraint firstItem="I6l-kw-2eq" firstAttribute="top" secondItem="29O-ON-YKf" secondAttribute="bottom" id="Nvt-6H-quT"/>
                                 <constraint firstItem="RF9-OZ-DHB" firstAttribute="height" secondItem="rvj-Nq-N2p" secondAttribute="height" id="P29-43-cML"/>
                                 <constraint firstItem="rvj-Nq-N2p" firstAttribute="height" secondItem="I6l-kw-2eq" secondAttribute="height" id="QGs-Au-yI5"/>
                                 <constraint firstItem="vGM-rI-bTB" firstAttribute="top" secondItem="76n-gq-TZ1" secondAttribute="top" id="Qnf-4e-CAO"/>
@@ -220,7 +222,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="0Bi-Nk-Gyi" firstAttribute="top" secondItem="P5d-HH-4we" secondAttribute="bottom" constant="8" id="D5Z-K5-56r"/>
+                        <constraint firstItem="0Bi-Nk-Gyi" firstAttribute="top" secondItem="P5d-HH-4we" secondAttribute="bottom" constant="4" id="D5Z-K5-56r"/>
                         <constraint firstItem="0Bi-Nk-Gyi" firstAttribute="leading" secondItem="QmV-gl-UH6" secondAttribute="leading" id="MX4-7M-EJy"/>
                         <constraint firstAttribute="bottom" secondItem="0Bi-Nk-Gyi" secondAttribute="bottom" id="N21-ef-5LZ"/>
                         <constraint firstAttribute="trailing" secondItem="P5d-HH-4we" secondAttribute="trailing" constant="10" id="UaG-bG-neV"/>
@@ -252,10 +254,10 @@
         </view>
     </objects>
     <resources>
-        <image name="UMS_qq_icon" width="39" height="39"/>
-        <image name="UMS_qzone_icon" width="39" height="39"/>
-        <image name="UMS_wechat_icon" width="39" height="39"/>
-        <image name="UMS_wechat_timeline_icon" width="39" height="39"/>
+        <image name="share_qq" width="39" height="39"/>
+        <image name="share_qzone" width="39" height="39"/>
+        <image name="share_weixin" width="39" height="39"/>
+        <image name="share_wx_frends" width="39" height="39"/>
         <image name="插画" width="489" height="341"/>
     </resources>
 </document>
