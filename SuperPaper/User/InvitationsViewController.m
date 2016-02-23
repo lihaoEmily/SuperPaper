@@ -36,11 +36,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *friendNumLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstBtnCon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *secondBtnCon;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnTopCon;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnBottomCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstBtnLeadingCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lastBtnLeadingCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconBtnWidthCon;
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomCaptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *pasteBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *trailingCon;
 
 @end
 
@@ -62,7 +65,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [self pullupRefresh];
     }];
-    
+
     // 以下是自定义分享view
     [[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil];
     self.shareView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -77,10 +80,10 @@ static NSString *const InvitationIdentifier = @"Invitation";
     self.pasteBtn.backgroundColor = [AppConfig appNaviColor];
     [self.captionLabel setTextColor:[AppConfig appNaviColor]];
     [self.bottomCaptionLabel setTextColor:[AppConfig appNaviColor]];
-    self.firstBtnCon.constant = (self.view.bounds.size.width - 12 * 2 - 4 * 39 - 2 * 12) / 3;
+    self.trailingCon.constant = self.leadingCon.constant;
+    self.lastBtnLeadingCon.constant = self.firstBtnLeadingCon.constant;
+    self.firstBtnCon.constant = (self.view.bounds.size.width - self.firstBtnLeadingCon.constant - self.lastBtnLeadingCon.constant - 4 * self.iconBtnWidthCon.constant - self.leadingCon.constant - self.trailingCon.constant) / 3;
     self.secondBtnCon.constant = self.firstBtnCon.constant;
-    self.btnTopCon.constant = (self.btnTopCon.constant + self.btnBottomCon.constant) / 2;
-    self.btnBottomCon.constant = self.btnTopCon.constant;
     self.shareBottomView.layer.borderWidth = 1;
     self.shareBottomView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.shareContentLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -273,6 +276,9 @@ static NSString *const InvitationIdentifier = @"Invitation";
                 if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                     _total_num = [responseObject[@"total_num"] integerValue];
                     self.friendNumLabel.text = [NSString stringWithFormat:@"%ld人",(long)_total_num];
+                }else{
+                    self.friendNumLabel.text = [NSString stringWithFormat:@"%@人",responseObject[@"total_num"]];
+                    _total_num = [self.friendNumLabel.text integerValue];
                 }
                 
                 _list = [responseObject[@"list"]mutableCopy];
@@ -304,15 +310,20 @@ static NSString *const InvitationIdentifier = @"Invitation";
     InvitationsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:InvitationIdentifier];
     NSDictionary *dic = _list[indexPath.row];
     NSString *userName = dic[@"username"];
-    NSString *dotString = @"";
-    for (int i = 0; i < userName.length - 6; i++) {
-        dotString = [dotString stringByAppendingString:@"*"];
+    if (userName.length < 6) {
+        cell.idLabel.text = userName;
+    }else{
+        NSString *dotString = @"";
+        for (int i = 0; i < userName.length - 6; i++) {
+            dotString = [dotString stringByAppendingString:@"*"];
+        }
+        cell.idLabel.text = [[[userName substringToIndex:3]stringByAppendingString:dotString]stringByAppendingString:[userName substringFromIndex:userName.length - 3]];
     }
-    
-    cell.idLabel.text = [[[userName substringToIndex:3]stringByAppendingString:dotString]stringByAppendingString:[userName substringFromIndex:userName.length - 3]];
     cell.progressLabel.text = dic[@"status"];
     NSString *timeString = dic[@"createdate"];
+    
     cell.timeLabel.text = [timeString componentsSeparatedByString:@" "][0];
+    
     if (_list.count - 1 == indexPath.row) {
         cell.seperatorLine.hidden = YES;
     }else
