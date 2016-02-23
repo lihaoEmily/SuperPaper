@@ -176,6 +176,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         [_webIndicator removeFromSuperview];
     }
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

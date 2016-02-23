@@ -273,6 +273,9 @@ static NSString *const InvitationIdentifier = @"Invitation";
                 if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                     _total_num = [responseObject[@"total_num"] integerValue];
                     self.friendNumLabel.text = [NSString stringWithFormat:@"%ld人",(long)_total_num];
+                }else{
+                    self.friendNumLabel.text = [NSString stringWithFormat:@"%@人",responseObject[@"total_num"]];
+                    _total_num = [self.friendNumLabel.text integerValue];
                 }
                 
                 _list = [responseObject[@"list"]mutableCopy];
@@ -304,15 +307,20 @@ static NSString *const InvitationIdentifier = @"Invitation";
     InvitationsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:InvitationIdentifier];
     NSDictionary *dic = _list[indexPath.row];
     NSString *userName = dic[@"username"];
-    NSString *dotString = @"";
-    for (int i = 0; i < userName.length - 6; i++) {
-        dotString = [dotString stringByAppendingString:@"*"];
+    if (userName.length < 6) {
+        cell.idLabel.text = userName;
+    }else{
+        NSString *dotString = @"";
+        for (int i = 0; i < userName.length - 6; i++) {
+            dotString = [dotString stringByAppendingString:@"*"];
+        }
+        cell.idLabel.text = [[[userName substringToIndex:3]stringByAppendingString:dotString]stringByAppendingString:[userName substringFromIndex:userName.length - 3]];
     }
-    
-    cell.idLabel.text = [[[userName substringToIndex:3]stringByAppendingString:dotString]stringByAppendingString:[userName substringFromIndex:userName.length - 3]];
     cell.progressLabel.text = dic[@"status"];
     NSString *timeString = dic[@"createdate"];
+    
     cell.timeLabel.text = [timeString componentsSeparatedByString:@" "][0];
+    
     if (_list.count - 1 == indexPath.row) {
         cell.seperatorLine.hidden = YES;
     }else
