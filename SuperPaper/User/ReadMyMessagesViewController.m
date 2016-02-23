@@ -35,7 +35,7 @@
     [btn addTarget:self action:@selector(shareThisMessage) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:btn];
 
-    self.textView.textContainerInset = UIEdgeInsetsMake(10, 0, 10, 0);
+    self.textView.textContainerInset = UIEdgeInsetsMake(8, 16, 8, 16);
     self.title = self.messageTitle;
     NSString * htmlString = self.messageContent;
     NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
