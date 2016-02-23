@@ -28,6 +28,7 @@
 @property (nonatomic, assign) NSInteger subgroupId;
 @property (nonatomic, strong) NSDictionary* selectedSortDic;
 @property (nonatomic, assign) NSInteger tagId;
+@property (nonatomic ,strong) UIActivityIndicatorView *webIndicator;
 
 @end
 
@@ -71,6 +72,11 @@
     _contentView.rightTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [self pullupRefresh:_selectedSortDic];
     }];
+    
+    _webIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _webIndicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    [_webIndicator setHidden:YES];
+    [self.view addSubview:_webIndicator];
     
     [self getPublicationSortData];
     
@@ -168,7 +174,14 @@
         }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
         }];
+    
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 - (void)getPublicationDataWithSort:(NSDictionary*) sortDic
@@ -198,11 +211,18 @@
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
               [_publicationDataArray addObjectsFromArray:array];
               [_contentView.rightTableView reloadData];
-
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
           }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 - (void)pulldownRefresh:(NSDictionary*) sortDic

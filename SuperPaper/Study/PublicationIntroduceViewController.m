@@ -18,9 +18,9 @@
  *  Text的行间矩，字间矩
  */
 @property(strong, nonatomic) NSDictionary *textAttributeDictionary;
+@property(strong, nonatomic) UIActivityIndicatorView *webIndicator;
 
 @end
-
 
 @implementation PublicationIntroduceViewController
 {
@@ -116,6 +116,11 @@
     [_telBtn setImage:[UIImage imageNamed:@"CellPhoneIcon"] forState:UIControlStateNormal];
     [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
     
+    _webIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _webIndicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    [_webIndicator setHidden:YES];
+    [self.view addSubview:_webIndicator];
+    
     [self getPublicationDetailData];
 }
 
@@ -142,10 +147,18 @@
               if (dataDic) {
                   [self reloadViewDateWithdict:dataDic];
               }
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
           }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 -(void)reloadViewDateWithdict:(NSDictionary *)dic
