@@ -12,4 +12,5 @@
 @property (nonatomic) NSInteger messageID;
 @property (nonatomic, copy) NSString *messageContent;
 @property (nonatomic, copy) NSString *messageTitle;
+@property (nonatomic, strong) NSString *urlString;
 @end
