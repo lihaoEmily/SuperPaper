@@ -165,7 +165,7 @@
 {
     self.title = dic[@"title"];
     _titleLabel.text = dic[@"title"];
-    [_titleLabel sizeToFit];
+//    [_titleLabel sizeToFit];
     
     _contributeLab.hidden = !self.showPaper;
     if ([dic[@"emptyflg"]integerValue] == 0) {

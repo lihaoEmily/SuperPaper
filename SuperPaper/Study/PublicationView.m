@@ -30,6 +30,7 @@
         _leftTableView.allowsSelection = YES;
         _leftTableView.allowsMultipleSelection = NO;
 //        _leftTableView.backgroundColor = [UIColor lightGrayColor];
+        _leftTableView.tableFooterView = [[UIView alloc] init];
         _leftTableView.scrollEnabled = NO;
         [self addSubview:_leftTableView];
         
