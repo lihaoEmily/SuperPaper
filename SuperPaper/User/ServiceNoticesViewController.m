@@ -28,7 +28,7 @@
     paragraphStyle.headIndent = 15; // 字间矩
     paragraphStyle.lineSpacing = 7; // 行间矩
     _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
-    self.textView.textContainerInset = UIEdgeInsetsMake(10, 0, 10, 0);
+    self.textView.textContainerInset = UIEdgeInsetsMake(8, 16, 8, 16);
     
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
