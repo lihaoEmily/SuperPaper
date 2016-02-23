@@ -150,6 +150,7 @@
     self.title = dic[@"title"];
     _titleLabel.text = dic[@"title"];
     [_titleLabel sizeToFit];
+    
     _contributeLab.hidden = !self.showPaper;
     if ([dic[@"emptyflg"]integerValue] == 0) {
         _contributeLab.text = @"可投稿";
@@ -166,8 +167,6 @@
     NSString *content = dic[@"content"];
     [_contentLabel setAttributedText:[[NSAttributedString alloc] initWithString:content
                                                                      attributes:self.textAttributeDictionary]];
-    
-
     [_contentLabel sizeToFit];
 
     NSString *imageUrl = [NSString stringWithFormat:@"%@",dic[@"content_pic_name"]];

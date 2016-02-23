@@ -55,6 +55,10 @@
     _contentView = [[PublicationView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     _contentView.backgroundColor = [UIColor whiteColor];
     self.view = _contentView;
+//    _contentView.leftTableView.backgroundColor = [UIColor whiteColor];
+//    _contentView.rightTableView.backgroundColor = [UIColor whiteColor];
+//    _contentView.leftTableView.layer.borderColor = [UIColor whiteColor].CGColor;
+//    _contentView.rightTableView.layer.borderColor = [UIColor whiteColor].CGColor;
     _contentView.leftTableView.dataSource = self;
     _contentView.leftTableView.delegate = self;
     _contentView.rightTableView.dataSource = self;
@@ -113,14 +117,28 @@
 - (void) searchPublication :(id) sender{
     PublicationSearchViewController *vc = [[PublicationSearchViewController alloc] init];
     vc.groupId = self.groupId;
+    
+    if (self.groupId == 2) {
+        vc.title = @"出版社搜索";
+    }
+    else{
+        vc.title = @"刊物搜索";
+    }
+    
     [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
 - (void) sortPublication:(id) sender{
     PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
-    sortsView.title = @"刊物分类";
+    
     sortsView.tagId = _tagId;
     sortsView.groupId = self.groupId;
+    if (self.groupId == 2) {
+        sortsView.title = @"出版社分类";
+    }
+    else{
+        sortsView.title = @"刊物分类";
+    }
     sortsView.delegate = self;
     [self.navigationController pushViewController:sortsView animated:YES];
 }
@@ -158,6 +176,15 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
+    /**
+     ** parameters 参数
+     * ownertype  整型    1：老师  2:学生
+     * subgroup_id   整型  期刊属性
+     * tag_id     整型    期刊标签
+     * start_pos  整型    表单中获取数据的开始位置。从0开始
+     * list_num   整型    一次获取list数
+     * group_id   整型    ownertype为1时,group_id为1表示刊物;ownertype为2时,group_id为10表示刊物
+     */
     UserRole ownerType = [[UserSession sharedInstance] currentRole];
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
