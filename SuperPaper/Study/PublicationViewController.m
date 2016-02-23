@@ -213,11 +213,17 @@
               [_contentView.rightTableView reloadData];
               [_webIndicator stopAnimating];
               [_webIndicator setHidden:YES];
+              if ([array count] == 0) {
+                  [self showAlertViewWithMessage:@"无数据"];
+              }
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
               [_webIndicator stopAnimating];
               [_webIndicator setHidden:YES];
+
+              [self showAlertViewWithMessage:@"数据获取失败"];
+
           }];
     if (!_webIndicator.isAnimating) {
         [_webIndicator setHidden:NO];
@@ -275,6 +281,9 @@
               [_publicationDataArray addObjectsFromArray:array];
               [_contentView.rightTableView reloadData];
               [_contentView.rightTableView.mj_footer endRefreshing];
+              if ([array count] == 0) {
+                  [self showAlertViewWithMessage:@"暂无数据"];
+              }
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
@@ -403,6 +412,16 @@
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.textLabel.textColor = [UIColor blackColor];
     }
+}
+
+#pragma mark - Show alert view
+- (void)showAlertViewWithMessage:(NSString *)message {
+    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                       message:message
+                                                      delegate:nil
+                                             cancelButtonTitle:@"确认"
+                                             otherButtonTitles:nil, nil];
+    [alerView show];
 }
 
 @end
