@@ -60,6 +60,7 @@
     _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollView];
     
     _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(8, 16, 6, 56)];

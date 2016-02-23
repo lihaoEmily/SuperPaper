@@ -53,6 +53,7 @@
     [super viewDidLoad];
 //    _contentView = [[JournalsPressView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     _contentView = [[PublicationView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    _contentView.backgroundColor = [UIColor whiteColor];
     self.view = _contentView;
     _contentView.leftTableView.dataSource = self;
     _contentView.leftTableView.delegate = self;
@@ -119,7 +120,7 @@
     PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
     sortsView.title = @"刊物分类";
     sortsView.tagId = _tagId;
-    sortsView.groupId = 1;
+    sortsView.groupId = self.groupId;
     sortsView.delegate = self;
     [self.navigationController pushViewController:sortsView animated:YES];
 }
@@ -157,8 +158,8 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -340,7 +341,7 @@
     else{
         PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
         vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
-        if (self.groupId == 1) {
+        if (self.groupId == 1 || self.groupId == 10) {
             vc.showPaper = YES;
         }else{
             vc.showPaper = NO;

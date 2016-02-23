@@ -22,6 +22,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     _sortData = [NSMutableArray array];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self setUpTableView];
     [self getData];
 }
