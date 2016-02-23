@@ -57,6 +57,9 @@
     paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
     paragraphStyle.headIndent = 15; // 字间矩
     paragraphStyle.lineSpacing = 7; // 行间矩
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentLeft;
+//    paragraphStyle.paragraphSpacing = 7;
     _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
@@ -167,7 +170,16 @@
     NSString *content = dic[@"content"];
     [_contentLabel setAttributedText:[[NSAttributedString alloc] initWithString:content
                                                                      attributes:self.textAttributeDictionary]];
-    [_contentLabel sizeToFit];
+    
+
+    CGRect tmpRect = [_contentLabel.text boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 20, 10000)
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                   attributes:self.textAttributeDictionary
+                                                      context:nil];
+    CGFloat contentH = tmpRect.size.height;
+    NSLog(@"-----> contentHeight=%f",contentH);
+//    [_contentLabel sizeToFit];
+    [_contentLabel setFrame:CGRectMake(_contentLabel.frame.origin.x, _contentLabel.frame.origin.y, _contentLabel.frame.size.width, contentH)];
 
     NSString *imageUrl = [NSString stringWithFormat:@"%@",dic[@"content_pic_name"]];
     NSString *url = [NSString stringWithFormat:@"%@%@",IMGURL,dic[@"content_pic_name"]];
