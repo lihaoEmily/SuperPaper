@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.textView.textContainerInset = UIEdgeInsetsMake(8, 16, 8, 16);
     UIFont *font = [UIFont systemFontOfSize:18];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩

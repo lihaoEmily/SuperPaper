@@ -33,7 +33,7 @@
     paragraphStyle.headIndent = 15; // 字间矩
     paragraphStyle.lineSpacing = 7; // 行间矩
     _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
-    self.textView.textContainerInset = UIEdgeInsetsMake(10, 0, 10, 0);
+    self.textView.textContainerInset = UIEdgeInsetsMake(8, 16, 8, 16);
     
 //    if (!self.content) {
         NSString *urlString = [NSString stringWithFormat:@"%@getmeinfo.php",BASE_URL];

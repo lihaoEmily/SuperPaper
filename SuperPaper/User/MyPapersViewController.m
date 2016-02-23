@@ -159,16 +159,17 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
         }
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];
-        [self.tableView.mj_footer endRefreshing];
+//        [self.tableView.mj_footer endRefreshing];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];
-        [self.tableView.mj_footer endRefreshing];
+//        [self.tableView.mj_footer endRefreshing];
     }];
     [_webIndicator startAnimating];
     [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
+    [self.tableView.mj_footer endRefreshing];
 }
 //MARK: TableviewDatasource,Delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

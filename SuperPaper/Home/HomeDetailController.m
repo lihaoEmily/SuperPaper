@@ -74,7 +74,8 @@
     centerImageView.frame = CGRectMake(CGRectGetMaxX(leftView.frame)+10,CGRectGetMaxY(imageView.frame) + 20, SCREEN_WIDTH - (CGRectGetMaxX(leftView.frame)+10)*2, 200);
     [scrollVeiw addSubview:centerImageView];
     
-    content = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame)+10, CGRectGetMaxY(centerImageView.frame) + 20, CGRectGetWidth(centerImageView.frame), 10000)];
+    content = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(centerImageView.frame) + 20, SCREEN_WIDTH-20, 10000)];
+//    [content setTextAlignment:NSTextAlignmentCenter];
 //    content.font = [UIFont systemFontOfSize:19];
     UIFont *font = [UIFont systemFontOfSize:18];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
