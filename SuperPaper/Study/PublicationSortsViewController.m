@@ -11,7 +11,8 @@
 
 @interface PublicationSortsViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic ,strong)UITableView *tableView;
+@property (nonatomic ,strong) UITableView *tableView;
+@property (nonatomic ,strong) UIActivityIndicatorView *webIndicator;
 
 @end
 
@@ -34,6 +35,12 @@
     self.navigationItem.rightBarButtonItem = searchItem;
     
     [self setUpTableView];
+    
+    _webIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _webIndicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    [_webIndicator setHidden:YES];
+    [self.view addSubview:_webIndicator];
+    
     [self getData];
 }
 
@@ -71,10 +78,18 @@
                self.tableView.delegate = self;
                self.tableView.dataSource = self;
                [self.tableView reloadData];
-        }
+           }
+           [_webIndicator stopAnimating];
+           [_webIndicator setHidden:YES];
        } failure:^(NSURLSessionDataTask* _Nullable task, NSError* _Nonnull error) {
            NSLog(@"%@",error);
+           [_webIndicator stopAnimating];
+           [_webIndicator setHidden:YES];
        }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 - (void)pulldownRefresh
@@ -105,10 +120,19 @@
                    [self.tableView.mj_header endRefreshing];
                }
            }
+           [_webIndicator stopAnimating];
+           [_webIndicator setHidden:YES];
        } failure:^(NSURLSessionDataTask* _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
            [self.tableView.mj_header endRefreshing];
+           [_webIndicator stopAnimating];
+           [_webIndicator setHidden:YES];
        }];
+    
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 - (void) searchPublication :(id) sender{
