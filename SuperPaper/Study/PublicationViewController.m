@@ -28,6 +28,7 @@
 @property (nonatomic, assign) NSInteger subgroupId;
 @property (nonatomic, strong) NSDictionary* selectedSortDic;
 @property (nonatomic, assign) NSInteger tagId;
+@property (nonatomic ,strong) UIActivityIndicatorView *webIndicator;
 
 @end
 
@@ -53,7 +54,12 @@
     [super viewDidLoad];
 //    _contentView = [[JournalsPressView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     _contentView = [[PublicationView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    _contentView.backgroundColor = [UIColor whiteColor];
     self.view = _contentView;
+//    _contentView.leftTableView.backgroundColor = [UIColor whiteColor];
+//    _contentView.rightTableView.backgroundColor = [UIColor whiteColor];
+//    _contentView.leftTableView.layer.borderColor = [UIColor whiteColor].CGColor;
+//    _contentView.rightTableView.layer.borderColor = [UIColor whiteColor].CGColor;
     _contentView.leftTableView.dataSource = self;
     _contentView.leftTableView.delegate = self;
     _contentView.rightTableView.dataSource = self;
@@ -66,6 +72,11 @@
     _contentView.rightTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [self pullupRefresh:_selectedSortDic];
     }];
+    
+    _webIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _webIndicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    [_webIndicator setHidden:YES];
+    [self.view addSubview:_webIndicator];
     
     [self getPublicationSortData];
     
@@ -112,14 +123,28 @@
 - (void) searchPublication :(id) sender{
     PublicationSearchViewController *vc = [[PublicationSearchViewController alloc] init];
     vc.groupId = self.groupId;
+    
+    if (self.groupId == 2) {
+        vc.title = @"出版社搜索";
+    }
+    else{
+        vc.title = @"刊物搜索";
+    }
+    
     [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
 - (void) sortPublication:(id) sender{
     PublicationSortsViewController *sortsView = [[PublicationSortsViewController alloc]init];
-    sortsView.title = @"刊物分类";
+    
     sortsView.tagId = _tagId;
-    sortsView.groupId = 1;
+    sortsView.groupId = self.groupId;
+    if (self.groupId == 2) {
+        sortsView.title = @"出版社分类";
+    }
+    else{
+        sortsView.title = @"刊物分类";
+    }
     sortsView.delegate = self;
     [self.navigationController pushViewController:sortsView animated:YES];
 }
@@ -149,7 +174,14 @@
         }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
         }];
+    
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 - (void)getPublicationDataWithSort:(NSDictionary*) sortDic
@@ -157,8 +189,17 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    /**
+     ** parameters 参数
+     * ownertype  整型    1：老师  2:学生
+     * subgroup_id   整型  期刊属性
+     * tag_id     整型    期刊标签
+     * start_pos  整型    表单中获取数据的开始位置。从0开始
+     * list_num   整型    一次获取list数
+     * group_id   整型    ownertype为1时,group_id为1表示刊物;ownertype为2时,group_id为10表示刊物
+     */
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -170,11 +211,18 @@
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
               [_publicationDataArray addObjectsFromArray:array];
               [_contentView.rightTableView reloadData];
-
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
           }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 - (void)pulldownRefresh:(NSDictionary*) sortDic
@@ -340,7 +388,7 @@
     else{
         PublicationIntroduceViewController *vc = [[PublicationIntroduceViewController alloc]init];
         vc.publicationID = [[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue];
-        if (self.groupId == 1) {
+        if (self.groupId == 1 || self.groupId == 10) {
             vc.showPaper = YES;
         }else{
             vc.showPaper = NO;
