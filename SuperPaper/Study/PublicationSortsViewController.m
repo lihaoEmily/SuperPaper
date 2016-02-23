@@ -7,6 +7,7 @@
 //
 
 #import "PublicationSortsViewController.h"
+#import "PublicationSearchViewController.h"
 
 @interface PublicationSortsViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -22,6 +23,16 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     _sortData = [NSMutableArray array];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    UIImage *searhImage = [UIImage imageNamed:@"searchImage"];
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.frame = CGRectMake(0, 0, 40, 25);
+    [searchBtn setImage:searhImage forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchPublication:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+    self.navigationItem.rightBarButtonItem = searchItem;
+    
     [self setUpTableView];
     [self getData];
 }
@@ -98,6 +109,20 @@
            NSLog(@"%@",error);
            [self.tableView.mj_header endRefreshing];
        }];
+}
+
+- (void) searchPublication :(id) sender{
+    PublicationSearchViewController *vc = [[PublicationSearchViewController alloc] init];
+    vc.groupId = self.groupId;
+    
+    if (self.groupId == 2) {
+        vc.title = @"出版社搜索";
+    }
+    else{
+        vc.title = @"刊物搜索";
+    }
+    
+    [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
 #pragma -mark tableViewDataSource

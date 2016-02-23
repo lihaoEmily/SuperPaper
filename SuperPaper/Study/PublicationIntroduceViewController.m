@@ -57,9 +57,13 @@
     paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
     paragraphStyle.headIndent = 15; // 字间矩
     paragraphStyle.lineSpacing = 7; // 行间矩
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentLeft;
+//    paragraphStyle.paragraphSpacing = 7;
     _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollView];
     
     _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(8, 16, 6, 56)];
@@ -149,6 +153,7 @@
     self.title = dic[@"title"];
     _titleLabel.text = dic[@"title"];
     [_titleLabel sizeToFit];
+    
     _contributeLab.hidden = !self.showPaper;
     if ([dic[@"emptyflg"]integerValue] == 0) {
         _contributeLab.text = @"可投稿";
@@ -167,7 +172,14 @@
                                                                      attributes:self.textAttributeDictionary]];
     
 
-    [_contentLabel sizeToFit];
+    CGRect tmpRect = [_contentLabel.text boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 20, 10000)
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                   attributes:self.textAttributeDictionary
+                                                      context:nil];
+    CGFloat contentH = tmpRect.size.height;
+    NSLog(@"-----> contentHeight=%f",contentH);
+//    [_contentLabel sizeToFit];
+    [_contentLabel setFrame:CGRectMake(_contentLabel.frame.origin.x, _contentLabel.frame.origin.y, _contentLabel.frame.size.width, contentH)];
 
     NSString *imageUrl = [NSString stringWithFormat:@"%@",dic[@"content_pic_name"]];
     NSString *url = [NSString stringWithFormat:@"%@%@",IMGURL,dic[@"content_pic_name"]];
