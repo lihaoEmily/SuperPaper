@@ -10,6 +10,7 @@
 #import "MyMessageTableViewCell.h"
 #import "ReadMyMessagesViewController.h"
 #import "UserSession.h"
+#import "NormalWebViewController.h"
 
 @interface MyMessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -227,11 +228,15 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     NSInteger messageID = [dic[@"id"]integerValue];
     NSString *title = dic[@"title"];
     NSString *content = dic[@"content"];
+    NSString *urlString = dic[@"url"];
+
     ReadMyMessagesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"readmymessage"];
     vc.messageID = messageID;
     vc.messageTitle = title;
     vc.messageContent = content;
+    vc.urlString = urlString;
     [self.navigationController pushViewController:vc animated:YES];
+
 }
 /*
 #pragma mark - Navigation
