@@ -221,7 +221,8 @@
 #pragma mark - 获取数据
 - (void)getData
 {
-    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:54],@"uid",[NSNumber numberWithInteger:1],@"keywordsnum",_searchBar.text,@"keywords",nil];
+    NSInteger usetId = [UserSession sharedInstance].currentUserID;
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:usetId],@"uid",[NSNumber numberWithInteger:1],@"keywordsnum",_searchBar.text,@"keywords",nil];
     NSLog(@"%@",paramDic);
     NSString *urlString =  [NSString stringWithFormat:@"%@paper_create.php",BASE_URL];
     NSLog(@"%@",urlString);
