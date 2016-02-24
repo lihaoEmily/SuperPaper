@@ -349,7 +349,7 @@
     [JPUSHService setupWithOption:launchOptions
                            appKey:JPushAppKey
                           channel:JPushChannel
-                 apsForProduction:NO];
+                 apsForProduction:YES];
     //注册接收自定义消息
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self
