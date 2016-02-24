@@ -44,7 +44,8 @@
     UIBarButtonItem *btnItem = [UIBarButtonItem appearance];
     NSMutableDictionary * dictM = [NSMutableDictionary dictionary];
     dictM[NSForegroundColorAttributeName] = [UIColor clearColor];
-    dictM[NSFontAttributeName] = [UIFont systemFontOfSize:0];
+    //TODO:解决应用程序切换闪的问题
+//    dictM[NSFontAttributeName] = [UIFont systemFontOfSize:0];
 
     NSShadow * shadow = [[NSShadow alloc]init];
     shadow.shadowOffset = CGSizeZero;
