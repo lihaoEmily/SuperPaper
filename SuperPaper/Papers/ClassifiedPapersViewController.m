@@ -54,6 +54,9 @@
 
 @interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate,ClassifiedPapersViewControllerDelegate>
 
+@property (nonatomic, assign) NSInteger totalCountOfItems;
+@property (nonatomic, assign) BOOL isRequiring;
+
 @end
 
 @implementation ClassifiedPapersViewController
@@ -88,14 +91,16 @@
     [manager.requestSerializer setTimeoutInterval:15.0f];
     [manager POST:urlString
        parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-           
+           self.isRequiring = YES;
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           self.isRequiring = NO;
            [_activity stopAnimating];
            [_activity setHidden:YES];
            NSLog(@"%@",responseObject);
            if (responseObject) {
                NSArray * listData = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
                NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+               self.totalCountOfItems = total_num;
                if (_paperArray.count >= total_num) {
                    return;
                }else{
@@ -104,6 +109,7 @@
                }
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           self.isRequiring = NO;
            [_activity stopAnimating];
            [_activity setHidden:YES];
            NSLog(@"%@",error);
@@ -122,8 +128,9 @@
     [manager.requestSerializer setTimeoutInterval:15.0f];
     [manager POST:urlString
        parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-           
+           self.isRequiring = YES;
        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           self.isRequiring = NO;
            [_activity stopAnimating];
            [_activity setHidden:YES];
            if (responseObject) {
@@ -133,6 +140,7 @@
                [_tableView reloadData];
            }
        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           self.isRequiring = NO;
            [_activity stopAnimating];
            [_activity setHidden:YES];
            NSLog(@"%@",error);
@@ -170,7 +178,7 @@
     [self setupTitleView];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)];
-    _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.showsVerticalScrollIndicator = YES;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -183,9 +191,9 @@
     }];
     
     // 上拉加载
-    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self loadNextPageData];
-    }];
+//    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self loadNextPageData];
+//    }];
     
     _tableView.mj_header.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
     _tableView.mj_footer.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
@@ -270,6 +278,21 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 100;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger rowIndex = [indexPath row];
+    NSInteger currentCountOfItems = [_paperArray count];
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",rowIndex, currentCountOfItems, self.totalCountOfItems);
+    if (currentCountOfItems < self.totalCountOfItems) {
+        NSInteger visibleCountOfItems = [[tableView visibleCells] count];
+        NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+        NSLog(@"----> OffsetCountOfItems = %ld", offsetCountOfItems);
+        if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+            NSLog(@"----> Load more data");
+            [self loadNextPageData];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
