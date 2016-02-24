@@ -39,11 +39,17 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstBtnLeadingCon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lastBtnLeadingCon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconBtnWidthCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconBtnHeightCon;
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomCaptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *pasteBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingCon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *trailingCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qqLabelBottomCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qqBtnBottomCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qqLabelHeightCon;
+@property (weak, nonatomic) IBOutlet UILabel *bottomShareLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomSubBG;
 
 @end
 
@@ -119,6 +125,12 @@ static NSString *const InvitationIdentifier = @"Invitation";
         [_webIndicator removeFromSuperview];
     }
 }
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.qqLabelBottomCon.constant = (self.bottomSubBG.bounds.size.height - CGRectGetMaxY(self.bottomShareLabel.frame) - self.iconBtnHeightCon.constant - self.qqBtnBottomCon.constant - self.qqLabelHeightCon.constant) / 2;
+}
+
 - (IBAction)pasteUrl:(id)sender {
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     pasteBoard.string = _shareUrlString;
