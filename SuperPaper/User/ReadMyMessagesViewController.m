@@ -7,10 +7,14 @@
 //
 
 #import "ReadMyMessagesViewController.h"
+#import "ShareManage.h"
+#import "UMSocial.h"
+#import "ShareView.h"
 
-@interface ReadMyMessagesViewController ()
+@interface ReadMyMessagesViewController ()<UMSocialUIDelegate>
 {
     UIActivityIndicatorView *_webIndicator;
+    NSDictionary *_textAttributeDictionary;
 }
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @end
@@ -21,16 +25,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
+    
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [btn setTitle:@"分享" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(shareThisMessage) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:btn];
 
-    self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
+    self.textView.textContainerInset = UIEdgeInsetsMake(8, 16, 8, 16);
     self.title = self.messageTitle;
     NSString * htmlString = self.messageContent;
-    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    [attrStr setAttributes:_textAttributeDictionary range:NSMakeRange(0, attrStr.length)];
     self.textView.attributedText = attrStr;
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
@@ -59,11 +71,73 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+}
 //MARK: 功能
 - (void) shareThisMessage
 {
     //TODO: 分享我的信息
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"56af0b3be0f55ab9b1001511"
+                                      shareText:@"更多精彩内容尽在[超级论文]"
+                                     shareImage:nil
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,nil]
+                                       delegate:self];
+    
+    // 分享的图片
+    UIImage *image = [UIImage imageNamed:@"LOGO-181"];
+    
+    // 微信好友
+    [UMSocialData defaultData].extConfig.wechatSessionData.fileData = UIImagePNGRepresentation(image);
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = self.urlString;
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.title;
+    [UMSocialData defaultData].extConfig.wechatSessionData.shareImage = image;
+    
+    // 微信朋友圈
+    [UMSocialData defaultData].extConfig.wechatTimelineData.fileData = UIImagePNGRepresentation(image);
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.urlString;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.title;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.shareImage = image;
+    
+    // QQ好友
+    [UMSocialData defaultData].extConfig.qqData.url = self.urlString;
+    [UMSocialData defaultData].extConfig.qqData.title = self.title;
+    [UMSocialData defaultData].extConfig.qqData.shareImage = image;
+    
+    // QQ空间
+    [UMSocialData defaultData].extConfig.qzoneData.url = self.urlString;
+    [UMSocialData defaultData].extConfig.qzoneData.title = self.title;
+    [UMSocialData defaultData].extConfig.qzoneData.shareImage = image;
 }
+
+#pragma mark - UMSocialUIDelegate
+- (BOOL)isDirectShareInIconActionSheet {
+    return YES;
+}
+
+-(void)didSelectSocialPlatform:(NSString *)platformName withSocialData:(UMSocialData *)socialData {
+    NSLog(@"%s", __func__);
+}
+
+-(void)didCloseUIViewController:(UMSViewControllerType)fromViewControllerType {
+    NSLog(@"---->UMSViewControllerType : %u",fromViewControllerType);
+}
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        //得到分享到的微博平台名
+        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
+    }
+}
+
 /*
 #pragma mark - Navigation
 

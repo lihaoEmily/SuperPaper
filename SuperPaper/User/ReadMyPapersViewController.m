@@ -28,7 +28,7 @@
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(deleteThisPaper) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
+    self.textView.textContainerInset = UIEdgeInsetsMake(10, 0, 10, 0);
     self.textView.text = self.content;
     self.dayLabel.text = self.dateString;
     self.title = self.paperTitle;

@@ -10,6 +10,7 @@
 #import "MyMessageTableViewCell.h"
 #import "ReadMyMessagesViewController.h"
 #import "UserSession.h"
+#import "NormalWebViewController.h"
 
 @interface MyMessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -44,6 +45,14 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     [super viewWillAppear:animated];
     [self pullData];
     
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -176,8 +185,8 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     for (NSString *str in marr) {
         totalString = [totalString stringByAppendingString:str];
     }
-    CGFloat contentHeight = [totalString boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.height;
-    return contentHeight + 21 + 21 + 8;
+    CGFloat contentHeight = [totalString boundingRectWithSize:CGSizeMake(tableView.bounds.size.width - 28, 40) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size.height;
+    return contentHeight + 21 + 21 + 16;
 
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -219,11 +228,15 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     NSInteger messageID = [dic[@"id"]integerValue];
     NSString *title = dic[@"title"];
     NSString *content = dic[@"content"];
+    NSString *urlString = dic[@"url"];
+
     ReadMyMessagesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"readmymessage"];
     vc.messageID = messageID;
     vc.messageTitle = title;
     vc.messageContent = content;
+    vc.urlString = urlString;
     [self.navigationController pushViewController:vc animated:YES];
+
 }
 /*
 #pragma mark - Navigation

@@ -11,6 +11,11 @@
 @interface VoucherIntroViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+/**
+ *  Text的行间矩，字间矩
+ */
+@property(strong, nonatomic) NSDictionary *textAttributeDictionary;
+
 @end
 
 @implementation VoucherIntroViewController
@@ -18,9 +23,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
-    self.textView.text = self.content;
-    self.textView.font = [UIFont systemFontOfSize:16];
+    self.textView.textContainerInset = UIEdgeInsetsMake(8, 16, 8, 16);
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
+//    self.textView.text = self.content;
+//    self.textView.font = [UIFont systemFontOfSize:16];
+    
+    [self.textView setAttributedText:[[NSAttributedString alloc] initWithString:self.content
+                                                                     attributes:self.textAttributeDictionary]];
 }
 
 - (void)didReceiveMemoryWarning {

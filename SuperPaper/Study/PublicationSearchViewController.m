@@ -48,12 +48,12 @@
 {
     UserRole role = [UserSession sharedInstance].currentRole;
     NSNumber *ownertype = [NSNumber numberWithInt:role];
-    NSNumber *group_id;
-    if ([ownertype intValue] == 1) {
-        group_id = [NSNumber numberWithInt:1];
-    }else if ([ownertype intValue] == 2){
-        group_id = [NSNumber numberWithInt:10];
-    }
+//    NSNumber *group_id;
+//    if ([ownertype intValue] == 1) {
+//        group_id = [NSNumber numberWithInt:1];
+//    }else if ([ownertype intValue] == 2){
+//        group_id = [NSNumber numberWithInt:10];
+//    }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
@@ -65,7 +65,7 @@
      * list_num   整型    一次获取list数
      * group_id   整型    ownertype为1时,group_id为1表示刊物;ownertype为2时,group_id为10表示刊物  
      */
-    NSDictionary *parameters = @{@"ownertype":ownertype, @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":group_id};
+    NSDictionary *parameters = @{@"ownertype":ownertype, @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:(int)_responseArr.count], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInteger:self.groupId]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
@@ -97,15 +97,15 @@
 {
     UserRole role = [UserSession sharedInstance].currentRole;
     NSNumber *ownertype = [NSNumber numberWithInt:role];
-    NSNumber *group_id;
-    if ([ownertype intValue] == 1) {
-        group_id = [NSNumber numberWithInt:1];
-    }else if ([ownertype intValue] == 2){
-        group_id = [NSNumber numberWithInt:10];
-    }
+//    NSNumber *group_id;
+//    if ([ownertype intValue] == 1) {
+//        group_id = [NSNumber numberWithInt:1];
+//    }else if ([ownertype intValue] == 2){
+//        group_id = [NSNumber numberWithInt:10];
+//    }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSDictionary *parameters = @{@"ownertype":ownertype, @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":group_id};
+    NSDictionary *parameters = @{@"ownertype":ownertype, @"keywords":_searchBar.text, @"start_pos":[NSNumber numberWithInt:0], @"list_num":[NSNumber numberWithInt:SEARCHPAGESIZE], @"group_id":[NSNumber numberWithInteger:self.groupId]};
     NSString *urlString = [NSString stringWithFormat:@"%@confer_searchnews.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
@@ -163,7 +163,6 @@
 // UI搭建
 - (void)setupUI
 {
-    self.title = @"刊物搜索";
     [self setupSearchBar];
     [self setupTableView];
     // add indicator view
@@ -312,7 +311,7 @@
 {
     PublicationIntroduceViewController *publicationIntroduceVC = [[PublicationIntroduceViewController alloc] init];
     publicationIntroduceVC.publicationID = [[[_responseArr objectAtIndex:indexPath.row] valueForKey:@"id"] integerValue];
-    if (self.groupId == 1) {
+    if (self.groupId == 1 || self.groupId == 10) {
         publicationIntroduceVC.showPaper = YES;
     }else{
         publicationIntroduceVC.showPaper = NO;
