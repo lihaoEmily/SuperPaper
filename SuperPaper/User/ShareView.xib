@@ -168,7 +168,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29O-ON-YKf" userLabel="QQ">
+                                <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29O-ON-YKf" userLabel="QQ按钮">
                                     <rect key="frame" x="12" y="26" width="39" height="39"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="39" id="eyT-EQ-wAm"/>
