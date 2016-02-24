@@ -28,7 +28,10 @@
 @property (nonatomic, assign) NSInteger subgroupId;
 @property (nonatomic, strong) NSDictionary* selectedSortDic;
 @property (nonatomic, assign) NSInteger tagId;
-@property (nonatomic ,strong) UIActivityIndicatorView *webIndicator;
+@property (nonatomic ,strong) UIActivityIndicatorView* webIndicator;
+@property (nonatomic ,strong) UIActivityIndicatorView* indicator;
+@property (nonatomic, assign) NSInteger totalNum;   //用于动态加载右侧列表
+@property (nonatomic, assign) BOOL isQuerying;   //正在网络请求
 
 @end
 
@@ -45,6 +48,8 @@
         _subgroupId = 0;
         _selectedSortDic = nil;
         _tagId = 0;
+        _totalNum = 0;
+        _isQuerying = NO;
     }
     return self;
 }
@@ -69,9 +74,9 @@
     _contentView.rightTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self pulldownRefresh:_selectedSortDic];
     }];
-    _contentView.rightTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullupRefresh:_selectedSortDic];
-    }];
+//    _contentView.rightTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullupRefresh:_selectedSortDic];
+//    }];
     
     _webIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _webIndicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
@@ -162,6 +167,8 @@
         }
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
+              _isQuerying = NO;
+              
             NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
             [_publicationSortArray addObjectsFromArray:array];
             [_contentView.leftTableView reloadData];
@@ -170,18 +177,20 @@
             [_contentView.leftTableView selectRowAtIndexPath:selectedIndex animated:NO scrollPosition:UITableViewScrollPositionNone];
             [self tableView: _contentView.leftTableView didSelectRowAtIndexPath:selectedIndex];
             _selectedIndexPath = selectedIndex;
-              
         }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);
+              _isQuerying = NO;
               [_webIndicator stopAnimating];
               [_webIndicator setHidden:YES];
+              
         }];
     
     if (!_webIndicator.isAnimating) {
         [_webIndicator setHidden:NO];
         [_webIndicator startAnimating];
     }
+    _isQuerying = YES;
 }
 
 - (void)getPublicationDataWithSort:(NSDictionary*) sortDic
@@ -207,7 +216,7 @@
         NSLog(@"%@",uploadProgress);
         }
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
+              _isQuerying = NO;
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
               [_publicationDataArray addObjectsFromArray:array];
               [_contentView.rightTableView reloadData];
@@ -216,19 +225,21 @@
               if ([array count] == 0) {
                   [self showAlertViewWithMessage:@"无数据"];
               }
+              _totalNum = [[responseObject valueForKey:@"total_num"]integerValue];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+              _isQuerying = NO;
               [_webIndicator stopAnimating];
               [_webIndicator setHidden:YES];
 
               [self showAlertViewWithMessage:@"数据获取失败"];
-
           }];
     if (!_webIndicator.isAnimating) {
         [_webIndicator setHidden:NO];
         [_webIndicator startAnimating];
     }
+    _isQuerying = YES;
 }
 
 - (void)pulldownRefresh:(NSDictionary*) sortDic
@@ -247,7 +258,7 @@
         NSLog(@"%@",uploadProgress);
     }
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
+              _isQuerying = NO;
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
               if (array && [array count] > 0) {
                   [_publicationDataArray removeAllObjects];
@@ -258,8 +269,10 @@
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+              _isQuerying = NO;
               [_contentView.rightTableView.mj_header endRefreshing];
           }];
+    _isQuerying = YES;
 }
 
 - (void)pullupRefresh:(NSDictionary*) sortDic
@@ -276,7 +289,7 @@
         NSLog(@"%@",uploadProgress);
     }
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
+              _isQuerying = NO;
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
               [_publicationDataArray addObjectsFromArray:array];
               [_contentView.rightTableView reloadData];
@@ -287,8 +300,10 @@
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+              _isQuerying = NO;
               [_contentView.rightTableView.mj_footer endRefreshing];
           }];
+    _isQuerying = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -315,7 +330,13 @@
         return [_publicationSortArray count];
     }
     else{
-        return [_publicationDataArray count];
+        if ([_publicationDataArray count] && [_publicationDataArray count] < _totalNum) {
+            return [_publicationDataArray count]+1;
+        }
+        else{
+            return [_publicationDataArray count];
+        }
+        
     }
 }
 
@@ -344,28 +365,55 @@
         return cell;
     }
     else{
-        static NSString *CellIdentifierPublicationRight = @"rightCell";
-        PublicationViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierPublicationRight];
         
-        if (cell == nil) {
-            cell = [[PublicationViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
+        if([indexPath row] == _publicationDataArray.count) {
+            
+            static NSString *MoreCellIdentifier =@"TableMoreCell";
+            UITableViewCell *moreCell = [tableView dequeueReusableCellWithIdentifier:MoreCellIdentifier];
+            
+            if (!moreCell) {
+                moreCell = [[PublicationViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:MoreCellIdentifier];
+                
+            }
+            
+            if (_isQuerying) {  //当前请求还没有结束的话显示小齿轮
+                 
+                 _indicator = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100,25,20,20)];
+                 _indicator.activityIndicatorViewStyle =UIActivityIndicatorViewStyleGray;
+                 _indicator.hidesWhenStopped =YES;
+                [_indicator startAnimating];
+                [moreCell addSubview:_indicator];
+                moreCell.textLabel.text = @"正在加载";
+                moreCell.textLabel.textAlignment = NSTextAlignmentCenter;
+            }
+            
+            return moreCell;
+                 
         }
-        
-        if (!_publicationDataArray || !_publicationDataArray.count) {//防止刷新左侧table的时候，点击右侧table,崩溃
+        else {
+            static NSString *CellIdentifierPublicationRight = @"rightCell";
+            PublicationViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierPublicationRight];
+            
+            if (cell == nil) {
+                cell = [[PublicationViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifierPublicationRight];
+            }
+            
+            if (!_publicationDataArray || !_publicationDataArray.count) {//防止刷新左侧table的时候，点击右侧table,崩溃
+                return cell;
+            }
+            //        cell.textLabel.text = @"right";
+            //        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
+            //        cell.textLabel.text = [dataDic objectForKey:@"title"];
+            //        cell.detailTextLabel.text = [dataDic objectForKey:@"description"];
+            //        cell.detailTextLabel.textColor = [UIColor grayColor];
+            
+            NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
+            [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+            cell.titleLabel.font = [UIFont systemFontOfSize:14];
+            cell.titleLabel.text = [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"];
+            
             return cell;
         }
-//        cell.textLabel.text = @"right";
-//        NSDictionary* dataDic = (NSDictionary*)_publicationDataArray[indexPath.row];
-//        cell.textLabel.text = [dataDic objectForKey:@"title"];
-//        cell.detailTextLabel.text = [dataDic objectForKey:@"description"];
-//        cell.detailTextLabel.textColor = [UIColor grayColor];
-        
-        NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
-        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
-        cell.titleLabel.font = [UIFont systemFontOfSize:14];
-        cell.titleLabel.text = [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"];
-
-        return cell;
     }
 }
 
@@ -378,6 +426,17 @@
     
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    
+    if (tableView.tag == 2000) {
+        NSInteger row = [indexPath row];
+        if (_publicationDataArray.count < _totalNum) {
+            if (row == (_publicationDataArray.count-8)&&!_isQuerying) {
+                [self pullupRefresh:_selectedSortDic]; //获取更多数据方法、
+            }
+            
+        }
     }
 }
 
