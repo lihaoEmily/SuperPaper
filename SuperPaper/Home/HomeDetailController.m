@@ -82,6 +82,8 @@
     paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
     paragraphStyle.headIndent = 15; // 字间矩
     paragraphStyle.lineSpacing = 7; // 行间矩
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentLeft;
     textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     content.numberOfLines = 0;
     [scrollVeiw addSubview:content];
@@ -121,7 +123,18 @@
     [titleLabel sizeToFit];
 //    content.text = dic[@"content"];
     content.attributedText = [[NSAttributedString alloc] initWithString:dic[@"content"] attributes:textAttributeDictionary];
-    [content sizeToFit];
+//    [content sizeToFit];
+    
+    CGRect tmpRect = [content.text boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 20, 10000)
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                   attributes:textAttributeDictionary
+                                                      context:nil];
+    CGFloat contentH = tmpRect.size.height;
+    NSLog(@"-----> contentHeight=%f",contentH);
+
+    [content setFrame:CGRectMake(content.frame.origin.x, content.frame.origin.y, content.frame.size.width, contentH)];
+
+    
     NSString *time = [NSString stringWithFormat:@"%@",dic[@"createdate"]];
     keyLabel.text = [NSString stringWithFormat:@"%@",dic[@"keywords"]];
     if ([self isBlankString:time] ||  [time isEqualToString:@"(null)"]){

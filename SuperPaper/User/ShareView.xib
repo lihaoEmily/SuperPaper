@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -31,11 +31,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的邀请码：BBBBBBBBB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s9c-ne-3zq">
-                    <rect key="frame" x="12" y="4" width="208" height="18"/>
+                    <rect key="frame" x="12" y="4" width="296" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="g98-AK-DEe"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -46,14 +46,14 @@
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XeI-zV-2dk" userLabel="upBG">
-                    <rect key="frame" x="12" y="185" width="296" height="122"/>
+                    <rect key="frame" x="12" y="185" width="296" height="123.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您可以选择" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BvN-Dp-hGA">
                             <rect key="frame" x="12" y="4" width="184" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="5WE-8R-Ojl"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -62,13 +62,13 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="18" id="FKa-Qx-Xmr"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://www.baidu.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="272" translatesAutoresizingMaskIntoConstraints="NO" id="OwF-7J-5oX">
-                            <rect key="frame" x="12" y="50" width="272" height="64"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <rect key="frame" x="12" y="50" width="272" height="65.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -87,7 +87,6 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="BvN-Dp-hGA" firstAttribute="top" secondItem="XeI-zV-2dk" secondAttribute="top" constant="4" id="4nW-21-a8p"/>
                         <constraint firstItem="mer-qd-Wsi" firstAttribute="bottom" secondItem="Z4U-sc-FXF" secondAttribute="bottom" id="6oY-R3-B8r"/>
@@ -104,45 +103,45 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QmV-gl-UH6" userLabel="bottomBG">
-                    <rect key="frame" x="12" y="322" width="296" height="122"/>
+                    <rect key="frame" x="12" y="320.5" width="296" height="123.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="也可以选择" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5d-HH-4we" userLabel="bottomTitleLabel">
                             <rect key="frame" x="12" y="4" width="274" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="iul-18-4hs"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.90980392160000001" green="0.30980392159999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Bi-Nk-Gyi" userLabel="bottomSubBG">
-                            <rect key="frame" x="0.0" y="29" width="296" height="93"/>
+                            <rect key="frame" x="0.0" y="29" width="296" height="94.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分享到社交平台" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kki-u5-4RY" userLabel="fenxiangdaoshejiaopingtai">
                                     <rect key="frame" x="12" y="0.0" width="272" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="Hnn-ay-jmi"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHR-ug-ucp" userLabel="kongjian">
-                                    <rect key="frame" x="76" y="26" width="39" height="39"/>
+                                    <rect key="frame" x="76" y="27.5" width="39" height="39"/>
                                     <state key="normal" backgroundImage="share_qzone"/>
                                     <connections>
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="d3W-UQ-JA7"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76n-gq-TZ1" userLabel="weixin">
-                                    <rect key="frame" x="145" y="26" width="39" height="39"/>
+                                    <rect key="frame" x="145" y="27.5" width="39" height="39"/>
                                     <state key="normal" backgroundImage="share_weixin"/>
                                     <connections>
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="e5m-4b-nC8"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QQ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6l-kw-2eq">
-                                    <rect key="frame" x="20" y="65" width="23" height="18"/>
+                                    <rect key="frame" x="20" y="66.5" width="23" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="M9i-iI-CwY"/>
                                     </constraints>
@@ -151,19 +150,19 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="空间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvj-Nq-N2p" userLabel="kongjian">
-                                    <rect key="frame" x="81" y="65" width="30" height="18"/>
+                                    <rect key="frame" x="81" y="66.5" width="30" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RF9-OZ-DHB" userLabel="weixin">
-                                    <rect key="frame" x="150" y="65" width="30" height="18"/>
+                                    <rect key="frame" x="150" y="66.5" width="30" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="朋友圈" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ojn-Ug-pAd" userLabel="pengyouquan">
-                                    <rect key="frame" x="242" y="65" width="45" height="18"/>
+                                    <rect key="frame" x="242" y="66.5" width="45" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -180,7 +179,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGM-rI-bTB" userLabel="pengyouquan">
-                                    <rect key="frame" x="245" y="26" width="39" height="39"/>
+                                    <rect key="frame" x="245" y="27.5" width="39" height="39"/>
                                     <state key="normal" backgroundImage="share_wx_frends"/>
                                     <connections>
                                         <action selector="shareToSocailPlatform:" destination="-1" eventType="touchUpInside" id="R9T-5H-pGk"/>
@@ -236,8 +235,8 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="XeI-zV-2dk" secondAttribute="trailing" constant="12" id="11e-kH-ezf"/>
                 <constraint firstItem="AGg-mG-K0d" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="15R-kO-x9R"/>
-                <constraint firstAttribute="trailing" secondItem="s9c-ne-3zq" secondAttribute="trailing" constant="100" id="9te-dk-yg1"/>
-                <constraint firstItem="QmV-gl-UH6" firstAttribute="top" secondItem="XeI-zV-2dk" secondAttribute="bottom" constant="15" id="Dba-g5-Joc"/>
+                <constraint firstAttribute="trailing" secondItem="s9c-ne-3zq" secondAttribute="trailing" constant="12" id="9te-dk-yg1"/>
+                <constraint firstItem="QmV-gl-UH6" firstAttribute="top" secondItem="XeI-zV-2dk" secondAttribute="bottom" constant="12" id="Dba-g5-Joc"/>
                 <constraint firstItem="s9c-ne-3zq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="NbY-Y4-Y3f"/>
                 <constraint firstAttribute="trailing" secondItem="AGg-mG-K0d" secondAttribute="trailing" constant="30" id="V8L-Ht-l2V"/>
                 <constraint firstItem="QmV-gl-UH6" firstAttribute="height" secondItem="XeI-zV-2dk" secondAttribute="height" id="bnH-ui-Np4"/>
