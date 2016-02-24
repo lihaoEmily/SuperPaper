@@ -73,7 +73,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     NSLayoutConstraint *shareViewLeadingCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
     NSLayoutConstraint *shareViewTrailingCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
     NSLayoutConstraint *shareViewBottomCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    _shareUrlString = [NSString stringWithFormat:@"http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
+    _shareUrlString = [NSString stringWithFormat:@"http://121.42.179.44/admin/invite/index/uid/%ld",[UserSession sharedInstance].currentUserID];
     self.topLabel.text = [NSString stringWithFormat:@"我的邀请码：%@",[UserSession sharedInstance].currentUserInviteCode];
     self.shareTopView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.shareTopView.layer.borderWidth = 1;
@@ -89,7 +89,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     self.shareContentLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.shareContentLabel.layer.borderWidth = 0.5;
 
-    self.shareContentLabel.text = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
+    self.shareContentLabel.text = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%ld",[UserSession sharedInstance].currentUserID];
     [self.view addSubview:self.shareView];
     [self.view addConstraints:@[shareViewTopCon,shareViewLeadingCon,shareViewTrailingCon,shareViewBottomCon]];
     self.shareView.hidden = YES;
@@ -121,7 +121,8 @@ static NSString *const InvitationIdentifier = @"Invitation";
 }
 - (IBAction)pasteUrl:(id)sender {
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-    pasteBoard.string = _shareUrlString;
+//    pasteBoard.string = _shareUrlString;
+    pasteBoard.string = self.shareContentLabel.text;
     UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"已复制到剪切板" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [av show];
 }
@@ -160,20 +161,21 @@ static NSString *const InvitationIdentifier = @"Invitation";
 //MARK: ShareCustomDelegate
 - (void)shareBtnClickWithIndex:(NSInteger)tag
 {
-    NSString *text = @"更多精彩内容尽在[超级论文]";
+    NSString *title = @"更多精彩内容尽在[超级论文]";
+    NSString *text = self.shareContentLabel.text;
     NSString *urlString = _shareUrlString;
     switch (tag) {
         case 1000:
-            [[ShareManage shareManage] QQFriendsShareWithViewControll:self text:text urlString:urlString title:self.title];
+            [[ShareManage shareManage] QQFriendsShareWithViewControll:self text:text urlString:urlString title:title];
             break;
         case 1001:
-            [[ShareManage shareManage] QzoneShareWithViewControll:self text:text urlString:urlString title:self.title];
+            [[ShareManage shareManage] QzoneShareWithViewControll:self text:text urlString:urlString title:title];
             break;
         case 1002:
-            [[ShareManage shareManage] wxShareWithViewControll:self text:text urlString:urlString title:self.title];
+            [[ShareManage shareManage] wxShareWithViewControll:self text:text urlString:urlString title:title];
             break;
         case 1003:
-            [[ShareManage shareManage] wxpyqShareWithViewControll:self text:text urlString:urlString title:self.title];
+            [[ShareManage shareManage] wxpyqShareWithViewControll:self text:text urlString:urlString title:title];
             break;
             
         default:
