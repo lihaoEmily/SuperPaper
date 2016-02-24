@@ -220,6 +220,7 @@
 {
     PapersSearchViewController *papersSearchVC = [[PapersSearchViewController alloc] init];
     papersSearchVC.title = [NSString stringWithFormat:@"%@搜索",self.title];
+    papersSearchVC.typeId = self.type_id;
     [AppDelegate.app.nav pushViewController:papersSearchVC animated:YES];
 }
 
@@ -276,7 +277,8 @@
     getPapersVC.paperTitleStr = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"title"];
     getPapersVC.dateStr = [[[[_paperArray objectAtIndex:indexPath.row] valueForKey:@"createdate"] componentsSeparatedByString:@" "] objectAtIndex:0];
     getPapersVC.paperID = [[_paperArray objectAtIndex:indexPath.row] valueForKey:@"id"];
-    [AppDelegate.app.nav pushViewController:getPapersVC animated:YES];
+//    [AppDelegate.app.nav pushViewController:getPapersVC animated:YES];
+    [self.navigationController pushViewController:getPapersVC animated:YES];
 }
 
 @end

@@ -63,6 +63,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //设置标题居中
+    NSArray *viewControllerArray = [self.navigationController viewControllers];
+    NSInteger preViewControllerIndex = [viewControllerArray indexOfObject:self] - 1;
+    UIViewController *previous;
+    if (preViewControllerIndex >= 0) {
+        previous = [viewControllerArray objectAtIndex:preViewControllerIndex];
+        previous.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                                     style:UIBarButtonItemStylePlain
+                                                                                    target:self
+                                                                                    action:nil];
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
     [self setupUI];

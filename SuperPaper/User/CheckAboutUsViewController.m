@@ -33,7 +33,7 @@
     paragraphStyle.headIndent = 15; // 字间矩
     paragraphStyle.lineSpacing = 7; // 行间矩
     _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
-    self.textView.textContainerInset = UIEdgeInsetsMake(10, 5, 10, 5);
+    self.textView.textContainerInset = UIEdgeInsetsMake(8, 16, 8, 16);
     
 //    if (!self.content) {
         NSString *urlString = [NSString stringWithFormat:@"%@getmeinfo.php",BASE_URL];
@@ -84,6 +84,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+}
 /*
 #pragma mark - Navigation
 

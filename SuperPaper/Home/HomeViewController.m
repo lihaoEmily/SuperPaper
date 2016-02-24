@@ -35,16 +35,29 @@
     BOOL isNews;
 }
 
+- (instancetype)init{
+    if (self = [super init]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeviewControllerChangeDate) name:@"homeviewControllerChangeDate" object:nil];
+    }
+    return  self;
+}
+
+- (void)homeviewControllerChangeDate{
+    [_responseNewsInfoArr removeAllObjects];
+    [_responseActivityInfoArr removeAllObjects];
+    [self pullDownPageData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     isNews = YES;
     [self initData];
+    [self pullDownPageData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self pullDownPageData];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -142,11 +155,6 @@
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_newsinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
-        [_responseNewsInfoArr addObjectsFromArray:myArr];
-        //  NSLog(@"%@",responseObject);
-        [_studyTableView reloadData];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
             [_responseNewsInfoArr addObjectsFromArray:myArr];

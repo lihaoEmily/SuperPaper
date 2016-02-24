@@ -169,6 +169,14 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 }
 
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -332,12 +340,14 @@ static NSString *cellIdentifier = @"UserTableViewCell";
             if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
                 [UserSession sharedInstance].currentRole = kUserRoleTeacher;
                 [self.backTableView reloadData];
+                [self addNotification];
             }
         }];
         UIAlertAction *chooseStudent = [UIAlertAction actionWithTitle:@"学生" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
                 [UserSession sharedInstance].currentRole = kUserRoleStudent;
                 [self.backTableView reloadData];
+                [self addNotification];
             }
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -349,6 +359,10 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 
 }
 
+- (void)addNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"homeviewControllerChangeDate" object:self];
+}
 //MARK: UIActionSheet Delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -356,12 +370,14 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         if (kUserRoleTeacher != [UserSession sharedInstance].currentRole) {
             [UserSession sharedInstance].currentRole = kUserRoleTeacher;
             [self.backTableView reloadData];
+            [self addNotification];
         }
         
     }else if(1 == buttonIndex){
         if (kUserRoleStudent != [UserSession sharedInstance].currentRole) {
             [UserSession sharedInstance].currentRole = kUserRoleStudent;
             [self.backTableView reloadData];
+            [self addNotification];
         }
     }
 
@@ -392,7 +408,6 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     cell.dotLabel.backgroundColor = [UIColor redColor];
     cell.dotLabel.layer.masksToBounds = YES;
     cell.dotLabel.hidden = YES;
-//    [cell.titleLabel setFont:[UIFont systemFontOfSize:18]];
     if (indexPath.section == 0)
     {
         cell.titleLabel.text = _titles[indexPath.row];

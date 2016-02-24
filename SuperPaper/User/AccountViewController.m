@@ -57,6 +57,13 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
     [self pullData];
     
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+}
 //MARK: Helper
 - (void) pullData
 {
@@ -234,7 +241,7 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
         [av show];
     }else if(1 == status){
         
-        NSString *urlString = [NSString stringWithFormat:@"%@usecoupon.php",BASE_URL];
+        NSString *urlString = [NSString stringWithFormat:@"%@usecoupon.php",BASE_URL];
         NSDictionary *params = @{@"id":dic[@"id"]};
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -245,6 +252,8 @@ static NSString *const AccountCellIdentifier = @"AccountCell";
             if (0 == result.integerValue) {
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"现金券使用成功！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];
+                [self pullData];
+                [self.tableView reloadData];
             }else{
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"现金券使用失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [av show];

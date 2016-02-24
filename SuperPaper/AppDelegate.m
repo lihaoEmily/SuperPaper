@@ -430,9 +430,15 @@
         if (urlStr) {
             _pushUrlString = [NSString stringWithString:urlStr];
         }
+    } else {
+        NSString *urlStr = [userInfo valueForKey:@"url"];
+        if (urlStr) {
+            _pushUrlString = urlStr;
+        }
     }
     
-    if (self.isAppLaunched) { //程序启动时，显示AlertView；否则直接跳转到WebView
+    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+    if (state == UIApplicationStateActive) {
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
         [self showAlertViewWith:apsDic];
         return YES;
@@ -440,6 +446,15 @@
         [self showWebViewForPushNotification];
         return YES;
     }
+    
+//    if (self.isAppLaunched) { //程序启动时，显示AlertView；否则直接跳转到WebView
+//        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+//        [self showAlertViewWith:apsDic];
+//        return YES;
+//    } else {
+//        [self showWebViewForPushNotification];
+//        return YES;
+//    }
     
     return NO;
 }

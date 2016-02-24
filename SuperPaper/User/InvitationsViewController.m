@@ -36,11 +36,20 @@
 @property (weak, nonatomic) IBOutlet UILabel *friendNumLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstBtnCon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *secondBtnCon;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnTopCon;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnBottomCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstBtnLeadingCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lastBtnLeadingCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconBtnWidthCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconBtnHeightCon;
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomCaptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *pasteBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *trailingCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qqLabelBottomCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qqBtnBottomCon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qqLabelHeightCon;
+@property (weak, nonatomic) IBOutlet UILabel *bottomShareLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomSubBG;
 
 @end
 
@@ -62,7 +71,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [self pullupRefresh];
     }];
-    
+
     // 以下是自定义分享view
     [[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil];
     self.shareView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -70,23 +79,23 @@ static NSString *const InvitationIdentifier = @"Invitation";
     NSLayoutConstraint *shareViewLeadingCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
     NSLayoutConstraint *shareViewTrailingCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
     NSLayoutConstraint *shareViewBottomCon = [NSLayoutConstraint constraintWithItem:self.shareView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    _shareUrlString = [NSString stringWithFormat:@"http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
+    _shareUrlString = [NSString stringWithFormat:@"http://121.42.179.44/admin/invite/index/uid/%ld",[UserSession sharedInstance].currentUserID];
     self.topLabel.text = [NSString stringWithFormat:@"我的邀请码：%@",[UserSession sharedInstance].currentUserInviteCode];
     self.shareTopView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.shareTopView.layer.borderWidth = 1;
     self.pasteBtn.backgroundColor = [AppConfig appNaviColor];
     [self.captionLabel setTextColor:[AppConfig appNaviColor]];
     [self.bottomCaptionLabel setTextColor:[AppConfig appNaviColor]];
-    self.firstBtnCon.constant = (self.view.bounds.size.width - 12 * 2 - 4 * 39 - 2 * 12) / 3;
+    self.trailingCon.constant = self.leadingCon.constant;
+    self.lastBtnLeadingCon.constant = self.firstBtnLeadingCon.constant;
+    self.firstBtnCon.constant = (self.view.bounds.size.width - self.firstBtnLeadingCon.constant - self.lastBtnLeadingCon.constant - 4 * self.iconBtnWidthCon.constant - self.leadingCon.constant - self.trailingCon.constant) / 3;
     self.secondBtnCon.constant = self.firstBtnCon.constant;
-    self.btnTopCon.constant = (self.btnTopCon.constant + self.btnBottomCon.constant) / 2;
-    self.btnBottomCon.constant = self.btnTopCon.constant;
     self.shareBottomView.layer.borderWidth = 1;
     self.shareBottomView.layer.borderColor = [AppConfig appNaviColor].CGColor;
     self.shareContentLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.shareContentLabel.layer.borderWidth = 0.5;
 
-    self.shareContentLabel.text = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%@",[UserSession sharedInstance].currentUserInviteCode];
+    self.shareContentLabel.text = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%ld",[UserSession sharedInstance].currentUserID];
     [self.view addSubview:self.shareView];
     [self.view addConstraints:@[shareViewTopCon,shareViewLeadingCon,shareViewTrailingCon,shareViewBottomCon]];
     self.shareView.hidden = YES;
@@ -108,9 +117,24 @@ static NSString *const InvitationIdentifier = @"Invitation";
         [self getInvitationsListFromWeb];
     }
 }
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([_webIndicator isAnimating]) {
+        [_webIndicator removeFromSuperview];
+    }
+}
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.qqLabelBottomCon.constant = (self.bottomSubBG.bounds.size.height - CGRectGetMaxY(self.bottomShareLabel.frame) - self.iconBtnHeightCon.constant - self.qqBtnBottomCon.constant - self.qqLabelHeightCon.constant) / 2;
+}
+
 - (IBAction)pasteUrl:(id)sender {
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-    pasteBoard.string = _shareUrlString;
+//    pasteBoard.string = _shareUrlString;
+    pasteBoard.string = self.shareContentLabel.text;
     UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"已复制到剪切板" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [av show];
 }
@@ -149,20 +173,21 @@ static NSString *const InvitationIdentifier = @"Invitation";
 //MARK: ShareCustomDelegate
 - (void)shareBtnClickWithIndex:(NSInteger)tag
 {
-    NSString *text = @"更多精彩内容尽在[超级论文]";
+    NSString *title = @"更多精彩内容尽在[超级论文]";
+    NSString *text = self.shareContentLabel.text;
     NSString *urlString = _shareUrlString;
     switch (tag) {
         case 1000:
-            [[ShareManage shareManage] QQFriendsShareWithViewControll:self text:text urlString:urlString title:self.title];
+            [[ShareManage shareManage] QQFriendsShareWithViewControll:self text:text urlString:urlString title:title];
             break;
         case 1001:
-            [[ShareManage shareManage] QzoneShareWithViewControll:self text:text urlString:urlString title:self.title];
+            [[ShareManage shareManage] QzoneShareWithViewControll:self text:text urlString:urlString title:title];
             break;
         case 1002:
-            [[ShareManage shareManage] wxShareWithViewControll:self text:text urlString:urlString title:self.title];
+            [[ShareManage shareManage] wxShareWithViewControll:self text:text urlString:urlString title:title];
             break;
         case 1003:
-            [[ShareManage shareManage] wxpyqShareWithViewControll:self text:text urlString:urlString title:self.title];
+            [[ShareManage shareManage] wxpyqShareWithViewControll:self text:text urlString:urlString title:title];
             break;
             
         default:
@@ -265,6 +290,9 @@ static NSString *const InvitationIdentifier = @"Invitation";
                 if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                     _total_num = [responseObject[@"total_num"] integerValue];
                     self.friendNumLabel.text = [NSString stringWithFormat:@"%ld人",(long)_total_num];
+                }else{
+                    self.friendNumLabel.text = [NSString stringWithFormat:@"%@人",responseObject[@"total_num"]];
+                    _total_num = [self.friendNumLabel.text integerValue];
                 }
                 
                 _list = [responseObject[@"list"]mutableCopy];
@@ -296,15 +324,20 @@ static NSString *const InvitationIdentifier = @"Invitation";
     InvitationsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:InvitationIdentifier];
     NSDictionary *dic = _list[indexPath.row];
     NSString *userName = dic[@"username"];
-    NSString *dotString = @"";
-    for (int i = 0; i < userName.length - 6; i++) {
-        dotString = [dotString stringByAppendingString:@"*"];
+    if (userName.length < 6) {
+        cell.idLabel.text = userName;
+    }else{
+        NSString *dotString = @"";
+        for (int i = 0; i < userName.length - 6; i++) {
+            dotString = [dotString stringByAppendingString:@"*"];
+        }
+        cell.idLabel.text = [[[userName substringToIndex:3]stringByAppendingString:dotString]stringByAppendingString:[userName substringFromIndex:userName.length - 3]];
     }
-    
-    cell.idLabel.text = [[[userName substringToIndex:3]stringByAppendingString:dotString]stringByAppendingString:[userName substringFromIndex:userName.length - 3]];
     cell.progressLabel.text = dic[@"status"];
     NSString *timeString = dic[@"createdate"];
+    
     cell.timeLabel.text = [timeString componentsSeparatedByString:@" "][0];
+    
     if (_list.count - 1 == indexPath.row) {
         cell.seperatorLine.hidden = YES;
     }else

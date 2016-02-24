@@ -7,10 +7,12 @@
 //
 
 #import "PublicationSortsViewController.h"
+#import "PublicationSearchViewController.h"
 
 @interface PublicationSortsViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic ,strong)UITableView *tableView;
+@property (nonatomic ,strong) UITableView *tableView;
+@property (nonatomic ,strong) UIActivityIndicatorView *webIndicator;
 
 @end
 
@@ -22,7 +24,23 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     _sortData = [NSMutableArray array];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    UIImage *searhImage = [UIImage imageNamed:@"searchImage"];
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.frame = CGRectMake(0, 0, 40, 25);
+    [searchBtn setImage:searhImage forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchPublication:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+    self.navigationItem.rightBarButtonItem = searchItem;
+    
     [self setUpTableView];
+    
+    _webIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _webIndicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    [_webIndicator setHidden:YES];
+    [self.view addSubview:_webIndicator];
+    
     [self getData];
 }
 
@@ -60,10 +78,18 @@
                self.tableView.delegate = self;
                self.tableView.dataSource = self;
                [self.tableView reloadData];
-        }
+           }
+           [_webIndicator stopAnimating];
+           [_webIndicator setHidden:YES];
        } failure:^(NSURLSessionDataTask* _Nullable task, NSError* _Nonnull error) {
            NSLog(@"%@",error);
+           [_webIndicator stopAnimating];
+           [_webIndicator setHidden:YES];
        }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 - (void)pulldownRefresh
@@ -94,10 +120,33 @@
                    [self.tableView.mj_header endRefreshing];
                }
            }
+           [_webIndicator stopAnimating];
+           [_webIndicator setHidden:YES];
        } failure:^(NSURLSessionDataTask* _Nullable task, NSError * _Nonnull error) {
            NSLog(@"%@",error);
            [self.tableView.mj_header endRefreshing];
+           [_webIndicator stopAnimating];
+           [_webIndicator setHidden:YES];
        }];
+    
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
+}
+
+- (void) searchPublication :(id) sender{
+    PublicationSearchViewController *vc = [[PublicationSearchViewController alloc] init];
+    vc.groupId = self.groupId;
+    
+    if (self.groupId == 2) {
+        vc.title = @"出版社搜索";
+    }
+    else{
+        vc.title = @"刊物搜索";
+    }
+    
+    [AppDelegate.app.nav pushViewController:vc animated:YES];
 }
 
 #pragma -mark tableViewDataSource

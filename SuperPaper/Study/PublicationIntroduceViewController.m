@@ -14,8 +14,13 @@
 
 //@property (nonatomic, strong) PublicationDetailData* detailData;
 
-@end
+/**
+ *  Text的行间矩，字间矩
+ */
+@property(strong, nonatomic) NSDictionary *textAttributeDictionary;
+@property(strong, nonatomic) UIActivityIndicatorView *webIndicator;
 
+@end
 
 @implementation PublicationIntroduceViewController
 {
@@ -47,19 +52,26 @@
     [super viewDidLoad];
     
 //    _bundleStr = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
- 
-   
-    
+    UIFont *font = [UIFont systemFontOfSize:18];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 15; // 首行字间矩
+    paragraphStyle.headIndent = 15; // 字间矩
+    paragraphStyle.lineSpacing = 7; // 行间矩
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentLeft;
+//    paragraphStyle.paragraphSpacing = 7;
+    _textAttributeDictionary = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : paragraphStyle};
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollView];
     
-    _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(5, 8, 5, 44)];
+    _leftColorView = [[UIView alloc]initWithFrame:CGRectMake(8, 16, 6, 56)];
     _leftColorView.backgroundColor = [AppConfig appNaviColor];
     [_scrollView addSubview:_leftColorView];
     
     // 标题
-    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_leftColorView.frame) + 16, 8, SCREEN_WIDTH-CGRectGetMaxX(_leftColorView.frame) - 16 - 16, 44)];
+    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_leftColorView.frame) + 16, 16, SCREEN_WIDTH-CGRectGetMaxX(_leftColorView.frame) - 16 - 16, 56)];
     _titleLabel.font = [UIFont systemFontOfSize:20];
     _titleLabel.numberOfLines = 2;
     [_scrollView addSubview:_titleLabel];
@@ -104,6 +116,11 @@
     [_telBtn setImage:[UIImage imageNamed:@"CellPhoneIcon"] forState:UIControlStateNormal];
     [_telBtn setImageEdgeInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
     
+    _webIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _webIndicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
+    [_webIndicator setHidden:YES];
+    [self.view addSubview:_webIndicator];
+    
     [self getPublicationDetailData];
 }
 
@@ -130,17 +147,26 @@
               if (dataDic) {
                   [self reloadViewDateWithdict:dataDic];
               }
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+              [_webIndicator stopAnimating];
+              [_webIndicator setHidden:YES];
           }];
+    if (!_webIndicator.isAnimating) {
+        [_webIndicator setHidden:NO];
+        [_webIndicator startAnimating];
+    }
 }
 
 -(void)reloadViewDateWithdict:(NSDictionary *)dic
 {
     self.title = dic[@"title"];
     _titleLabel.text = dic[@"title"];
-    [_titleLabel sizeToFit];
+//    [_titleLabel sizeToFit];
+    
     _contributeLab.hidden = !self.showPaper;
     if ([dic[@"emptyflg"]integerValue] == 0) {
         _contributeLab.text = @"可投稿";
@@ -153,8 +179,20 @@
         _contributeLab.layer.borderColor = [UIColor lightGrayColor].CGColor;
     }
     
-    _contentLabel.text = dic[@"content"];
-    [_contentLabel sizeToFit];
+//    _contentLabel.text = dic[@"content"];
+    NSString *content = dic[@"content"];
+    [_contentLabel setAttributedText:[[NSAttributedString alloc] initWithString:content
+                                                                     attributes:self.textAttributeDictionary]];
+    
+
+    CGRect tmpRect = [_contentLabel.text boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 20, 10000)
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                   attributes:self.textAttributeDictionary
+                                                      context:nil];
+    CGFloat contentH = tmpRect.size.height;
+    NSLog(@"-----> contentHeight=%f",contentH);
+//    [_contentLabel sizeToFit];
+    [_contentLabel setFrame:CGRectMake(_contentLabel.frame.origin.x, _contentLabel.frame.origin.y, _contentLabel.frame.size.width, contentH)];
 
     NSString *imageUrl = [NSString stringWithFormat:@"%@",dic[@"content_pic_name"]];
     NSString *url = [NSString stringWithFormat:@"%@%@",IMGURL,dic[@"content_pic_name"]];

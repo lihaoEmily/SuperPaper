@@ -22,6 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+//                                                                             style:UIBarButtonItemStylePlain
+//                                                                            target:self
+//                                                                            action:nil];
 }
 
 + (void)initialize
@@ -46,6 +50,8 @@
     shadow.shadowOffset = CGSizeZero;
     dictM[NSShadowAttributeName] = shadow;
     [btnItem setTitleTextAttributes:dictM forState:UIControlStateNormal];
+    [btnItem setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin)
+                                    forBarMetrics:UIBarMetricsDefault];
 
     NSMutableDictionary * highdictM = [NSMutableDictionary dictionaryWithDictionary:dictM];
     highdictM[NSForegroundColorAttributeName] = [UIColor clearColor];
@@ -55,12 +61,13 @@
     disableDictM[NSForegroundColorAttributeName] = [UIColor clearColor];
     [btnItem setTitleTextAttributes:disableDictM forState:UIControlStateDisabled];
     
+    
     // 系统自带的导航条，在标题文字很长时，进入到下一个界面，而下一个界面的标题也很长时，就会出现标题不居中显示。因此这里，我们需要使用自定义的返回箭头，而且不显示返回按钮的文字。
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
+//    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
     
     // 但是，仅仅部分标题是正常显示，还是有一些地方有不居中的。因此，我们还需要再添加一些代码解决。
-    NSDictionary *attributes = @{NSFontAttributeName : [UIFont systemFontOfSize:1]};
-    [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+//    NSDictionary *attributes = @{NSFontAttributeName : [UIFont systemFontOfSize:1]};
+//    [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
 }
 
 
