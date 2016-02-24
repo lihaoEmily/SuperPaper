@@ -12,12 +12,12 @@
 /**
  *  测试用推送KEY
  */
-static NSString * const JPushAppKey = @"e550c163c9dd30914734847c";
+//static NSString * const JPushAppKey = @"e550c163c9dd30914734847c";
 
 /**
  *  新推送KEY
  */
-//static NSString * const JPushAppKey = @"32169657b8e7a567a6a9fc5b";
+static NSString * const JPushAppKey = @"32169657b8e7a567a6a9fc5b";
 
 /**
  *  推送渠道
