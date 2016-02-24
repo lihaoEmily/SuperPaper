@@ -124,6 +124,23 @@
     NavigationController *navController = AppDelegate.app.nav;
     MainViewController *parentController = navController.viewControllers[0];
     parentController.tabbar.tabBarDisplayType = currentRole == kUserRoleStudent?MainTabBarDisplayTypeStudent:MainTabBarDisplayTypeTeacher;
+    if (self.currentUserID != 0) {
+        NSString * tagString = @"";
+        if (currentRole == kUserRoleStudent) {
+            tagString = @"student";
+        } else if (currentRole == kUserRoleTeacher) {
+            tagString = @"teacher";
+        } else {
+            tagString = @"";
+        }
+        NSString *aliasString = self.currentUserJPushAlias;
+        NSSet *tagSet = [NSSet setWithObjects:tagString, nil];
+        [JPUSHService setTags:tagSet alias:aliasString fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+            NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
+        }];
+    }
+    
+    
 }
 -(void)setCurrentUserAge:(NSInteger)currentUserAge
 {
@@ -190,7 +207,16 @@
 //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 //    [userDefaults setValue:currentUserJPushAlias forKey:kUserjpushalias];
 //    [userDefaults synchronize];
-    [JPUSHService setTags:nil alias:currentUserJPushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+    NSString * tagString = @"";
+    if (self.currentRole == kUserRoleStudent) {
+        tagString = @"student";
+    } else if (self.currentRole == kUserRoleTeacher) {
+        tagString = @"teacher";
+    } else {
+        tagString = @"";
+    }
+    NSSet *tagSet = [NSSet setWithObjects:tagString, nil];
+    [JPUSHService setTags:tagSet alias:currentUserJPushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
         NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
         if (iResCode == 0) {// register successfully
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
