@@ -212,6 +212,17 @@
         return;
     }
     
+    if (destinationController == self.homeController)
+    {
+        if (self.navigationItem.titleView == nil)
+        {
+            UIImageView *imageView = [[UIImageView alloc]  initWithImage:[UIImage imageNamed:@"superpaper"]];
+            self.navigationItem.titleView = imageView;
+        }
+    }else{
+        self.navigationItem.titleView = nil;
+    }
+    
     if (destinationController == self.userController)
     {
         self.navigationItem.rightBarButtonItem = self.settingBarButtonItem;
