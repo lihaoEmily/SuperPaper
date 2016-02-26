@@ -230,12 +230,18 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     NSString *content = dic[@"content"];
     NSString *urlString = dic[@"url"];
 
-    ReadMyMessagesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"readmymessage"];
-    vc.messageID = messageID;
-    vc.messageTitle = title;
-    vc.messageContent = content;
+    NSLog(@"----> MessageID:%ld, ContentLengh:%ld",(long)messageID, (long)content.length);
+    NormalWebViewController *vc = [[NormalWebViewController alloc]init];
+    vc.title = title;
     vc.urlString = urlString;
-    [self.navigationController pushViewController:vc animated:YES];
+    [AppDelegate.app.nav pushViewController:vc animated:YES];
+
+//    ReadMyMessagesViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"readmymessage"];
+//    vc.messageID = messageID;
+//    vc.messageTitle = title;
+//    vc.messageContent = content;
+//    vc.urlString = urlString;
+//    [self.navigationController pushViewController:vc animated:YES];
 
 }
 /*
