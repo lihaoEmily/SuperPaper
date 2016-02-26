@@ -432,10 +432,9 @@
             _pushUrlString = urlStr;
         }
     }
-    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     UIApplicationState state = [[UIApplication sharedApplication] applicationState];
     if (state == UIApplicationStateActive) {
-        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
         [self showAlertViewWith:apsDic];
         return YES;
     } else {
