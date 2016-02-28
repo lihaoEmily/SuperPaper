@@ -1905,7 +1905,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhi Hua (8A22DCC6HG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhi Hua (YNJST4DNP2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1928,7 +1928,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharetechnology.SuperPapers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "29042482-8b7a-4ad9-a8ee-1b65de60191a";
+				PROVISIONING_PROFILE = "7137017b-47ae-4aa1-9f24-fba61c9e42c7";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1938,7 +1938,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhi Hua (8A22DCC6HG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhi Hua (YNJST4DNP2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1961,7 +1961,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharetechnology.SuperPapers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "29042482-8b7a-4ad9-a8ee-1b65de60191a";
+				PROVISIONING_PROFILE = "7137017b-47ae-4aa1-9f24-fba61c9e42c7";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

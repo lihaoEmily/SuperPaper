@@ -98,7 +98,8 @@
     [self.homeController didMoveToParentViewController:self];
     self.currentController = self.homeController;
     
-    self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
+//    self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
+    self.navigationItem.rightBarButtonItem = nil;//客户要求隐藏
     
     NSString *versionStr = @"CFBundleShortVersionString";
     NSString *currentVersionStr = [[[NSBundle mainBundle] infoDictionary] objectForKey:versionStr];
@@ -216,7 +217,8 @@
     {
         if (self.navigationItem.titleView == nil)
         {
-            UIImageView *imageView = [[UIImageView alloc]  initWithImage:[UIImage imageNamed:@"superpaper"]];
+            UIImageView *imageView = [[UIImageView alloc]  initWithImage:[UIImage imageNamed:@"homeTitle"]];
+            [imageView setFrame:CGRectMake(0, 0, 74, 44)];
             self.navigationItem.titleView = imageView;
         }
     }else{
@@ -227,7 +229,11 @@
     {
         self.navigationItem.rightBarButtonItem = self.settingBarButtonItem;
     }else{
-        self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
+        if (destinationController == self.homeController) {
+            self.navigationItem.rightBarButtonItem = nil;
+        } else {
+            self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
+        }
     }
 
     self.title = destinationController.titleName;
