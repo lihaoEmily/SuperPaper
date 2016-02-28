@@ -19,6 +19,15 @@
     UIActivityIndicatorView *_webIndicator;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+/**
+ *  数据总数
+ */
+@property (nonatomic, assign) NSInteger totalCountOfItems;
+
+/**
+ *  是否正在请求
+ */
+@property (nonatomic, assign) BOOL isRequiring;
 
 @end
 
@@ -32,9 +41,13 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self pulldownRefresh];
     }];
-    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullupRrefresh];
+//    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullupRrefresh];
+//    }];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
     }];
+    
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - 40)/2, ([UIScreen mainScreen].bounds.size.height - 40)/2, 40, 40);
     _webIndicator = indicator;
@@ -66,7 +79,7 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
             if (0 == result.integerValue) {//获取我的论文列表成功
                 if ([responseObject[@"total_num"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
                     _total_num = [responseObject[@"total_num"] integerValue];
-                    
+                    self.totalCountOfItems = _total_num;
                 }
                 
                 _list = [responseObject[@"list"]mutableCopy];
@@ -92,7 +105,7 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
 - (void) pulldownRefresh
 {
     NSString *urlString = [NSString stringWithFormat:@"%@mypaper_list.php",BASE_URL];
-    NSDictionary *params = @{@"uid":@([UserSession sharedInstance].currentUserID),@"start_pos":@(0),@"list_num":@(10)};
+    NSDictionary *params = @{@"uid":@([UserSession sharedInstance].currentUserID),@"start_pos":@(0),@"list_num":@(15)};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -126,16 +139,18 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
     [_webIndicator startAnimating];
     [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
+
 - (void) pullupRrefresh
 {
 
     NSString *urlString = [NSString stringWithFormat:@"%@mypaper_list.php",BASE_URL];
-    NSDictionary *params = @{@"uid":@([UserSession sharedInstance].currentUserID),@"start_pos":@(0),@"list_num":@(10)};
+    NSDictionary *params = @{@"uid":@([UserSession sharedInstance].currentUserID),@"start_pos":@(_list.count),@"list_num":@(15)};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        self.isRequiring = NO;
         if ([responseObject[@"result"]respondsToSelector:NSSelectorFromString(@"integerValue")]) {
             NSNumber *result = responseObject[@"result"];
             if (0 == result.integerValue) {//获取我的论文列表成功
@@ -146,10 +161,10 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
                 
                 NSArray *list = responseObject[@"list"];
                 
-                if (_list.count + list.count < _total_num) {
+//                if (_list.count + list.count < _total_num) {
                     [_list addObjectsFromArray:list];
-                }else
-                    _list = [responseObject[@"list"]mutableCopy];
+//                }else
+//                    _list = [responseObject[@"list"]mutableCopy];
 
                 [self.tableView reloadData];
             }else{
@@ -161,12 +176,14 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
         [_webIndicator removeFromSuperview];
 //        [self.tableView.mj_footer endRefreshing];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        self.isRequiring = NO;
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];
 //        [self.tableView.mj_footer endRefreshing];
     }];
+    self.isRequiring = YES;
     [_webIndicator startAnimating];
     [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
     [self.tableView.mj_footer endRefreshing];
@@ -202,6 +219,24 @@ static NSString *const MyPapersIdentifier = @"MyPaper";
     vc.userData = dic;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger rowIndex = [indexPath row];
+    NSInteger currentCountOfItems = [_list count];
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, self.totalCountOfItems);
+    if (currentCountOfItems < self.totalCountOfItems) {
+        NSInteger visibleCountOfItems = [[tableView visibleCells] count];
+        NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+        NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
+        if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+            NSLog(@"----> Load more data");
+            [self pullupRrefresh];
+        }
+    } else {
+        [tableView.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
 /*
 #pragma mark - Navigation
 

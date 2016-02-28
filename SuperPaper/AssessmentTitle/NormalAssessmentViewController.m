@@ -17,6 +17,15 @@
  *  加载进度
  */
 @property(nonatomic, strong) UIActivityIndicatorView * indicatorView;
+/**
+ *  数据总数
+ */
+@property (nonatomic, assign) NSInteger totalCountOfItems;
+
+/**
+ *  是否正在请求
+ */
+@property (nonatomic, assign) BOOL isRequiring;
 @end
 
 @implementation NormalAssessmentViewController
@@ -50,6 +59,12 @@
     _jobTableView.dataSource = self;
     _jobTableView.delegate = self;
     _jobTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    if ([_jobTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_jobTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_jobTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_jobTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
     [self.view addSubview:_jobTableView];
     
     // 下拉刷新
@@ -58,8 +73,11 @@
     }];
     
     // 上拉加载
-    _jobTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullUpPageData];
+//    _jobTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullUpPageData];
+//    }];
+    _jobTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
     }];
 }
 
@@ -98,11 +116,13 @@
     NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
+        self.isRequiring = YES;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        self.isRequiring = NO;
         [_indicatorView stopAnimating];
         [_indicatorView setHidden:YES];
-        
+        NSInteger num = [responseObject[@"total_num"] integerValue];
+        self.totalCountOfItems = num;
         NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseNewsInfoArr addObjectsFromArray:myArr];
         NSLog(@"%@",responseObject);
@@ -111,7 +131,9 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        self.isRequiring = NO;
     }];
+    self.isRequiring = YES;
 }
 
 #pragma mark - UITableViewDataSource And UITableViewDelegate
@@ -143,6 +165,25 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return TABLE_CELL_HEIGHT;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger rowIndex = [indexPath row];
+    NSInteger currentCountOfItems = [_responseNewsInfoArr count];
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, self.totalCountOfItems);
+    if (currentCountOfItems < self.totalCountOfItems) {
+        NSInteger visibleCountOfItems = [[tableView visibleCells] count];
+        NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+        NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
+        if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+            NSLog(@"----> Load more data");
+            [self pullUpPageData];
+        }
+    } else {
+        NSLog(@"----> CurrentCountOfItems >= TotalCountOfItems");
+        //        [_studyTableView.mj_footer endRefreshing];
+        [tableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

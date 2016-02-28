@@ -53,8 +53,14 @@
 @end
 
 @interface ClassifiedPapersViewController ()<UITableViewDataSource, UITableViewDelegate,ClassifiedPapersViewControllerDelegate>
-
+/**
+ *  数据总数
+ */
 @property (nonatomic, assign) NSInteger totalCountOfItems;
+
+/**
+ *  是否正在请求
+ */
 @property (nonatomic, assign) BOOL isRequiring;
 
 @end
@@ -114,7 +120,7 @@
            [_activity setHidden:YES];
            NSLog(@"%@",error);
        }];
-    
+    self.isRequiring = YES;
     [_activity setHidden:NO];
     [_activity startAnimating];
 }
@@ -146,6 +152,7 @@
            NSLog(@"%@",error);
        }];
     
+    self.isRequiring = YES;
     [_activity setHidden:NO];
     [_activity startAnimating];
 }
@@ -294,6 +301,8 @@
             NSLog(@"----> Load more data");
             [self loadNextPageData];
         }
+    } else {
+        [tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
