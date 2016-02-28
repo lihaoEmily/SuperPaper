@@ -104,6 +104,8 @@ static NSString *cellIdentifier = @"UserTableViewCell";
                     if ([_unReadMessageCountStr isEqualToString:@"0"]) {
                         _unReadMessageCountStr = @"";
                     }
+                    [self setPushNotificationBadgeNumber];
+                    
                     _papersCountStr = responseObject[@"paper_num"];
                     _aboutMeStr = responseObject[@"service_aboutme"];
                     _service_telStr = responseObject[@"service_tel"];
@@ -537,6 +539,14 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     
 }
 
-
+#pragma mark - Set push notification badge
+- (void)setPushNotificationBadgeNumber {
+    NSInteger badge = [[UIApplication sharedApplication] applicationIconBadgeNumber];
+    NSInteger unReadMsgCount = [_unReadMessageCountStr integerValue];
+    NSLog(@"----> BadgeNumber=%ld, UnReadMessageCount=%ld",(long)badge, unReadMsgCount);
+    if (badge > unReadMsgCount && unReadMsgCount >= 0) {
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unReadMsgCount];
+    }
+}
 
 @end

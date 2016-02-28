@@ -194,7 +194,9 @@
 //    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
 //        [self loadNextPageData];
 //    }];
-    
+    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
+    }];
     _tableView.mj_header.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
     _tableView.mj_footer.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
     
@@ -283,11 +285,11 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger rowIndex = [indexPath row];
     NSInteger currentCountOfItems = [_paperArray count];
-    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",rowIndex, currentCountOfItems, self.totalCountOfItems);
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, self.totalCountOfItems);
     if (currentCountOfItems < self.totalCountOfItems) {
         NSInteger visibleCountOfItems = [[tableView visibleCells] count];
         NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
-        NSLog(@"----> OffsetCountOfItems = %ld", offsetCountOfItems);
+        NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
         if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
             NSLog(@"----> Load more data");
             [self loadNextPageData];

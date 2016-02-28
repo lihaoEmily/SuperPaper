@@ -361,7 +361,9 @@
 //        cell.detailTextLabel.textColor = [UIColor grayColor];
         
         NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
-        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+//        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]
+                        placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
         cell.titleLabel.font = [UIFont systemFontOfSize:14];
         cell.titleLabel.text = [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"];
 
