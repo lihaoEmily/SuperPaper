@@ -19,6 +19,16 @@
     UIActivityIndicatorView *_webIndicator;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+/**
+ *  数据总数
+ */
+@property (nonatomic, assign) NSInteger totalCountOfItems;
+
+/**
+ *  是否正在请求
+ */
+@property (nonatomic, assign) BOOL isRequiring;
+
 @end
 
 static NSString *const MessageTableViewCellIdentifier = @"Message";
@@ -30,8 +40,11 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self pulldownRefresh];
     }];
-    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullupRefresh];
+//    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullupRefresh];
+//    }];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
     }];
     _list = [NSMutableArray array];
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -68,10 +81,12 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        self.isRequiring = NO;
         NSNumber *result = responseObject[@"result"];
         if (0 == result.integerValue) {//获取我的消息列表成功
             _list = [responseObject[@"list"]mutableCopy];
             _total_num = [responseObject[@"total_num"] integerValue];
+            self.totalCountOfItems = _total_num;
             [self.tableView reloadData];
         }else{//失败
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的消息列表出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -80,11 +95,13 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        self.isRequiring = NO;
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];
     }];
+    self.isRequiring = YES;
     [_webIndicator startAnimating];
     [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
@@ -124,22 +141,24 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
 - (void) pullupRefresh
 {
     NSString *urlString = [NSString stringWithFormat:@"%@mynotice.php",BASE_URL];
-    NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@(0),@"list_num":@(10)};
+    NSDictionary *params = @{@"uid":[NSNumber numberWithInteger:[UserSession sharedInstance].currentUserID],@"start_pos":@(_list.count),@"list_num":@(15)};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        self.isRequiring = NO;
         NSNumber *result = responseObject[@"result"];
         if (0 == result.integerValue) {//获取我的消息列表成功
             NSArray *list = responseObject[@"list"];
             
-            if (_list.count + list.count < _total_num) {
+//            if (_list.count + list.count < _total_num) {
                 [_list addObjectsFromArray:list];
-            }else
-                _list = [responseObject[@"list"]mutableCopy];
+//            }else
+//                _list = [responseObject[@"list"]mutableCopy];
             
             _total_num = [responseObject[@"total_num"] integerValue];
+            self.totalCountOfItems = _total_num;
             [self.tableView reloadData];
         }else{//失败
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"获取我的消息列表出错" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -149,12 +168,14 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
         [_webIndicator removeFromSuperview];
         [self.tableView.mj_footer endRefreshing];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        self.isRequiring = NO;
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"网络连接失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [av show];
         [_webIndicator stopAnimating];
         [_webIndicator removeFromSuperview];
         [self.tableView.mj_footer endRefreshing];
     }];
+    self.isRequiring = YES;
     [_webIndicator startAnimating];
     [[UIApplication sharedApplication].keyWindow addSubview:_webIndicator];
 }
@@ -220,6 +241,23 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
     cell.detailsLabel.text = totalString;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger rowIndex = [indexPath row];
+    NSInteger currentCountOfItems = [_list count];
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, self.totalCountOfItems);
+    if (currentCountOfItems < self.totalCountOfItems) {
+        NSInteger visibleCountOfItems = [[tableView visibleCells] count];
+        NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+        NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
+        if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+            NSLog(@"----> Load more data");
+            [self pullupRefresh];
+        }
+    } else {
+        [tableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

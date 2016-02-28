@@ -19,6 +19,17 @@
 
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 @property (nonatomic, strong) UITableView *studyTableView;
+
+/**
+ *  数据总数
+ */
+@property (nonatomic, assign) NSInteger totalCountOfItems;
+
+/**
+ *  是否正在请求
+ */
+@property (nonatomic, assign) BOOL isRequiring;
+
 @end
 
 @implementation HomeViewController{
@@ -96,8 +107,11 @@
     }];
     
     // 上拉加载
-    _studyTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullUpPageData];
+//    _studyTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullUpPageData];
+//    }];
+    _studyTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
     }];
     
 }
@@ -138,6 +152,7 @@
 //获取首页资讯接口
 - (void)getHomePageNewsInfo
 {
+    NSLog(@"%s",__func__);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
@@ -150,20 +165,27 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",[NSNumber numberWithInteger:ownerType],@"ownertype", nil];
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_newsinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        self.isRequiring = YES;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        self.isRequiring = NO;
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+            self.totalCountOfItems = total_num;
             [_responseNewsInfoArr removeAllObjects];
             [_responseNewsInfoArr addObjectsFromArray:myArr];
             [_studyTableView reloadData];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        self.isRequiring = NO;
     }];
+    self.isRequiring = YES;
 }
 
 - (void)getHomePageNewsInfoMoreDate
 {
+    NSLog(@"%s",__func__);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     /**
@@ -176,19 +198,26 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",[NSNumber numberWithInteger:ownerType],@"ownertype", nil];
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_newsinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        self.isRequiring = YES;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        self.isRequiring = NO;
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+            self.totalCountOfItems = total_num;
             [_responseNewsInfoArr addObjectsFromArray:myArr];
             [_studyTableView reloadData];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        self.isRequiring = NO;
     }];
+    self.isRequiring = YES;
 }
 //获取首页活动接口
 - (void)getHomePageActivityInfo
 {
+    NSLog(@"%s",__func__);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //设置返回类型
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -202,10 +231,13 @@
     NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType], @"start_pos":[NSNumber numberWithInt:(int)_responseActivityInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_activityinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        self.isRequiring = YES;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        self.isRequiring = NO;
         if ([[NSString stringWithFormat:@"%@",responseObject[@"result"]] isEqualToString:@"0"]) {
             NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+            NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+            self.totalCountOfItems = total_num;
             if (isRefresh) {
                 [_responseActivityInfoArr removeAllObjects];
                 isRefresh = NO;
@@ -215,7 +247,9 @@
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        self.isRequiring = YES;
     }];
+    self.isRequiring = YES;
 }
 
 
@@ -434,6 +468,31 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.1;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger rowIndex = [indexPath row];
+    NSInteger currentCountOfItems = 0;
+    if (isNews) {
+        currentCountOfItems = _responseNewsInfoArr.count;
+    }
+    else{
+        currentCountOfItems = _responseActivityInfoArr.count;
+    }
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, self.totalCountOfItems);
+    if (currentCountOfItems < self.totalCountOfItems) {
+        NSInteger visibleCountOfItems = [[tableView visibleCells] count];
+        NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+        NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
+        if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+            NSLog(@"----> Load more data");
+            [self pullUpPageData];
+        }
+    } else {
+        NSLog(@"----> CurrentCountOfItems >= TotalCountOfItems");
+//        [_studyTableView.mj_footer endRefreshing];
+        [tableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 #pragma mark - UITableView Delgate
