@@ -216,6 +216,26 @@
         tagString = @"";
     }
     NSSet *tagSet = [NSSet setWithObjects:tagString, nil];
+    /*
+    alias
+        nil 此次调用不设置此值。
+        空字符串 （@""）表示取消之前的设置。
+        每次调用设置有效的别名，覆盖之前的设置。
+        有效的别名组成：字母（区分大小写）、数字、下划线、汉字。
+        限制：alias 命名长度限制为 40 字节。（判断长度需采用UTF-8编码）
+    tags
+        nil 此次调用不设置此值。
+        空集合（[NSSet set]）表示取消之前的设置。
+        集合成员类型要求为NSString类型
+        每次调用至少设置一个 tag，覆盖之前的设置，不是新增。
+        有效的标签组成：字母（区分大小写）、数字、下划线、汉字。
+        限制：每个 tag 命名长度限制为 40 字节，最多支持设置 100 个 tag，但总长度不得超过1K字节。（判断长度需采用UTF-8编码）
+        单个设备最多支持设置 100 个 tag。App 全局 tag 数量无限制。
+    (void (^)(int iResCode, NSSet iTags, NSString iAlias))completionHandler
+        completionHandler用于处理设置返回结果
+        iResCode返回的结果状态码
+        iTags和iAlias返回设置的tag和alias
+    */
     [JPUSHService setTags:tagSet alias:currentUserJPushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
         NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
         if (iResCode == 0) {// register successfully

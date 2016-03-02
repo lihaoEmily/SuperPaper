@@ -331,6 +331,8 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     ChangeUserHeadImageViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"changeuserheadimage"];
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+//FIXME: UIAlertController 在iOS 8以后使用，如果适配Pad需要调整，否则会引起崩溃的现象
 - (void)popupDisplayTypeChoosingActionSheet
 {
     if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
@@ -543,7 +545,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 - (void)setPushNotificationBadgeNumber {
     NSInteger badge = [[UIApplication sharedApplication] applicationIconBadgeNumber];
     NSInteger unReadMsgCount = [_unReadMessageCountStr integerValue];
-    NSLog(@"----> BadgeNumber=%ld, UnReadMessageCount=%ld",(long)badge, unReadMsgCount);
+    NSLog(@"----> BadgeNumber=%ld, UnReadMessageCount=%ld",(long)badge, (long)unReadMsgCount);
     if (badge > unReadMsgCount && unReadMsgCount >= 0) {
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unReadMsgCount];
     }

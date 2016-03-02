@@ -432,7 +432,7 @@
         NSInteger rowIndex = [indexPath row];
         NSInteger currentCountOfItems = _publicationDataArray.count;
         
-        NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, self.totalCountOfItems);
+        NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, (long)self.totalCountOfItems);
         if (currentCountOfItems < self.totalCountOfItems) {
             NSInteger visibleCountOfItems = [[_contentView.rightTableView visibleCells] count];
             if (visibleCountOfItems == 0) {
