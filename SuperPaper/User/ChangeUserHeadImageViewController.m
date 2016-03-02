@@ -127,7 +127,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
     
 }
 
-
+//FIXME: UIAlertController 在iOS 8以后使用，如果适配Pad需要调整，否则会引起崩溃的现象
 - (void) popupChangeHeadImageView
 {
     if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {

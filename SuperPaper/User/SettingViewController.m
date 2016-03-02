@@ -217,8 +217,8 @@ static NSString *logoutIdentifier = @"logout";
     UserSession *session = [UserSession sharedInstance];
     
     [session setCurrentUserID:0];
-    
-    [session setCurrentRole:kUserRoleStudent];
+    //TODO:Keep current user role
+//    [session setCurrentRole:kUserRoleStudent];
     
     [session setCurrentUserName:nil];
     
@@ -246,7 +246,7 @@ static NSString *logoutIdentifier = @"logout";
     
     [session setCurrentUserInviteCode:nil];
     
-    [session setCurrentUserJPushAlias:nil];
+    [session setCurrentUserJPushAlias:@""];
     
     [self.navigationController popViewControllerAnimated:YES];
     
