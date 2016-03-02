@@ -246,7 +246,7 @@ static NSString *const MessageTableViewCellIdentifier = @"Message";
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger rowIndex = [indexPath row];
     NSInteger currentCountOfItems = [_list count];
-    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, self.totalCountOfItems);
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, (long)self.totalCountOfItems);
     if (currentCountOfItems < self.totalCountOfItems) {
         NSInteger visibleCountOfItems = [[tableView visibleCells] count];
         NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;

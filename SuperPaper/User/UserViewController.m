@@ -543,7 +543,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
 - (void)setPushNotificationBadgeNumber {
     NSInteger badge = [[UIApplication sharedApplication] applicationIconBadgeNumber];
     NSInteger unReadMsgCount = [_unReadMessageCountStr integerValue];
-    NSLog(@"----> BadgeNumber=%ld, UnReadMessageCount=%ld",(long)badge, unReadMsgCount);
+    NSLog(@"----> BadgeNumber=%ld, UnReadMessageCount=%ld",(long)badge, (long)unReadMsgCount);
     if (badge > unReadMsgCount && unReadMsgCount >= 0) {
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unReadMsgCount];
     }

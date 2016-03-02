@@ -479,7 +479,7 @@
     else{
         currentCountOfItems = _responseActivityInfoArr.count;
     }
-    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, self.totalCountOfItems);
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, (long)self.totalCountOfItems);
     if (currentCountOfItems < self.totalCountOfItems) {
         NSInteger visibleCountOfItems = [[tableView visibleCells] count];
         NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
