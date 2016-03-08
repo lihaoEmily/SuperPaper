@@ -161,8 +161,12 @@
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
+    NSInteger startPos = _responseNewsInfoArr.count;
+    if (isRefresh) {
+        startPos = 0;
+    }
     UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:(int)_responseNewsInfoArr.count],@"start_pos",[NSNumber numberWithInt:15],@"list_num",[NSNumber numberWithInteger:ownerType],@"ownertype", nil];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:startPos],@"start_pos",[NSNumber numberWithInt:15],@"list_num",[NSNumber numberWithInteger:ownerType],@"ownertype", nil];
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_newsinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         self.isRequiring = YES;
@@ -227,8 +231,14 @@
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
+    NSInteger startPos = _responseActivityInfoArr.count;
+    if (isRefresh) {
+        startPos = 0;
+    }
     UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType], @"start_pos":[NSNumber numberWithInt:(int)_responseActivityInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType],
+                                 @"start_pos":[NSNumber numberWithInteger:startPos],
+                                 @"list_num":[NSNumber numberWithInt:15]};
     NSString *urlString = [NSString stringWithFormat:@"%@homepage_activityinfo.php",BASE_URL];
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         self.isRequiring = YES;
