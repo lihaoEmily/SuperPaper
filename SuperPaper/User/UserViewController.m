@@ -34,6 +34,7 @@ typedef enum{
     NSString *_papersCountStr;
     NSString *_aboutMeStr;
     NSString *_service_telStr;
+    UILabel *_userRoleLabel;
     UIActivityIndicatorView *_webIndicator;
 }
 
@@ -358,6 +359,12 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         [alertController addAction:chooseTeacher];
         [alertController addAction:chooseStudent];
         [alertController addAction:cancel];
+        if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
+            alertController.popoverPresentationController.sourceView = _userRoleLabel;
+            alertController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            CGRect frame = _userRoleLabel.bounds;
+            alertController.popoverPresentationController.sourceRect = frame;
+        }
         [self presentViewController:alertController animated:YES completion:nil];
     }
 
@@ -424,6 +431,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
             
         }else if (4 == indexPath.row) {
             cell.contentLabel.text = (kUserRoleStudent == [UserSession sharedInstance].currentRole)?@"学生":@"老师";
+            _userRoleLabel = cell.contentLabel;
         }else if(5 == indexPath.row){
             cell.contentLabel.text = _papersCountStr;
         }else

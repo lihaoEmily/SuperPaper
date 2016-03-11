@@ -19,6 +19,7 @@
     UIActivityIndicatorView *_webIndicator;
     UIView *_inputView;
     CGRect _originalFrame;
+    UIImageView *_uploadWayImageView;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -69,6 +70,7 @@ static NSString *const ShowTextIdentifier = @"showtext";
         ChangeUserHeadImageHasNextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HasNextIdentifier];
         cell.titleImageView.image = [UIImage imageNamed:@"更换头像"];
         cell.titleLabel.text = @"头像上传";
+        _uploadWayImageView = cell.titleImageView;
         cell.contentLabel.text = nil;
         return cell;
         
@@ -145,6 +147,11 @@ static NSString *const ShowTextIdentifier = @"showtext";
         [alertController addAction:chooseMan];
         [alertController addAction:chooseWoman];
         [alertController addAction:cancel];
+        if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
+            alertController.popoverPresentationController.sourceView = _uploadWayImageView;
+            alertController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            alertController.popoverPresentationController.sourceRect = _uploadWayImageView.bounds;
+        }
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
