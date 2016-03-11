@@ -23,6 +23,8 @@
     UIView *_inputView;
     UIActivityIndicatorView *_webIndicator;
     CGRect _originalFrame;
+    UILabel *_genderLabel;
+    UILabel *_userRoleLabel;
 }
 @property (nonatomic, copy) NSString *telNo;
 @property (nonatomic, copy) NSString *name;
@@ -296,6 +298,11 @@ static NSString *const SubmitIdentifier = @"submit";
         [alertController addAction:chooseMan];
         [alertController addAction:chooseWoman];
         [alertController addAction:cancel];
+        if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
+            alertController.popoverPresentationController.sourceView = _genderLabel;
+            alertController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            alertController.popoverPresentationController.sourceRect = _genderLabel.bounds;
+        }
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
@@ -346,6 +353,11 @@ static NSString *const SubmitIdentifier = @"submit";
         [alertController addAction:chooseTeacher];
         [alertController addAction:chooseStudent];
         [alertController addAction:cancel];
+        if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
+            alertController.popoverPresentationController.sourceView = _userRoleLabel;
+            alertController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            alertController.popoverPresentationController.sourceRect = _userRoleLabel.bounds;
+        }
         [self presentViewController:alertController animated:YES completion:nil];
     }
 
@@ -556,12 +568,13 @@ static NSString *const SubmitIdentifier = @"submit";
         {
             cell.titleLabel.text = @"真实姓名";
             cell.detailsLabel.text = self.name;
-            
+
         }
             break;
         case 2:{
             cell.titleLabel.text = @"性   别";
             cell.detailsLabel.text = self.gender;
+            _genderLabel = cell.detailsLabel;
         }
             break;
         case 3:{
@@ -572,6 +585,7 @@ static NSString *const SubmitIdentifier = @"submit";
         case 4:{
             cell.titleLabel.text = @"职业选择";
             cell.detailsLabel.text = self.career;
+            _userRoleLabel = cell.detailsLabel;
         }
             break;
         case 5:{
@@ -582,6 +596,7 @@ static NSString *const SubmitIdentifier = @"submit";
         default:
             break;
     }
+    [cell.detailsLabel sizeToFit];
     return cell;
     
 }
