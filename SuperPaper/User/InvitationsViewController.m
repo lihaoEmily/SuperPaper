@@ -95,7 +95,7 @@ static NSString *const InvitationIdentifier = @"Invitation";
     self.shareContentLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.shareContentLabel.layer.borderWidth = 0.5;
 
-    self.shareContentLabel.text = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%ld",[UserSession sharedInstance].currentUserID];
+    self.shareContentLabel.text = [NSString stringWithFormat:@"立即注册超级论文，还可以【免费】得到10元现金券，机会难得，赶紧看看啊！下载链接：http://121.42.179.44/admin/invite/index/uid/%ld",(long)[UserSession sharedInstance].currentUserID];
     [self.view addSubview:self.shareView];
     [self.view addConstraints:@[shareViewTopCon,shareViewLeadingCon,shareViewTrailingCon,shareViewBottomCon]];
     self.shareView.hidden = YES;
