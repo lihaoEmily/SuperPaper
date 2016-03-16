@@ -16,7 +16,16 @@
 //#define KAppHeight [UIScreen mainScreen].bounds.size.height
 
 @interface NormalStudyViewController ()<UITableViewDataSource,UITableViewDelegate>
+/**
+ *  数据总数
+ */
+@property (nonatomic, assign) NSInteger totalCountOfItems;
 
+/**
+ *  是否正在请求
+ */
+@property (nonatomic, assign) BOOL isRequiring;
+@property (nonatomic, assign) BOOL isDragging;
 @end
 
 @implementation NormalStudyViewController {
@@ -105,8 +114,11 @@
     }];
     
     // 上拉加载
-    _studyTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullUpPageData];
+//    _studyTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullUpPageData];
+//    }];
+    _studyTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
     }];
     
 }
@@ -137,19 +149,24 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
-     ** parameters 参数
+     * parameters 参数
      * ownertype  整型    固定值2:学习页
      * group_id   整型    10:刊物，11：考研，12：留学，13：比赛，14：考证，15：计算机，16：大学46级，17：论文指导，18：作业指导
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:2], @"group_id":[NSNumber numberWithInt:_type_id], @"start_pos":[NSNumber numberWithInt:(int)_responseNewsInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
+    NSInteger startPos = [_responseNewsInfoArr count];
+    NSLog(@"----> start position:%ld",(long)startPos);
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:2], @"group_id":[NSNumber numberWithInt:_type_id], @"start_pos":[NSNumber numberWithInteger:startPos], @"list_num":[NSNumber numberWithInt:15]};
     NSString *urlString = [NSString stringWithFormat:@"%@study_newsinfo.php",BASE_URL];
     NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
+        self.isRequiring = YES;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        self.isRequiring = NO;
+        NSInteger num = [responseObject[@"total_num"] integerValue];
+        self.totalCountOfItems = num;
         NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseNewsInfoArr addObjectsFromArray:myArr];
         NSLog(@"%@",responseObject);
@@ -158,7 +175,9 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        self.isRequiring = NO;
     }];
+    self.isRequiring = YES;
 }
 
 #pragma mark - TableView dataSource
@@ -229,6 +248,50 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.1;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger rowIndex = [indexPath row];
+    NSInteger currentCountOfItems = _responseNewsInfoArr.count;
+
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, (long)self.totalCountOfItems);
+    if (currentCountOfItems < self.totalCountOfItems) {
+        NSInteger visibleCountOfItems = [[tableView visibleCells] count];
+        NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+        NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
+        if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+            NSLog(@"----> Load more data");
+            [self pullUpPageData];
+        }
+    } else {
+        NSLog(@"----> CurrentCountOfItems >= TotalCountOfItems");
+        //        [_studyTableView.mj_footer endRefreshing];
+        [tableView.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.isRequiring)
+        return;
+    self.isDragging = YES;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (!self.isRequiring && self.isDragging && scrollView.contentOffset.y < 0) {
+//        [self headerViewDidScroll:scrollView.contentOffset.y < 0 - [self headerRefreshHeight]
+//                       scrollView:scrollView];
+//    } else if (!isLoadingMore && canLoadMore) {
+//        CGFloat scrollPosition = scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y;
+//        if (scrollPosition < [self footerLoadMoreHeight]) {
+//            [self loadMore];
+//        }
+//    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    ;
 }
 
 @end

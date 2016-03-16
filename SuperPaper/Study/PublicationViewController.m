@@ -30,6 +30,21 @@
 @property (nonatomic, assign) NSInteger tagId;
 @property (nonatomic ,strong) UIActivityIndicatorView *webIndicator;
 
+/**
+ *  数据总数
+ */
+@property (nonatomic, assign) NSInteger totalCountOfItems;
+
+/**
+ *  可见行数
+ */
+@property (nonatomic, assign) NSInteger visibleRowsOfRightTable;
+
+/**
+ *  是否正在请求
+ */
+@property (nonatomic, assign) BOOL isRequiring;
+
 @end
 
 @implementation PublicationViewController
@@ -69,8 +84,11 @@
     _contentView.rightTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self pulldownRefresh:_selectedSortDic];
     }];
-    _contentView.rightTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullupRefresh:_selectedSortDic];
+//    _contentView.rightTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullupRefresh:_selectedSortDic];
+//    }];
+    _contentView.rightTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
     }];
     
     _webIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -190,16 +208,21 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
-     ** parameters 参数
-     * ownertype  整型    1：老师  2:学生
-     * subgroup_id   整型  期刊属性
-     * tag_id     整型    期刊标签
-     * start_pos  整型    表单中获取数据的开始位置。从0开始
-     * list_num   整型    一次获取list数
-     * group_id   整型    ownertype为1时,group_id为1表示刊物;ownertype为2时,group_id为10表示刊物
+     * parameters  参数
+     * ownertype   整型    1：老师  2:学生
+     * subgroup_id 整型    期刊属性
+     * tag_id      整型    期刊标签
+     * start_pos   整型    表单中获取数据的开始位置。从0开始
+     * list_num    整型    一次获取list数
+     * group_id    整型    ownertype为1时,group_id为1表示刊物;ownertype为2时,group_id为10表示刊物
      */
     UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInteger:ownerType],
+                                 @"group_id":[NSNumber numberWithInteger:_groupId],
+                                 @"subgroup_id":[sortDic objectForKey:@"id"],
+                                 @"tag_id":[NSNumber numberWithInteger:_tagId],
+                                 @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count],
+                                 @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -208,14 +231,19 @@
         }
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
-              NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+//              NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+              NSArray *array = [responseObject valueForKey:@"list"];
+              if ([array count] == 0) {
+                  [self showAlertViewWithMessage:@"无数据"];
+                  return ;
+              }
               [_publicationDataArray addObjectsFromArray:array];
+              NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+              self.totalCountOfItems = total_num;
               [_contentView.rightTableView reloadData];
               [_webIndicator stopAnimating];
               [_webIndicator setHidden:YES];
-              if ([array count] == 0) {
-                  [self showAlertViewWithMessage:@"无数据"];
-              }
+              
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
@@ -238,8 +266,13 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:0], @"list_num":[NSNumber numberWithInt:15]};
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:ownerType],
+                                 @"group_id":[NSNumber numberWithInteger:_groupId],
+                                 @"subgroup_id":[sortDic objectForKey:@"id"],
+                                 @"tag_id":[NSNumber numberWithInteger:_tagId],
+                                 @"start_pos":[NSNumber numberWithUnsignedInteger:0],
+                                 @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -267,8 +300,13 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-//    UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:1], @"group_id":[NSNumber numberWithInteger:_groupId], @"subgroup_id":[sortDic objectForKey:@"id"], @"tag_id":[NSNumber numberWithInteger:_tagId], @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count], @"list_num":[NSNumber numberWithInt:15]};
+    UserRole ownerType = [[UserSession sharedInstance] currentRole];
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:ownerType],
+                                 @"group_id":[NSNumber numberWithInteger:_groupId],
+                                 @"subgroup_id":[sortDic objectForKey:@"id"],
+                                 @"tag_id":[NSNumber numberWithInteger:_tagId],
+                                 @"start_pos":[NSNumber numberWithUnsignedInteger:_publicationDataArray.count],
+                                 @"list_num":[NSNumber numberWithInt:15]};
     
     NSString *urlString = [NSString stringWithFormat:@"%@confer_newsinfo.php",BASE_URL];
     
@@ -276,19 +314,26 @@
         NSLog(@"%@",uploadProgress);
     }
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
+              self.isRequiring = NO;
+//              NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+//              self.totalCountOfItems = total_num;
               NSArray *array = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
+              if ([array count] == 0) {
+                  [self showAlertViewWithMessage:@"暂无数据"];
+                  return ;
+              }
               [_publicationDataArray addObjectsFromArray:array];
               [_contentView.rightTableView reloadData];
               [_contentView.rightTableView.mj_footer endRefreshing];
-              if ([array count] == 0) {
-                  [self showAlertViewWithMessage:@"暂无数据"];
-              }
+
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"%@",error);
+              self.isRequiring = NO;
               [_contentView.rightTableView.mj_footer endRefreshing];
           }];
+    
+    self.isRequiring = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -361,7 +406,9 @@
 //        cell.detailTextLabel.textColor = [UIColor grayColor];
         
         NSString* urlString = [NSString stringWithFormat:@"%@%@",IMGURL,[[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"listitem_pic_name"]];
-        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+//        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]];
+        [cell.cellImg sd_setImageWithURL:[NSURL URLWithString:urlString]
+                        placeholderImage:[UIImage imageWithASName:@"default_image" directory:@"common"]];
         cell.titleLabel.font = [UIFont systemFontOfSize:14];
         cell.titleLabel.text = [[_publicationDataArray objectAtIndex:indexPath.row] valueForKey:@"title"];
 
@@ -372,12 +419,36 @@
 #pragma mark - tableViewDelegate
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
+//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    
+//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [cell setLayoutMargins:UIEdgeInsetsZero];
+//    }
+//    return;
     
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
+    if (tableView == _contentView.rightTableView) {
+        NSInteger rowIndex = [indexPath row];
+        NSInteger currentCountOfItems = _publicationDataArray.count;
+        
+        NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, (long)self.totalCountOfItems);
+        if (currentCountOfItems < self.totalCountOfItems) {
+            NSInteger visibleCountOfItems = [[_contentView.rightTableView visibleCells] count];
+            if (visibleCountOfItems == 0) {
+                visibleCountOfItems = _contentView.rightTableView.frame.size.height / 70;
+            }
+            NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+            NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
+            if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+                NSLog(@"----> Load more data");
+                [self pullupRefresh:_selectedSortDic];
+            }
+        } else {
+            NSLog(@"----> CurrentCountOfItems >= TotalCountOfItems");
+            //        [_studyTableView.mj_footer endRefreshing];
+            [tableView.mj_footer endRefreshingWithNoMoreData];
+        }
     }
 }
 

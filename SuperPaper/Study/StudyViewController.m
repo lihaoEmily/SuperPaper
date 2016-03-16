@@ -23,6 +23,16 @@
 
 @property (nonatomic, strong) UITableView *studyTableView;
 
+/**
+ *  数据总数
+ */
+@property (nonatomic, assign) NSInteger totalCountOfItems;
+
+/**
+ *  是否正在请求
+ */
+@property (nonatomic, assign) BOOL isRequiring;
+
 @end
 
 @implementation StudyViewController{
@@ -92,8 +102,11 @@
     }];
     
     // 上拉加载
-    _studyTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullUpPageData];
+//    _studyTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullUpPageData];
+//    }];
+    _studyTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
     }];
     
 }
@@ -124,32 +137,37 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     /**
-     ** parameters 参数
+     * parameters 参数
      * ownertype  整型    2：学生
      * start_pos  整型    表单中获取数据的开始位置。从0开始
      * list_num   整型    一次获取list数
      */
 //    UserRole ownerType = [[UserSession sharedInstance] currentRole];
-    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:2], @"start_pos":[NSNumber numberWithInt:(int)_responseNewsInfoArr.count], @"list_num":[NSNumber numberWithInt:15]};
+    NSInteger startPos = [_responseNewsInfoArr count];
+    NSLog(@"----> startPosition:%ld",(long)startPos);
+    NSDictionary *parameters = @{@"ownertype":[NSNumber numberWithInt:2], @"start_pos":[NSNumber numberWithInteger:startPos], @"list_num":[NSNumber numberWithInt:15]};
     NSString *urlString = [NSString stringWithFormat:@"%@studypage_newsinfo.php",BASE_URL];
     NSLog(@"%@",urlString);
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
+        self.isRequiring = YES;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        self.isRequiring = NO;
         NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseNewsInfoArr addObjectsFromArray:myArr];
         NSLog(@"%@",responseObject);
         [_studyTableView reloadData];
-//        NSInteger num = [responseObject[@"total_num"] integerValue];
-//
+        NSInteger num = [responseObject[@"total_num"] integerValue];
+        self.totalCountOfItems = num;
 //        if (_responseNewsInfoArr.count < num) {
 //            [self getStudyPageNewsInfo];
 //        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        self.isRequiring = NO;
     }];
+    self.isRequiring = YES;
 }
 
 //获取学习广告信息
@@ -384,6 +402,29 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.1;
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        NSInteger rowIndex = [indexPath row];
+        NSInteger currentCountOfItems = [_responseNewsInfoArr count];
+        NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, (long)self.totalCountOfItems);
+        if (currentCountOfItems < self.totalCountOfItems) {
+            NSInteger visibleCountOfItems = [[tableView visibleCells] count];
+            NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+            NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
+            if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+                NSLog(@"----> Load more data");
+                [self pullUpPageData];
+            }
+        } else {
+            NSLog(@"----> CurrentCountOfItems >= TotalCountOfItems");
+            //        [_studyTableView.mj_footer endRefreshing];
+            [tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+    }
+}
+
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (2 == indexPath.section) {

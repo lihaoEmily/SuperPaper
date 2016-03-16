@@ -44,14 +44,16 @@
     UIBarButtonItem *btnItem = [UIBarButtonItem appearance];
     NSMutableDictionary * dictM = [NSMutableDictionary dictionary];
     dictM[NSForegroundColorAttributeName] = [UIColor clearColor];
-    dictM[NSFontAttributeName] = [UIFont systemFontOfSize:0];
+    //TODO:解决应用程序切换闪的问题
+//    dictM[NSFontAttributeName] = [UIFont systemFontOfSize:0];
 
     NSShadow * shadow = [[NSShadow alloc]init];
     shadow.shadowOffset = CGSizeZero;
     dictM[NSShadowAttributeName] = shadow;
     [btnItem setTitleTextAttributes:dictM forState:UIControlStateNormal];
-    [btnItem setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin)
-                                    forBarMetrics:UIBarMetricsDefault];
+    //TODO:解决应用程序切换闪的问题
+//    [btnItem setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin)
+//                                    forBarMetrics:UIBarMetricsDefault];
 
     NSMutableDictionary * highdictM = [NSMutableDictionary dictionaryWithDictionary:dictM];
     highdictM[NSForegroundColorAttributeName] = [UIColor clearColor];

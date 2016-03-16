@@ -353,7 +353,7 @@
     [JPUSHService setupWithOption:launchOptions
                            appKey:JPushAppKey
                           channel:JPushChannel
-                 apsForProduction:NO];
+                 apsForProduction:YES];
     //注册接收自定义消息
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self
@@ -436,10 +436,9 @@
             _pushUrlString = urlStr;
         }
     }
-    
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     UIApplicationState state = [[UIApplication sharedApplication] applicationState];
     if (state == UIApplicationStateActive) {
-        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
         [self showAlertViewWith:apsDic];
         return YES;
     } else {

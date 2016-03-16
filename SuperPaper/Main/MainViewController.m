@@ -98,7 +98,8 @@
     [self.homeController didMoveToParentViewController:self];
     self.currentController = self.homeController;
     
-    self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
+//    self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
+    self.navigationItem.rightBarButtonItem = nil;//客户要求隐藏
     
     NSString *versionStr = @"CFBundleShortVersionString";
     NSString *currentVersionStr = [[[NSBundle mainBundle] infoDictionary] objectForKey:versionStr];
@@ -212,11 +213,27 @@
         return;
     }
     
+    if (destinationController == self.homeController)
+    {
+        if (self.navigationItem.titleView == nil)
+        {
+            UIImageView *imageView = [[UIImageView alloc]  initWithImage:[UIImage imageNamed:@"homeTitle"]];
+            [imageView setFrame:CGRectMake(0, 0, 74, 44)];
+            self.navigationItem.titleView = imageView;
+        }
+    }else{
+        self.navigationItem.titleView = nil;
+    }
+    
     if (destinationController == self.userController)
     {
         self.navigationItem.rightBarButtonItem = self.settingBarButtonItem;
     }else{
-        self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
+        if (destinationController == self.homeController) {
+            self.navigationItem.rightBarButtonItem = nil;
+        } else {
+            self.navigationItem.rightBarButtonItem = self.normalBarButtonItem;
+        }
     }
 
     self.title = destinationController.titleName;
@@ -403,7 +420,17 @@
     //注册Alias
     if ([[UserSession sharedInstance] currentUserID] != 0) {
         NSString * jpushAlias = [[UserSession sharedInstance] currentUserJPushAlias];
-        [JPUSHService setTags:nil alias:jpushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+        NSString * tagString = @"";
+        UserRole currentRole = [[UserSession sharedInstance] currentRole];
+        if (currentRole == kUserRoleStudent) {
+            tagString = @"student";
+        } else if (currentRole == kUserRoleTeacher) {
+            tagString = @"teacher";
+        } else {
+            tagString = @"";
+        }
+        NSSet *tagSet = [NSSet setWithObjects:tagString, nil];
+        [JPUSHService setTags:tagSet alias:jpushAlias fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
             NSLog(@"----> JPUSH Set tags and alias:\n ResCode=%d, \nTags=%@, \nAlias=%@", iResCode, iTags, iAlias);
             if (iResCode == 0) {// register successfully
                 NSLog(@"----> JPUSH Register alias successfully.");

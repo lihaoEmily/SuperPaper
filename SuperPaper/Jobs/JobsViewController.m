@@ -20,6 +20,15 @@
 @interface JobsViewController ()<UITableViewDataSource, UITableViewDelegate,SDCycleScrollViewDelegate>
 
 @property (nonatomic, strong) UITableView *jobTableView;
+/**
+ *  数据总数
+ */
+@property (nonatomic, assign) NSInteger totalCountOfItems;
+
+/**
+ *  是否正在请求
+ */
+@property (nonatomic, assign) BOOL isRequiring;
 
 @end
 
@@ -68,8 +77,11 @@
     }];
     
     // 上拉加载
-    _jobTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self pullUpPageData];
+//    _jobTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        [self pullUpPageData];
+//    }];
+    _jobTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        ;
     }];
 }
 
@@ -111,7 +123,9 @@
     [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        self.isRequiring = NO;
+        NSInteger total_num = [[responseObject valueForKey:@"total_num"] integerValue];
+        self.totalCountOfItems = total_num;
         NSArray *myArr = [NSArray arrayWithArray:[responseObject valueForKey:@"list"]];
         [_responseNewsInfoArr addObjectsFromArray:myArr];
         NSLog(@"%@",responseObject);
@@ -119,7 +133,10 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        self.isRequiring = NO;
     }];
+    
+    self.isRequiring = YES;
 }
 
 // 获取学习广告信息
@@ -305,6 +322,23 @@
         }
         [AppDelegate.app.nav pushViewController:viewController animated:YES];
         
+    }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger rowIndex = [indexPath row];
+    NSInteger currentCountOfItems = [_responseNewsInfoArr count];
+    NSLog(@"----> rowIndex=%ld, currentCountOfItems=%ld, totalCountOfItems=%ld",(long)rowIndex, (long)currentCountOfItems, (long)self.totalCountOfItems);
+    if (currentCountOfItems < self.totalCountOfItems) {
+        NSInteger visibleCountOfItems = [[tableView visibleCells] count];
+        NSInteger offsetCountOfItems = rowIndex + visibleCountOfItems/2 + 1;
+        NSLog(@"----> OffsetCountOfItems = %ld", (long)offsetCountOfItems);
+        if (self.isRequiring == NO && offsetCountOfItems >= currentCountOfItems) {
+            NSLog(@"----> Load more data");
+            [self pullUpPageData];
+        }
+    } else {
+        [tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 

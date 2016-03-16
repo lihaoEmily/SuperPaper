@@ -34,6 +34,7 @@ typedef enum{
     NSString *_papersCountStr;
     NSString *_aboutMeStr;
     NSString *_service_telStr;
+    UILabel *_userRoleLabel;
     UIActivityIndicatorView *_webIndicator;
 }
 
@@ -104,6 +105,8 @@ static NSString *cellIdentifier = @"UserTableViewCell";
                     if ([_unReadMessageCountStr isEqualToString:@"0"]) {
                         _unReadMessageCountStr = @"";
                     }
+                    [self setPushNotificationBadgeNumber];
+                    
                     _papersCountStr = responseObject[@"paper_num"];
                     _aboutMeStr = responseObject[@"service_aboutme"];
                     _service_telStr = responseObject[@"service_tel"];
@@ -329,6 +332,8 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     ChangeUserHeadImageViewController *vc = [[UIStoryboard storyboardWithName:@"User" bundle:nil]instantiateViewControllerWithIdentifier:@"changeuserheadimage"];
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+//FIXME: UIAlertController 在iOS 8以后使用，如果适配Pad需要调整，否则会引起崩溃的现象
 - (void)popupDisplayTypeChoosingActionSheet
 {
     if ([[UIDevice currentDevice]systemVersion].floatValue < 8.0) {
@@ -354,6 +359,12 @@ static NSString *cellIdentifier = @"UserTableViewCell";
         [alertController addAction:chooseTeacher];
         [alertController addAction:chooseStudent];
         [alertController addAction:cancel];
+        if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
+            alertController.popoverPresentationController.sourceView = _userRoleLabel;
+            alertController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            CGRect frame = _userRoleLabel.bounds;
+            alertController.popoverPresentationController.sourceRect = frame;
+        }
         [self presentViewController:alertController animated:YES completion:nil];
     }
 
@@ -420,6 +431,7 @@ static NSString *cellIdentifier = @"UserTableViewCell";
             
         }else if (4 == indexPath.row) {
             cell.contentLabel.text = (kUserRoleStudent == [UserSession sharedInstance].currentRole)?@"学生":@"老师";
+            _userRoleLabel = cell.contentLabel;
         }else if(5 == indexPath.row){
             cell.contentLabel.text = _papersCountStr;
         }else
@@ -537,6 +549,14 @@ static NSString *cellIdentifier = @"UserTableViewCell";
     
 }
 
-
+#pragma mark - Set push notification badge
+- (void)setPushNotificationBadgeNumber {
+    NSInteger badge = [[UIApplication sharedApplication] applicationIconBadgeNumber];
+    NSInteger unReadMsgCount = [_unReadMessageCountStr integerValue];
+    NSLog(@"----> BadgeNumber=%ld, UnReadMessageCount=%ld",(long)badge, (long)unReadMsgCount);
+    if (badge > unReadMsgCount && unReadMsgCount >= 0) {
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unReadMsgCount];
+    }
+}
 
 @end
