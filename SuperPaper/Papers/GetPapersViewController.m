@@ -13,8 +13,8 @@
 #define TOP_WIEW_HEIGHT 136
 #define TITLE_HEIGHT    56.0
 //#define kDefaultColor  [UIColor colorWithRed:232/255.0 green:79/255.0 blue:135./255.0 alpha:1.0f]
-//#define kScreenWidth   [UIScreen mainScreen].bounds.size.width
-//#define kScreenHeight   [UIScreen mainScreen].bounds.size.height
+#define kScreenWidth   [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight   [UIScreen mainScreen].bounds.size.height
 
 @interface GetPapersViewController ()
 /**

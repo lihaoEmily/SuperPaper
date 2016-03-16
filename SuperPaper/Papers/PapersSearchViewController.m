@@ -66,6 +66,8 @@
     
     /// 搜索table
     UITableView *_searchTableView;
+    
+    UIActivityIndicatorView *_activity;
 }
 
 - (void)viewDidLoad {
@@ -112,6 +114,8 @@
         NSLog(@"%@",uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
+        [_activity stopAnimating];
+        [_activity setHidden:YES];
         if (responseObject) {
             if ([[responseObject valueForKey:@"total_num"] integerValue] == 0) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -124,6 +128,8 @@
             }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [_activity stopAnimating];
+        [_activity setHidden:YES];
         NSLog(@"%@",error);
     }];
 }
@@ -225,6 +231,12 @@
     
     _searchTableView.mj_header.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
     _searchTableView.mj_footer.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0];
+    
+    /// 指示器
+    _activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [_activity setCenter:CGPointMake(kScreenWidth / 2, CGRectGetMidY(_searchTableView.frame) - 60)];
+    [_activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+    [_searchTableView addSubview:_activity];
 }
 
 #pragma mark - Actions
@@ -241,6 +253,8 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入搜索关键字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
     }else{
+        [_activity setHidden:NO];
+        [_activity startAnimating];
         [self getSearchData];
     }
 }
